@@ -1,0 +1,6 @@
+1. For tree problem, think the way of traversal first. All tree problems use the 3 ways of traversal.  
+
+2. when doing tree traversal, it is recommended to use null as base case 
+and avoid using left and right as base case
+
+
