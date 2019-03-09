@@ -1,5 +1,9 @@
 import java.util.Stack;
-
+/* You are given a score list which consists of a few numbers and characters,
+ * if the character is '+', then add the last two scores to the total,
+ * if the character is 'Z', substract the last score from the total,  
+ * if the character is 'X', add the twice value of the last score to the total.
+ */
 public class Baseball{
 	public static int ballCount(String[] score)
         {
