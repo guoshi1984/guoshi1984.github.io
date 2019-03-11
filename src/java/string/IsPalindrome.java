@@ -1,3 +1,5 @@
+/*Given a string, check if it is a palindrom
+ */
 public class IsPalindrome
 {
 	public static boolean check(String s)
