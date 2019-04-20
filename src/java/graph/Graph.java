@@ -1,6 +1,7 @@
 import java.util.*;
 class Graph
 {
+
 	public static class Node
 	{
 		public int data;
@@ -34,18 +35,56 @@ class Graph
 		}
 	}
 
-	public static Node graph1;
+	protected LinkedList<Node> vertices;
+	public void addVertex(Node node)
+	{
+		vertices.add(node);
+	}
+
+	public LinkedList<Node> getVertices()
+	{
+		return vertices;
+	}
+
+	Graph()
+	{
+		vertices = new LinkedList<Node>();
+	}
+	
+
+	public static Graph graph1 = new Graph();
+	public static Graph graph2 = new Graph();
 	static
 	{
-                Node node1 = new Node(1);
-                Node node2 = new Node(2);
-                Node node3 = new Node(3);
-                Node node4 = new Node(4);
-		Node node5 = new Node(5);
-                node1.addAdj(node2).addAdj(node3);
-                node2.addAdj(node2).addAdj(node4);
-                node3.addAdj(node4).addAdj(node5);
-		graph1 = node1;
+                Node node11 = new Node(1);
+                Node node12 = new Node(2);
+                Node node13 = new Node(3);
+                Node node14 = new Node(4);
+		Node node15 = new Node(5);
+                node11.addAdj(node12).addAdj(node13);
+                node12.addAdj(node12).addAdj(node14);
+                node13.addAdj(node14).addAdj(node15);
+		graph1.addVertex(node11);
+		graph1.addVertex(node12);
+		graph1.addVertex(node13);
+		graph1.addVertex(node14);
+		graph1.addVertex(node15);
+                Node node20 = new Node(0);
+                Node node21 = new Node(1);
+                Node node22 = new Node(2);
+                Node node23 = new Node(3);
+		Node node24 = new Node(4);
+		Node node25 = new Node(5);
+                node25.addAdj(node22).addAdj(node20);
+                node24.addAdj(node20).addAdj(node21);
+                node22.addAdj(node23);
+		node23.addAdj(node21);
+		graph2.addVertex(node20);
+		graph2.addVertex(node21);
+		graph2.addVertex(node22);
+		graph2.addVertex(node23);
+		graph2.addVertex(node24);
+		graph2.addVertex(node25);
 	}
 
 }

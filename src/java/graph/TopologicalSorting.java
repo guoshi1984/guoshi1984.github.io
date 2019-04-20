@@ -2,28 +2,35 @@ import java.util.*;
 public class TopologicalSorting
 {
 	
-	private static void find(Node node, Set<Node> visited,
-		LinkedList<Node> result)
+	private static void find(Graph.Node node, Set<Graph.Node> visited,
+		LinkedList<Graph.Node> result)
 	{
 		visited.add(node);
-		//System.out.println(nd.val);
-		for(Node thisNode : nd.getAdjList())
+		System.out.println("current node"+ node.getData());
+		for(Graph.Node thisNode : node.getAdjList())
 		{
 			if(!visited.contains(thisNode))
 				 find(thisNode, visited, result);
 		}
+		System.out.println("add "+ node.getData());
 		result.offerFirst(node);
 		
 		
 	}
-	public static List<Node> find(Node nd)
+	
+	public static List<Graph.Node> find(Graph graph)
 	{
-		Set<Node> visited = new HashSet<Node>();
-		LinkedList<Node> result = new LinkedList<Node>();
-		find(nd, visited, result);
-		for(Node thisNode : result)
+		Set<Graph.Node> visited = new HashSet<Graph.Node>();
+		LinkedList<Graph.Node> result = new LinkedList<Graph.Node>();
+		for(Graph.Node node : graph.getVertices())
 		{
-			System.out.println(curNd.getData());
+			if(!visited.contains(node))
+				find(node, visited, result);
+		}
+
+		for(Graph.Node thisNode : result)
+		{
+			System.out.println(thisNode.getData());
 		}
 		return result;
 	}
@@ -31,22 +38,6 @@ public class TopologicalSorting
 
 	public static void main(String[] args)
 	{
-                Node nd1 = new Node(1);
-                Node nd2 = new Node(2);
-                Node nd3 = new Node(3);
-                Node nd4 = new Node(4);
-		Node nd5 = new Node(5);
-                nd1.addAdj(nd2);
-                nd1.addAdj(nd3);
-                nd2.addAdj(nd3);
-                nd2.addAdj(nd4);
-                nd3.addAdj(nd4);
-                nd3.addAdj(nd5);
-               // nd2.addAdj(nd4);
-               // nd4.addAdj(nd2);
-               // nd2.addAdj(nd4);
-               // nd4.addAdj(nd3);
-               // nd3.addAdj(nd4);
-		find(nd1);
+		find(Graph.graph2);
 	}		
 }

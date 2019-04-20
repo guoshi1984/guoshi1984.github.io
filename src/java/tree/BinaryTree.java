@@ -1,3 +1,4 @@
+import java.util.*;
 public class BinaryTree
 {
 	public static class Node
@@ -63,6 +64,41 @@ public class BinaryTree
 	}
 
 
+
+	
+
+	public static String serializeBinaryTree(Node node)
+	{
+		if(node == null)
+			return "null,";
+		StringBuilder sb = new StringBuilder();
+		sb.append(node.getData());
+		sb.append(",");
+
+		sb.append(serializeBinaryTree(node.getLeft()));
+		sb.append(serializeBinaryTree(node.getRight()));
+		return sb.toString();
+	}
+
+	public static Node deserializeBinaryTree(String data, String delimiter)
+	{
+		LinkedList<String> nodes = new LinkedList<String>();
+		nodes.addAll(Arrays.asList(data.split(delimiter)));
+		return deserializeBinaryTree(nodes);
+	}
+	private static Node deserializeBinaryTree(LinkedList<String> nodes)
+	{
+		String currentNode = nodes.removeFirst();
+		if(currentNode.equals("null"))
+			return null;
+		else
+		{
+			Node node = new Node(Integer.parseInt(currentNode));
+			node.setLeft(deserializeBinaryTree(nodes));
+			node.setRight(deserializeBinaryTree(nodes));
+			return node;
+		}
+	}
 	public static Node tree1 = new Node();
 	public static Node tree2 = new Node();
 	static
@@ -80,6 +116,14 @@ public class BinaryTree
 		tree2.setRight(new Node(3));
 		tree2.getLeft().setLeft(new Node(4));
 		tree2.getLeft().setRight(new Node(5));
+	}
+
+	public static void main(String[] args)
+	{
+		String str = new String(serializeBinaryTree(tree1));
+		System.out.println(str);
+		Node node = deserializeBinaryTree(str, ",");
+		inOrder(node);
 	}
 }
 
