@@ -1,7 +1,26 @@
 import java.util.*;
 public class CloneGraph
 {
-	public static class Node
+
+	public static class Graph
+	{
+		int numberOfVertices;
+		LinkedList<Node> adjListArray[];
+
+		Graph(int numberOfVertices)
+		{
+			this.numberOfVertices = numberOfVertices;
+			
+			adjListArray = new LinkedList[this.numberOfVertices];
+			
+			for(int i=0; i < this.numberOfVertices; i++ )
+			{
+				adjListArray[i] = new LinkedList<>();
+			}
+		}
+	}
+
+	private static class Node
 	{
 		public int val;
 		public ArrayList<Node> adjList;
