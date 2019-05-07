@@ -1,0 +1,107 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Random Walk}
+\subsection{Symmetric Random Walk}
+\noindent{\bf a. Definition}\\
+Starting from coin toss, \\
+def:
+\begin{align*}
+X_j & =  1 \hspace{2mm} &if \hspace{2mm} w_j = H\\
+    & = -1 \hspace{2mm} &if \hspace{2mm} w_j = T	
+\end{align*}
+Let $M_k = \sum_{j=1} ^{k} X_j$, $M_k$ is symmetric random walk, and its distribution is binomial.\\
+
+\noindent{\bf b. Expectation and Variance}\\
+$E(X_j) =0$, $Var(X_j) =1$,\\
+$Var(M_k - M_l) = \sum_{i=l}^{k} Var(X_i) = k - l$;\\
+
+\noindent{\bf c. Martingale Property} \\
+$E(M_l| F_k)$\\
+$=E((M_l - M_k + M_k) | F_k)$\\
+$=E((M_l - M_k) | F_k) + E(M_k | F_k)$\\
+$=0 + M_k = M_k$\\
+
+\subsection{Scaled Random Walk}\\
+
+\noindent{ \bf a. Scaled Symmetric Random Walk Definition}\\
+$W^{(n)}(t) = 1/\sqrt{n} M_{nt} $ \\
+$= 1/\sqrt{n} \sum_{i=1} ^{nt} X_^{(n)}(t)$\\
+$= \sum_{i=1} ^{nt}  1/\sqrt{n} X_^{(n)}(t)$ \\
+
+\noindent{ \bf b. Expectation and Variance}\\
+$E(W^{(n)}(t) - W^{(n)}(s)) =0, $\\
+$Var(W^{(n)}(t) - W^{(n)}(s)) = n(t-s) Var(1/\sqrt{n} X^{(n)} (t-s) )$\\
+$=t - s$ \\
+
+
+\subsection{Brownian Motion}\\
+\noindent { \bf a. Limit of Scaled Symmetric Random Walk: Brownian Motion} \\
+When $n-> \inf$, based on Central Limit Theorem\\ 
+$W^{(n)}(t)$ starting from 0 follows a normal distribution N(0, t)\\
+We view $W^{(n)}(t)$ as a Brownian motion\\
+
+\noindent { \bf b.	Quadratic variation of Brownian motion } \\
+ Given a Brownian motion $W_{t_j}$
+ Define 
+ \begin{align*}
+	Q &= \sum_{j=0} ^{n-1} (W_{t_{j+1}} - W_{t_j})^2 \\
+ 	E(Q)  &= \sum_{j=0} ^{n-1} E ((W_{t_{j+1}} - W_{t_j})^2) \\
+       & = \sum_{j=0} ^{n-1} (t_{j+1} - t_j) \\
+       & = T
+\end{align*}
+
+ \begin{align*}
+   Var(Q) = \sum_{j=0}^{n-1} 2(t_{j+1} - t_{j})^2 \\
+   <= 2|C|T (where ||C|| = max|t_{j+1} - t_{j} |) \\
+    When |C| = 0, \\
+    Var(Q) = 0 \\
+ \end{align*}
+        This is simply written in differential form $dW dW$ = $dt$\\
+
+\noindent{ \bf c. From Scaled Asymmetric Random Walk to Geometric Brownian motion}\\
+
+Consider a scaled asymmetric random walk with factor of $\sigma$ and drift $\alpha$
+  \begin{align*}
+	W^{(n)}(t) =  \sigma  (\frac{1}{\sqrt{n}} M_{nt} )+ \alpha t
+  \end{align*}
+  
+  Construct new random variable which satisfies
+  $\delta S / S = W^{(n)}(t)$ , which is equivalent to 
+	
+	\begin{align*}
+  S+ = S(1+\alpha /n + \sigma /\sqrt{n}) \\
+  S- =  S(1+\alpha /n - \sigma /\sqrt{n}) \\
+	\end{align*}
+  Assuming number of heads is $H_{nt}$, number of tails is $T_{nt}$
+  Then 
+  \begin{align*}
+	 S_n(t) &= S_n(0) (1+\alpha /n + \sigma /\sqrt{n})^{(H_{nt})} (1+\alpha /n - \sigma /\sqrt{n})^{(T_{nt})} \\
+   \end{align*}
+ 
+ \begin{align*}
+	log(S_n(t)) & = log(S_n(0)) + (H_{nt}) log(1+\alpha /n + \sigma /\sqrt{n})
+								+ (T_{nt}) log(1+\alpha /n - \sigma /\sqrt{n})\\
+				& = log(S_n(0)) + (H_{nt}) (\alpha /n + \sigma /\sqrt{n} - 1/2(\alpha /n + \sigma /\sqrt{n})^2)\\
+				& +(T_{nt}) (\alpha /n - \sigma /\sqrt{n} - 1/2(\alpha /n - \sigma /\sqrt{n})^2)\\
+				& = log(S_n(0)) +(H_{nt} + T_{nt}) (\alpha/n - \sigma^2 /n + O(n^{-3/2}))
+				+ (H_{nt} - T_{nt}) (\sigma /\sqrt{n} )\\
+				& = log(S_n(0)) + nt(\alpha /n - 1/2 \sigma^2 /n) + M_{nt} \sigma/\sqrt{n}\\
+				& = log(S_n(0)) + (\alpha - \frac{1}{2} \sigma^2)t + W^{n}(t) \sigma \\
+\end{align*}
+  Then we can prove when $n-> \infty$
+  The distribution of $S_n(t)$ converges to the distribution of
+  \begin{align*}
+	  S(t) = S(0) exp((\alpha - \frac{1}{2} \sigma^2 )t +\sigma W(t))
+  \end{align*}
+  Where W(t) is a normal random variable with mean 0 and variance t. 
+
+
+
+
+
+
+
+
+\end{document}

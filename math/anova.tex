@@ -1,0 +1,111 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{ANOVA One-Way Model}
+One way ANOVA model states as following:\\
+\begin{align*}
+	Y_{ij} = \mu + \alpha_i + \epsilon_{ij}\\
+	i \leq I; j \leq J \\
+\end{align*}
+with the assumption that $\sum_i \alpha_i = 0$, and $\epsilon_{ij}$ follows$N(0, \sigma^2)$.\\
+We now calculate the expectation of the sum square error.\\
+\begin{align*}
+	E[SSE] & = E[\sum_{ij} (Y_{ij} - \bar Y_{i.})^2] \\
+	       & = E[\sum_{ij} (\mu + \alpha_i + \epsilon_{ij}
+	       -(\mu + \alpha_i + \frac{1}{J}\sum_j \epsilon_{ij}))^2]\\
+	       & = E[\sum_{ij}(\epsilon_{ij} -\frac{1}{J}\sum_{j} \epsilon_{ij})^2] \\
+	       & = \sum_{ij} E[(\epsilon_{ij} - \frac{1}{J}\sum_{j} \epsilon_{ij})^2]\\
+	       & = \sum_{ij}(E[\epsilon^2_{ij}] - 2E[\epsilon_{ij}][\frac{1}{J}\sum_j \epsilon_{ij}]+
+	       E[(\frac{1}{J}\sum_j \epsilon_{ij})^2])\\
+\end{align*}
+Based on the following,\\
+\begin{align*}
+	E[\epsilon^2_{ij}] = E[\epsilon_{ij} \epsilon_{kl}] = \sigma^2 \delta_{ik} \delta{jl}\\
+\end{align*}
+So the SSE is\\
+\begin{align*}
+	E[SSE] & = \sum_{ij} (\sigma^2 -\frac{2}{J} \sigma^2 +\frac{J}{J^2}\sigma^2)\\
+	       & = IJ(\simga^2 - \frac{2}{J} \sigma^2 + \frac{1}{J} \sigma^2) \\
+	       & = IJ\sigma^2 - I \sigma^2 = I(J-1) \sigma^2\\
+\end{align*}
+
+\begin{align*}
+	E[SS\alpha] & = E[\sum_{ij}(\bar Y_{i.} - \bar Y_{..})^2]\\
+				& = E[\sum_{ij}(\mu + \alpha_i + \frac{\sum_j \epsilon_{ij}}{J}
+				-(\mu + \sum_{i} \frac{\alpha_i}{I} + \frac{1}{IJ} \sum_{ij} \epsilon_{ij}))^2]\\
+				& = E[\sum_{ij}(\alpha_i + \sum_j \frac{\epsilon_{ij}}{J} - \sum_{ij} \frac{\epsilon_{ij}}{IJ})^2]\\
+				& = J \sum_i \alpha_i^2 + \sum_{ij}(E[(\frac{\sum_j \epsilon_{ij}}{J})^2])
+				-2 E[\frac{\sum_j \epsilon_{ij}}{J} (\frac{1}{IJ} \sum_{ij}\epsilon_{ij})] +E[(\frac{1}{IJ}\sum_{ij} \epsilon_{ij})^2]\\
+				& = J \sum_{i} \alpha^2_{i} + \sum_{ij} (\frac{J}{J^2} \sigma^2 - \frac{2J}{IJ^2} \sigma^2 + \frac{IJ}{I^2J^2} \sigma^2)\\
+				& = J \sum_{i} \alpha^2_{i} + (I-1)\sigma^2 \\
+\end{align*}
+\begin{align*}
+	\frac{E(SS\alpha)}{I-1} = J \frac{\sum_i \alpha^2}{I-1} + \sigma^2\\
+\end{align*}
+
+\section{ANOVA Two-Way Model}
+Two way ANOVA model states as following:\\
+\begin{align*}
+	Y_{ijk} = \mu + \alpha_i + \beta_j+ \epsilon_{ijk}\\
+	i \leq I; j \leq J; k \leq K \\
+\end{align*}
+with the assumption that $\sum_i \alpha_i = 0$, $\sum_j \beta_j = 0$, and $\epsilon_{ijk}$ follows$N(0, \sigma^2)$.\\
+We now calculate the expectation of the sum square error, similar to what we did in section 1.\\
+\begin{align*}
+	E[SSE] & = E[\sum_{ijk} (Y_{ijk} - \bar Y_{ij.})^2] \\
+	       & = E[\sum_{ijk} (\mu + \alpha_i + \beta_j+  \epsilon_{ijk}
+	       -(\mu + \alpha_i + \beta_j+ \frac{1}{K}\sum_k \epsilon_{ijk}))^2]\\
+	       & = E[\sum_{ijk}(\epsilon_{ijk} -\frac{1}{K}\sum_{k} \epsilon_{ijk})^2] \\
+\end{align*}
+Based on the SSE we have derived in one-way model, we can easily see\\
+\begin{align*}
+	E[SSE] & = IJ(K-1) \sigma^2\\
+\end{align*}
+\begin{align*}
+	E[SS\alpha] & = E[\sum_{ijk}(\bar Y_{i..} - \bar Y_{...})^2]\\
+				& = E[\sum_{ijk}(\mu + \alpha_i + \frac{\sum_j \beta_j}{J} + \frac{\sum_{jk} \epsilon_{ijk}}{JK}
+				-(\mu + \sum_{i} \frac{\alpha_i}{I} + \sum_j \frac{ \beta_j}{J}  + \frac{1}{IJK} \sum_{ijk} \epsilon_{ijk}))^2]\\
+				& = E[\sum_{ijk}(\alpha_i + \sum_{jk} \frac{\epsilon_{ijk}}{JK} - \sum_{ijk} \frac{\epsilon_{ijk}}{IJK})^2]\\
+				& = JK \sum_{i} \alpha^2_{i} + (I-1)\sigma^2 \\
+\end{align*}
+The last line can be seen based on what we derived in one-way model by replacing j with jk.\\
+
+\section{ANOVA Two-Way Nested Model}
+Two way ANOVA nested model states as following:\\
+\begin{align*}
+	Y_{ijk} = \mu + \alpha_i + \beta_{j(i)}+ \epsilon_{ijk}\\
+	i \leq I; j \leq J; k \leq K \\
+\end{align*}
+with the assumption that $\sum_i \alpha_i = 0$, $\sum_j \beta_j(i) = 0$, and $\epsilon_{ijk}$ follows$N(0, \sigma^2)$.\\
+We now calculate the expectation of the sum square error, similar to what we did in section 2.\\
+\begin{align*}
+	E[SSE] & = E[\sum_{ijk} (Y_{ijk} - \bar Y_{ij.})^2] \\
+	       & = E[\sum_{ijk} (\mu + \alpha_i + \beta_{j(i)}+  \epsilon_{ijk}
+	       -(\mu + \alpha_i + \beta_{j(i)}+ \frac{1}{K}\sum_k \epsilon_{ijk}))^2]\\
+	       & = E[\sum_{ijk}(\epsilon_{ijk} -\frac{1}{K}\sum_{k} \epsilon_{ijk})^2] \\
+\end{align*}
+Based on the SSE we have derived in one-way model, by replacing j in one-way model with jk, we can easily see\\
+\begin{align*}
+	E[SSE] & = IJ(K-1) \sigma^2\\
+\end{align*}
+\begin{align*}
+	E[SS\beta|\alpha] & = E[\sum_{ijk}(\bar Y_{ij.} - \bar Y_{...})^2]\\
+				& = E[\sum_{ijk}(\mu + \alpha_i +\beta_{j(i)} + \sum_k \frac{\epsilon_{ijk}}{K} 
+				-(\mu + \sum_{i} \alpha_i + \frac{\sum_j \beta_{j(i)}}{J}  + \frac{1}{IJK} \sum_{ijk} \epsilon_{ijk}))^2]\\
+				& = K \sum_{ij} \beta^2_{j(i)} + \sum_{ijk}E[(\sum_k \frac{\epsilon_{ijk}}{K} 
+				- \frac{1}{IJK} \epsilon_{ijk})^2] \\
+				& = K \sum_{ij} \beta^2_{j(i)} + \sum_{ijk}(\frac{K}{K^2} - 2\frac{1}{IJK^2}K \sigma^2 
+				+ \frac{1}{I^2 J^2 K^2} IJK \sigma^2) \\
+				& = K \sum_{ij} \beta^2_{j(i)} + (IJ-1)\sigma^2 \\
+\end{align*}
+The last line is based on what we derived in one-way model.
+\begin{align*}
+	E[SS\alpha] & = E[\sum_{ijk}(\bar Y_{i..} - \bar Y_{...})^2]\\
+				& = E[\sum_{ijk}(\mu + \alpha_i + \frac{\sum_j \beta_{j(i)}}{J} + \frac{\sum_{ijk} \epsilon_{ijk}}{JK}
+				-(\mu + \sum_{i} \frac{\alpha_i}{I} + \frac{\sum_j \beta_{j(i)}}{J}  + \frac{1}{IJK} \sum_{ijk} \epsilon_{ijk}))^2]\\
+				& = E[\sum_{ijk}(\alpha_i + \sum_{jk} \frac{\epsilon_{ijk}}{JK} - \sum_{ijk} \frac{\epsilon_{ijk}}{IJK})^2]\\
+				& = JK \sum_{i} \alpha^2_{i} + (I-1)\sigma^2 \\
+\end{align*}
+The last line is based on what we derived in one-way model.
+\end{document}

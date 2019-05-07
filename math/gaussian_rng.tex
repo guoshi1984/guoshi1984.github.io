@@ -1,0 +1,68 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Gaussian Random Number Generator}
+Given $U_1$ and $U_2$ belong $[-1,1]$, the following is to find out random variables that are Gaussian distributed.\\
+
+\noindent{\bf a. Principle}\\
+1)	Start from an cdf of joint Gaussian random variable x and y\\
+\begin{align*}
+& \int \int exp(-1/2 x^2)  exp(-1/2 y^2)  dx dy \\
+ = & \int d \theta \int r exp(-r^2/2) dr\\
+ = & \int pdf(\theta) * \int pdf(r)\\
+\end{align*}
+So if we are able to fine r and $\theta$, then by taking x = r cos $\theta$, y = r sin $\theta$, we get x and y\\
+2)	To fine $\theta$ is easy as we can take $\theta = 2 \pi U_2$\\
+3)	Suppose $R = \sqrt{-2 ln U_1}$\\
+The cdf of R is
+\begin{align*}
+& P(R <= r) \\
+ = &P(\sqrt{-2 U_1} <= r) \\
+ = &P(U_1 >= exp(-1/2 r^2)) \\
+ = &\int_{exp(1/2r^2)}^1 du_1 \\
+ = &1 - exp(-1/2 r^2)	\\
+\end{align*}
+
+So the $pdf = r exp(-1/2 r^2)$\\
+4)	Therefore
+\begin{align*}
+X = \sqrt{-2 ln U_1} cos(2\pi U_2) \\
+Y = \sqrt{-2 ln U_1} sin(2\pi U_2) \\
+\end{align*}
+
+\noindent{\bf b.	Efficient way of evaluating cos and sin function} \\
+In most computers, evaluating cos and sine is not quite straightforward, so the above method is not practical to use. So the following alternative avoids evaluating sine and cos functions directly.\\
+1)	We generate new random variable $S = U_1^2 + U_2^2$
+\begin{align*}
+ P(S<s) &= P(U_1^2 + U_2^2 <s) \\
+& = \int\int_{u_1^2 + u_2^2} 1 dx dy\\
+& = \int_0 ^{\sqrt{s}} r dr *2\pi \\
+& = \pi r^2|_0^s \\
+& = \pi s \\
+\end{align*}
+So pdf of s is 1/pi, it is uniform distribution.\\
+2)	Now if we let $S<1$, by taking S that satisfies only $U_1^2 + U_2^2 <1$, then throwing away others, then S is uniform in (0,$\pi$), which corresponds r in(0, 1)\\
+Then a.4) becomes\\
+\begin{align*}
+X = \sqrt{-2 ln S} cos(2\pi S) =\sqrt{-2 ln S} U_1/\sqrt{S} \\
+Y = \sqrt{-2 ln S} sin(2\pi S) = \sqrt{-2 ln S} U_2/\sqrt{S} \\
+\end{align*}
+
+
+{\bf c.	Final algorithm} \\
+1)	Generate two uniform random variables $U_1$ $U_2$ y belongs to [-1, 1]\\
+2)	If $U_1^2 + U_2^2 >=1$, throw away and regenerate.\\
+3)	Return\\ 
+\begin{align*}
+    U_1 * \sqrt{-2 log (U_1^2 + U_2^2) / (U_1^2 + U_2 ^2)}\\
+    U_2 * \sqrt{-2 log (U_1^2 + U_2^2) / (U_1^2 + U_2 ^2)}\\
+\end{align*}
+
+
+
+
+
+
+
+\end{document}

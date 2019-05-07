@@ -1,0 +1,64 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Ito Integral}
+
+
+\noindent{ \bf a. Ito Integral Definition for simple integrand}\\
+Given $t_0$, $t_1$бн $t_n$ and $\Delta t$ is a constant in between any $[t_k, t_{k+1}]$\\
+\begin{align*}
+I(t) = \sum_{j=0}^{k-1} \Delta(t_j)[W(t_{j+1}) - W(t_{j}) ]
+         + \Delta(t_k)[W(t) - W(t_k)]        	
+\end{align*}
+We can also rewrite $I(t) = \int_0 ^t \Delta(u) dW(u)$.\\
+ 
+\noindent{ \bf b. Properties of Ito integral} \\
+1)	Ito Integral is a martingale \\
+2)	Isometry \\
+$E I^2(t) = E \int_0 ^t \Delta^2(u) du$ \\
+
+\noindent{ \bf c. Ito integral definition for general integrand } \\
+Choose $\Delta_n(t)$ such that when $n-> \infty$ \\
+$lim_{n->\infty} E \int_0 ^T |\Delta_n(t) -\Delta(t)|^2 dt =0$ \\
+Define Ito integral\\
+\begin{align*}
+	\int_0^t \Delta(u) dW(u) = lim_{n->\infty} \int_0^t \Delta_n(u) dW(u)
+\end{align*}
+
+\section{Ito formula }
+\noindent{\bf a. Ito formula}
+Suppose 
+$dX_t = u dt + \sigma dB_t$ \\
+If g(t, X) is twice continuously differentiable   $Y_t = g(t, X_t)$ \\
+\begin{align*}
+	d Y_t = \frac{\partial g}{\partial t} dt + \frac{\partial g}{\partial X} dX_t \\
+          + \frac{1}{2} \frac{\partial^2 g}{\partial x^2} (d X_t)^2
+\end{align*}
+Where $(dX)^2 = d(X_t) d(X_t) = u^2 (dt)^2 + 2 u \sigma dt dB_t
+                                                       + \sigma^2 (dB_t)^2$\\
+$dt * dt = dt * dB_t = 0$, $dB_t dB_t = dt$ \\
+So $(d X_t)^2 = \sigma^2 dt$. \\
+
+\noindent {\bf b. Example: Geometric Brownian motion}\\
+The geometric Brownian motion satisfies
+$d N_t /N_t= r  dt + \sigma dB_t$
+to solve this we consider\\
+\begin{align*}
+	d(ln N_t)
+&= \frac{\partial ln N_t}{\partial N_t} d N_t 
++\frac{1}{2} \frac{\partial^2  ln N_t}{ \partial N_t ^2} (dN_t)^2 \\
+&= \frac{1}{N_t} d N_t + \frac{1}{2} (-\frac{1}{N_t^2}) (d N_t)^2 \\
+(d N_t)^2 &= r^2 N_t ^2 (dt)^2 + r N_t dt \sigma d B_t 
++ \sigma^2 N_t^2 d^2 B_t \\
+                  & = 0 + 0 +  \sigma^2 N_t^2 dt \\
+\end{align*}
+So   
+\begin{align*}
+d(ln N_t) = \frac{1}{N_t} d N_t  - \frac{1}{2}\sigma^2 dt
+                        = (r - \frac{1}{2} \sigma^2 ) dt + \sigma d B_t\\	
+ln (N_t/ N_0) =  (r - \frac{1}{2} \sigma^2 ) t + \sigma  B_t \\
+N_t =  N_0 exp(   (r - \frac{1}{2} \sigma^2 ) t + \sigma  B_t) \\
+\end{align*}
+
+\end{document}

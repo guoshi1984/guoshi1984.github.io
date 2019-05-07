@@ -1,0 +1,29 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{The Fourier Transform of  white noise is white noise}
+Assuming noise we sample in time is $n[m]$, where m = 0,... M-1. $n[m]$ is a Gaussian random variable with zero mean and variance $\sigma^2$. The the FFT of $n[m]$ is
+\begin{align*}
+	N[k] &= \frac{1}{M}\sum_{m=0}^{M-1} n[m] e^{-i2\pi m k/M}\\
+	     &= \frac{1}{M}\sum_{m=0}^{M-1} n[m] (cos(2\pi m k/M) - i \textrm{ }n[m] sin(2\pi m k/M))\\	
+\end{align*}
+The expected value is
+\begin{align*}
+	E[N[k]] & = E[\frac{1}{M} \sum_0^{M-1} n[m] e^{-i2\pi m k/M}]\\
+			& = \frac{1}{M}\sum_0^{M-1} E[n[m]] e^{-i2\pi m k/M}] \\
+			& = 0 \textrm{(because E[n[m]] = 0)} \\
+\end{align*}
+The variance of the real part is
+\begin{align*}
+	Var[R[N[k]]] & = E[(\frac{1}{M}\sum_{m=0}^{M-1} n[m] (cos(2\pi m k/M))
+	*(\frac{1}{M}\sum_{p=0}^{M-1} n[p] (cos(2\pi p k/M))]\\
+	             & = \frac{1}{M^2}
+	             E[\sum_{m=0}^{M-1} n[m] n[p] \delta(n-p) cos(2\pi m k/M)* cos(2\pi p k/M)]\\
+	             & = \frac{1}{M^2} \sum_{m=0}^{M-1} E[n[m]^2]  cos^2(2\pi m k/M) \\
+	             & = \frac{1}{M^2} \sigma^2(\sum_{m=0}^{M-1}  cos^2(2\pi m k/M)) \\
+	             & = \frac{1}{M^2} \sigma^2(\frac{M}{2} + \frac{cos((M+1)2 \pi k/M) sin(2 \pi M k /M)}{2sin(2 \pi k /M)})\\
+				 & = \frac{1}{M} \frac{\sigma^2}{2} 	             
+\end{align*}
+The same derivation applies for the imaginary part. So the FFT is Gaussian noise with mean zero and variance \sigma^2.
+\end{document}

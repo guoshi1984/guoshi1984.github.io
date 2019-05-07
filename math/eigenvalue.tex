@@ -1,0 +1,60 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Jacobi Method for Solving Eigenvalues}
+{\bf a. Intuition}\\
+One can understand the Jacobi Method by rotation matrix. From geometry perspective, a diagonal matrix can be rotated to an non-diagonal matrix. So it is natural to think for a non-diagonal matrix, we can rotate it back to a diagonal matrix. This can be done by similar transformation using rotation matrix.\\
+{\bf b. Eligibility}\\
+Since we apply similar transformation by rotation matrix and eventually we can the diagonal matrix which is symmetric, the original matrix has to be symmetrical.\\
+{\bf c. Algorithm}\\
+The Jacobi iteration for a matrix A is
+\begin{align*}
+	A^{(k)} = G^T_{pkqk}(\theta_k) A^{k-1} G_{pkqk} (\theta_k)
+\end{align*}
+Where
+\begin{align*}
+	G_{pq}(\theta)
+	= 
+	\left( \begin{array}{ccccc}
+I      & 	0 	& 	0 	 & 	 0 		& 	0 	\\
+0	   & 	cos(\theta) 	& 	0 	 &	 sin(\theta) 		& 	0	\\
+0 	   &    0   &   I  	 &   0		&	0	\\
+0 	   &    -sin(\theta)   &   0    &   cos(\theta)		& 	0	\\
+0      &    0   &   0    & 	 0   	& 	I	\\\end{array} \right)
+\end{align*}
+It is an Identity matrix replaced by an rotation matrix on pth and qth columns and rows. The iteration is chosen to reduce the sum of the squares of the off-diagonal elements, which for any square matrix A is
+\begin{align*}
+	||A||_F^2 - \sum_i a_{ii}^2
+\end{align*}
+The orthogonal similarity transforms preserve the Frobenius norm
+\begin{align*}
+	|| A^{(k)}||_F = ||A^{(k-1)}||_F
+\end{align*}
+Because the rotation matrix change only (p,p), (q,q), (p,q), (q,p) positions. We have
+\begin{align*}
+	(a_{pp}^{(k)})^2 + (a_{qq}^{(k)})^2+ 2 (a_{pq}^{(k)})^2 = (a_{pp}^{(k-1)})^2 + (a_{qq}^{(k-1)})^2 + 2 (a_{pq}^{(k-1)})^2   
+\end{align*}
+The off-diagonal sum of squares at the kth stage in terms of that at k-1 th stage is
+\begin{align*}
+	& || A^{(k)}||^2_F - \sum_i (a_{ii}^{(k)}) \\
+	= & || A^{(k)}||^2_F - \sum_{i \neq p,q} (a_{ii}^{(k)}) -( (a_{pp}^{(k)})^2 + (a_{qq}^{(k)})^2 ) \\
+	= & || A^{(k)}||^2_F - \sum_i (a_{ii}^{(k-1)}) - 2 (a_{pq}^{(k-1)})^2  + 2 (a_{pq}^{(k)})^2  \\
+\end{align*}
+In order to minimize this, we need
+\begin{align*}
+	& a_{pq}^{(k)} = 0\\
+	& a_{pq}^{(k-1)} = max _{i<j} |a_{ij} ^ {(k-1)}|\\
+\end{align*}
+This implies
+\begin{align*}
+	a_{pq}^{(k-1)} (cos^2 \theta - sin^2 \theta) + (a_{pp}^{k-1} - a_{qq}^{k-1}) cos \theta sin \theta = 0
+\end{align*}
+Solve for $\theta$
+\begin{align*}
+	tan(2\theta) = \frac{2 a_{pq}^{(k-1)}}{a_{pp}^{k-1} - a_{qq}^{k-1}}
+	tan(\theta) = \frac{tan(2 \theta)}{1 + \sqrt{1 + tan^2 (2 \theta)}}
+	cos \theta = \frac{1}{\sqrt{1 + tan^2 \theta}}
+	sin \theta = cos \theta tan \theta
+\end{align*}
+\end{document}

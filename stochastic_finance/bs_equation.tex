@@ -1,0 +1,56 @@
+\documentclass[a4paper]{article}\
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
+\line(1,0){350}
+\section{Black Scholes Merton Equation}
+We assume the stock prices following a geometric Brownian motion\\
+1) Stock price:\\
+\begin{align*}
+	 dS(t) = \alpha S(t) dt + \sigma S(t) dW(t)\\
+\end{align*}
+                   
+
+\noindent 2) We have a portfolio X(t) which consists of $\Delta(t)$ share of stock  $\Delta(t) S(t)$, and $(X(t) - \Delta (t) S(t))$ money market account with interest rate r. \\  
+\begin{align*}
+	X(t) = \Delta(t) dS(t) + r(X(t) -\Delta(t) S(t)) dt\\
+\end{align*}
+\noindent 3) Change of the portfolio with respect to time
+\begin{align*}
+	  d X(t) & = \Delta(t) d S(t) + r(X(t) - \Delta(t) S(t)) dt \\
+             & = r X(t) dt + \Delta(t) (\alpha - r )S(t) + \Delta (t) \sigma S(t) d W(t) \\
+\end{align*}
+                      
+\noindent 4) Change of the present value of the stock with respect to time\\
+\begin{align*}
+	d(e^{-r t} S(t)) & = (\alpha - r) e^{- r t}S(t) dt + \sigma e^{- r t} S(t) dW(t) \\
+\end{align*}
+
+\noindent 5) With a few steps, we get change of the present value of the portfolio with respect to time\\
+\begin{align*}
+ & d(e^{- r t} X(t)) \\
+ = & \Delta(t) (\alpha - r) e^{-rt} S(t) dt + \Delta(t) \sigma e^{-rt} S(t) dW(t)\\
+\end{align*}
+
+\noindent 6) Assume the option value is $c(t,S(t))$ and we apply Ito's formula\\
+\begin{align*}
+	& d(e^{-rt } c(t, S(t)) \\
+= & e^{-rt} [- r c(t, S(t)) + c_t(t, S(t)) + \alpha S(t) \frac{\partial c(t, S(t))}{\partial S(t)}  +\frac{1}{2} \sigma^2 S^2(t) \frac{\partial^2 c(t, S(t))}{\partial S^2(t)} ] dt\\
+  & +e^{-rt} \sigma S(t)  \frac{\partial c(t, S(t))}{\partial S(t)} dW(t)\\
+\end{align*}
+7)\noindent	Now equate Equation in 5) and 6), we get\\
+dW(t) term:
+\begin{align*}
+	\Delta(t) = \frac{\partial c(t,S(t))}{\partial S(t)} \\	
+\end{align*}
+dt term:
+\begin{align*}
+	rc(t, S)  = c_t (t, S(t)) + r S(t) + \frac{1}{2} \sigma^2 S^(t) \frac{\partial c(t, S(t))}{\partial S^2(t)}  \\
+\end{align*}
+which is known as Black-Scholes-Merton partial differential equation.\\
+
+
+
+
+\end{document}

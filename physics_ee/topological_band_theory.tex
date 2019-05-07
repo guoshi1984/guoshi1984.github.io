@@ -1,0 +1,132 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\noindent The purpose of this article is providing an explanation of topological band theory. Understanding the topological band theory is not an easy task, here we provide a step by step derivation. The whole article is organized as the following:\\
+\noindent 1) We review the standard conductivity theory, from classical level to quantum level.\\
+\noindent 2) At quantum level, we derive the current operator which has two contributions. The first term, the gradient of the energy eigenvalue in k space, contributes the conductivity of most metals. The second term, which relates to the Berry curvature, has non trivial contribution when the system breaks time-reversal symmetry.\\
+\noindent 3) We show that the second term, which relates to the Berry curvature, has an interesting property. The integral of the Berry curvature over the Brillouin zone summed over all bands is an integer of $2\pi$.\\
+
+\section{Brief Summary of Conductance Theory}\\
+%\section{Current Operator}
+\noindent In order to describe the conductivity, physicists have developed several models, starting from classical model, semiclassical model to quantum model. These model can be summarized as:\\
+\noindent 1) In classical model, the electrons are treated classically, and the movement is governed by the Newton's law and the forces on the electrons are described by electromagnetism . This model is good enough to explain the Ohm's law.\\
+\noindent 2) In semiclassical model, we consider the behavior of electron as a wave, and treat the movement of electrons as the propagation of the wavepacket, therefore the velocity of the electron is group velocity of the wave. This model utilize the particle-wave duality, and is capable of explaining the conduction in metal.\\
+\noindent 3) In quantum model, the velocity is the expectation value of the velocity operator given a wavefunction. We need to use this theory to derive the Hall conductance, and understand the topological behavior of Hall conductance.\\
+
+\section{Classical Conductance Theory Example: Hall Effect}
+We consider the electrons inside conductors. When we apply both an electric field E and a magnetic filed B, the electrons have the equation of motion following the Newtons' law
+\begin{align*}
+	m \frac{d\bf v}{dt} = -e {\bf E} - e {\bf v} \times {\bf B} - m\frac{\bf v}{\tau}
+\end{align*}
+The first term in right hand side is the force by the electric field, and the second term is the force by the magnetic field. The third term electron collision by the ions. When collision happens, the momentum of the electron changes to zero within a certain mean free time $\tau$. At the equilibrium states, we have $\frac{d {\bf v}}{d t} = 0$. The velocity satisfies 
+\begin{align}
+	  \frac{e\tau}{m} {\bf v} \times {\bf B} + {\bf v} = - \frac{e \tau}{m} {\bf E}
+\end{align}
+As {\bf v} = ($v_x$, $v_y$), so the above equation can be written as
+\begin{align*}
+	v_x + \frac{e \tau}{m} v_y B = -\frac{e \tau}{m} E_x
+\end{align*}
+The current density J is related to the velocity by
+\begin{align*}
+	{\bf J} = - n e {\bf v}
+\end{align*}
+So 
+\begin{align*}
+	j_x + \frac{e \tau B} {m} j_y  = \frac{n e^2 \tau}{m} E_x
+\end{align*}
+We define the conductivity as 
+\begin{align*}
+	{\bf J} = \sigma {\bf E}
+\end{align*}
+so $\sigma_{xx} =\frac{n e^2 \tau}{m}$, $\sigma_{xy} =\frac{ne}{B}$.\\  
+
+\section{Hall conductivity of 2D electrons }
+{\bf Solution to 2D electron system subject to a magnetic field}\\
+A Hamiltonian for 2D electrons in a magnetic field $A = xB\haty$ is\\
+\begin{align*}
+	H = \frac{1}{2m} (p_x^2 + (p_y + eBx)^2)
+\end{align*}
+Because this Hamiltonian commutes with $p_y$, so they share the same eigenstates, therefore, we can write the
+solution for the Hamiltonian as
+\begin{align*}
+	\psi_k(x, y) = e^{iky}f_k(x)
+\end{align*}
+\begin{align*}
+	H \psi_k(x, y) = \frac{1}{2m} (p_x^2 +(\hbar k + eBx)^2) \psi_k(x, y) = H_k \psi_k(x, y)
+\end{align*}
+\begin{align*}
+		H_k = \frac{1}{2m} p_x^2 +\frac{m \omega_B^2}{2} (x+ \frac{\hbar k}{eB})^2
+\end{align*}
+This $H_k$ is the Hamiltonian for a harmonic oscillator in the x direction, with the center displaced form the origin. The solution to $H_k$ is very similar to harmonic oscillator. The energy eigenvalues are
+\begin{align*}
+	E_n = \hbar \omega_B (n + \frac{1}{2})
+\end{align*}
+where $\omega_B = \frac{eB}{m}$. And the eigenstate wavefunctions are
+\begin{align*}
+	\psi_{n,k}(x, y) \propto e^{iky} H_n(x + \frac{\hbar k}{eB})e^{-(x+ \frac{\hbar k}{eB})^2eB/2\hbar}
+\end{align*}
+{\bf Adding an electric filed for 2D electron system subjected to a magnetic field}\\
+\begin{align*}
+	H = \frac{1}{2m} (p_x^2 + (p_y + eBx)^2) + eEx
+\end{align*}
+Its solution is again similar to harmonic oscillator with additional shift
+\begin{align*}
+	\psi(x, y) = \psi_{n,k}(x+ mE/eB^2, y)	
+\end{align*}
+and the energies are 
+\begin{align*}
+	E_{n,k} = \hbar \omega_B (n+ \frac{1}{2}) -eE(\frac{\hbar k}{eB}+\frac{eE}{m\omega_B^2})+\frac{m}{2}\frac{E^2}{B^2}
+\end{align*}
+Since we get the wavefunction and eigenenergy, there are two ways to find out the current.\\
+1) One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
+\begin{align*}
+	v_y = \frac{1}{\hbar} \frac{\partial E_{n,k}}{\partial k} = -\frac{E}{B}
+\end{align*}
+So we surprisingly see add an electric filed in x direction generates the movement in y!
+To find out the total current in y direction, we have to know the degeneracy, which means how many electrons are in the state with the momentum k to k + dk. In y direction, electrons are free particle with momentum k confined in a finite size $L_y$. So
+\begin{align*}
+	\frac{dn}{dk} = \frac{L_y}{2 \pi}
+\end{align*}
+The total current is
+\begin{align*}
+	I_y = e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eEL_y}{2\pi B} \int k
+\end{align*}
+The range of k in the above integral is tricky. From the wavefunction, we see the center of the harmonic oscillator in x direction is $x = -k\hbar/eB$, while $ 0 \leq x \leq L_x$, then $-L_x eB/\hbar  \leq k \leq 0$.
+\begin{align*}
+	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
+\end{align*}
+
+\noindent{\bf Derivation of velocity operator}\\
+In quantum mechanics, the velocity operator is defined as
+\begin{align*}
+	v = \frac{\partial H}{\partial p} = \frac{\partial H}{ \hbar \partial k}
+\end{align*}
+There exist several ways to understand this. First, we can recall the equation of motion in analytical mechanics. Given a Hamiltonian, the equation of motion is
+\begin{align*}
+	v = \dot{q} = \frac{\partial H}{\partial p}
+\end{align*}
+%Let us recall the semi-classical model where the movement of electrons is described as the movement of the wave-packet. And the velocity is given by the group velocity of the wave packet.
+%\begin{align*}
+%	v_g = \frac{\partial \omega}{ \partial k} = \frac{1}{\hbar} \frac{\partial E}{\partial k}
+%\end{align*}
+{\bf Wavefunction subject to adiabatic evolution }
+\begin{align*}
+	|\Psi(t)>= exp(-\frac{i}{\hbar}\int_{t_0}^{t} dt^{'} E_{n}(t^{'}))(|n> 
+	-i\hbar \sum_{n^{'}\neq n} |n^{'}>\frac{<n^{'}|\frac{\partial}{\partial t}|n>}{E_{n} - E_{n^{'}}})
+\end{align*}
+The expectation value of the velocity
+\begin{align*}
+	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
+	- i \sum_{n^{'}\neq n} (<n|\frac{\partial H}{\partial k}|n^{'}>\frac{<n^{'}|\frac{\partial}{\partial t}|n>}{E_{n} - E_{n^{'}}} - c.c.)
+\end{align*}
+\begin{align*}
+	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
+	- i  (<\frac{\partial n}{\partial k}| \frac{\partial n}{\partial t}> -<\frac{\partial n}{\partial t}| \frac{\partial n}{\partial k}>)
+\end{align*}
+Where the second term is the Berry phase.
+The current operator is
+\begin{align*}
+	j = -2e\sum_{all bands}\int\frac{dk}{2 \pi} f(k)v(k)
+\end{align*}
+\end{document}
