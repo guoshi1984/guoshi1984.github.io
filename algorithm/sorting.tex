@@ -1,0 +1,49 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\begin{document}
+\section{Sorting Algorithm Basic}
+\noindent{\bf a.	In place sorting}
+An in-place sorting algorithm uses constant extra space for producing the output (modifies the given array only). It sorts the list only by modifying the order of the elements within the list.\\
+\noindent{\bf b.	Internal and external sorting}
+When all data that needs to be sorted cannot be placed in-memory at a time, the sorting is called external sorting. External Sorting is used for massive amount of data. Merge Sort and its variations are typically used for external sorting. Some extrenal storage like hard-disk, CD, etc is used for external storage.
+When all data is placed in-memory, then sorting is called internal sorting.\\
+\noindent{\bf c.	Stable sorting}
+A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in sorted output as they appear in the input array to be sorted.\\
+
+
+\section{Selection Sort}
+\noindent{\bf a. Algorithm} \\
+The algorithm maintains two subarrays in a given array. One subarray is already sorted, the remaining subarray is unsorted. In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray is SELECTED and moved to the sorted subarray.\\
+
+\noindent{\bf b. C++ implementation} \\
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+\begin{listing}
+	void selectionSort(int arr[], int n)  
+	{ 
+    	int i, j, min_idx; 
+
+		// One by one move boundary of unsorted subarray 
+		for (i = 0; i < n-1; i++) 
+    	{ 
+        	// Find the minimum element in unsorted array 
+        	min_idx = i; 
+        	for (j = i+1; j < n; j++) 
+        	{  if (arr[j] < arr[min_idx]) 
+            	min_idx = j; 
+        	}	
+        	// Swap the found minimum element with the first element 
+        	swap(&arr[min_idx], &arr[i]); 
+    	}	 
+	} 
+\end{listing}
+	
+
+
+
+\end{document}

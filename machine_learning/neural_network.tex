@@ -1,0 +1,217 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Neural Network}
+\subsection{One Step further of Logistic Regression}\\
+{\bf Model Description}\\
+$z^{[1](i)}$ means first layer, ith sample
+\begin{align*}
+	z^{[1](i)} = W^{[1]} X^{(i)} + b^{[1](i)}
+\end{align*}
+in matrix form
+\begin{align*}
+\left( \begin{array} {c c c c}
+z_1^{[1](1)} & z_1^{[1](2)} & ... & z_1^{[1](m)} \\
+... & ... & ... & ... \\
+z_4^{[1](1)} & z_4^{[1](2)} & ... & z_4^{[1](m)} \\
+\end{array} \right)
+=\left( \begin{array} {c c}
+w_{11}^{[1]} & w_{12}^{[1]}   \\
+w_{21}^{[1]} & w_{22}^{[1]}   \\
+\end{array} \right)
+\left( \begin{array} {c c c c}
+x_1^{(1)} & x_1^{(2)} & ... & x_1^{(m)} \\
+x_2^{(1)} & x_2^{(2)} & ... & x_2^{(m)} \\
+\end{array} \right)\\
+\end{align*}
+\begin{align*}
+	a^{[1](i)} = tanh(z^{[1](i)})
+\end{align*}
+In matrix notation
+\begin{align*}
+\left( \begin{array} {c c c c}
+a_1^{[1](1)} & a_1^{[1](2)} & ... & a_1^{[1](m)} \\
+... & ... & ... & ... \\
+a_4^{[1](1)} & a_4^{[1](2)} & ... & a_4^{[1](m)} \\
+\end{array} \right)
+=tanh \left( \begin{array} {c c c c}
+z_1^{[1](1)} & z_1^{[1](2)} & ... & z_1^{[1](m)} \\
+... & ... & ... & ... \\
+z_4^{[1](1)} & z_4^{[1](2)} & ... & z_4^{[1](m)} \\
+\end{array} \right)
+\end{align*}
+
+\begin{align*}
+	z^{[2](i)} = W^{[2]} X^{(i)} + b^{[2](i)}
+\end{align*}
+in matrix form
+\begin{align*}
+\left( \begin{array} {c c c c}
+z_1^{[2](1)} & z_1^{2](2)} & ... & z_1^{[2](m)} \\
+\end{array} \right)
+=\left( \begin{array} {c c c}
+w_{1}^{[2]} & ... &   w_{4}^{[2]}\\
+\end{array} \right)
+\left( \begin{array} {c c c c}
+a_1^{[1](1)} & a_1^{[1](2)} & ... & a_1^{[1](m)} \\
+...&...&...&...\\
+a_4^{[1](1)} & a_4^{[1](2)} & ... & a_4^{[1](m)} \\
+\end{array} \right)\\
+\end{align*}
+\begin{align*}
+	a^{[2](i)} = sigmoid(z^{[2](i)})
+\end{align*}
+In matrix notation
+\begin{align*}
+\left( \begin{array} {c c c c}
+a_1^{[2](1)} & a_1^{[2](2)} & ... & a_1^{[2](m)} \\
+\end{array} \right)
+=sigmoid \left( \begin{array} {c c c c}
+z_1^{[2](1)} & z_1^{[2](2)} & ... & z_1^{[2](m)} \\
+\end{array} \right)
+\end{align*}
+{\bf Gradient Calculation}
+We now derive the gradient of the model above.\\
+\noindent 1) Cost function\\
+\begin{align*}
+	J = -\frac{1}{m} \sum_i^m[y^{(i)} log(a^{[2](i)})
+	(1-y^{(i)}) log(1 - a^{[2](i)})]
+\end{align*}
+(i) denotes sample index
+[j] denotes layer index
+The sequence of calculating the gradient is \\
+J - $a_{(i)}^{[2]}$ - $z_{(i)}^{[2]}$ - $W_k^{[2]} b^{[2]}$ - chain rule ...\\
+\noindent 2) \\
+\begin{align*}
+\frac{\partial J}{\partial a_{(j)}^{[2]}}
+& = \frac{\partial }{\partial a_{(j)}^{[2]}} (-\frac{1}{m} \sum_i [y_{(i)} log(a^{[2]}_{(i)})
+	+ (1-y_{(i)}) log(1 - a^{[2]}_{(i)}]) \textrm{ only i = j survives}\\
+& = \frac{\partial }{\partial a_{(j)}^{[2]}} (-\frac{1}{m}  [y_{(j)} log(a^{[2]}_{(j)})
+	+ (1-y_{(j)}) log(1 - a^{[2]}_{(j)})]\\
+& = -\frac{1}{m}  [\frac{y^{(j)}}{ a^{[2]}_{(j)}}
+	-\frac{(1-y^{(j)})}{ (1 - a^{[2]}_{(j)})}]\\
+\end{align*}
+\noindent 3) \\
+\begin{align*}
+  &\frac{\partial a}{\partial z}\\
+= & \frac{\partial}{\partial z}(\frac{e^z}{e^z + 1}) \\
+= &\frac{1}{(e^z + 1)^2} (e^z(e^z + 1) -e^z e^z) \\
+= &\frac{1}{(e^z + 1)^2} e^z \\
+= &\frac{e^z}{e^z + 1} \frac{1}{e^z +1} \\
+= &\frac{e^z}{e^z + 1} \frac{e^z + 1 -e^z}{e^z +1}\\
+= & g(z) (1 -g(z))\\
+\end{align*}
+\noindent 4)
+\begin{align*}
+	 &\frac{\partial J}{\partial z_{j}^{[2]}} \\
+   = &\frac{\partial J }{\partial a_{(j)}^{[2]}} \frac{\partial a_{(j)}^{[2]} }{\partial z_{(j)}^{[2]}} \\
+   = &-\frac{1}{m}  [\frac{y^{(j)}}{ a^{[2]}_{(j)}}
+	-\frac{(1-y^{(j)})}{ (1 - a^{[2]}_{(j)})}]
+    a^{[2]}_{(j)} (1 - a^{[2]}_{(j)}) \\
+   = &-\frac{1}{m} (y_{(j)} - y_{(j)} a_{(j)} ^{[2]} - a_{(j)}^{[2]} + y_{{j}}a_{(j)}^{[2]}) \\   
+   =& -\frac{1}{m} (y_{(j)} a_{(j)}^{[2]})\\   
+\end{align*}
+matrix form
+\begin{align*}
+	&\frac{\partial J}{\partial Z^{[2]}} \\
+  = & (\frac{\partial J}{\partial z_{1}^{[2]}}, \frac{\partial J}{\partial z_{2}^{[2]}},...,\frac{\partial J}{\partial z_{m}^{[2]}} ) \\
+  = & -\frac{1}{m} (y_{(1)} a_{(1)}^{[2]}, y_{(2)} a_{(2)}^{[2]},...,y_{(m)} a_{(m)}^{[2]})\\ 	
+  = & \frac{1}{m} (A^{[2]} - Y)\\
+\end{align*}
+\noindent 5)
+\begin{align*}
+\left( \begin{array} {c c c c}
+z^{[2](1)} & z^{[2](2)} & ... & z^{[2](m)} \\
+\end{array} \right)
+=\left( \begin{array} {c c c c}
+w_1^{[2]} & w_2^{[2]} & ... & w_4^{[2]} \\
+\end{array} \right)
+\left( \begin{array} {c c c c}
+a_1^{[1](1)} & a_1^{[1](2)} & ... & a_1^{[1](m)} \\
+...& ...& ...&...\\
+a_4^{[2](1)} & a_4^{[1](2)} & ... & a_4^{[1](m)} \\
+\end{array} \right)\\
++\left( b[2], b[2], ... ,b[2]\right)
+\end{align*}
+\begin{align*}
+	z_{[2](i)} = \sum_l w_l^{[2]} a_l^{[1](i)} + b^{[2]}
+\end{align*}
+\begin{align*}
+	\frac{\partial z_{i}^{[2]}}{ \partial w_k^{[2]}} = a_l ^{[1](i)}
+\end{align*}
+\begin{align*}
+	\frac{\partial z_{i}^{[2]}}{\partial  b^{[2]}} = 1
+\end{align*}
+\noindent 6)
+\begin{align*}
+	 & \frac{\partial J}{\partial w_k^{[2]}}\\
+	= & \sum_{(i)} \frac{\partial J}{\partial z_{(i)}^{[2]}} \frac{\partial  z_{(i)}^{[2]}}{\partial  w_k^{[2]}} \textmd { chain rule in higher dimension}\\
+	= &\sum_{i}^{m} -\frac{1}{m} (y_{(i)} - a_{(i)}^{[2]}) a_k^{[1](i)}\\
+	= &\frac{1}{m} \left( \begin{array} {c c c c}
+	 a_{(1)}^{[2]} - y_{(1)} & a_{(2)}^{[2]} - y_{(2)} & ... & a_{(m)}^{[2]} - y_{(m)}  \\
+	\end{array} \right)
+	\left( \begin{array} {c }
+	 a_k^{(1)[1]}  \\
+	 a_k^{(2)[1]}  \\
+		... \\
+	 a_k^{(m)[1]}  \\
+	\end{array} \right)\\
+	&\textrm {in matrix form}\\
+	= &\frac{1}{m} [A^{[2}] - Y] (a_k^{[1]})^T	
+\end{align*}
+
+\begin{align*}
+&\left( \begin{array} {c c c c}
+ \frac{\partial J}{\partial w_k^{[2]}}, & \frac{\partial J}{\partial w_k^{[2]}}, &... & 
+\frac{\partial J}{\partial w_k^{[2]}}\\
+\end{array} \right)\\
+	&\frac{1}{m} \left( \begin{array} {c c c c}
+	 a_{(1)}^{[2]} - y_{(1)} & a_{(2)}^{[2]} - y_{(2)} & ... & a_{(m)}^{[2]} - y_{(m)}  \\
+	\end{array} \right)
+	\left( \begin{array} {c c c c}
+	 a_1^{(1)[1]} &  a_2^{(1)[1]} & ... & a_4^{(1)[1]}  \\
+	 a_1^{(2)[1]} &  a_2^{(2)[1]} & ... & a_4^{(2)[1]} \\
+		&...&...& \\
+	 a_1^{(m)[1]} &  a_2^{(m)[1]} & ... & a_4^{(m)[1]} \\
+	\end{array} \right)\\
+	&\textrm {in matrix form}\\
+	= &\frac{1}{m} [A^{[2}] - Y] (A^{[1]})^T	
+\end{align*}
+7)
+\begin{align*}
+	&\frac{\partial J}{ \partial z_l ^{[1](j)}}
+= & \frac{\partial J}{ \partial z ^{[2](j)}}
+	\frac{\partial z ^{[2](j)}}{ \partial a_l ^{[1](j)}}
+	\frac{ \partial a_l ^{[1](j)}}{ \partial z_l ^{[1](j)}}\\
+= & \frac{\partial J}{ \partial z ^{[2](j)}} 
+	\frac{\partial \sum_{l=1}^4 w_l^{[2]} a_l^{[1](j)}}{ \partial a_l ^{[1](j)}}
+	g^{'}(z_l^{[1](j)})\\
+= & \frac{\partial J}{ \partial z ^{[2](j)}} 
+	w_l^{[2]}
+	g^{'}(z_l^{[1](j)})\\
+\end{align*}
+in matrix form
+\begin{align*}
+ \left( \begin{array} {c c c c}
+ \frac{\partial J}{\partial z_1^{[1](1)}}, &... &... &   \frac{\partial J}{\partial z_1^{[1](m)}}\\
+ ... & ... & ... & \\
+ \frac{\partial J}{\partial z_4^{[1](1)}}, &... &... &   \frac{\partial J}{\partial z_4^{[1](m)}} \\
+\end{array} \right)\\
+=
+\left( \begin{array} {c c c c}
+w_l^{[2]} \frac{\partial J}{ \partial z ^{[2](1)}} , &... &... & w_l^{[2]} \frac{\partial J}{ \partial z ^{[2](m)}}  \\
+ ... & ... & ... & \\
+ , &... &... &    \\
+ w_4^{[2]} \frac{\partial J}{ \partial z ^{[2](1)}} , &... &... & w_4^{[2]} \frac{\partial J}{ \partial z ^{[2](m)}} 
+\end{array} \right)\\
+\circ
+\left( \begin{array} {c c c c}
+ g^{'}(z_l^{[1](1)}), &... &... &  g^{'}(z_l^{[1](m)})\\
+ ... & ... & ... & \\
+ g^{'}(z_4^{[1](1)}), &... &... &  g^{'}(z_4^{[1](m)}) \\
+\end{array} \right)\\
+\end{align*}
+
+
+\end{document}

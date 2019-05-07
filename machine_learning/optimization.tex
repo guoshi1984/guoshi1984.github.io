@@ -1,0 +1,85 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Optimization}
+\subsection{Batch gradient descent vs. stochastic gradient descent vs. mini batch gradient descent}
+{\bf a.	Definition}\\
+\noindent 1) Batch gradient
+Batch gradient means using all the data point to calculate the gradient.\\
+$cost = \sum_{i=1}^{N}$ -loglikelihood of ith sample\\
+$grad = \frac{\partial(cost)}{\partial {\bf w}}$\\
+update all parameter based on gradient\\
+2)	Stochastic gradient descent
+The cost function used in batch gradient descent uses is the summation over all the data points. In stochastic descent the cost function we use only contains one data point, we use one data point to update parameters, iterate over all data points.\\
+For m = 1 : N\\
+\indent	cost = - loglikelihood of the ith sample\\
+\indent  $grad = \frac{\partial(cost)}{\partial {\bf w}}$\\
+update all parameter based on gradient\\
+3)	We divide N samples into G = N/k groups so that each group contains k data points\\
+For n = 1 : G\\
+\indent cost = ¨C $\sum_{(n-1)k} ^{nk}$ loglikelihood\\
+\indent   grad = $\frac{\partial(cost)}{\partial {\bf w}}$ \\
+update all parameter based on gradient\\
+
+\noindent {\bf b.	Comparison}\\
+\begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}}
+&Time per iteration &	Convergence time for large data	& Sensitivity to parameters	& Smoothness\\
+\hline
+Batch Gradient	& Slow for large data	& Slower	& Moderate	& Smooth\\
+\hline
+Stochastic Gradient &	Always fast & 	Faster & High & Very noisy\\
+\end{tabular}
+\\
+\noindent {\bf c. Practical usage}\\
+Shuffle the data before running the stochastic gradient descent\\
+\subsection{Newton Method}
+\noindent {\bf a. Newton Method Principles}\\
+Based on Taylor¡¯s expansion if we are at $x_0$, we try to find $\delta x$ so that $x_0 + \delta x$ is closer to the stationary point.\\
+\begin{align*}
+	f(x_0 + \delta x ) = f(x_0) + f^{'}(x_0) \delta x + f^{''}(x_0) (\delta x) ^ 2
+\end{align*}
+take the derivative
+\begin{align*}
+	d f(x_0 + \delta x)/d x = f^{'}(x_0)  + f^{''}(x_0) \delta x
+\end{align*}
+therefore
+\begin{align*}
+	\delta x = - \frac{f^{'}(x_0)}{f^{''} (x_0)} \\
+	X^{(t+1)} = X^{t}  - \frac{f^{'}(x_0)}{f^{''} (x_0)} \\
+\end{align*}
+
+\noindent{\bf b. Matrix Forms}
+\begin{align*}
+	x^{(t+1)} = x^{t}  - H^{-1}(f(x^{t})) \grad f(x^{t})
+\end{align*}
+ where H is the Hessian matrix.\\
+ 
+\noindent{\bf c. Connection with Gradient descent}
+The newton method can be reduce to gradient descent method by taking Hessian matrix as Identity matrix\\
+\noindent{\bf d. Pros} 
+Since it utilizes the second order derivative, it converges much faster than gradient descent.\\
+For quadratic function, the equation from the Taylor expansion is exact, therefore the stationary point can be found using only one step.\\
+\noindent{\bf e. Cons}
+Need to evaluate the inverse of the Hessian Matrix, so it is computationally expensive.\\
+
+\subsection{Other optimization method}
+\noindent{\bf a.	Quasi Newton}
+Newton method requires the inverse of the Hessian matrix, which is usually not easy to solve. So we need to find an approximation of the Hessian. Similar to the way we solve for gradient, we can use finite difference method, in which the gradient is
+\begin{align*}
+	grad f(x) = \frac{f(x+\delta x) - f(x)} {\delta x}, 
+\end{align*}
+This is only exact when $\delta x$ approaches zero.  For 2nd order derivative, we can write\\
+\begin{align*}
+	f^{'}(x) = \frac{f^{'}(x+\delta)- f^{'}(x)}{\delta}
+\end{align*}
+Again this is only exact when $\delta$ is zero. Based on this idea we
+replace the Hessian Matrix with an approximation that satisfies the following approximation\\
+\begin{align*}
+	\grad f(x + \delta x) = \grad f(x) + B\delta x
+\end{align*}
+This is quasi newton method. Various Quasi Newton methods exist with different choice of B.\\
+
+{\bf b.	Levenburg Marquadt}
+This Method adds a scaled Identity matrix uI to the Hessian, for large u and small Hessian, the method is equivalent to gradient descent with step size 1/u.\\
+\end{document}

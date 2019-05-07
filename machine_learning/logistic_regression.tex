@@ -1,0 +1,53 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Logistic Regression}
+\noindent{a. Definition}\\
+For binary dependent variable, with parameter w, the model states
+\begin{align*}
+P(y = +1| {\bf x},{\bf w}) = \frac{e^{H({\bf x}) {\bf w}}} {1 + e^{ H({\bf x}) {\bf w}}}
+\end{align*}
+Then  
+\begin{align*}
+	P(y = -1|{\bf x}, {\bf w})  = 1 - P(y = +1 | {\bf x},{\bf w}) = \frac{1} {1 + e^{ H({\bf x}), {\bf w}}}
+\end{align*}
+And a typically logistic regression task is to fit {\bf w} to the data set ({\bf X}, {\bf Y})\\
+
+\noindent{b. Likelihood function and log likelihood function}
+\begin{align*}
+	L({\bf w}) = \Pi_{i=1}^{N} P(y_i | x_i, {\bf w}) \textrm{      ($y_i$ can be +1 or 0)}
+\end{align*}
+The solution w maximize the L(w)
+\begin{align*}
+	Log L({\bf w}) & = \sum_i ^N  (1 _{y_i =1} ln (P(y_i=1 | x_i, {\bf w})) + 1 _{y_i =0} ln(P(y_i=-1 | x_i,{\bf w})) ) \\
+         & = \sum_i^N (y_i ln \hat y_i + (1-y_i) ln( 1- \hat y_i ) ))  \\
+\end{align*}
+
+\noindent{\bf  c. Gradient descent solution}\\
+This solution minimize cost function which is the negative of the log likelihood function\\
+Loss(w) = - log Likelihood(w)\\
+Init $w^{(1)}$ = 0\\
+While $||grad Log L(w^{(t)})|| > \epsilon$\\
+\indent For j = 0бн..D\\
+\indent \indent $partial[j] = \sum_i ^N H_{ij} (1_{y_i = +1} иC P(y = +1 | x_i, {\bf w}^{(t)}))$\\
+\indent \indent     $w_j ^{(t+1)} = w_j ^({t}) + stepsize * partial[j]$\\
+\indent t = t+1;\\
+{\bf d.	How to choose the step size} \\
+1)	Picking step size requires a log of trials and error\\
+2)	Plot learning curve(cost function vs number of step)\\
+             Find the step size that is too small\\
+             Find the step size that is too large\\
+            Then fine tune the step size in between to find the optimal.\\
+
+\noindent {\bf e.	Logistic regression with penalty}\\
+Use L2 norm as penalty term\\
+Then the new loss function
+\begin{align*}
+	L^{'}({\bf w}) = L({\bf w}) + \sum_{i=j}^{D} \lambda w_{j}^2
+\end{align*}
+For gradient descent, we use
+\begin{align*}
+	\nabla L^{'}({\bf w}) = \nabla L({\bf w}) + 2 \lambda {\bf w}
+\end{align*}
+\end{document}
