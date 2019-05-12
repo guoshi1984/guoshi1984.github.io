@@ -86,6 +86,26 @@ public class MatrixAlgebra{
 		}
 	}	
 	
+	/* check if a matrix is symmetric
+	 * @param a the matrix to be checked
+	 */
+	public static boolean isSymmetric(double[][] a)
+	{
+		if(a.length != a[0].length) return false;
+		else
+		{
+			for(int i=0; i<a.length; i++)
+			{
+				for(int j=0; j<i; j++)
+				{
+					if(a[i][j] != a[j][i])
+						return false;
+				}
+			}
+		}
+		return true;
+	}
+
 
 	/* LU decomposition
 	 * @param a The matrix to be decomposed, it is updated in place and store the L and U matrix
@@ -276,6 +296,229 @@ public class MatrixAlgebra{
 		}
 	}
 
+	/* Jacobi diagonalization
+	 * @param Ain input matrix
+	 * @param evals returned eigenvalues
+	 * @param evecs returned eigenvectors
+	 */
+
+	public static void calculateEigenUsingJacobi(double[][] Ain, double[] evals, double[][] evecs)
+	{
+		
+		if(Ain.length != Ain[0].length)
+			throw new IllegalArgumentException("Matrix row and column dimensions do not match.");
+
+		//TODO is symmetric matrix;
+		//numerical recepies Jacobi transfomation eigen value solver
+		
+		if(MatrixAlgebra.isSymmetric(Ain)==false)		
+			throw new IllegalArgumentException("Matrix has to be symmetric "+ 
+					"in order to use Jacobi eigenvalue calculation!	");
+		final int n = Ain.length;
+		int p = 0;
+		int q = 0;
+		double fabsApq,fabsApp,fabsAqq;
+		double a,c,blen,sitheta;
+		double b;
+		double t,zeta;
+		double alpha,stau;
+		double beta,betastar;
+	        double  zp,zq;
+	        final int MAXSWEEP=100;
+		  
+		/* local copy to work on */
+		double[][] A = new double[n][n];
+		/* Copy Ain to A */
+		for(int i=0; i < n; i++)
+		{
+			for (int j=0; j < n; j++) 
+			{
+		         	A[i][j] = Ain[i][j];
+		  	}
+		}
+			
+		 /* Set evecs to identity */
+		for(int i=0; i < n; i++)
+		{
+			for(int j=0; j < n; j++) 
+			{
+		  		if (i==j) evecs[i][j] = 1.0;
+		  		else evecs[i][j] = 0.0;
+		  	}
+		}
+
+	    	int sweep;
+		for (sweep=0; sweep < MAXSWEEP; sweep++) 
+		{		                      
+			/* S = sum of abs of real and imag of off diag terms
+			 *  maxoffdiag is maximum size of off-diagonal element, 
+			 *  and (p,q) will contain its coordinates in the matrix A 
+			 */
+
+			double maxoffdiag = 0.0;
+		        double S = 0.0;
+		                
+			for(int i=0; i < n; i++)
+			{
+		  		for(int j=i+1; j < n; j++) 
+				{
+		                	double temp = Math.abs(A[i][j]);
+		                        S += temp;
+		                        if(temp >= maxoffdiag) 
+					{
+		                		maxoffdiag = temp;
+		                        	p = i;
+		                        	q = j;
+		                 	}
+		                }
+			}  
+
+			if(maxoffdiag == 0.0) break;
+		        // If we're done to machine precision, go home!
+		        fabsApp = Math.abs(A[p][p]);
+		        fabsAqq = Math.abs(A[q][q]);
+		        
+			if((maxoffdiag+fabsApp==fabsApp) && (maxoffdiag+fabsAqq==fabsAqq) )
+		  		break;
+			        //set threshold
+			double thresh = 0.0;
+			if(sweep < 5) thresh = 0.4*S/(n*n);
+		  	// Loop over off diagonal terms of A in upper triangle: p < q
+		  	for(p=0; p < n; p++)
+			{
+				for(q=p+1; q < n; q++) 
+				{
+		  			// If A(p,q) is too small compared to A(p,p) and A(q,q), 
+					// skip the rotation
+		  			fabsApq = Math.abs(A[p][q]);
+		                        fabsApp = Math.abs(A[p][p]);
+		  			fabsAqq = Math.abs(A[q][q]);
+		 			if ( (fabsApq+fabsApp==fabsApp) && (fabsApq+fabsAqq==fabsAqq) )
+		 				continue;
+					//If A(p,q) is smaller than the threshold, then also skip
+					// the rotation
+					if (fabsApq <= thresh)
+						continue;
+		  			// the 2x2 matrix we diagonalize is [ [a b] ; [conj(b) a] ]
+					a = A[p][p];
+		  			c = A[q][q];
+		                        b = A[p][q];
+		                        blen = Math.abs(b);
+					// zeta = \frac{1}{tan(2\theta)}
+					zeta = (c-a)/(2.0*blen);
+		  			// t = sgn(zeta)/(|zeta|+sqrt(zeta^2+1)), but if zeta is too
+		  			//  huge, then we set t = 1/(2*zeta)
+		  			if ( Math.abs(zeta)>1.0e200 )
+		  				t = 1/(2.0*zeta);
+		  			else {
+		  				t = 1.0/(Math.abs(zeta)+Math.sqrt(zeta*zeta+1.0));
+		  				if (zeta<0.0) t = -t;
+		  			}
+		  
+		  			/* The matrix we use to diagonalize the 2x2 block above is
+					 * [ [alpha beta] ; [-conj(beta) alpha] ] 
+		  		         * where alpha is real and positive and alpha = cos(theta)
+		 		       	 * and beta = sin(theta)*b/|b|.
+		 			* The angle theta is chosen to diagonalize the 2x2 block.
+		 			 * The relevant formula are sin(theta)=cos(theta)*t and
+		 			 * cos(theta)=1/sqrt(1+t^2).
+		 			 * stau = (1-alpha) cleverly written. */
+		 			 alpha = 1.0/Math.sqrt(t*t+1.0);
+		 			 sitheta = t*alpha;
+		 			 stau = sitheta*sitheta/(1.0+alpha);
+		 			 beta = b*sitheta/blen;
+		 			 
+					 //betastar = conj(beta);
+		 			 betastar = beta; // because it is real	 
+		  			/* Now we update the elements of A: */
+		  			/* This involves chaning the p'th and q'th column of A */
+		  			for(int i=0; i < n; i++) 
+					{
+		  				if(i==p) 
+						{
+		  					A[i][p] -= blen*t;
+		  					A[i][q] = 0.0;
+		  				}
+		  				else if(i==q) 
+						{
+		  					A[i][p] = 0.0;
+		  					A[i][q] += blen*t;
+		  				}
+						else 
+						{
+							zp = A[i][p];
+							zq = A[i][q];
+							A[i][p] -= stau*zp + betastar*zq;
+							A[i][q] += beta*zp - stau*zq;
+							A[p][i] = A[i][p];
+							A[q][i] = A[i][q];
+						}
+					}
+						
+		 
+		 
+		  			/* Now we must update the eigenvector matrix with this
+		  			* rotation:  evecs <- evecs*P_pq.
+		  			* Update p'th and q'th column of evecs 
+					* */
+		  			for(int i=0; i < n; i++) 
+					{
+		  				zp = evecs[i][p];
+		  				zq = evecs[i][q];
+		  				evecs[i][p] = alpha*zp - betastar*zq;
+		  				evecs[i][q] = beta*zp  + alpha*zq;
+		  			}
+		 	 	} /* (p,q) rotation loop */
+			}
+		} /* end of sweep loop */
+		  
+		if(sweep == MAXSWEEP) 
+		{
+		  		System.out.println("Warning:  Jacobi() needs more than "
+						+MAXSWEEP + " sweeps ");
+		}
+		  
+		for(int i=0; i < n; i++) 
+		{
+			evals[i] = A[i][i];
+		  	//cout << evals[i]<<endl;
+		}
+		  		
+		// sort eigs and evecs by ascending eigenvalue
+		int[] list = new int[n]; 
+		for(int i=0; i < n; i++) 
+			list[i] = i;
+	
+		for(int i=1; i < n; i++) {
+			double temp = evals[i];
+		  	int j;
+		  	for(j=i-1; j>=0 && evals[j]<temp; j--) {
+		  		evals[j+1] = evals[j];
+		  		list[j+1] = list[j];
+		  	}
+		  	evals[j+1] = temp;
+		  	list[j+1] = i;
+		}
+
+		// todo, sort eiven vectors in place
+		double[][] evecsOrig = new double[n][n];	
+		for(int i=0; i < n; i++)
+		{
+			for(int j=0; j < n; j++)
+			{
+				evecsOrig[i][j] = evecs[i][j];
+		  	}
+		}
+
+		for(int j=0; j < n; j++)
+		{
+			for(int i=0; i < n; i++)
+			{
+				evecs[i][j] = evecsOrig[i][list[j]];
+		  	}
+		}
+	}
+
 	public static void linearEquationCalculation(double[][] x, double[] b)
 	{
 		MatrixAlgebra.Parity p = new MatrixAlgebra.Parity();
@@ -298,7 +541,7 @@ public class MatrixAlgebra{
 		}
 		double[][] xTx = new double[nCols][nCols];
 		MatrixAlgebra.matrixMultiply(xT, x, xTx);
-		MatrixAlgebra.print(xTx);
+		//MatrixAlgebra.print(xTx);
 		double[][] xTxInv = new double[nCols][nCols];
 		MatrixAlgebra.invertMatrix(xTx, xTxInv);
 		double[][] xTxInvXT = new double[nCols][nRows];
@@ -313,31 +556,209 @@ public class MatrixAlgebra{
 
 				
 	}
-	public static void main(String[] args)
+
+	//svd not tested
+	public static void svd(double[][] a, double[][] u, double[] sigma, double[][] v)
 	{
+		final int nRows = a.length;
+		final int nCols = a[0].length;
+		double[][] aT= new double[nCols][nRows];
+		for(int i=0; i<nCols; i++)
+		{
+			for(int j=0; j<nRows; j++)
+				aT[i][j] = a[j][i];
+		}
+		double[][] aTa = new double[nCols][nCols];
+		MatrixAlgebra.matrixMultiply(aT, a, aTa);
+		double[][] aaT = new double[nRows][nRows];
+		MatrixAlgebra.matrixMultiply(a, aT, aaT);
+		
+		final int nsigma = Math.min(nRows, nCols);
+		double[] sigma2 = new double[nsigma];
+
+		calculateEigenUsingJacobi(aTa, sigma2, v);
+		calculateEigenUsingJacobi(aaT, sigma2, u);
+		
+	
+		for(int i=0; i<sigma.length; i++)
+		{
+			sigma[i] = Math.sqrt(sigma2[i]);
+		}
+		
+
+	}
+
+	public static void test1()
+	{
+		System.out.println("----------Run test case 1----------");
+		System.out.println("Linear equation calculation: Ax=b");
 		double matrix[][] = {{1,3},{1,2}};
 		double b[] = {8,6};
-		MatrixAlgebra.linearEquationCalculation(matrix, b);
-		System.out.println("linear equation calculation");
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(matrix);
+		System.out.println("Vector b");
 		MatrixAlgebra.print(b);
-		//MatrixAlgebra.lubksb(matrix, matrix.length, index, b);
-		double [][] matrixInverse = new double[matrix.length][matrix[0].length];
+		MatrixAlgebra.linearEquationCalculation(matrix, b);
+		System.out.println("Solution vector x");
+		MatrixAlgebra.print(b);
+		System.out.println("\n");
+		return;
+	}
+
+	public static void test2()
+	{
+		System.out.println("----------Run test case 2----------");
+		System.out.println("Matrix inversion");
+		double matrix[][] = {{1,3},{1,2}};
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(matrix);
+		double[][] matrixInverse = new double[matrix.length][matrix.length];
 		invertMatrix(matrix, matrixInverse);
+		System.out.println("Matrix A's inverse");
 		MatrixAlgebra.print(matrixInverse);
-		double product[][] = new double[matrix.length][matrix.length];
+		double[][] product = new double[matrix.length][matrix[0].length];
 		MatrixAlgebra.matrixMultiply(matrix, matrixInverse, product);
+		System.out.println("A multiplied by A's inverse");
 		MatrixAlgebra.print(product);
+		System.out.println("\n");
+	}
+
+	public static void test3()
+	{
+		System.out.println("----------Run test case 3----------");
+		System.out.println("Least square calculation X beta = b");
 		double x[][] = {{2, 1, 1 },
 				{2, 2, 1},
 				{5, 3, 1},
 				{2, 4, 1}};
-		double b1[] = {2,
+		double b[] = {2,
 			      4,
 			      3,
 		              4};
+		System.out.println("Matrix x:");
+		MatrixAlgebra.print(x);
+		System.out.println("Vector b:");
+		MatrixAlgebra.print(b);
 		double beta[] = new double[3];
-		MatrixAlgebra.leastSquareCalculation(x, b1, beta);
+		MatrixAlgebra.leastSquareCalculation(x, b, beta);
+		System.out.println("Solution beta:");
 		MatrixAlgebra.print(beta);	
+		System.out.println("\n");
+	}
+
+	public static void test4()
+	{
+
+		System.out.println("----------Run test case 4----------");
+		System.out.println("Jacobi eigenvalues calculation");
+		double a[][] = {{1, 2},
+				{2, 1}};
+
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double evals[] = new double[a.length];
+		double evecs[][] = new double[a.length][a.length];
+		MatrixAlgebra.calculateEigenUsingJacobi(a, evals, evecs);	
+		System.out.println("A's eigenvalues");
+		MatrixAlgebra.print(evals);
+		System.out.println("A's eigenvectors");
+		MatrixAlgebra.print(evecs);	
+		System.out.println("\n");	
+	}
+	public static void test5()
+	{
+
+		System.out.println("----------Run test case 5----------");
+		System.out.println("Jacobi eigenvalues calculation");
+		double a[][] = {{25, 20},
+				{20, 25}};
+
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double evals[] = new double[a.length];
+		double evecs[][] = new double[a.length][a.length];
+		MatrixAlgebra.calculateEigenUsingJacobi(a, evals, evecs);	
+		System.out.println("A's eigenvalues");
+		MatrixAlgebra.print(evals);
+		System.out.println("A's eigenvectors");
+		MatrixAlgebra.print(evecs);	
+		System.out.println("\n");	
+	}
+	
+	public static void test6()
+	{
+
+		System.out.println("----------Run test case 6----------");
+		System.out.println("Jacobi eigenvalues calculation");
+		double a[][] = {{9, 12},
+				{12, 41}};
+
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double evals[] = new double[a.length];
+		double evecs[][] = new double[a.length][a.length];
+		MatrixAlgebra.calculateEigenUsingJacobi(a, evals, evecs);	
+		System.out.println("A's eigenvalues");
+		MatrixAlgebra.print(evals);
+		System.out.println("A's eigenvectors");
+		MatrixAlgebra.print(evecs);	
+		System.out.println("\n");	
+	}
+	
+	public static void test7()
+	{
+
+		System.out.println("----------Run test case 7----------");
+		System.out.println("Jacobi eigenvalues calculation");
+		double a[][] = {{4, -30, 60, -35},
+				{-30, 300, -675, 420},
+				{60, -675, 1620, -1050},
+				{-35, 420, -1050, 700},
+				};
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double evals[] = new double[a.length];
+		double evecs[][] = new double[a.length][a.length];
+		MatrixAlgebra.calculateEigenUsingJacobi(a, evals, evecs);	
+		System.out.println("A's eigenvalues");
+		MatrixAlgebra.print(evals);
+		System.out.println("A's eigenvectors");
+		MatrixAlgebra.print(evecs);	
+		System.out.println("\n");	
+	}
+	
+	public static void test8()
+	{
+
+		System.out.println("----------Run test case 8----------");
+		System.out.println("SVD calculation");
+		double a[][] = {{3, 0},
+				{4, 5}};
+
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double u[][] = new double[a.length][a.length];
+		double v[][] = new double[a[0].length][a[0].length];
+		double sigma[] = new double[a.length];
+		MatrixAlgebra.svd(a, u, sigma, v);	
+		System.out.println("u");
+		MatrixAlgebra.print(u);
+		System.out.println("sigma");
+		MatrixAlgebra.print(sigma);	
+		System.out.println("v");
+		MatrixAlgebra.print(v);
+		System.out.println("\n");	
+	}
+	public static void main(String[] args)
+	{
+		test1();
+		test2();
+		test3();
+		test4();
+		test5();
+		test6();
+		test7();
+		test8();
 	}
 }
 	
