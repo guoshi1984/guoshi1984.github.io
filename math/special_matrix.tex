@@ -1,0 +1,82 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Symmetric Matrix}
+{\bf Definition}\\
+\begin{align*}
+	A = A^T
+\end{align*}
+{\bf Properties}\\
+1)	The eigenvectors associate with distinct eigenvalues ($v_1$, $v_2$, ¡­$v_n$ )of a symmetric matrix are orthogonal. So let V be the matrix whose columns are the eigenvectors of A, then $VV^T =I$, $V^{-1} = V^T$. If with same eigenvalues, then the eigenvector may not be orthogonal,  we can do Gram-Schmit transformation to make it orthogonal.\\
+2)	The diagonal factorization of an symmetric matrix is\\
+\begin{align*}
+	A = & VCV^T\\
+      = & AI\\
+	  = & A \sum_i v_i v_i^T\\
+	  = &\sum_i c_i v_i v_i^T\\
+\end{align*}
+
+3)	Maximum value of A¡¯s quadratic form\\
+\begin{align*}
+	&x^TAx\\
+= &x^T\sum_i c_i v_i v_i^T x\\
+= &\sum_i b^T V^T v_i v_i^TVbc_i\\
+= &\sum_i b_i^2 c_i\\
+<= &max (c_i) b^T b\\
+= &max (c_i)  x^Tx\\
+\end{align*}
+
+\section{Hermitian Matrix}
+A = A*(where A* is the complex conjugate of A)\\
+1)	The eigenvalues are real.\\
+
+\section{Orthogonal Matrix}
+{\bf Definition}\\
+$A{-1} = A^T$
+{\bf Intuition}\\
+Orthogonal matrix arise from dot product. Consider vector u , and a matrix Q. When we apply the matrix Q to v, we get $v^{'}= Q v$. We would like to have the dot product preserved, namely
+\begin{align*}
+	v^T v = v^{'T} v^{'} = (Qv)^T (Qv) = v^T Q^T Q v
+\end{align*}
+So $Q^T Q =1$, $Q^T = Q^{-1}$.\\
+{\bf Properties}\\
+Orthogonal matrices imply orthogonal transformations. Examples include rotations, reflections and combinations\\
+{\bf Examples}\\
+1) Rotation Matrix
+\begin{align*}
+	\left(  \begin{array} {cc}
+		cos \theta & - sin \theta\\
+		sin \theta & cos \theta \\
+		\end{array}
+		\right)
+\end{align*}
+2) Reflection Matrix
+\begin{align*}
+	\left(  \begin{array} {cc}
+		1 & 0\\
+		0 & -1 \\
+		\end{array}
+		\right)
+\end{align*}
+
+\section{Idempotent Matrix}
+{\bf Definition}\\
+$A^2 = A$\\
+{\bf Properties}\\
+1)	Its eigenvalues are either 0 or 1.
+Because the eigenvalues of $A^2$ are the squares of the eigenvalues of A.
+2)	Any vector in the columns space of an idempotent matrix A is an eigenvector of A
+3)	The number of eigenvalues that are 1 is the rank of an idempotent matrix. $tr(A) = rank(A)$
+
+\section{Symmetric Positive Definite}
+{\bf Definition}\\
+A symmetric positive definite matrix satisfies for any non-zero vector x, $x^T A x >0$\\
+{\bf Properties}
+1)	Positive definite matrix is non-singular.\\
+Proof: If A is singular, it means there is a non-zero vector x so that Ax=0.  Therefore $x^T A x = 0$, which is a contradiction.\\
+2)	All the eigenvalues are positive.\\
+3)	Its leading principal minors are all positive.\\
+4)	It has a unique Cholesky decomposition. \\
+
+\end{document}
