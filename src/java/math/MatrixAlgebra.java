@@ -61,18 +61,19 @@ public class MatrixAlgebra{
 		}
 	}
 
+	
 	/* Multiply two matrix with compatible dimension
 	 *
 	 * @param a The first matrix to be multiplied
 	 * @param b The second matrix to be multiplied
-	 * @param c The product matrix of multiplication 
-	 */
-
-	public static void matrixMultiply(double[][] a, double[][] b, double[][] c)
+	 * @return the product of axb
+	 * */
+	public static double[][] matrixMultiply(double[][] a, double[][] b)
 	{
 		if(a[0].length != b.length)
 			throw new IllegalArgumentException("Matrix dimensions do not match.");
 
+		double[][] c = new double[a.length][b[0].length];
 		for(int i=0; i<a.length; i++)
 		{
 			for(int j=0; j<b[0].length; j++)
@@ -84,6 +85,7 @@ public class MatrixAlgebra{
 				}
 			}
 		}
+		return c;
 	}	
 	
 	/* check if a matrix is symmetric
@@ -106,6 +108,22 @@ public class MatrixAlgebra{
 		return true;
 	}
 
+	/* return the transpose of a matrix 
+	 * @param a the input matrix
+	 * @return the transpose of matrix a
+	 */
+	public static double[][] getTransposeMatrix(double[][] a)
+	{
+		double[][] aTranspose = new double[a[0].length][a.length];
+		for(int i=0; i<a.length; i++)
+		{
+			for(int j=0; j<a[0].length; j++)
+			{
+				aTranspose[j][i] = a[i][j];
+			}
+		}
+		return aTranspose;
+	}
 
 	/* LU decomposition
 	 * @param a The matrix to be decomposed, it is updated in place and store the L and U matrix
@@ -252,11 +270,12 @@ public class MatrixAlgebra{
 	}
 
 
+	
 	/* Invert a Matrix
 	 * @param a The matrix to be inverted
-	 * @param aInv The inverted matrix
+	 * @return  The inverted matrix
 	 */
-	public static void invertMatrix(double[][] a, double[][] aInv)
+	public static double[][] invertMatrix(double[][] a)
 	{
 		if(a.length != a[0].length)
 			throw new IllegalArgumentException("Matrix row and column dimensions do not match.");
@@ -266,7 +285,8 @@ public class MatrixAlgebra{
 		int[] index = new int[n];
 		Parity p = new Parity();
 		//aInv = new double[n][n];
-
+		
+		double[][] aInv = new double[n][n];
 		for(int i=0; i<n; ++i)
 		{
 			for(int j=0; j<n; ++j )
@@ -294,6 +314,7 @@ public class MatrixAlgebra{
 		{
 			lubksb(aTranspose, n , index, aInv[j]);
 		}
+		return aInv;
 	}
 
 	/* Jacobi diagonalization
@@ -477,11 +498,11 @@ public class MatrixAlgebra{
 		  		System.out.println("Warning:  Jacobi() needs more than "
 						+MAXSWEEP + " sweeps ");
 		}
-		  
-		for(int i=0; i < n; i++) 
+		
+	        //System.out.println(evals.length);	
+		for(int i=0; i < evals.length; i++) 
 		{
 			evals[i] = A[i][i];
-		  	//cout << evals[i]<<endl;
 		}
 		  		
 		// sort eigs and evecs by ascending eigenvalue
@@ -519,12 +540,14 @@ public class MatrixAlgebra{
 		}
 	}
 
-	public static void linearEquationCalculation(double[][] x, double[] b)
+	
+	public static double[] solveLinearEquation(double[][] x, double[] b)
 	{
 		MatrixAlgebra.Parity p = new MatrixAlgebra.Parity();
 		int [] index = new int[x.length];
 		MatrixAlgebra.ludcmp(x, x.length, index, p);
 		MatrixAlgebra.lubksb(x, x.length, index, b);
+		return b;
 	}
 	public static void leastSquareCalculation(double[][] x, double[] b, double[] beta)
 	{
@@ -539,18 +562,18 @@ public class MatrixAlgebra{
 			for(int j=0; j<nRows; j++)
 				xT[i][j] = x[j][i];
 		}
-		double[][] xTx = new double[nCols][nCols];
-		MatrixAlgebra.matrixMultiply(xT, x, xTx);
-		//MatrixAlgebra.print(xTx);
-		double[][] xTxInv = new double[nCols][nCols];
-		MatrixAlgebra.invertMatrix(xTx, xTxInv);
-		double[][] xTxInvXT = new double[nCols][nRows];
-		MatrixAlgebra.matrixMultiply(xTxInv, xT, xTxInvXT);
+		//double[][] xTx = new double[nCols][nCols];
+		//MatrixAlgebra.matrixMultiply(xT, x, xTx);
+		
+		double[][] xTx = MatrixAlgebra.matrixMultiply(xT, x);
+		
+		double[][] xTxInv = MatrixAlgebra.invertMatrix(xTx);
+
+		double[][] xTxInvXT = MatrixAlgebra.matrixMultiply(xTxInv, xT);
 		double[][] b1 = new double[b.length][1];
 		for(int i=0; i< b.length; i++)
 			b1[i][0] = b[i];
-		double[][] beta1 = new double[beta.length][1];
-		MatrixAlgebra.matrixMultiply(xTxInvXT, b1, beta1);
+		double[][] beta1 = MatrixAlgebra.matrixMultiply(xTxInvXT, b1);
 		for(int i=0; i< beta.length; i++)
 			beta[i] = beta1[i][0];
 
@@ -558,7 +581,7 @@ public class MatrixAlgebra{
 	}
 
 	//svd not tested
-	public static void svd(double[][] a, double[][] u, double[] sigma, double[][] v)
+	public static void svd(double[][] a, double[][] u, double[][] sigma, double[][] v)
 	{
 		final int nRows = a.length;
 		final int nCols = a[0].length;
@@ -568,21 +591,32 @@ public class MatrixAlgebra{
 			for(int j=0; j<nRows; j++)
 				aT[i][j] = a[j][i];
 		}
-		double[][] aTa = new double[nCols][nCols];
-		MatrixAlgebra.matrixMultiply(aT, a, aTa);
-		double[][] aaT = new double[nRows][nRows];
-		MatrixAlgebra.matrixMultiply(a, aT, aaT);
+		double[][] aTa = MatrixAlgebra.matrixMultiply(aT, a);
+		double[][] aaT = MatrixAlgebra.matrixMultiply(a, aT);
 		
 		final int nsigma = Math.min(nRows, nCols);
-		double[] sigma2 = new double[nsigma];
+		double[] sigma21 = new double[nCols];
+		double[] sigma22 = new double[nRows];
 
-		calculateEigenUsingJacobi(aTa, sigma2, v);
-		calculateEigenUsingJacobi(aaT, sigma2, u);
-		
+		calculateEigenUsingJacobi(aTa, sigma21, v);
+		//calculateEigenUsingJacobi(aaT, sigma22, u);
+
+		System.out.println("sigma21");
+		MatrixAlgebra.print(sigma21);
+		double[][] usigma = MatrixAlgebra.matrixMultiply(a, v);
 	
-		for(int i=0; i<sigma.length; i++)
+		for(int i=0; i<nsigma; i++)
 		{
-			sigma[i] = Math.sqrt(sigma2[i]);
+			sigma[i][i] = Math.sqrt(sigma21[i]);
+		}
+
+		for(int j=0; j< u[0].length; j++)
+		{
+			for(int i=0; i< u.length; i++)
+			{
+				if(sigma[j][j]!=0)
+					u[i][j] = usigma[i][j]/sigma[j][j];
+			}
 		}
 		
 
@@ -598,7 +632,7 @@ public class MatrixAlgebra{
 		MatrixAlgebra.print(matrix);
 		System.out.println("Vector b");
 		MatrixAlgebra.print(b);
-		MatrixAlgebra.linearEquationCalculation(matrix, b);
+		b = MatrixAlgebra.solveLinearEquation(matrix, b);
 		System.out.println("Solution vector x");
 		MatrixAlgebra.print(b);
 		System.out.println("\n");
@@ -612,12 +646,10 @@ public class MatrixAlgebra{
 		double matrix[][] = {{1,3},{1,2}};
 		System.out.println("Matrix A");
 		MatrixAlgebra.print(matrix);
-		double[][] matrixInverse = new double[matrix.length][matrix.length];
-		invertMatrix(matrix, matrixInverse);
+		double[][] matrixInverse = invertMatrix(matrix);
 		System.out.println("Matrix A's inverse");
 		MatrixAlgebra.print(matrixInverse);
-		double[][] product = new double[matrix.length][matrix[0].length];
-		MatrixAlgebra.matrixMultiply(matrix, matrixInverse, product);
+		double[][] product = MatrixAlgebra.matrixMultiply(matrix, matrixInverse);
 		System.out.println("A multiplied by A's inverse");
 		MatrixAlgebra.print(product);
 		System.out.println("\n");
@@ -739,7 +771,7 @@ public class MatrixAlgebra{
 		MatrixAlgebra.print(a);
 		double u[][] = new double[a.length][a.length];
 		double v[][] = new double[a[0].length][a[0].length];
-		double sigma[] = new double[a.length];
+		double[][] sigma = new double[a.length][a[0].length];
 		MatrixAlgebra.svd(a, u, sigma, v);	
 		System.out.println("u");
 		MatrixAlgebra.print(u);
@@ -747,6 +779,39 @@ public class MatrixAlgebra{
 		MatrixAlgebra.print(sigma);	
 		System.out.println("v");
 		MatrixAlgebra.print(v);
+		System.out.println("usigmavt");
+		double[][] usigma = MatrixAlgebra.matrixMultiply(u, sigma);
+		double[][] a2= MatrixAlgebra.matrixMultiply(usigma, MatrixAlgebra.getTransposeMatrix(v));
+		MatrixAlgebra.print(a2);
+		System.out.println("\n");	
+	}
+
+	public static void test9()
+	{
+
+		System.out.println("----------Run test case 9----------");
+		System.out.println("SVD calculation");
+		double a[][] = {{1, 0, 0, 0, 2},
+				{0, 0, 3, 0, 0},
+				{0, 0, 0, 0, 0},
+				{0, 2, 0, 0, 0}};
+
+		System.out.println("Matrix A");
+		MatrixAlgebra.print(a);
+		double[][] u = new double[a.length][a.length];
+		double[][] v = new double[a[0].length][a[0].length];
+		double[][] sigma = new double[a.length][a[0].length];
+		MatrixAlgebra.svd(a, u, sigma, v);	
+		System.out.println("u");
+		MatrixAlgebra.print(u);
+		System.out.println("sigma");
+		MatrixAlgebra.print(sigma);	
+		System.out.println("v");
+		MatrixAlgebra.print(v);
+		System.out.println("usigmav");
+		double[][] usigma = MatrixAlgebra.matrixMultiply(u, sigma);
+		double[][] a2= MatrixAlgebra.matrixMultiply(usigma, MatrixAlgebra.getTransposeMatrix(v));
+		MatrixAlgebra.print(a2);
 		System.out.println("\n");	
 	}
 	public static void main(String[] args)
@@ -759,6 +824,7 @@ public class MatrixAlgebra{
 		test6();
 		test7();
 		test8();
+		test9();
 	}
 }
 	
