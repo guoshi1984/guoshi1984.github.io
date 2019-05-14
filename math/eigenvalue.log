@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  11 MAY 2019 11:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  14 MAY 2019 09:28
 entering extended mode
 **"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/math/eigenvalue.tex"
 ("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/math/eigenvalue.tex"
@@ -283,28 +283,69 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--149
+Underfull \hbox (badness 10000) in paragraph at lines 154--157
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 153--155
+Underfull \hbox (badness 10000) in paragraph at lines 211--213
 
  []
 
-[3] [4] (eigenvalue.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--217
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--225
+
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.231 ...ix, divided by the ith column with sigma_
+                                                  i, we can obtain U matrix.\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.232 \end{document}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (25.17084pt too wide) in paragraph at lines 230--232
+\OT1/cmr/m/n/10 So if we take $\OML/cmm/m/it/10 U\OT1/cmr/m/n/10 $ ma-trix, di-vided by the ith col-umn with sigma$[]\OML/cmm/m/it/10 ; wecanobtainUmatrix:[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 230--232
+
+ []
+
+[4] (eigenvalue.aux) ) 
 Here is how much of TeX's memory you used:
- 2360 strings out of 493328
- 30996 string characters out of 3139118
- 97531 words of memory out of 3000000
- 5878 multiletter control sequences out of 15000+200000
- 6549 words of font info for 26 fonts, out of 3000000 for 9000
+ 2362 strings out of 493328
+ 31017 string characters out of 3139118
+ 98531 words of memory out of 3000000
+ 5879 multiletter control sequences out of 15000+200000
+ 6857 words of font info for 27 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,15n,26p,324b,188s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on eigenvalue.pdf (4 pages, 99975 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on eigenvalue.pdf (4 pages, 116008 bytes).
 PDF statistics:
- 47 PDF objects out of 1000 (max. 8388607)
+ 51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

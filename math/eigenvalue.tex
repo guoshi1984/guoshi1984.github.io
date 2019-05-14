@@ -138,6 +138,13 @@ so $Re$ is the eigenvector for A.
 	A = U \Sigma V^T
 \end{align*}
 \subsection{SVD using Jacobi}
+{\bf a Definition}\\
+A matrix $A(mxn)$ can be decompose into three matrix
+\begin{align*}
+	A = U \Sigma V^T
+\end{align*}
+where $U$ is $mxm$ matrix, $\Sigma$ is $mxn$ matrix with diagonal elements only, and $V$ is $nxn$ matrix.
+{\bf Jacobi method}
 SVD using Jacobi is based on the following fact
 \begin{align*}
 	& A = U \Sigma V^T \\
@@ -145,11 +152,81 @@ SVD using Jacobi is based on the following fact
 	& A^T A V = V \Sigma^T \Sigma V^T V \\
 	& A^T A V = V \Sigma^T \Sigma = \Sigma^T \Sigma V
 \end{align*}
-So V is the eigenvector matrix of $A^T A$\\
+So V is the eigenvector matrix of $A^T A$\\, and $\Sigma^T \Sigma$ is a diagonal matrix whose elements are $\sigma_i^2$, where $\sigma_i$ is the eigenvalue of A. This can be shown as the following.\\
+If $m >n $, then\\
+\begin{align*}
+	\Sigma = \left(  \begin{array} {cc}
+		\sigma_1 & 0 \\
+		0 & \sigma_2\\
+		0 & 0
+	\end{array} \right)
+\end{align*}
+
+\begin{align*}
+	\Sigma^T \Sigma = \left(  \begin{array} {ccc}
+		\sigma_1 & 0 & 0 \\
+		0 & \sigma_2 & 0\\
+	\end{array} \right)
+	\left(  \begin{array} {cc}
+		\sigma_1 & 0 \\
+		0 & \sigma_2\\
+		0 & 0
+	\end{array} \right)
+	= \left(  \begin{array} {cc}
+		\sigma_1^2 & 0 \\
+		0 & \sigma_2^2\\
+	\end{array} \right)
+\end{align*}	
+
+If $m < n $, then\\
+\begin{align*}
+	\Sigma = \left(  \begin{array} {ccc }
+		\sigma_1 & 0 & 0\\
+		0 & \sigma_2 & 0\\
+	\end{array} \right)
+\end{align*}
+
+\begin{align*}
+	\Sigma^T \Sigma = \left(  \begin{array} {cc}
+		\sigma_1 & 0  \\
+		0 & \sigma_2 \\
+		0 & 0\\
+	\end{array} \right)
+	\left(  \begin{array} {ccc}
+		\sigma_1 & 0 & 0\\
+		0 & \sigma_2 & 0\\
+	\end{array} \right)
+	= \left(  \begin{array} {ccc}
+		\sigma_1^2 & 0 & 0\\
+		0 & \sigma_2^2 & 0\\
+		0 & 0 & 0\\
+	\end{array} \right)
+\end{align*}
+So $sigma_i$ can be calculated by taking the square root of the first r = min(m,n) largest values of $sigma_i^2$.\\
+The U can be obtains in two ways. One is using Jacobi method again.
 \begin{align*}
 	& A A^T =  U \Sigma V^T (U \Sigma V^T)^T = U \Sigma V^T V \Sigma U^T = U \Sigma \Sigma^T U^T \\
 	& A A^T U =  U \Sigma \Sigma^T U^T U \\
 	& A A^T U =  \Sigma \Sigma^T U \\
 \end{align*}
-So U is the eigenvector matrix of $A A^T$\\
+So U is the eigenvector matrix of $A A^T$, but this requires additional Jacobi diagonalization. An alternative way is to consider\\
+\begin{align*}
+	AV = U \Sigma V^T V = U \Sigma\\
+\end{align*}
+If $m > n $, then\\
+\begin{align*}
+	U\Sigma = \left(  \begin{array} {cc}
+		U_{11}\sigma_1 & U_{12}\sigma_2 \\
+		U_{21}\sigma_1 & U_{22}\sigma_2 \\
+		U_{31}\sigma_1 & U_{32}\sigma_2 \\
+	\end{array} \right)
+\end{align*}	
+If $m < n $, then\\
+\begin{align*}
+	U\Sigma = \left(  \begin{array} {ccc}
+		U_{11}\sigma_1 & U_{12}\sigma_2 & 0\\
+		U_{21}\sigma_1 & U_{22}\sigma_2 & 0\\
+	\end{array} \right)
+\end{align*}
+So if we take $U\Sigma$ matrix, divided by the ith column with sigma_i, we can obtain U matrix.\\
 \end{document}
