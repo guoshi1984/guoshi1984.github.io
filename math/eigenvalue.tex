@@ -2,7 +2,7 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
-\section{Jacobi Method for Solving Eigenvalues}
+\section{Jacobi Method for Solving Eigenvalues}\\
 \subsection{Intuition}\\
 Imagine we have a simple diagonal matrix C\\
 \begin{align*}
@@ -58,7 +58,7 @@ Let $R C R^{-1} = A $, where A is
 \end{array} \right)
 \end{align*}
 Up to now we see we can transform a diagonal matrix to non-diagonal, still symmetric matrix by doing rotation. \\
-\subsetion{Jacobi Method}\\
+\subsection{Jacobi Method}\\
 The Jacobi method reverse the idea above by rotating a non-diagonal matrix back to a diagonal matrix. 
 \begin{align*}
 	A = R C R^{-1} \\
@@ -133,5 +133,23 @@ Multiply by R from the left,
 	RPe = \lambda Re
 \end{align*}
 so $Re$ is the eigenvector for A.
-
+\section{Singular Value Decomposition(SVD)}
+\begin{align*}
+	A = U \Sigma V^T
+\end{align*}
+\subsection{SVD using Jacobi}
+SVD using Jacobi is based on the following fact
+\begin{align*}
+	& A = U \Sigma V^T \\
+	& A^T A = (U \Sigma V^T)^T U \Sigma V^T = V \Sigma^T U^T U\Sigma V^T \\
+	& A^T A V = V \Sigma^T \Sigma V^T V \\
+	& A^T A V = V \Sigma^T \Sigma = \Sigma^T \Sigma V
+\end{align*}
+So V is the eigenvector matrix of $A^T A$\\
+\begin{align*}
+	& A A^T =  U \Sigma V^T (U \Sigma V^T)^T = U \Sigma V^T V \Sigma U^T = U \Sigma \Sigma^T U^T \\
+	& A A^T U =  U \Sigma \Sigma^T U^T U \\
+	& A A^T U =  \Sigma \Sigma^T U \\
+\end{align*}
+So U is the eigenvector matrix of $A A^T$\\
 \end{document}
