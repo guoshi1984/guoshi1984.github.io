@@ -44,17 +44,17 @@ We now consider a rotation matrix that rotates the eigenvectors by 45 degree ang
 		\frac{\sqrt{2}}{2} \\
 	\end{array} \right) 
 \end{align*}
-The eigenequation still holds for $u_1$
+The eigenequation still holds for $u_1$ because
 \begin{align*}
-	C R^{-1} R v_1 = \lambda v_1 \\
+	C v_1 = C R^{-1} R v_1 = \lambda v_1 \\
 	R C R^{-1} R v_1 = \lambda R v_1 \\
 	R C R^{-1} u_1 = \lambda  u_1 \\
 \end{align*}
 Let $R C R^{-1} = A $, where A is
 \begin{align*}
 	\left( \begin{array}{cc}	
+		0 & 1\\
 		1 & 0\\
-		0 & -1\\
 \end{array} \right)
 \end{align*}
 Up to now we see we can transform a diagonal matrix to non-diagonal, still symmetric matrix by doing rotation. \\
@@ -74,7 +74,7 @@ The Jacobi iteration for a matrix A is
 \end{align*}
 Where
 \begin{align*}
-	G_{pq}(\theta)
+	R_{pq}(\theta)
 	= 
 	\left( \begin{array}{ccccc}
 I      & 	0 	& 	0 	 & 	 0 		& 	0 	\\
@@ -216,17 +216,17 @@ So U is the eigenvector matrix of $A A^T$, but this requires additional Jacobi d
 If $m > n $, then\\
 \begin{align*}
 	U\Sigma = \left(  \begin{array} {cc}
-		U_{11}\sigma_1 & U_{12}\sigma_2 \\
-		U_{21}\sigma_1 & U_{22}\sigma_2 \\
-		U_{31}\sigma_1 & U_{32}\sigma_2 \\
+		u_{11}\sigma_1 & u_{12}\sigma_2 \\
+		u_{21}\sigma_1 & u_{22}\sigma_2 \\
+		u_{31}\sigma_1 & u_{32}\sigma_2 \\
 	\end{array} \right)
 \end{align*}	
 If $m < n $, then\\
 \begin{align*}
 	U\Sigma = \left(  \begin{array} {ccc}
-		U_{11}\sigma_1 & U_{12}\sigma_2 & 0\\
-		U_{21}\sigma_1 & U_{22}\sigma_2 & 0\\
+		u_{11}\sigma_1 & u_{12}\sigma_2 & 0\\
+		u_{21}\sigma_1 & u_{22}\sigma_2 & 0\\
 	\end{array} \right)
 \end{align*}
-So if we take $U\Sigma$ matrix, divided by the ith column with sigma_i, we can obtain U matrix.\\
+So if we take $U\Sigma$ matrix, divided by the ith column with $\sigma_i$, we can obtain U matrix.\\
 \end{document}
