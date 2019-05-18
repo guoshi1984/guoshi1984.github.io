@@ -2,13 +2,15 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
+Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
+\line(1,0){350}
 \section{Symmetric Matrix}
 {\bf Definition}\\
 \begin{align*}
 	A = A^T
 \end{align*}
 {\bf Properties}\\
-1)	The eigenvectors associate with distinct eigenvalues ($v_1$, $v_2$, бн$v_n$ )of a symmetric matrix are orthogonal. So let V be the matrix whose columns are the eigenvectors of A, then $VV^T =I$, $V^{-1} = V^T$. If with same eigenvalues, then the eigenvector may not be orthogonal,  we can do Gram-Schmit transformation to make it orthogonal.\\
+1)	We know the eigenvectors associated with distinct eigenvalues are linearly independent for all matrix. The eigenvectors associate with distinct eigenvalues ($v_1$, $v_2$, бн$v_n$ )of a symmetric matrix are not only linearly independent but also orthogonal. So let V be the matrix whose columns are the eigenvectors of A, then $VV^T =I$, $V^{-1} = V^T$. If with same eigenvalues, then the eigenvector may not be orthogonal,  we can do Gram-Schmit transformation to make it orthogonal.\\
 2)	The diagonal factorization of an symmetric matrix is\\
 \begin{align*}
 	A = & VCV^T\\
@@ -33,7 +35,7 @@ A = A*(where A* is the complex conjugate of A)\\
 
 \section{Orthogonal Matrix}
 {\bf Definition}\\
-$A{-1} = A^T$
+$A{-1} = A^T$\\
 {\bf Intuition}\\
 Orthogonal matrix arise from dot product. Consider vector u , and a matrix Q. When we apply the matrix Q to v, we get $v^{'}= Q v$. We would like to have the dot product preserved, namely
 \begin{align*}
