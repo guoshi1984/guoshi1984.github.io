@@ -2,8 +2,8 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
-\section{Jacobi Method for Solving Eigenvalues}\\
-\subsection{Intuition}\\
+\section{Jacobi Method for Solving Eigenvalues}
+\subsection{Intuition}
 Imagine we have a simple diagonal matrix C\\
 \begin{align*}
 \left( \begin{array}{cc}
@@ -58,16 +58,16 @@ Let $R C R^{-1} = A $, where A is
 \end{array} \right)
 \end{align*}
 Up to now we see we can transform a diagonal matrix to non-diagonal, still symmetric matrix by doing rotation. \\
-\subsection{Jacobi Method}\\
+\subsection{Jacobi Method}
 The Jacobi method reverse the idea above by rotating a non-diagonal matrix back to a diagonal matrix. 
 \begin{align*}
 	A = R C R^{-1} \\
 	C = R^{-1} A R \\
 \end{align*}
 where matrix C is diagonal.\\
-\subsection{Eligibility}\\
+\subsection{Eligibility}
 Since we apply similar transformation by rotation matrix and eventually we can the diagonal matrix which is symmetric, the original matrix has to be symmetrical.\\
-\subsection{Algorithm}\\
+\subsection{Algorithm}
 The Jacobi iteration for a matrix A is
 \begin{align*}
 	A^{(k)} = R^T_{pkqk}(\theta_k) A^{k-1} R_{pkqk} (\theta_k)
@@ -118,7 +118,7 @@ Solve for $\theta$
 	sin \theta & = cos \theta tan \theta
 \end{align*}
 We use the above formula to update the matrix(by rotation). \\
-\subsection{Eigenvectors}\\
+\subsection{Eigenvectors}
 Since 
 \begin{align*}
 	A = R C R^{-1}
