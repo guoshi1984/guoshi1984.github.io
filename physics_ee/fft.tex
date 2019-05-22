@@ -42,8 +42,32 @@ Since the summation on the right hand side is from $-\infty$ to $\infty$, it is 
 = \sum_{\infty}^{-\infty} c_{-k}^* e^{2 \pi i \frac{1}{T} kx}
 \end{align}
 Combine the above two equations \ref{eq1} and \ref{eq2}, we can see $c_k = c_{-k}^*$. This means they are complex conjugate: their magnitude are equal, their phase are opposite.  Namely $||c_k|| = ||c_{-k}||$, $\phi(c_k) = \phi(c_{-k})$.\\
-\noindent 3) Connection between complex representation and real representation.
+\noindent 3) Connection between complex representation and real representation.\\
+We have shown that for real signal $c_k = c_{-k}^*$ and $c_k = |c_k| e^{j \theta_k}$, 
+$c_{-k} = |c_k| e^{- j \theta_k}$. And in complex representation, we can combine the term with index k and -k,
+\begin{align*}
+	c_k e^{j 2 \pi k F_0 t} + c_{-k} e^{- j 2 \pi k F_0 t} = 2 |c_k| cos(2 \pi k F_0 t + \theta_k)
+\end{align*}
+
+\begin{align*}
+f(x) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	 \\
+& = c_0 + 2 \sum_{k=1}^{\infty} |c_k| cos(2 \pi k F_0 t + \theta_k) \\
+& = a_0 + \sum_{k=1}^{\infty} (a_k cos(2 \pi k F_0 t)  - b_k sin(2 \pi k F_0 t) ) \\
+\end{align*}
+where $a_0 = c_0$, $a_k = 2 |c_k|cos \theta_k$, $b_k = 2 |c_k| sin \theta_k$. 
 \noindent 4) $c_k = c_{k+N}$. So when a signal contains frequency component no larger than $B$, in other words, the bandwidth of the signal is $2B(-B\textrm( to )B)$, then in order to capture the whole bandwidth of the signal, $N \Delta f > 2B$. This leads to Nyquist sampling theorem $F_s > 2B(bandwidth)$.\\
+\noindent 5) Power density
+\begin{align*}
+	P_x & = \frac{1}{T} \int |x(t)|^2 dt \\
+	    & = \frac{1}{T} \int x(t) \sum_{-\infty}^{\infty} c_k^* e^{-j 2 \pi k F_0 t} \\
+	    & = \sum_{-\infty}^{\infty} c_k^*  [\frac{1}{T} \int x(t) e^{-j 2 \pi k F_0 t}] \\
+	    & = \sum_{-\infty}^{\infty} |c_k|^2\\
+\end{align*}
+When signal is real, then 
+\begin{align*}
+	P_x & = \sum_{-\infty}^{\infty} |c_k|^2\\
+	    & = a_0^2 + \frac{1}{2} \sum_{k=1}^{\infty} (a_k^2 + b_k^2)\\
+\end{align*}
 \section{Fast Fourier Transform}
 \begin{align*}
 	X_k =  \sum_{n = 0} ^ {N-1} x_n e^{-i 2 \pi k \frac{n}{N}}
