@@ -1,3 +1,4 @@
+package math;
 import java.math.*;
 
 public class MatrixAlgebra{
@@ -61,7 +62,27 @@ public class MatrixAlgebra{
 		}
 	}
 
+	public static double[] getColumn(double[][] a, int index)
+	{
+		double[] v = new double[a[0].length];
+		for(int i=0; i< a.length; i++)
+		{
+			v[i] = a[i][index];
+		}
+		return v;
+	}
 	
+	public static void getColumn(double[][] a, double[] v, int index)
+	{
+		if(index >= a[0].length)
+			throw new IllegalArgumentException("Matrix column index out of bound");
+
+		for(int i=0; i< a.length; i++)
+		{
+			a[i][index] = v[i];
+		}
+	}
+
 	/* Multiply two matrix with compatible dimension
 	 *
 	 * @param a The first matrix to be multiplied
@@ -521,7 +542,7 @@ public class MatrixAlgebra{
 		  	list[j+1] = i;
 		}
 
-		// todo, sort eiven vectors in place
+		// todo, sort eigen vectors in place
 		double[][] evecsOrig = new double[n][n];	
 		for(int i=0; i < n; i++)
 		{
@@ -538,6 +559,25 @@ public class MatrixAlgebra{
 				evecs[i][j] = evecsOrig[i][list[j]];
 		  	}
 		}
+		
+		// inplace sort eigen vectors
+		//for(int j=0; j < n; j++)
+		//{
+		//	while(list[j]!=j)
+		//	{
+		//		int oldTargetIndex = list[list[j]];
+		//		double[] oldTargetVector = MatrixAlgebra.getColumn(evecs, list[j]);
+		//
+		//		MatrixAlgebra.setColumn(a, MatrixAlgebra.getColumn(evcs, j), list[j]);
+		//		list[list[j]]= list[j];
+		//
+		//
+		//		MatrixAlgebra.setColumn(a, oldTargetVector, j);
+		//		list[j]= oldTargetIndex;
+		//	}
+		//}
+		//
+
 	}
 
 	
@@ -691,10 +731,15 @@ public class MatrixAlgebra{
 		double evals[] = new double[a.length];
 		double evecs[][] = new double[a.length][a.length];
 		MatrixAlgebra.calculateEigenUsingJacobi(a, evals, evecs);	
-		System.out.println("A's eigenvalues");
+		System.out.println("A's calculated eigenvalues");
 		MatrixAlgebra.print(evals);
-		System.out.println("A's eigenvectors");
+		System.out.println("A's calcualted eigenvectors");
 		MatrixAlgebra.print(evecs);	
+		System.out.println("A's expected eigenvalues");
+		System.out.println("3.0 " + "-1.0 ");
+		System.out.println("A's expected eigenvectors");
+		System.out.println("0.707 " + "0.707 ");
+		System.out.println("0.707 " + "-0.707 ");
 		System.out.println("\n");	
 	}
 	public static void test5()
