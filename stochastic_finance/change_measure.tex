@@ -5,29 +5,59 @@
 Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \line(1,0){350}\\
 
-\noindent The goal of this article is to present a review of change of measure. By changing of measure, we can construct risk-free measure which is widely used in finance. The Girsanov theorem formulates clearly how the stochastic process changes when probability measure changes. However the theorem itself
+The goal of this article is to present a review of change of measure. By changing of measure, we can construct risk-free measure which is widely used in finance. The Girsanov theorem formulates clearly how the stochastic process changes when probability measure changes. However the theorem itself
 is not easy to understand and one needs some background before diving into it. In order to understand change of measure in a stochastic process, we first discuss the change of measure for random variables by showing change of probability measure for both discrete random variables and continuous random variables. Then we move to stochastic process, and we show how to construct risk-free measure for discrete binomial model. Finally we present Girsanov theorem and illustrate the theorem using geometric Brownian motion as an example.
 
 \section{Change of Measure for Random Variable }
+
 {\bf The probability measure defined on the sigma algebra does not have to be unique.} Given a sigma algebra, one can define as many as different probability measure as long as they satisfy the probability measure definition. See examples below:
 \subsection{Change of measure for a discrete random variable}
-\noindent 1) Give a binomial random variable S associated with a coin toss, define S = 1 if $\omega$ = Head,
-S = -1 if $\omega$ = Tail. \\
+\noindent 1) Give a binomial random variable S associated with a coin toss, define 
+\begin{align*}
+&S = 1  \textrm{ if } \omega = \textrm{ Head } \\
+&S = -1 \textrm{ if } \omega = \textrm{ Tail } \\
+\end{align*}
 
-\noindent 2)We define the probability measure P. In this measure getting a head has prob $\frac{1}{2}$, and getting a tail has $\frac{1}{2}$. We can also define the probability measure $P^{'}$, under $P^{'}$, getting a head has prob $\frac{2}{3}$, and getting a tail has $\frac{1}{3}$. \\
+\noindent 2)We define the probability measure of getting head and tail (P(Head) and P(tail)) in two ways. \\
+Probability measure 1:\\
+\begin{align*}
+P(head) & = \frac{1}{2}\\ 
+P(tail) & = \frac{1}{2}\\
+\end{align*}
+We can also define the probability measure $P^{'}$, under $P^{'}$\\ 
+\begin{align*}
+P^{'}(head) & = \frac{2}{3}\\ 
+P^{'}(tail) & = \frac{1}{3}\\
+\end{align*}
+ 
 
-\noindent 3)We can define change of measure to connect P and $P^{'}$. Consider the transformation $Z(\omega) = \frac{P^{'}(\omega)}{P(\omega)}$, so $Z(H) = \frac{4}{3}$, $Z(T) = \frac{2}{3}$. This is the change of measure for a discrete random variable. \\
+\noindent 3)We can define change of measure to connect P and $P^{'}$. Consider the transformation 
+\begin{align*}
+	Z(\omega) = \frac{P^{'}(\omega)}{P(\omega)}
+\end{align*}
+so 
+\begin{align*}
+	Z(H) & = \frac{P^{'}(H)}{P(H)} = \frac{4}{3}\\
+	Z(T) & = \frac{P^{'}(T)}{P(T)} = \frac{2}{3}\\
+\end{align*}
+This is the change of measure for a discrete random variable. \\
 \subsection{Change of measure for a continuously random variable(uniformly distributed) } \\
 
 Give a random variable  X($\omega$)=x where x in [0,1]\\
 1)	\\
 Define probability measure P \\
-P(a \textless x \textless b) = b - a, the pdf is $p(x) = 1$. 
+P(a \textless x \textless b) = b - a, the pdf is 
+\begin{align*}
+p(x) = 1	
+\end{align*}
 This is a uniform measure.\\
 
 \noindent 2)\\
 Define another probability measure P^{'}\\
-P^{'}(a \textless x  \textless b) = $b^2$ - $a^2$, the pdf is $p(x) = 2x$.
+P^{'}(a \textless x  \textless b) = $b^2$ - $a^2$, the pdf is 
+\begin{align*}
+p(x) = 2x
+\end{align*}
 So this is non-uniform measure\\
 
 
@@ -38,8 +68,14 @@ Check  P[0,1] = 1; P(0)=0;\\
 
 \noindent 4) we can define change of measure to connect P and $P^{'}$ \\
 Consider the transformation \\
-$P^{'}(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))$\\
-$dP{¡¯}(X(\omega)) = Z(X(\omega)) dP(X(\omega))$ where $Z(X(\omega))= 2x$\\
+\begin{align*}
+	&P^{'}(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))\\
+	&dP{¡¯}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
+\end{align*}
+So
+\begin{align*}
+	Z(X(\omega))= 2x
+\end{align*}
 This is the change of measure for a continuously random variable. \\
 
 
@@ -106,7 +142,7 @@ p= \frac{r - \alpha + \sigma}{2 \sigma} \\
 q= \frac{\alpha - r + \sigma}{2 \sigma} \\
 \end{align*}
 
-We call this risk-neutral measure. Under this measure, the expectation of the stock return is the same as the return of saving account. We define this as risk neutral measure. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is 1+r. The same argument holds for $r < \alpha$. 
+We call this {\bf risk-neutral measure}. Under this measure, the expectation of the stock return is the same as the return of saving account. We define this as risk neutral measure. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is 1+r. The same argument holds for $r < \alpha$. 
 
 
 \subsection{Girsanov's Theorem}
@@ -115,8 +151,13 @@ For $(\Omega, F, P)$, given random variable Z with $E(Z) = 1$, define new probab
 \begin{align}
 	P^{'} = \int_A Z(\omega) dP(\omega)\\
 \end{align}
-We have two expectation defined, one is under P, the other under P^{'}, $E^{'}[X] = E[XZ]$, 
-$dP^{'}(\omega) = Z(\omega) dP(\omega)$, and $Z(\omega) = \frac{d^{'}P(\omega)}{dP(\omega)}$\\
+We have two expectation defined, one is under P, the other under $P^{'}$
+\begin{align*}
+	&E^{'}[X] = E[XZ]\\ 
+	&dP^{'}(\omega) = Z(\omega) dP(\omega)\\
+	&Z(\omega) = \frac{dP^{'}(\omega)}{dP(\omega)}\\
+\end{align*}
+
 \noindent{\bf Define change of measure for filtration}\\
 $E[Z] = 1$ and $Z(t) = E[Z|F(t)]$\\
 
@@ -130,7 +171,7 @@ $E^{'}[Y]=E[YZ] = E[E[YZ|F(t)]]=E[Y E[Z|F(t)]] = E[YZ(t)]$\\
 E^{'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]\\
 
 \noindent{\bf Girsanov's Theorem}\\
-Suppose w(t) is Brownian Motion given $\Omega, F, P$ F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $W^{'}(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $P^{'}$, $W^{'}(t)$ is Brownian motion.\\
+Suppose w(t) is Brownian Motion given $\Omega, F, P$ and F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $W^{'}(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $P^{'}$, $W^{'}(t)$ is Brownian motion.\\
 
 \subsection{Risk neutral measure in filtration for stock price}\\
 We model the stock price using geometric Brownian motion\\

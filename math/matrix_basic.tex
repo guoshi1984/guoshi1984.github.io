@@ -2,5 +2,136 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
-\section{}
+\section{Matrix Multiplication}
+Consider a matrix A multiplies by B\\
+A B = C\\
+Then each column of C can be viewed as a linear combination of columns of A with B＊s column as coefficients.
+1st col of C \\
+= $b_11$* 1st Col of A + $b_{21}$* 2nd Col of A + ＃ + $b_{n1}$* nth Col of A\\
+= 
+\begin{align*}
+( C_1  |  C_2  |  ... | C_n ) \\
+= ( A_1  |  A_2  |  ... | A_n )\\
+\left( \begin{array}{cc}
+b_{11} & ...\\
+b_{21} & ...\\
+\end{array} \right)
+\end{align*}
+Namely,
+\begin{align*}
+	C_1 = b_{11} A_1 + b_{21} A_2 +...+b_{n1} A_n\\
+	C_2 = b_{12} A_1 + b_{22} A_2 +...+b_{n2} A_n\\
+\end{align*}
+
+Then each row of C can be viewed as a linear combination of rows of B with A＊s row as coefficients.
+1st row of C \\
+= $a_11$* 1st Row of B + $a_{12}$* 2nd Row of B + ＃ + $a_{1n}$* nth Row of B\\
+= \begin{align*}
+\left( \begin{array}{c}
+C_1\\
+C_2\\
+...\\
+C_n\\ 
+\end{array} 
+\right)
+= \left(
+ \begin{array}{c c c c c}
+a_{11} & a_{12} &  ... & a_{1n} \\
+...& ... & ... & ... \\ 
+\end{array}
+\right)
+\left( \begin{array}{c}
+B_{1} \\
+B_{2} \\
+...\\
+B_{n}\\ 
+\end{array} \right)
+\end{align*}
+Namely,\\
+\begin{align*}
+	C_1 = a_{11} B_1 + a_{21} B_2 +...+a_{n1} B_n\\
+	C_2 = a_{12} B_1 + a_{22} B_2 +...+a_{n2} B_n\\
+\end{align*}
+\section{Determinant}
+{\bf a.	Determinant definition:} \\
+1)	Determinant\\
+\begin{align*}
+	|A| = \sum_{ \sigma(\pi_j)} a_{1 j_1} a_{2 j_2}＃.a_{n j_n}
+\end{align*}
+2)	Minors:\\
+$|A_(i)(j)|$: the submatrix by removing ith row and jth colomn\\
+3)	Cofactors: $a_{ij} = (-1)^{i+j} |A_(i)(j)|$\\
+Adjugate matrix: $adj(A) = (a_{ij})^T$\\
+{\bf b.	Laplace expansion:}\\
+\begin{align*}
+	|A| = \sum_{i}{n} a_{ij} a_{(i)(j)}
+\end{align*}
+Property:\\
+$A adj(A) = |A|I$
+The off-diagonal elements are zero because it is the determinant of matrix with the same two rows(or column).
+So $A^{-1} = \frac{adj(A)}{|A|}$
+{\bf c.	Diagonal expansion:}\\
+A matrix A+D where D is diagonal matrix with all same element d, then\\
+\begin{align*}
+	|A+D| = |A| + \sum_{i_1,i_2＃.i_n-1} |A_{i_1, ,i_2＃.i_n-1}| d
++＃.+
+ \sum_{i\=j} |A_(i,j)|d^{n-1} + 
+ \sum_{i} a_{i, i} d^{n-1} 
+ d^{n}
+\end{align*}
+This is a polynomial of degree n in d, called characteristic polynomial.\\
+{\bf d.	Diagonal expansion example:\\}
+A matrix(n x n) has n in its diagonal and all other elements are 1.\\
+\begin{align*}
+\left( \begin{array}{ccccc}
+n & 1 & 1 & ＃.& 1\\            
+1 & n & 1 & ＃.& 1\\            
+1 & 1 & n & ＃.& 1\\                                               
+＃ & ＃ & ＃ & ＃ & ...\\                                 
+1 & 1 & 1 & ＃ &n\\                           
+\end{array}
+\right)
+=
+\left(
+\begin{array}{ccc}
+n - 1 & 0 & 0 \\                                   
+0 & n - 1 & 0 \\                            
+0 & 0 & n - 1 \\                                
+\end{array}
+\right)
+\left(
+\begin{array}{ccccc}
+1 & 1 & 1 &＃.& 1\\   
+1 & 1 & 1 &＃.& 1\\
+1 & 1 & 1 &＃ & 1\\
+\end{array}
+\right)
+\end{align*}
+\begin{align*}
+	|A+D - \lambda I|& = n (n 每 1 - \lambda)^(n-1) \\
+                                     + (n 每 1 - \lambda)^n \\
+                      &               = (n 每 1 - \lambda)*(2n 每 1 -\lambda) \\
+\end{align*}
+ The first term is to choose n - 1 diagonal element in D, one element in $A- \lambda I$ , the second term is choose all diagonal element in D. All other permutations are zero when we select two or more rows in A since it is a matrix with same rows.\\
+{\bf e. Determinant of Matrix Product}\\
+If A and B are square matrix and conformable for multiplication, then
+$|AB| = |A||B|$
+\section{Rank}
+{\bf a. Definition} \\
+The maximum number of linear dependent vectors(columns of rows) in a matrix is the rank of matrix 
+{\bf b. Basic fact} \\
+The maximum number of linear dependent rows is the row rank, and the maximum number of linear dependent columns is the column rank, they are equal. See wiki for the proof\\
+{\bf c. Basic properties} \\
+1)	rank(AB) <= min(rank(A), rank(B)) \\
+2)	rank(A+B) <= rank(A) + rank(B) \\
+3)	rank(AB) >= rank(A) + rank(B) - n \\
+4)	rank(A) = r \\
+      PAQ = matrix( $I_r$ 0) \\
+{\bf d. Full Rank Factorization}\\
+A n *m matrix A with rank = r can be factored as product of two full rank matrices.
+A = $L_{n*r}$ * $R_{r*m}$ where L is full column rank and R is of full row rank\\
+{\bf e. Existence of Left and right inverse}\\
+If A is n * m matrix with n<m. Rank(A) = n. Then A has a right inverse. This means a full row rank matrix has a right inverse.
+If A is n * m matrix with m<n. Rank(A) = m. Then A has a left inverse. This means a full column rank matrix has a left inverse.
+
 \end{document}
