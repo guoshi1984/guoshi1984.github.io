@@ -1,0 +1,42 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Convolutional Neural Network}
+\subsection{Convolution Operation of Matrix}
+We denote the convolution operation as the following
+\begin{align*}
+	Z= A*W +b
+\end{align*}
+Where $A$, $W$, $b$ are matrices with proper dimension. The star $*$ represent the convolution operation of the two matrix $A$ and $W$. We define the matrix $A$ with dimension $I^{in} \times J^{in}$. The matrix $W$ has the dimension $P \times Q$ and we assume $P \leq I^{in}$, $Q \leq J^{in}$. The matrix $Z$ has the dimension $I^{out} \times J^{out}$ . And b is a scalar constant. The convolution operation is defined as 
+\begin{align*}
+	z_{ij} = \sum_{p=i}^{p+P} \sum_{q=j}^{q+Q}  a_{pq} w_{pq} + b
+\end{align*}
+An intuitive way of thinking the above operation is we put matrix W on top of matrix A and align the top left corner, meaning that $a_{11}$ aligns with $w_{11}$. And for each overlapped element of matrix A and Z, we multiply them and get each product. Finally we sum all the product, add the bias b, then we get $z_{11}$. To get $z_{12}$, we still put W on top of A, but this time we align $a_{12}$ with $w_{11}$. Then we follow the same procedure to calculate the product and summation. We keep going to slide W matrix along the matrix A, we can all the element of matrix Z.  
+\subsection{Convolution Operation of Tensors}
+We denote the convolution operation as the following(same as above)
+\begin{align*}
+	Z= A*W +b
+\end{align*}
+Where $A$, $W$, $b$ are tensors with proper dimension. The star $*$ represent the convolution operation of the two matrix $A$ and $W$. We define the tensor $A$ with dimension $I^{in} \times J^{in} \times K$. The tensor $W$ has the dimension $P \times Q \times K \times N$. The tensor $Z$ has the dimension $I^{out} \times J^{out} \times N$. And $b$ is a vector of size $N$. The convolution operation is defined as 
+\begin{align*}
+	z_{ijn} = \sum_{p=i}^{p+P} \sum_{q=j}^{q+Q} \sum_{k=1}^{K} a_{pqk} w_{pqk}^{(n)} + b^{(n)}
+\end{align*}
+{\bf Example}
+Take $A$ as a $2 \times 2 \times 3$ tensor, and $W$ as a $2 \times 2 \times 3 \times 2$ tensor, then 
+\begin{align*}
+z_{111} & = a_{111} w_{111}^{(1)} + a_{121} w_{121}^{(1)} + a_{211} w_{211}^{(1)} + a_{221} w_{221}^{(1)}\\
+		& + a_{112} w_{112}^{(1)} + a_{122} w_{122}^{(1)} + a_{212} w_{212}^{(1)} + a_{222} w_{222}^{(1)}\\	
+		& + a_{113} w_{113}^{(1)} + a_{123} w_{123}^{(1)} + a_{213} w_{213}^{(1)} + a_{223} w_{223}^{(1)}\\	
+		& + b^{1}\\
+\end{align*}
+
+\begin{align*}
+z_{112} & = a_{111} w_{111}^{(2)} + a_{121} w_{121}^{(2)} + a_{211} w_{211}^{(2)} + a_{221} w_{221}^{(2)}\\
+		& + a_{112} w_{112}^{(2)} + a_{122} w_{122}^{(2)} + a_{212} w_{212}^{(2)} + a_{222} w_{222}^{(2)}\\	
+		& + a_{113} w_{113}^{(2)} + a_{123} w_{123}^{(2)} + a_{213} w_{213}^{(2)} + a_{223} w_{223}^{(2)}\\	
+		& + b^{1}\\
+\end{align*}
+
+
+\end{document}
