@@ -78,8 +78,7 @@ and the energies are
 \begin{align*}
 	E_{n,k} = \hbar \omega_B (n+ \frac{1}{2}) -eE(\frac{\hbar k}{eB}+\frac{eE}{m\omega_B^2})+\frac{m}{2}\frac{E^2}{B^2}
 \end{align*}
-Since we get the wavefunction and eigenenergy, there are two ways to find out the current.\\
-1) One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
+Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
 \begin{align*}
 	v_y = \frac{1}{\hbar} \frac{\partial E_{n,k}}{\partial k} = -\frac{E}{B}
 \end{align*}
@@ -96,7 +95,7 @@ The range of k in the above integral is tricky. From the wavefunction, we see th
 \begin{align*}
 	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
 \end{align*}
-
+The second way is purely quantum approach, we start with the derivation of the current operator.\\
 \noindent{\bf Derivation of velocity operator}\\
 In quantum mechanics, the velocity operator is defined as
 \begin{align*}
@@ -104,8 +103,17 @@ In quantum mechanics, the velocity operator is defined as
 \end{align*}
 There exist several ways to understand this. First, we can recall the equation of motion in analytical mechanics. Given a Hamiltonian, the equation of motion is
 \begin{align*}
-	v = \dot{q} = \frac{\partial H}{\partial p}
+	{\bf v} = \dot{{\bf r}} = \frac{\partial H}{\partial {\bf p}}
 \end{align*}
+Another way is using Heisenburg equation of motion, which is the counterpart of analytical mechanics' equation of motion in quantum mechanics. The velocity operator given by Heisenburg equation of motion is
+\begin{align*}
+	{\bf v} = \frac{d{\bf r}}{dt} = \frac{i}{\hbar}[H, {\bf r}]
+\end{align*}
+In momentum space, it becomes
+\begin{align*}
+	v(k) = e^{-i{\bf k} \cdot {\bf r}} \frac{i}{\hbar}[H, {\bf r}] e^{-i{\bf k} \cdot {\bf r}} = \frac{1}{\hbar} \nabla_{\bf k} H({\bf k},t)
+\end{align*}
+
 %Let us recall the semi-classical model where the movement of electrons is described as the movement of the wave-packet. And the velocity is given by the group velocity of the wave packet.
 %\begin{align*}
 %	v_g = \frac{\partial \omega}{ \partial k} = \frac{1}{\hbar} \frac{\partial E}{\partial k}
@@ -120,13 +128,16 @@ The expectation value of the velocity
 	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
 	- i \sum_{n^{'}\neq n} (<n|\frac{\partial H}{\partial k}|n^{'}>\frac{<n^{'}|\frac{\partial}{\partial t}|n>}{E_{n} - E_{n^{'}}} - c.c.)
 \end{align*}
-\begin{align*}
+\begin{align}\label{velocity}
 	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
 	- i  (<\frac{\partial n}{\partial k}| \frac{\partial n}{\partial t}> -<\frac{\partial n}{\partial t}| \frac{\partial n}{\partial k}>)
-\end{align*}
-Where the second term is the Berry phase.
+\end{align}
+Where the second term is the {\bf Berry phase}.
 The current operator is
 \begin{align*}
 	j = -2e\sum_{all bands}\int\frac{dk}{2 \pi} f(k)v(k)
 \end{align*}
+We need to consider several cases to discuss the current.\\
+1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
+2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
 \end{document}

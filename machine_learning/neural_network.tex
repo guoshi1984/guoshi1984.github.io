@@ -5,12 +5,12 @@
 \section{Neural Network}
 \subsection{One Step further of Logistic Regression}\\
 {\bf Model Description}\\
-We consider two step of logistic regression to illustrate a simple neural network. In our notation, $X_i^{(j)}$ means the jth component in the ith input sample.
+We use two steps of logistic regression to illustrate a simple neural network. We first introduce the notation we use. The subscript j means the jth component of the input/output vector. The superscript of $(i)$ means the ith sample. The superscript $[k]$ indicates kth layer. So the input vector $X_i^{(j)}$ means the jth component in the ith sample. We write the operation in the first layer using matrix notation
 \begin{align*}
 	z^{[1](i)} = W^{[1]} X^{(i)} + b^{[1](i)}
 \end{align*}
- $z^{[1](i)}$ means first layer, ith sample
-in full matrix form
+ $z^{[1](i)}$ means first layer, ith sample.
+ Namely,
 \begin{align*}
 \left( \begin{array} {c c c c}
 z_1^{[1](1)} & z_1^{[1](2)} & ... & z_1^{[1](m)} \\
@@ -28,10 +28,10 @@ x_1^{(1)} & x_1^{(2)} & ... & x_1^{(m)} \\
 x_2^{(1)} & x_2^{(2)} & ... & x_2^{(m)} \\
 \end{array} \right)
 +
-\left( \begin{array} {c}
-b_1^{[1]}  \\
-...  \\
-b_4^{[1]}  \\
+\left( \begin{array} {c c c }
+b_1^{[1]} & ... &  b_1^{[1]} \\
+... & ... & ... \\
+b_4^{[1]} & ... &  b_4^{[1]} \\
 \end{array} \right)
 \end{align*}
 \begin{align*}
@@ -50,11 +50,11 @@ z_1^{[1](1)} & z_1^{[1](2)} & ... & z_1^{[1](m)} \\
 z_4^{[1](1)} & z_4^{[1](2)} & ... & z_4^{[1](m)} \\
 \end{array} \right)
 \end{align*}
-
+For the 2nd layer, we have 
 \begin{align*}
 	z^{[2](i)} = W^{[2]} X^{(i)} + b^{[2](i)}
 \end{align*}
-in matrix form
+Namely,
 \begin{align*}
 \left( \begin{array} {c c c c}
 z_1^{[2](1)} & z_1^{2](2)} & ... & z_1^{[2](m)} \\
@@ -66,12 +66,16 @@ w_{1}^{[2]} & ... &   w_{4}^{[2]}\\
 a_1^{[1](1)} & a_1^{[1](2)} & ... & a_1^{[1](m)} \\
 ...&...&...&...\\
 a_4^{[1](1)} & a_4^{[1](2)} & ... & a_4^{[1](m)} \\
-\end{array} \right)\\
+\end{array} \right) 
++
+\left( \begin{array} {c c c }
+b_1^{[2]} & ... &  b_1^{[2]} \\
+\end{array} \right)
 \end{align*}
 \begin{align*}
 	a^{[2](i)} = sigmoid(z^{[2](i)})
 \end{align*}
-In matrix notation
+In full matrix notation
 \begin{align*}
 \left( \begin{array} {c c c c}
 a_1^{[2](1)} & a_1^{[2](2)} & ... & a_1^{[2](m)} \\
@@ -109,7 +113,7 @@ J - $a_{(i)}^{[2]}$ - $z_{(i)}^{[2]}$ - $W_k^{[2]} b^{[2]}$ - chain rule ...\\
 = &\frac{1}{(e^z + 1)^2} e^z \\
 = &\frac{e^z}{e^z + 1} \frac{1}{e^z +1} \\
 = &\frac{e^z}{e^z + 1} \frac{e^z + 1 -e^z}{e^z +1}\\
-= & g(z) (1 -g(z))\\
+= & a(z) (1 -a(z))\\
 \end{align*}
 \noindent 4)
 \begin{align*}
@@ -119,7 +123,7 @@ J - $a_{(i)}^{[2]}$ - $z_{(i)}^{[2]}$ - $W_k^{[2]} b^{[2]}$ - chain rule ...\\
 	-\frac{(1-y^{(j)})}{ (1 - a^{[2]}_{(j)})}]
     a^{[2]}_{(j)} (1 - a^{[2]}_{(j)}) \\
    = &-\frac{1}{m} (y_{(j)} - y_{(j)} a_{(j)} ^{[2]} - a_{(j)}^{[2]} + y_{{j}}a_{(j)}^{[2]}) \\   
-   =& -\frac{1}{m} (y_{(j)} a_{(j)}^{[2]})\\   
+   =& -\frac{1}{m} (y_{(j)} - a_{(j)}^{[2]})\\   
 \end{align*}
 matrix form
 \begin{align*}
@@ -231,7 +235,7 @@ x1 & x2 & output \\
 0  &  1 & 0 \\
 1  &  0 & 0 \\
 1  &  1 & 1 \\
-\end{tabular}
+\end{tabular}\\
 This is a well know problem and it is not linearly separable. By saying not linearly separable we mean we are not able to draw a line on the $x_1$-$x_2$ plane to separate output 0s and 1s. So we solve this by a 2-layer neural network. The idea of implementing this neural network comes from the following logic operation in the table below. \\
 \begin{tabular}{ l | c | c |c | c}
 x1 & x2 & a1= x1 \& x2 & a2=not x1 \& not x2 & output=a1 OR a2 \\
@@ -243,15 +247,15 @@ x1 & x2 & a1= x1 \& x2 & a2=not x1 \& not x2 & output=a1 OR a2 \\
 \end{tabular}\\
 In the neural network implementation, the first layer take the input $(x_1, x_2)$ and generates two output nodes $(a_1, a_2)$. The first node $a_1$ calculates AND operation using the following expression
 \begin{align*}
-	a_1 =sigmoid (20 x_1 + 20 x_2 - 30)
+	a_1 = tanh (20 x_1 + 20 x_2 - 30)
 \end{align*}
 The second node $a_2$ calculates $\bar x_1 AND \bar x_2$ using the following expression
 \begin{align*}
-	a_2 =sigmoid (-20 x_1 -20 x_2 + 10)
+	a_2 = tanh (-20 x_1 -20 x_2 + 10)
 \end{align*}
 Then the second layer calculates the final output node y, and it implements OR operation
 \begin{align*}
-	y = sigmoid (20 a_1 + 20 a_2 -10)
+	y = tanh (20 a_1 + 20 a_2 -10)
 \end{align*}
 \begin{align*}
 \left( \begin{array} {c }
@@ -296,6 +300,6 @@ a_2^{[2](1)}  \\
 \end{align*}
 \begin{align*}
 y^{[2](1)}  
-=sigmoid ( z^{[2](1)}  )
+= tanh ( z^{[2](1)}  )
 \end{align*}
 \end{document}
