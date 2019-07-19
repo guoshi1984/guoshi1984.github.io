@@ -95,7 +95,10 @@ The range of k in the above integral is tricky. From the wavefunction, we see th
 \begin{align*}
 	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
 \end{align*}
-The second way is purely quantum approach, we start with the derivation of the current operator.\\
+The second way is purely quantum approach. We need the following steps in order to derive the expression of the current. 
+1) In quantum mechanics, we represent every physical quantity using an operator. So the first step is to find out the expression of velocity operator. \\
+2) The current is the expectation value of its operator, therefore we need to know the wavefunction. Here we employ the time-dependent perturbation theory in order to know how the wavefunction changes overtime.\\
+3) Thirdly, we evaluate the expectation of the current operator then analyze why the conductivity is quantized.\\
 \noindent{\bf Derivation of velocity operator}\\
 In quantum mechanics, the velocity operator is defined as
 \begin{align*}
@@ -113,24 +116,33 @@ In momentum space, it becomes
 \begin{align*}
 	v(k) = e^{-i{\bf k} \cdot {\bf r}} \frac{i}{\hbar}[H, {\bf r}] e^{-i{\bf k} \cdot {\bf r}} = \frac{1}{\hbar} \nabla_{\bf k} H({\bf k},t)
 \end{align*}
-
 %Let us recall the semi-classical model where the movement of electrons is described as the movement of the wave-packet. And the velocity is given by the group velocity of the wave packet.
 %\begin{align*}
 %	v_g = \frac{\partial \omega}{ \partial k} = \frac{1}{\hbar} \frac{\partial E}{\partial k}
 %\end{align*}
 {\bf Wavefunction subject to adiabatic evolution }
+The wave function is subject to the time-dependent Schrodinger equation.
 \begin{align*}
-	|\Psi(t)>= exp(-\frac{i}{\hbar}\int_{t_0}^{t} dt^{'} E_{n}(t^{'}))(|n> 
-	-i\hbar \sum_{n^{'}\neq n} |n^{'}>\frac{<n^{'}|\frac{\partial}{\partial t}|n>}{E_{n} - E_{n^{'}}})
+	i \hbar \partial_t |\Psi(t) > = H(t) |\Psi(t)> 
+\end{align*}
+Suppose when $t= t_0$, the instantaneous eigenstates are $|u_n({\bf k}, t)>$, then
+the wavefunction can be written as linear combination of all instantaneous states with coefficients $a_n(t)$ times a time evolution factor.  
+\begin{align*}
+	|\Psi(t)> = \sum_n exp(\frac{1}{i\hbar} \int_{t_0}^t dt^{'} E_n(t^{'})) a_n(t) |u_n({\bf k}, t)>
+\end{align*}
+Then we consider adiabatic approximation which means the vector {\bf R}(t) varies with time very slowly and apply the time-dependent perturbation theory. After a few steps we have
+\begin{align*}
+	|\Psi(t)>= exp(-\frac{i}{\hbar}\int_{t_0}^{t} dt^{'} E_{n}(t^{'}))(|u_n({\bf k})> 
+	-i\hbar \sum_{n^{'}\neq n} |u_n^{'}({\bf k})>\frac{<u_n^{'}({\bf k})|\frac{\partial}{\partial t}|u_n({\bf k})>}{E_{n} - E_{n^{'}}})
 \end{align*}
 The expectation value of the velocity
 \begin{align*}
 	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
-	- i \sum_{n^{'}\neq n} (<n|\frac{\partial H}{\partial k}|n^{'}>\frac{<n^{'}|\frac{\partial}{\partial t}|n>}{E_{n} - E_{n^{'}}} - c.c.)
+	- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial k}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
 \end{align*}
 \begin{align}\label{velocity}
 	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
-	- i  (<\frac{\partial n}{\partial k}| \frac{\partial n}{\partial t}> -<\frac{\partial n}{\partial t}| \frac{\partial n}{\partial k}>)
+	- i  (<\frac{\partial u_n}{\partial k}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial k}>)
 \end{align}
 Where the second term is the {\bf Berry phase}.
 The current operator is
