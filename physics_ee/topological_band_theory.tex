@@ -114,7 +114,7 @@ Another way is using Heisenburg equation of motion, which is the counterpart of 
 \end{align*}
 In momentum space, it becomes
 \begin{align*}
-	v(k) = e^{-i{\bf k} \cdot {\bf r}} \frac{i}{\hbar}[H, {\bf r}] e^{-i{\bf k} \cdot {\bf r}} = \frac{1}{\hbar} \nabla_{\bf k} H({\bf k},t)
+	{\bf v}({\bf k}) = e^{-i{\bf k} \cdot {\bf r}} \frac{i}{\hbar}[H, {\bf r}] e^{i{\bf k} \cdot {\bf r}} = \frac{1}{\hbar} \nabla_{\bf k} H({\bf k},t)
 \end{align*}
 %Let us recall the semi-classical model where the movement of electrons is described as the movement of the wave-packet. And the velocity is given by the group velocity of the wave packet.
 %\begin{align*}
@@ -137,12 +137,16 @@ Then we consider adiabatic approximation which means the vector {\bf R}(t) varie
 \end{align*}
 The expectation value of the velocity
 \begin{align*}
-	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
-	- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial k}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
+	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
+	- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial {\bf k}}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
+\end{align*}
+Using the identity
+\begin{align*}
+	<u_n|\nabla_{\bf k} H | u_m> = (E_n - E_m) < \nabla_{\bf k} u_n| u_m>
 \end{align*}
 \begin{align}\label{velocity}
-	\bar v(k,t) = \frac{\partial E_n(k)}{\hbar \partial k} 
-	- i  (<\frac{\partial u_n}{\partial k}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial k}>)
+	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
+	- i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
 \end{align}
 Where the second term is the {\bf Berry phase}.
 The current operator is

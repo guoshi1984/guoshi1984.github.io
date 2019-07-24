@@ -118,20 +118,15 @@ This shows it is a standard normal distribution with mean 0.\\
 \section{Change of Measure for a Filtration(Series of Events in Time)}
 \subsection{Change of measure for Stock under binomial model - Risk neutral measure}\\
 Suppose we have the following stock $S_0$ at t=0. At t=1, we can associate the value of $S_1$ to outcome of tossing a coin. When we toss a coin and if the coin is fair, we can get Head and Tail and each has 50\% probability. If we get a head, the stock moves to $S_1(H)$, and if we get a tail, the stock moves to $S_1(T)$. Clearly, the stock has 50\% to move up, and 50\% to move down.
-
 \begin{align*}
 S_1(H) & = (1+\alpha + \sigma) S_0\\  
 S_1(T) & = (1+\alpha - \sigma) S_0\\     
 \end{align*}
-
 In the sense of risk neutral pricing, we would like to have the stock values grows as the same as a saving account with interest rate r.  Namely, we need
 \begin{align*}
 S_0 (1+r) = \frac{1}{2}S_1(H) + \frac{1}{2} S_1(T) 
 \end{align*}
-
-Simply plug in the definition of $S_1$, we easily see the equation does not hold except the special case when $\alpha = r$.
-
-When $\alpha$ does not equal to r, we artificially create two probabilities p and q with p + q =1, 
+Simply plug in the definition of $S_1$, we easily see the equation does not hold except the special case when $\alpha = r$.When $\alpha$ does not equal to r, we artificially create two probabilities p and q with p + q =1, 
 define 
 \begin{align*}
 S_0 (1+r) = p S_1(H) + q S_1(T) 	
@@ -141,8 +136,7 @@ Then solve for p and q, we have
 p= \frac{r - \alpha + \sigma}{2 \sigma} \\
 q= \frac{\alpha - r + \sigma}{2 \sigma} \\
 \end{align*}
-
-We call this {\bf risk-neutral measure}. Under this measure, the expectation of the stock return is the same as the return of saving account. We define this as risk neutral measure. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is 1+r. The same argument holds for $r < \alpha$. 
+We call this {\bf risk-neutral measure}. Under this measure, the expectation of the stock return is the same as the return of saving account. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is exactly 1+r. The same argument holds for $r < \alpha$. 
 
 
 \subsection{Girsanov's Theorem}
