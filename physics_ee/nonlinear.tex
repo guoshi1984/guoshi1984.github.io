@@ -1,0 +1,59 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
+\line(1,0){350}
+\section{Nonlinear Effect}
+Nonlinear effect means when a signal is passed into a device, the relationship between the output and input is not linear. This article aims to provide an explanation of the nonlinear process.
+\subsection{Harmonics}
+Suppose we have an input signal with a voltage 
+\begin{align*}
+	v_i(t) = V_{im} cos (\omega_i t)
+\end{align*}
+The output  signal can be approximated by Taylor's expansion
+\begin{align*}
+	v_o(t) & = a_1 V_{im} cos(\omega_i t) + a_2 V^2_{im} cos^2(\omega_i t) + a_3 V^3_{im} cos^3(\omega_i t)\\
+	     & = \frac{1}{2} a_2 V^2_{im} +(a_1 V_{im} + \frac{3}{4} a_3 V^3_{im}) cos(\omega_i t) + \frac{a_2}{2} V^2_{im} cos(2\omega_i t) 
+\end{align*}
+All the terms with $cos(n \omega_i t) $ are nonlinear terms. Therefore, an input signal with frequency $\omega$  has output with frequency $n \omega$, and this is called nonlinear effect. All the signal component with frequency $n \omega$ are called harmonics.
+\subsection{Gain compression}
+In the above derivation, the amplitude of $cos w_i t$ is $a_1 V_{im} + \frac{3}{4} a_3 V^3_{im}$ is the gain to the input signal $g_m$. In most cases $a_3 < 0$, when $v_{im}$ is sufficiently small, the first term dominates so the gain is equal to $log(a_1)$. But when $v_m$ is large enough, the second term is not negligible so the gain decreases from $log(a_1)$. We define {\bf 1db compression point} as the input power when the gain is decreased by 1dB from $log(a_1)$
+\subsection{Intermodulation}
+Suppose we have two input signals
+\begin{align*}
+	V_i(t) = V_{1m} cos(\omega_1 t) + V_{2m} cos(\omega_2 t)
+\end{align*}
+The third order output power term has two components 
+\begin{align*}
+	P_3 = \frac{3}{4}a_3 V^2_{1m}V_{2m}cos(2\omega_1 - \omega_2)t + \frac{3}{4}a_3 V_{1m}V^2_{2m} cos(2\omega_2 - \omega_1)t
+\end{align*}
+if $V_{1m} = V_{2m} = V_m$
+\begin{align*}
+	P_3 = \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 - \omega_2)t +  cos(2\omega_2 - \omega_1)t]
+\end{align*}
+Since this power term has two frequency components, we call it {\bf intermodulation power}, and we cal $P_3$ as {\bf third order intermodulation power}.
+\subsection{3rd order intercept point}
+The output power at base frequency 
+\begin{align*}
+	P_{o1} = \frac{1}{2} (a_1 V_m)^2 \equiv = G_1 P_i \\ 
+\end{align*}
+The output power at intermodulation frequency 
+\begin{align*}
+	P_{o3} = \frac{1}{2} (\frac{3}{4}a_3 V^3_m)^2 \equiv = G_3 P^3_i \\
+\end{align*}
+So
+\begin{align*}
+	P_{o1} = 10 log G_1 + 10 log P_i\\
+    P_{o3} = 30 log G_3	+ 30 log P_i\\
+ \end{align*}
+ So both $P_{o1}$ and $P_{o3}$ has a linear relationship with $P_i$. The above equations represent two lines, but the slope of $P_{o3}$ is 3 times of that of $P_{o1}$.
+ The third-order intercept point(IP3) is defined as the intercept point of the above two lines($P_{o1}$ and $P_{o3}$). We can use the slope relation to find the intercept point.
+ \begin{align*}
+	\frac{IP_3 - P_{o3}}{IP_3 - P_{o1}} = 3
+\end{align*}
+Therefore
+\begin{align*}
+	IP_3 = \frac{1}{2} (3P_{o1} - P_{o3})
+\end{align*}
+\end{document}

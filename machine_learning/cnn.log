@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  18 MAY 2019 10:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  2 JUL 2019 16:05
 entering extended mode
-**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/math/special_matrix.tex"
-("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/math/special_matrix.tex"
+**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/cnn.tex"
+("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/cnn.tex"
 LaTeX2e <2017-04-15>
 Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
@@ -107,8 +107,8 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 ))
 \Gin@req@height=\dimen112
 \Gin@req@width=\dimen113
-) (special_matrix.aux)
-\openout1 = `special_matrix.aux'.
+) (cnn.aux)
+\openout1 = `cnn.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
 LaTeX Font Info:    ... okay on input line 4.
@@ -169,62 +169,38 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-Overfull \hbox (5.0pt too wide) in paragraph at lines 5--7
-| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 8--9
-
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 9.
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+LaTeX Font Info:    Try loading font information for U+msa on input line 8.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 9.
+LaTeX Font Info:    Try loading font information for U+msb on input line 8.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Missing character: There is no ¡ in font cmr10!
-Missing character: There is no ­ in font cmr10!
+) [1
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--15
-
- []
-
-Missing character: There is no ¡ in font cmr10!
-Missing character: There is no ¯ in font cmr10!
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--23
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-
+Overfull \hbox (49.50085pt too wide) in paragraph at lines 95--106
+[] 
  []
 
-[1
-
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 75--83
-
- []
-
-[2] (special_matrix.aux) ) 
+[3] [4] (cnn.aux) ) 
 Here is how much of TeX's memory you used:
- 2360 strings out of 493328
- 31028 string characters out of 3139118
- 94531 words of memory out of 3000000
- 5877 multiletter control sequences out of 15000+200000
- 6252 words of font info for 25 fonts, out of 3000000 for 9000
+ 2362 strings out of 493328
+ 30983 string characters out of 3139118
+ 97531 words of memory out of 3000000
+ 5879 multiletter control sequences out of 15000+200000
+ 6857 words of font info for 27 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,14n,26p,596b,182s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on special_matrix.pdf (2 pages, 112439 bytes).
+ 39i,10n,26p,713b,125s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb>
+Output written on cnn.pdf (4 pages, 113511 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

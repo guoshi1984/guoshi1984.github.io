@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  28 APR 2019 16:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  13 JUL 2019 20:25
 entering extended mode
-**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/machine_learning/neural_network.tex"
-("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/machine_learning/neural_network.tex"
+**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/neural_network.tex"
+("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/neural_network.tex"
 LaTeX2e <2017-04-15>
 Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
@@ -190,50 +190,55 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 8.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (29.85843pt too wide) in paragraph at lines 61--61
+Overfull \hbox (93.64651pt too wide) in paragraph at lines 36--36
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--77
+Overfull \hbox (118.96956pt too wide) in paragraph at lines 74--74
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--86
+Underfull \hbox (badness 10000) in paragraph at lines 93--99
 
  []
 
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 94--96
+Underfull \hbox (badness 10000) in paragraph at lines 107--109
 
  []
 
 [2]
-Overfull \hbox (55.78677pt too wide) in paragraph at lines 136--136
+Overfull \hbox (55.78677pt too wide) in paragraph at lines 149--149
 [] 
  []
 
 
-Overfull \hbox (24.20975pt too wide) in paragraph at lines 180--180
+Overfull \hbox (24.20975pt too wide) in paragraph at lines 193--193
 [] 
  []
 
-[3] [4] (neural_network.aux) ) 
+[3] [4] [5] (neural_network.aux) ) 
 Here is how much of TeX's memory you used:
  2362 strings out of 493328
- 31030 string characters out of 3139118
- 101531 words of memory out of 3000000
+ 31093 string characters out of 3139118
+ 103531 words of memory out of 3000000
  5879 multiletter control sequences out of 15000+200000
  6857 words of font info for 27 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,15n,26p,319b,184s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,26p,606b,186s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb>
-Output written on neural_network.pdf (4 pages, 127385 bytes).
+Output written on neural_network.pdf (5 pages, 136143 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
+ 62 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
