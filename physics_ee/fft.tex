@@ -7,10 +7,12 @@ If $f(x)= f(x+T)$ then $f(x)$ can be written as
 \begin{align*}
 f(x) = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	
 \end{align*}
-because
+i is the imaginary unit, and k is an integer.  The above expression is eligible 
 \begin{align*}
 	e^{\frac{2 \pi i k x}{T}} = e^{\frac{2 \pi i k(x+T)}{T}}
 \end{align*}
+Each basis $e^{\frac{2 \pi i }{T}}$ represents a signal with frequency $F_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta F = \frac{1}{T}$.
+
 Based on orthogonality,
 \begin{align*}
 	c_k = \frac{1}{T} \int_0^T f(x) e^{-i\frac{2 \pi k x}{T}} dx
@@ -27,11 +29,23 @@ If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier seri
 \end{align*}
 This is the discrete Fourier transform.
 \begin{align*}
-	\Delta f = \frac{1}{T} = \frac{1}{N \Delta t} = \frac{F_s}{N}
+	\Delta F = \frac{1}{T} = \frac{1}{N \Delta t}
 \end{align*}
-Where $F_s$, $N$ are the sample frequency and number of samples.\\
+N is the total sample within time T.\\
 {\bf Properties}\\
-\noindent 1) To be eligible, f(x) has to be a period function with time T. This leads to uniform sampling theorem used in signal processing. The uniform sampling theorem states w\\
+\noindent 1) To be eligible, f(x) has to be a period function with time T(with frequency $F=\frac{1}{T}$) in both continuous case and discrete case.  The requirement in discrete case leads to uniform sampling theorem used in signal processing. The total sampling time $T_{sampling}$ has to be an integer multiple of $T$.
+\begin{align*}
+T_{sampling} = M T 
+\end{align*}
+while $T= \frac{N}{F_s}$
+So
+\begin{align*}
+	M T = N \delta t
+\end{align*}
+if we let $\delta t= \frac{1}{F_s}$, where $F_s$ is the sampling frequency, and $T=\frac{1}{F}$, we have
+\begin{align*}
+	\frac{M}{F} = \frac{N}{F_s}
+\end{align*}
 \noindent 2) If $f(x)$ is real, which means $f(x) = f^{*}(x)$. We then substitute Fourier series for both $f(x)$ and $f*(x)$,  
 \begin{align} \label{eq1}
 	\sum_{-\infty}^{+\infty} c_k e^{2 \pi i \frac{1}{T} kx} = \sum_{-\infty}^{+\infty} c_k^* e^{-2 \pi i \frac{1}{T} kx}
@@ -100,4 +114,39 @@ As noted, the above derivation is for $k<N/2$, a very similar derivation for $N/
 \end{align*}
 Now we have divided the FFT of N points to two FFT with N/2 points
 Keep going till we reach the size to one, then combine together recursively.
+\subsection{Connection with Uncertainty Principle}
+{\bf Relationship between time length and frequency bandwidth}\\
+We consider a few examples\\
+1) We consider a function g(t) which is infinitely long in time domain\\
+\begin{align*}
+	g(t) = cos(2\pi f_0 t)
+\end{align*}
+Its Fourier transform is 
+\begin{align*}
+	F(f) = \frac{1}{2} \delta(f-f_0) + \frac{1}{2} \delta(f + f_0)
+\end{align*}
+Since the delta function has width zero, so the the bandwidth in frequency domain is zero. We see a signal which is infinitely long in time domain has zero bandwidth in frequency domain. 
+2) We consider a function g(t) which has zero width in time, namely an impulse function.\\
+\begin{align*}
+	g(t) = \delta(t)
+\end{align*}
+Since this function is not a periodic function, we assume its period is infinity. Its Fourier transform is 
+\begin{align*}
+	F(f) = \int_{-\infty}^{\infty} \delta(t) e^{-2\pi f t} = 1
+\end{align*}
+Now we see a signal which has zero width in time has infinitely long frequency bandwidth. This leads to the uncertainty principle.\\
+{\bf Uncertainty Principle}
+In quantum mechanics, if there is a particle with position x and momentum p, then uncertainty principle states
+\begin{align*}
+	\Delta x \Delta p \geq \frac{\hbar}{2}
+\end{align*}
+Similar relationship holds for time t and Energy.
+\begin{align*}
+	\Delta t \Delta E \geq \frac{\hbar}{2}
+\end{align*}
+We can modify this expression to get the time and frequency relationship in our Fourier transform. Since 
+$E = \hbar \omega$. Then 
+\begin{align*}
+	\Delta t \Delta \omega \geq \frac{1}{2}
+\end{align*}
 \end{document}

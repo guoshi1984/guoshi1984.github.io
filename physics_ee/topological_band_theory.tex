@@ -120,7 +120,7 @@ In momentum space, it becomes
 %\begin{align*}
 %	v_g = \frac{\partial \omega}{ \partial k} = \frac{1}{\hbar} \frac{\partial E}{\partial k}
 %\end{align*}
-{\bf Wavefunction subject to adiabatic evolution }
+{\bf Wavefunction subject to adiabatic evolution }\\
 The wave function is subject to the time-dependent Schrodinger equation.
 \begin{align*}
 	i \hbar \partial_t |\Psi(t) > = H(t) |\Psi(t)> 
@@ -151,9 +151,48 @@ Using the identity
 Where the second term is the {\bf Berry phase}.
 The current operator is
 \begin{align*}
-	j = -2e\sum_{all bands}\int\frac{dk}{2 \pi} f(k)v(k)
+	j = -2e\sum_{all bands}\int_{BZ}\frac{dk}{2 \pi} f(k)v(k)
 \end{align*}
+The integral is taken over the first Brillouin zone denoted by BZ.
 We need to consider several cases to discuss the current.\\
 1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
 2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
+{\bf Quantized current}\\
+When the first term of the velocity vanishes(in the case that all bands are fully occupied), the expression of velocity reduces to
+\begin{align}
+	\bar v({\bf k},t) = - i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
+\end{align}
+Using the relationship 
+\begin{align*}
+	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} = -\frac{e}{\hbar} {\bf E} \times \Omega^n({\bf k})
+\end{align*}
+where 
+\begin{align*}
+	\Omega^{n}({\bf k}) = \nabla_{\bf k} \times <u_n({\bf k})|i\nabla_{\bf k}|u_n({\bf k})>
+\end{align*}
+\begin{align*}
+	{\bf v_n}({\bf k}) = - \frac{e}{\hbar} {\bf E} \times \Omega^{n}({\bf k})
+\end{align*}
+We plug the expression of $v_n$ into the expression of current j, we have
+\begin{align*}
+	{\bf j} = -2e\sum_{all bands}\int_{BZ}\frac{d{\bf k}}{2 \pi} f({\bf k}){\bf v}_n({\bf k}) 
+	 = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} {\bf E} \times \Omega^n({\bf k})
+\end{align*}
+Therefore the conductivity is
+\begin{align*}
+	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n({\bf k})
+\end{align*}
+If we consider the case of 2 dimensional electron gas, then 
+\begin{align*}
+	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n(k_x, k_y)
+\end{align*}
+Since the integral runs over the first Brillouin zone, and
+\begin{align*}
+	\Omega^n(k_x, k_y) = \Omega^n(k_x+\pi, k_y) = \Omega^n(k_x, k_y + \pi)
+\end{align*}
+Hence, the first Brillouin zone forms a closed torus. The integral over a closed torus gives an multiple integer of $2\pi$. So
+\begin{align*}
+	\sigma_H = \nu \frac{e^2}{h}
+\end{align*}
+Where $\nu$ is an integer.
 \end{document}
