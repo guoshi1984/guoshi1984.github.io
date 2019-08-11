@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{LSTM}
+In LSTM, the input $x_t$ is a sequence with length T with $1 \leq t \leq T$. The word recurrent means for the t's layer, it not only takes the external input tensor $x_t$, it also takes the output from the (t-1)'s layer and feed into the current layer. We first calculate z as the following
+\begin{align*}
+	z = tanh (W_o^{(z)} o_{t-1} + W_i^{(z)} x_t)
+\end{align*}
+where W are the parameter matrix to be optimized. All the variables above are vectors, matrices or tensors. And the function tanh is broadcast across the entire tensor, in other words, it means we take the tanh value of all the elements of the tensor in ().
+Then we calculate the input gate $i_g$, and it is a vector with elements taking values between 0 and 1.
+\begin{align*}
+	i_g = sigmoid (W_o^{(i)} o_{t-1} + W_i^{(i)} x_t)
+\end{align*}
+Then the forget gate $f_g$
+\begin{align*}
+	f_g = sigmoid (W_o^{(f)} o_{t-1} + W_i^{(f)} x_t)
+\end{align*}
+Then the output gate $o_g$
+\begin{align*}
+	o_g = tanh (W_o^{(z)} o_{t-1} + W_i^{(z)} x_t)
+\end{align*}
+Based on the value of forget gate and input gate, we update the memory cell $c_t$.
+\begin{align*}
+	c_t = f_g \circ c_{t-1} + i_g \circ z_t)
+\end{align*}
+Where the circle denotes the element wise product, not the dot product. 
+Finally, update the output gate.
+\begin{align*}
+		o_t = o_g \circ tanh (c_t)
+\end{align*}
+Let's walk through the dimensions to gain a better understanding. Say $o_t$'s dimension is $n_o \times 1$ and $x_t$'s dimension is $n_i \times 1$. Then similar to the operations we define in basic neural network, if we define the number of neurons in the first layer is $n^{[1]}$, then $W_o^{(i)}$ has dimension  $n^{[1]} \times n_o$  , and $W_i^{(i)}$ has dimension  $n^{[1]} \times n_i$.  
+Therefore, z has the dimension $n^{[1]} x 1$.
+\end{document}
