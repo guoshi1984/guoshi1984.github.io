@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \begin{document}
 \section{LSTM}
+\subsection{Basic LSTM Concept}
 In LSTM, the input $x_t$ is a sequence with length T with $1 \leq t \leq T$. The word recurrent means for the t's layer, it not only takes the external input tensor $x_t$, it also takes the output from the (t-1)'s layer and feed into the current layer. We first calculate z as the following
 \begin{align*}
 	z = tanh (W_o^{(z)} o_{t-1} + W_i^{(z)} x_t)
@@ -22,7 +23,7 @@ Then the output gate $o_g$
 \end{align*}
 Based on the value of forget gate and input gate, we update the memory cell $c_t$.
 \begin{align*}
-	c_t = f_g \circ c_{t-1} + i_g \circ z_t)
+	c_t = f_g \circ c_{t-1} + i_g \circ z_t
 \end{align*}
 Where the circle denotes the element wise product, not the dot product. 
 Finally, update the output gate.
@@ -30,5 +31,7 @@ Finally, update the output gate.
 		o_t = o_g \circ tanh (c_t)
 \end{align*}
 Let's walk through the dimensions to gain a better understanding. Say $o_t$'s dimension is $n_o \times 1$ and $x_t$'s dimension is $n_i \times 1$. Then similar to the operations we define in basic neural network, if we define the number of neurons in the first layer is $n^{[1]}$, then $W_o^{(i)}$ has dimension  $n^{[1]} \times n_o$  , and $W_i^{(i)}$ has dimension  $n^{[1]} \times n_i$.  
-Therefore, z has the dimension $n^{[1]} x 1$.
+Therefore, z has the dimension $n^{[1]} \times 1$.\\
+{\bf Dimensions with time sequence and sample size}
+In reality, the input x could not be as simple as a vector. In most cases, the input should be a tensor. The input is multiple sample of a time sequence of vectors. In other words, x should be $n_{sample} \times n_{Time} \times n_i$. After one cell RNN operation, the output size should be $n_{sample} \times n_{Time} \times n^{[1]}$
 \end{document}
