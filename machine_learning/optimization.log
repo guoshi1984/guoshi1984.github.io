@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  21 MAR 2019 16:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  14 SEP 2019 10:04
 entering extended mode
-**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/machine_learning/optimization.tex"
-("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/machine_learning/optimization.tex"
+**"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/optimization.tex"
+("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/machine_learning/optimization.tex"
 LaTeX2e <2017-04-15>
 Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
@@ -169,118 +169,456 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 10.
+LaTeX Font Info:    Try loading font information for U+msa on input line 11.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 10.
+LaTeX Font Info:    Try loading font information for U+msb on input line 11.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+Underfull \hbox (badness 10000) in paragraph at lines 7--14
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--21
+
+ []
+
 Missing character: There is no ¨ in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--24
+Underfull \hbox (badness 10000) in paragraph at lines 22--28
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--27
-[]\OT1/cmr/m/n/10 Convergence
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--27
-\OT1/cmr/m/n/10 time for
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--27
-[]\OT1/cmr/m/n/10 Sensitivity
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--27
-\OT1/cmr/m/n/10 to pa-ram-e-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 29--29
-[]\OT1/cmr/m/n/10 Slow for
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 31--31
+[]\OT1/cmr/m/n/10 Convergence
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--31
+\OT1/cmr/m/n/10 time for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--31
+[]\OT1/cmr/m/n/10 Sensitivity
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--31
+\OT1/cmr/m/n/10 to pa-ram-e-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--33
+[]\OT1/cmr/m/n/10 Slow for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 []\OT1/cmr/m/n/10 Stochastic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 25--36
+Underfull \hbox (badness 10000) in paragraph at lines 29--38
 
  []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--41
+
+ []
+
+[1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.62 \end{align*}
+                 
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.62 \end{align*}
+                 
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.62 \end{align*}
+                 
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.62 \end{align*}
+                 
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+Missing character: There is no £ in font cmr10!
+Missing character: There is no © in font cmr10!
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--86
+
+ []
+
+[2]
+Overfull \hbox (0.12253pt too wide) in paragraph at lines 117--121
+\OT1/cmr/m/n/10 Now we sup-pose the $\OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 x\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; x[]; :::; x[]; :::; x[]\OT1/cmr/m/n/10 )$ take a more gen-eral quadratic
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--121
+
+ []
+
+[3]
+! Double superscript.
+<argument>  d^{(0)}^
+                    T A e^{(1)} = 0 
+l.169 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument>  d^{(0)}^
+                    T A e^{(1)} = 0 
+l.169 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.170 ... $\alpha$ that minimize $f({\bf x^{(1)})$
+                                                  , we automatically guarant...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Double superscript.
+<argument>  d^{(0)}^
+                    T A (e^{(0)} + \alpha d^{(0)}) = 0 
+l.175 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument>  d^{(0)}^
+                    T A (e^{(0)} + \alpha d^{(0)}) = 0 
+l.175 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 175--177
+
+ []
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A e^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A d^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A {\bf x_{min} - x^{(0)}} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A d^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A e^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A d^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A {\bf x_{min} - x^{(0)}} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(0)}^
+                   T A d^{(0)} 
+l.180 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.184 We express the error term e^
+                                  {(0)} at step 0 as a linear combinations o...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! Package amsmath Error: \begin{align*} allowed only in paragraph mode.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.185 \begin{align*}
+                    
+You've lost some text.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.188 Where $\delta
+                   _j$ is a scalar. We find $\delta_j$ by multiplying $d^{(k...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double superscript.
+l.188 ... find $\delta_j$ by multiplying $d^{(k)}^
+                                                  T A$ on both sides
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+
+Overfull \hbox (22.37288pt too wide) in paragraph at lines 180--189
+\OT1/cmr/m/n/10 We ex-press the er-ror term e$[]\OML/cmm/m/it/10 atstep\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 asalinearcombinationsofnsearchingdirections[] 
+ []
+
+! Double superscript.
+<argument>  d^{(k)}^
+                    T A e^{(0)} & = \sum _{j=0} ^{n-1} \delta _j d^{(k)}^T A...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...sum _{j=0} ^{n-1} \delta _j d^{(k)}^
+                                                  T A d^{(j)} \\ d^{(k)}^T A...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...a _j d^{(k)}^T A d^{(j)} \\ d^{(k)}^
+                                                  T A e^{(0)} & = \delta _k ...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...}^T A e^{(0)} & = \delta _k d^{(k)}^
+                                                  T A d^{(k)} \\ 
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument>  d^{(k)}^
+                    T A e^{(0)} & = \sum _{j=0} ^{n-1} \delta _j d^{(k)}^T A...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...sum _{j=0} ^{n-1} \delta _j d^{(k)}^
+                                                  T A d^{(j)} \\ d^{(k)}^T A...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...a _j d^{(k)}^T A d^{(j)} \\ d^{(k)}^
+                                                  T A e^{(0)} & = \delta _k ...
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> ...}^T A e^{(0)} & = \delta _k d^{(k)}^
+                                                  T A d^{(k)} \\ 
+l.192 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(k)}^
+                   T A e^{(0)}
+l.196 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(k)}^
+                   T A d^{(k)}
+l.196 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(k)}^
+                   T A e^{(0)}
+l.196 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+! Double superscript.
+<argument> d^{(k)}^
+                   T A d^{(k)}
+l.196 \end{align*}
+                  
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+[4]
+Runaway argument?
+ 
+! Paragraph ended before \align* was complete.
+<to be read again> 
+                   \par 
+l.198 
+      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.198 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.198 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \par 
+l.198 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Misplaced \cr.
+\math@cr@@@ ->\cr 
+                  
+l.199 \end{align*}
+                  
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\math@cr@@ ... \iffalse }\fi \math@cr@@@ \noalign 
+                                                  {\vskip #1\relax }
+l.199 \end{align*}
+                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced \noalign.
+\black@ #1->\noalign 
+                     {\ifdim #1>\displaywidth \dimen@ \prevdepth \nointerlin...
+l.199 \end{align*}
+                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Extra }, or forgotten \endgroup.
+\endalign ->\math@cr \black@ \totwidth@ \egroup 
+                                                \ifingather@ \restorealignst...
+l.199 \end{align*}
+                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.199 \end{align*}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.199 \end{align*}
+                  
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
 
 Missing character: There is no ¡ in font cmr10!
 Missing character: There is no ¯ in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--39
+Underfull \hbox (badness 10000) in paragraph at lines 203--205
 
  []
 
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ® in font cmr7!
-Missing character: There is no ¡ in font cmr7!
-Missing character: There is no ¯ in font cmr7!
-[1
-
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 ! Undefined control sequence.
 <argument> ...)} = x^{t} - H^{-1}(f(x^{t})) \grad 
                                                   f(x^{t}) 
-l.55 \end{align*}
-                 
+l.221 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -290,8 +628,8 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> ...)} = x^{t} - H^{-1}(f(x^{t})) \grad 
                                                   f(x^{t}) 
-l.55 \end{align*}
-                 
+l.221 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -299,30 +637,40 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--57
+Underfull \hbox (badness 10000) in paragraph at lines 221--223
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--65
+Underfull \hbox (badness 10000) in paragraph at lines 224--226
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--73
+Underfull \hbox (badness 10000) in paragraph at lines 227--230
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--78
+Underfull \hbox (badness 10000) in paragraph at lines 231--233
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 238--240
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--245
 
  []
 
 ! Undefined control sequence.
 <argument>  \grad 
                   f(x + \delta x) = \grad f(x) + B\delta x 
-l.80 \end{align*}
-                 
+l.247 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -332,8 +680,8 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument>  \grad f(x + \delta x) = \grad 
                                           f(x) + B\delta x 
-l.80 \end{align*}
-                 
+l.247 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -343,8 +691,8 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument>  \grad 
                   f(x + \delta x) = \grad f(x) + B\delta x 
-l.80 \end{align*}
-                 
+l.247 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -354,8 +702,8 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument>  \grad f(x + \delta x) = \grad 
                                           f(x) + B\delta x 
-l.80 \end{align*}
-                 
+l.247 \end{align*}
+                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -363,28 +711,28 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--82
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--85
+Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
-[2] (optimization.aux) ) 
+[6] (optimization.aux) ) 
 Here is how much of TeX's memory you used:
  2367 strings out of 493328
- 31052 string characters out of 3139118
- 95531 words of memory out of 3000000
+ 31115 string characters out of 3139118
+ 98531 words of memory out of 3000000
  5882 multiletter control sequences out of 15000+200000
  7476 words of font info for 29 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,10n,26p,346b,125s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on optimization.pdf (2 pages, 122294 bytes).
+ 39i,15n,26p,579b,188s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on optimization.pdf (6 pages, 165634 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
+ 73 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

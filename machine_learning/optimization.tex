@@ -2,21 +2,25 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
-\section{Optimization}
-\subsection{Batch gradient descent vs. stochastic gradient descent vs. mini batch gradient descent}
+\section{Gradient Based Optimization Method}
+\subsection{Practical use of gradient descent: Dealing with large samples}
+\noindent{\bf Batch gradient descent vs. stochastic gradient descent vs. mini batch gradient descent}\\
 {\bf a.	Definition}\\
-\noindent 1) Batch gradient
+\noindent 1) {\bf Batch gradient} \\
 Batch gradient means using all the data point to calculate the gradient.\\
 $cost = \sum_{i=1}^{N}$ -loglikelihood of ith sample\\
 $grad = \frac{\partial(cost)}{\partial {\bf w}}$\\
 update all parameter based on gradient\\
-2)	Stochastic gradient descent
+
+\noindent 2) {\bf Stochastic gradient descent}\\
 The cost function used in batch gradient descent uses is the summation over all the data points. In stochastic descent the cost function we use only contains one data point, we use one data point to update parameters, iterate over all data points.\\
 For m = 1 : N\\
 \indent	cost = - loglikelihood of the ith sample\\
 \indent  $grad = \frac{\partial(cost)}{\partial {\bf w}}$\\
 update all parameter based on gradient\\
-3)	We divide N samples into G = N/k groups so that each group contains k data points\\
+
+\noindent 3) {\bf Mini-Batch gradient descent} \\
+We divide N samples into G = N/k groups so that each group contains k data points\\
 For n = 1 : G\\
 \indent cost = ¨C $\sum_{(n-1)k} ^{nk}$ loglikelihood\\
 \indent   grad = $\frac{\partial(cost)}{\partial {\bf w}}$ \\
@@ -31,8 +35,180 @@ Batch Gradient	& Slow for large data	& Slower	& Moderate	& Smooth\\
 Stochastic Gradient &	Always fast & 	Faster & High & Very noisy\\
 \end{tabular}
 \\
+
 \noindent {\bf c. Practical usage}\\
 Shuffle the data before running the stochastic gradient descent\\
+\subsection{Conjugate Gradient Method}
+{\bf a. Intuition}\\
+There exists tremendous materials online explaining conjugate gradient method. However, after reading many versions of explanations, I am still confused that why letting moving directions conjugate to each other eventually leads to a solution. So I will be explaining the intuition first such that the idea of CONJUGATE comes more natural to understand.\\
+\noindent 1)The conjugate gradient method applies only to quadratic function. We will come to the explanation later. Let us start with a quadratic function $f(x_1, x_2)$ as example.
+\begin{align*}
+	f(x_1, x_2) & = \frac{1}{2} (4 x_1^2 + x_2^2)
+		   & = \frac{1}{2} 
+		   \left( \begin{array} {c c}
+			x_1 & x_2 \\
+			\end{array}
+			\right)
+		   \left( \begin{array} {c c}
+			4 & 0 \\
+			0 & 1 \\
+			\end{array}
+			\right)
+			\left( \begin{array} {c}
+			x_1 & \\
+			x_2 & \\
+			\end{array}
+			\right)
+\end{align*}
+It is straightforward to calculate the gradient
+\begin{align*}
+   \nabla f(x_1, x_2) = (\frac{\partial }{\partial x_1} f(x_1,x_2) \hat x, 
+	\frac{\partial }{\partial x_2} f(x_1, x_2) \hat x_2) = (4x_1 \hat x_1, \hat x_2)\\
+\end{align*}
+\noindent 2) Suppose we start at point $(x^{(0)}, y^{(0)}) = (-\frac{1}{2}, 1)$. Based on the principle of gradient descent, we move point 0 to point 1 along the opposite direction of the gradient. Namely, the direction we move should be
+\begin{align*}
+	{\bf \hat d} = \frac{1}{||d||} (-4x \hat x_1, -\hat x_2)\\ 
+\end{align*}
+At point $(x_1^{(0)}, x_2^{(0)})$, $\hat d$ is
+\begin{align*}
+	{\bf \hat d}^{(0)} = \frac{1}{||d^{(0)}||} (-4x_1^{(0)} \hat x_1, -x_2^{(0)}\hat x_2)\\ 
+	 = \frac{1}{||d^{(0)}||} (-4(-\frac{1}{2}) \hat x_1, -1 \hat x_2) 
+	 = (\frac{2}{\sqrt{5}}, -\frac{1}{\sqrt{5}})
+\end{align*}
+3)After finding the direction, we need to determine the step $\alpha$ that we need to move, our next point is
+\begin{align*}
+	  (x_1^{(1)}, x_2^{(1)}) & = (x_1^{(0)}, x_2^{(0)}) + \alpha {\bf \hat d}^{(0)} \\
+	  					 & = (-\frac{1}{2} + 2 \alpha, 1 -\alpha)\\
+	f(x_1^{(1)}, x_2^{(1)}) & = \frac{17}{2} \alpha ^2 - 5 \alpha + 1\\
+\end{align*}
+We choose $\alpha$ such that $\alpha$ minimizes $f(x_1^{(1)}, x_2^{(1)})$ and we achieve this by setting
+$\frac{\partial f }{\partial \alpha} =0 $. We get $\alpha = \frac{5}{17}$, and the corresponding $(x_1^{(1)}, x_2^{(1)}£©$ is\\
+\begin{align*}
+	 (x_1^{(1)}, x_2^{(1)}) & = (x_1^{(0)}, x_2^{(0)}) + \alpha {\bf \hat d}^{(0)} \\
+	 x_1^{(1)} & = -\frac{1}{2} + \frac{5}{17} \times 2 = \frac{3}{34} \\ 
+	 x_2^{(1)} & = 1 - \frac{5}{17} = \frac{12}{17}\\
+\end{align*}
+4)Error term.\\
+Since we can easily know the the minimum point of $f(x_1, x_2)$ is (0,0) without doing any calculation. We can calculate the error term which gives us how far we are still off the minimum point. We define the error term as
+\begin{align*}
+	e^{(1)} = (0, 0) - (x_1^{(1)}, x_2^{(1)}) = (-\frac{3}{34}, -\frac{12}{17}).
+\end{align*}
+\noindent 5) Finally, we work on an interest fact by look at a matrix multiplication
+\begin{align*}
+	&{\bf d^{(0)}} A {\bf e^{(1)}} \\
+	& = \left( 
+	\begin{array}{c c}
+	\frac{2}{\sqrt{5}} & -\frac{1}{\sqrt{5}}\\
+	\end{array}
+	\right)
+	\left( 
+	\begin{array}{c c}
+	4 & 0 \\
+	0 & 1 \\
+	\end{array}
+	\right)
+	\left( 
+	\begin{array}{c}
+	-\frac{3}{34} \\
+	-\frac{12}{17} \\
+	\end{array}
+	\right)
+	=0
+\end{align*}
+	Orthogonal!!! This means the error term and moving direction are A- orthogonal. This is a very interesting point. But why?\\
+{\bf b. Proof of orthogonality}\\
+Now we suppose the $f({\bf x}) = f(x_1, x_2, ... , x_i, ..., x_N )$ take a more general quadratic form\\
+\begin{align*}
+	f({\bf x}) & =	\frac{1}{2} {\bf x}^T A {\bf x} - {\bf b}^T {\bf x} + c \\
+			   & =	\frac{1}{2} ( \sum_i a_{ii} x_i^2 + 2\sum_{i, j, i < j}  a_{ij} x_i x_j ) - \sum_i b_i x_i + c \\     
+\end{align*}
+Now taking the derivative,
+\begin{align*}
+	& \frac{\partial f({\bf x} )}{\partial x_k} \\
+  = & a_{kk} x_k + \sum_{j \neq k} a_{kj} x_j  - b_k\\
+  = & \sum_j a_{kj} x_j - b_k\\ 	
+\end{align*}
+The last line is the same as the first row result of matrix Ax -b. So 
+\begin{align*}
+	& \left( 
+	\begin{array}{c}
+	\frac{\partial f({\bf x})}{\partial x_1} \\
+	\frac{\partial f({\bf x})}{\partial x_2} \\
+	...\\
+	\frac{\partial f({\bf x})}{\partial x_N} \\
+	\end{array}
+	\right) \\
+	 = & \left( 
+	\begin{array}{c}
+     \sum_j a_{1j} x_j - b_1\\ 	
+     \sum_j a_{2j} x_j - b_2\\ 	
+     ...\\ 	
+     \sum_j a_{Nj} x_j - b_N\\ 	
+	\end{array}
+	\right) \\
+	 = & Ax-b
+\end{align*}
+We choose $f({\bf x}^{(1) })$ such that
+\begin{align*}
+& \frac{\partial f(x^{(1)}) }{\partial \alpha}  = 0 \\
+\end{align*}
+So,
+\begin{align*}
+& \frac{\partial f(x^{(1)}) }{\partial \alpha} \\
+& = \sum_i\frac{\partial f(x_i^{(1)} )}{\partial x_i^{(1)}}\frac{\partial x_i^{(1)} }{\partial \alpha}
+& = \nabla f({\bf x}^{(1)}) \cdot d^{0} 
+& = (A x^{(1)} - b) \cdot d^{0}
+\end{align*}
+While we know that
+\begin{align*}
+	Ae^{(1)} = A(x^{(min)} - x^{(1)})  = b-A x^{(1)}
+\end{align*}
+This leads to
+\begin{align*}
+	d^{(0)}^T A e^{(1)} = 0
+\end{align*}
+So by choosing $\alpha$ that minimize $f({\bf x^{(1)})$, we automatically guarantee that the moving direction is A-orthogonal to the error term. The orthogonality relationship is due to the nature that $f({\bf x})$is quadratic. If we take a f(x) with a different form, it is not guaranteed to have this relationship. Proof completed.\\
+7) 
+The A-orthogonal relationship provides us a way to solve for $\alpha$. We notice that $e^{(1)} = e^{(0)} + \alpha d^{(0)}$, then we have
+\begin{align*}
+	d^{(0)}^T A (e^{(0)} + \alpha d^{(0)}) = 0
+\end{align*}
+Solve for $\alpha$\\
+\begin{align*}
+	\alpha & = \frac{d^{(0)}^T A e^{(0)} }{d^{(0)}^T A d^{(0)} }\\
+	       & = \frac{d^{(0)}^T A {\bf x_{min} - x^{(0)}} }{d^{(0)}^T A d^{(0)} }\\
+\end{align*}
+{\bf c. Steps of convergence}
+In the example we did in the intuition, the $f({\bf x})$ only has two variables. And we have proved that after moving one step, the error term is A-orthogonal to the moving direction. So we need to enforce the next moving direction is A-orthogonal to the current one. We now prove that by enforcing each moving directions are A-orthogonal to each other, we guarantee that the algorithm can converge using exact n step, where n is the number of variables.\\
+\noindent Proof:\\
+We express the error term $e^{(0)}$ at step 0 as a linear combinations of n searching directions\\
+\begin{align*}
+	e^{(0)} = \sum_{j=0} ^{n-1} \delta_j d^{(j)}\\
+\end{align*}
+Where $\delta_j$ is a scalar. We find $\delta_j$ by multiplying $d^{(k)}^T A$ on both sides
+\begin{align*}
+	d^{(k)}^T A e^{(0)} & = \sum_{j=0} ^{n-1} \delta_j d^{(k)}^T A d^{(j)} \\
+	d^{(k)}^T A e^{(0)} & = \delta_k d^{(k)}^T A d^{(k)} \\
+\end{align*}
+
+\begin{align*}
+	\delta_k & = \frac{d^{(k)}^T A e^{(0)}}{d^{(k)}^T A d^{(k)}} \\
+			 & = \frac{d^{(k)}^T A e^{(k)} + \sum_{i=0}^{k-1} \alpha_i d^{(i)}}{d^{(k)}^T A d^{(k)}} \\
+			 & = \frac{d^{(k)}^T A e^{(k)}}{d^{(k)}^T A d^{(k)}}
+\end{align*}
+We found that 
+\begin{align*}
+	\alpha_i = -\delta_i
+\end{align*}
+So
+\begin{align*}
+	e^{(k)} = e^{(0)} + \sum_{i=0}^{k-1} \alpha_i d^{(i)} \\
+	        = \sum_{i=0}^{n-1} \delta_i d^{(i)} - \sum_{i=0}^{k-1} \alpha_i d^{(i)}
+	        = \sum_{j=k}^{n-1} \delta_i d^{(i)}
+\end{align*}
+We see that when i = n, $e^{(n)} = 0$
+
+\section{Hession Based Method}
 \subsection{Newton Method}
 \noindent {\bf a. Newton Method Principles}\\
 Based on Taylor¡¯s expansion if we are at $x_0$, we try to find $\delta x$ so that $x_0 + \delta x$ is closer to the stationary point.\\
@@ -57,14 +233,15 @@ therefore
  
 \noindent{\bf c. Connection with Gradient descent}
 The newton method can be reduce to gradient descent method by taking Hessian matrix as Identity matrix\\
+
 \noindent{\bf d. Pros} 
 Since it utilizes the second order derivative, it converges much faster than gradient descent.\\
 For quadratic function, the equation from the Taylor expansion is exact, therefore the stationary point can be found using only one step.\\
+
 \noindent{\bf e. Cons}
 Need to evaluate the inverse of the Hessian Matrix, so it is computationally expensive.\\
 
-\subsection{Other optimization method}
-\noindent{\bf a.	Quasi Newton}
+\subsection{Quasi Newton}
 Newton method requires the inverse of the Hessian matrix, which is usually not easy to solve. So we need to find an approximation of the Hessian. Similar to the way we solve for gradient, we can use finite difference method, in which the gradient is
 \begin{align*}
 	grad f(x) = \frac{f(x+\delta x) - f(x)} {\delta x}, 
@@ -80,6 +257,6 @@ replace the Hessian Matrix with an approximation that satisfies the following ap
 \end{align*}
 This is quasi newton method. Various Quasi Newton methods exist with different choice of B.\\
 
-{\bf b.	Levenburg Marquadt}
+\section{Levenburg Marquadt}
 This Method adds a scaled Identity matrix uI to the Hessian, for large u and small Hessian, the method is equivalent to gradient descent with step size 1/u.\\
 \end{document}
