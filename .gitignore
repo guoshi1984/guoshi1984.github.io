@@ -1,3 +1,4 @@
 ./physics_ee/*.log
+./machine_learning/*.log
 ./src/java/linkedlist/*.class
 ./src/java/stack/*.class
