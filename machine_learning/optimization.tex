@@ -84,7 +84,7 @@ At point $(x_1^{(0)}, x_2^{(0)})$, $\hat d$ is
 	f(x_1^{(1)}, x_2^{(1)}) & = \frac{17}{2} \alpha ^2 - 5 \alpha + 1\\
 \end{align*}
 We choose $\alpha$ such that $\alpha$ minimizes $f(x_1^{(1)}, x_2^{(1)})$ and we achieve this by setting
-$\frac{\partial f }{\partial \alpha} =0 $. We get $\alpha = \frac{5}{17}$, and the corresponding $(x_1^{(1)}, x_2^{(1)}£©$ is\\
+$\frac{\partial f }{\partial \alpha} =0 $. We get $\alpha = \frac{5}{17}$, and the corresponding $(x_1^{(1)}, x_2^{(1)} ) $ is\\
 \begin{align*}
 	 (x_1^{(1)}, x_2^{(1)}) & = (x_1^{(0)}, x_2^{(0)}) + \alpha {\bf \hat d}^{(0)} \\
 	 x_1^{(1)} & = -\frac{1}{2} + \frac{5}{17} \times 2 = \frac{3}{34} \\ 
@@ -117,8 +117,8 @@ Since we can easily know the the minimum point of $f(x_1, x_2)$ is (0,0) without
 	\right)
 	=0
 \end{align*}
-	Orthogonal!!! This means the error term and moving direction are A- orthogonal. This is a very interesting point. But why?\\
-{\bf b. Proof of orthogonality}\\
+	Orthogonal!!! This means the error term and moving direction are A-orthogonal. The fact of orthogonality holds if the $f({\bf x})$ has more than two variables. This is a very interesting point. But why?\\
+{\bf b. Proof of A-orthogonality}\\
 Now we suppose the $f({\bf x}) = f(x_1, x_2, ... , x_i, ..., x_N )$ take a more general quadratic form\\
 \begin{align*}
 	f({\bf x}) & =	\frac{1}{2} {\bf x}^T A {\bf x} - {\bf b}^T {\bf x} + c \\
@@ -169,7 +169,11 @@ This leads to
 \begin{align*}
 	d^{(0)}^T A e^{(1)} = 0
 \end{align*}
-So by choosing $\alpha$ that minimize $f({\bf x^{(1)})$, we automatically guarantee that the moving direction is A-orthogonal to the error term. The orthogonality relationship is due to the nature that $f({\bf x})$is quadratic. If we take a f(x) with a different form, it is not guaranteed to have this relationship. Proof completed.\\
+So by choosing $\alpha$ that minimize $f({\bf x^{(1)})$, we automatically guarantee that the moving direction is A-orthogonal to the error term. Proof completed. We note the in the proof above we use the moving direction at step 0 and the error term in step 1, but it is easy to generalize this relationship to any step. In other words, the following relationship holds at step i.
+\begin{align*}
+	d^{(i)}^T A e^{(i+1)} = 0
+\end{align*}
+The orthogonality relationship is due to the nature that $f({\bf x})$is quadratic. If we take a f(x) with a different form, it is not guaranteed to have this relationship. \\
 7) 
 The A-orthogonal relationship provides us a way to solve for $\alpha$. We notice that $e^{(1)} = e^{(0)} + \alpha d^{(0)}$, then we have
 \begin{align*}
