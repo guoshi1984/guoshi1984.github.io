@@ -1,0 +1,86 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Transmission Line}
+The transmission line in general refers two conductor line with some kind of dielectric materials in between. The two conductor lines build oscillating voltage across each other and a E-M waves is transmitted inside the dielectric materials.
+\subsection{Transmission Line Model}
+{\bf a. Wave equation}\\
+For most common transmission lines, they can be considered as a set of series inductors, shunt capacitance and resistors:\\
+The distributed resistance R of the conductors is represented by a series resistor (expressed in ohms per unit length).\\
+The distributed inductance L (due to the magnetic field around the wires, self-inductance, etc.) is represented by a series inductor (in henries per unit length).\\
+The capacitance C between the two conductors is represented by a shunt capacitor (in farads per unit length).\\
+The conductance G of the dielectric material separating the two conductors is represented by a shunt resistor between the signal wire and the return wire (in siemens per unit length).\\
+We consider an ideal case in which the resistance R and G are negligible meaning the transmission line is lossless. And we also assume the inductor and capacitor both have unit length. Based on Maxwell's equation, at a certain point z of the transmission line, the voltage across the two conductor line V and the current I satisfy the following equation
+\begin{align*}
+	\frac{\partial V}{\partial z} & = -L \frac{\partial I}{\partial t} \\
+	\frac{\partial I}{\partial z} & = -C \frac{\partial V}{\partial t} \\
+\end{align*}
+It is possible to show that $V(z)$ and $I(z)$ satisfy
+\begin{align*}
+	V(z) = V_1 e^{-jkz} + V_2 e^{+jkz} \\
+	I(z) = \frac{V_1}{Z_0} e^{-jkz} - \frac{V_2}{Z_0} e^{+jkz}
+\end{align*}
+Where $Z_0 = \sqrt{\frac{L}{C}}$\\
+{\bf b. Characteristic impedance}\\
+The reason we define a characteristic impedance is that with characteristic impedance we are able to use Ohm's law as the voltage current relationship. We all know Ohm's law applies to the DC case. In an AC circuit with capacitors and inductors, the voltage and current change over time and they are not always in phase, therefore it is not easy to apply Ohm's law directly. With characteristic impedance defined in both magnitude and phase, we are able to generalize the Ohm's in AC circuit.\\
+Based on the derivation above, the characteristic impedance is 
+\begin{align*}
+	Z_0 = \sqrt{\frac{L}{C}}
+\end{align*}
+There is one property of the characteristic impedance is it does not depend on length. From the previous derivation we assume the capacitance and inductance take the unit length. If they have real length  $\Delta z$, then the characteristic impedance becomes
+\begin{align*}
+	Z_0 = \sqrt{\frac{L \Delta z}{C \Delta z}} = \sqrt{\frac{L}{C}}
+\end{align*}
+\subsection{Reflection Coefficients and Impedance Matching}
+{a. Reflection coefficients}\\
+When the voltage propagates along the transmission line, eventually it will hit the end of the transmission line. What happens next and how do we solve it? In general, every EM problem can be answered by solving Maxwell's equations plus boundary conditions. In this particular case, we can solve it using wave equation derived above based on Maxwell's equations plus the Kirchhoff's law as our boundary conditions. When a wave reaches the boundary of two different media, there usually exists reflection wave. Here we define the reflection coefficient as ratio of refection voltage to the incident voltage. If a resistor $Z_L$ is connected across two conductor wires at the end of the transmission line, then the refection coefficients can be derived
+\begin{align*}
+	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0}
+\end{align*}
+{b. Refection examples in special cases}\\
+(1) When $Z_L = \infty$\\
+When $Z_L = \infty$, the end is open. When a current flows to the end point, the Kirchhoff's law requires that there must be an current with same magnitude but in opposite direction. Therefore, the voltage of reflection wave $V_r$ is equal to the voltage of the incident wave $V_i$
+\begin{align*}
+	V_r = V_i
+\end{align*}
+In this case $\Gamma = 1$. We can check this by the definition of $\Gamma$
+\begin{align*}
+	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0} = \frac{\infty + Z_0}{\infty - Z_0} = 1
+\end{align*}
+(2) When $Z_L = 0$\\
+When $Z_L = 0$, at the end point, the voltage is always zero. By Kirchhoff's law, there must be a refection wave that cancels the incident wave such that the total voltage vanishes. So\\
+\begin{align*}
+	V_r = - V_i
+\end{align*}
+In this case, $\Gamma = -1$. We can also check this by the definition of $\Gamma$
+\begin{align*}
+	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0} = \frac{0 + Z_0}{0 - Z_0} = 1
+\end{align*}
+\section{S parameters}
+Consider a two port system with port 1 and port 2. For example, the system could be a band pass filter with one port as input, and the other port as output. We define $a_1$ and $a_2$ to be the incident waves and the  $b_1$ and $b_2$ to be the reflected waves with the subscript being port number.  
+In this case the relationship between the reflected, incident power waves and the S-parameter matrix is given by:
+
+\begin{align*}
+	\left(
+	\begin{array} {c}
+		 b_1 \\
+		 b_2\\
+	\end{array}
+	\right)\\
+		= 
+	\left( 
+	\begin{array} {c c}
+	 	S_{11} & S_{12} \\
+		S_{21} & S_{22} \\
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		 a_1 \\
+		 a_2\\
+
+	\end{array}
+	\right)
+\end{align*}
+\end{document}
