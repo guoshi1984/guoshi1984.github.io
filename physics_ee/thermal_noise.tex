@@ -9,31 +9,39 @@ We all know that the thermal noise is
 \begin{align*}
 	P_{dBm} = -174 + 10 log_{10}(\Delta f) \\
 \end{align*}
-However, few resource explains clearly where the number -174 comes from. This article aims to provide a full derivation from physics. We consider a one dimensional black-body radiation. Consider a circuit that has two resistors(R1 and R2 with R1=R2=R) and they are connected in series with two transmission line L.  When the system reaches its equilibrium, the power emitted by the resistor R1 propagating  must be equal to the power absorbed by the resistor R2, and vice versa. 
+However, few resource explains clearly where the number -174 comes from. This article aims to provide a full derivation from physics. We consider a one dimensional black-body radiation. Consider a circuit that has two resistors(R1 and R2 with R1=R2=R) and they are connected in series with a transmission line L.  When the system reaches its equilibrium, the power emitted by the resistor R1 propagating along the transmission line must be absorbed by the resistor R2, and vice versa. 
 \begin{align*}
 	P_a = P_e
 \end{align*}
-The wave in Transmission Line can be written as 
+The wave in the transmission line can be written as 
 \begin{align*}
 	V = V_0 exp(i(kx - \omega t))
 \end{align*}
-The density of states dn/dp can be derived using uncertainty principle $n = 2\frac{\Delta x \Delta p}{h}$,
-where the factor of 2 is well know for the up and down spin. In this case, as we consider the EM wave in the transmission line, we can think factor of 2 as the 2 direction of propagation. 
+Since the quantum of EM field is photon which is a Boson following Bose distribution, the power of the wave in the transmission line is given by 
+\begin{align*}
+	P_e & = \frac{1}{\Delta t} \frac{dn}{d \omega} \int E(\omega) d \omega \\
+\end{align*}
+Where $\frac{dn}{d \omega}$ is the density of states and we can derive this based on uncertainty principle. We know
+\begin{align*}
+	\Delta n = 2\frac{\Delta x \Delta p}{h},
+\end{align*}
+where the factor of 2 is well know for the up and down spin. In this case, as we consider the EM wave in the transmission line, we can think factor of 2 as the forward and backward direction of propagation. 
 \begin{align*}
 	dn = 2\frac{L}{h}dp\\
-	dp = 2\frac{\hbar}{v} d \omega \\
+	dp = \frac{\hbar}{v} d \omega \\
 	\frac{d n}{d \omega} =\frac{L}{\pi v}
 \end{align*}
 Based on B.E distribution, the power is
 \begin{align*}
 	P_e & = \frac{1}{\Delta t} \frac{dn}{d \omega} \int E(\omega) d \omega \\
-	& = \frac{1}{\Delta t} \frac{L}{2 \pi v} \int \frac{\hbar \omega}{exp( \frac{\hbar \omega}{k_B T})-1} d \omega \\
-	& = \frac{1}{\pi} \frac{\hbar \omega}{exp( \frac{\hbar \omega}{k_B T})-1} d \omega
+	& = \frac{1}{\Delta t} \frac{L}{ \pi v} \int \frac{\hbar \omega}{exp( \frac{\hbar \omega}{k_B T})-1} d \omega \\
+	& = \frac{1}{\pi} \int \frac{\hbar \omega}{exp( \frac{\hbar \omega}{k_B T})-1} d \omega
 \end{align*}
 and having $\hbar \omega << k_B T$,
 \begin{align*}
-	P_e	& = \frac{1}{ \pi} k_B T d \omega\\
-	    & = 2 k_B T df\\
+	P_e	& = \int \frac{1}{ \pi} k_B T d \omega\\
+	    & = \int 2 k_B T df\\
+	    & = 2 k_B T \Delta f
 \end{align*}
 This is the total power in the transmission line emitted by 2 resistor, therefore, for each resistor, the power is
 %\begin{align*}
