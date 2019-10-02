@@ -1,6 +1,5 @@
 ./physics_ee/*.log
 ./physics_ee/*.aux
 ./machine_learning/*.log
-
 ./src/java/linkedlist/*.class
 ./src/java/stack/*.class
