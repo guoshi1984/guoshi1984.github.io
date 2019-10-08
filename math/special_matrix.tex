@@ -43,7 +43,81 @@ Orthogonal matrix arise from dot product. Consider vector u , and a matrix Q. Wh
 \end{align*}
 So $Q^T Q =1$, $Q^T = Q^{-1}$.\\
 {\bf Properties}\\
-Orthogonal matrices imply orthogonal transformations. Examples include rotations, reflections and combinations\\
+Transformations by orthogonal matrices are called orthogonal transformations. One property of orthogonal transformation is it preserves the angles between the two vectors. If Q is an orthogonal matrix($Q^T Q = I$), then for vectors x and y, we have
+\begin{align*}
+	<Qx, Qy> = <xQ>^T <Qy> = x^T Q^T Q y = x^T y = <x, y>
+\end{align*}
+so the new angle between $Qx$ and $Qy$ is
+\begin{align*}
+	arccos(\frac{<Qx, Qy>}{||Qx||_2 ||Qy||_2}) = arccos(\frac{<x, y>}{||x||_2 ||y||_2})
+\end{align*}
+The new angle is equal to the old angle of $x$ and $y$. Take an two dimension vector as an example. If Q is
+\begin{align*}
+	\left(  \begin{array} {cc}
+		q_{11} & q_{12}\\
+		q_{21} & q_{22} \\
+		\end{array}
+		\right)
+\end{align*}
+And $x = (x_1, x_2)^T$, $y = (y_1, y_2)^T$, if $<x, y> = 0$. Then
+\begin{align*}
+	\left(  \begin{array} {cc}
+		q_{11} & q_{12}\\
+		q_{21} & q_{22} \\
+		\end{array}
+		\right)
+		\left(  \begin{array} {c}
+		x_{1} \\
+		x_{2} \\
+		\end{array}
+		\right)
+		=
+		\left(  \begin{array} {c}
+		q_{11}  x_1 + q_{12} x_2 \\
+		q_{21}  x_1 + q_{22} x_2\\
+		\end{array}
+		\right)
+\end{align*}
+
+\begin{align*}
+	\left(  \begin{array} {cc}
+		q_{11} & q_{12}\\
+		q_{21} & q_{22} \\
+		\end{array}
+		\right)
+		\left(  \begin{array} {c}
+		y_{1} \\
+		y_{2} \\
+		\end{array}
+		\right)
+		=
+		\left(  \begin{array} {c}
+		q_{11}  y_1 + q_{12} y_2 \\
+		q_{21}  y_1 + q_{22} y_2\\
+		\end{array}
+		\right)
+\end{align*}
+Then
+\begin{align*}
+	&\left(  \begin{array} {cc}
+		q_{11}  x_1 + q_{12} x_2 & q_{21}  x_1 + q_{22} x_2\\
+		\end{array}
+		\right)
+		\left(  \begin{array} {c}
+		q_{11}  y_1 + q_{12} y_2 \\
+		q_{21}  y_1 + q_{22} y_2\\
+		\end{array}
+		\right) \\
+		 = &	
+		q_{11}^2  x_1 y_1 + q_{11} q_{12} (x_1 y_2 + x_2 y_1) + q_{12}^2 x_2 y_2 
+		+ q_{21}^2  x_1 y_1 + q_{21} q_{22} (x_1 y_2 + x_2 y_1) + q_{22}^2 x_2 y_2 \\
+		 = & x_1 y_1 ( q_{11}^2 + q_{21}^2 ) + x_2 y_2 (q_{12}^2 + q_{22}^2) 
+		+ (q_{11}q_{12} + q_{21}q_{22}) (x_1 y_2 + x_2 y_1) \\
+		 = & x_1 y_1 * 1 + x_2 y_2 *1 + 0 (x_1 y_2 + x_2 y_1) \\
+		 = & x_1 y_1 + x_2 y_2
+\end{align*}
+%Examples include rotations, reflections and combinations\\
+
 {\bf Examples}\\
 1) Rotation Matrix
 \begin{align*}
