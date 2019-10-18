@@ -21,6 +21,7 @@ SNR in dB is
  = & 10 log_{10}(P_{signal}) - 10 log_{10}(P_{noise}) \\
  = & P_{signal, dB} - P_{noise, dB}\\
 \end{align*}
+We see by using the unit of dB, the ratio of the power turns into addition or subtraction.
 \section{Nonlinear Effect}
 Nonlinear effect means when a signal is passed into a device, the relationship between the output and input is not linear. This article aims to provide an explanation of the nonlinear process.
 \subsection{Harmonics}
@@ -39,17 +40,35 @@ In the above derivation, the amplitude of $cos w_i t$ is $a_1 V_{im} + \frac{3}{
 \subsection{Intermodulation}
 Suppose we have two input signals
 \begin{align*}
-	V_i(t) = V_{1m} cos(\omega_1 t) + V_{2m} cos(\omega_2 t)
+	V_{in}(t) = V_{1m} cos(\omega_1 t) + V_{2m} cos(\omega_2 t)
 \end{align*}
-The third order output power term has two components 
+The third order output power term $V^{(3)}_{out}$has two components 
 \begin{align*}
-	P_3 = \frac{3}{4}a_3 V^2_{1m}V_{2m}cos(2\omega_1 - \omega_2)t + \frac{3}{4}a_3 V_{1m}V^2_{2m} cos(2\omega_2 - \omega_1)t
+	V^{(3)}_{out} = &  \frac{3}{4}a_3 V^2_{1m}V_{2m} cos(2\omega_1 + \omega_2)t \\
+					& + \frac{3}{4}a_3 V^2_{1m}V_{2m} cos(2\omega_1 - \omega_2)t \\ 
+					& + \frac{3}{4}a_3 V_{1m}V^2_{2m} cos(2\omega_2 + \omega_1)t \\
+				    & + \frac{3}{4}a_3 V_{1m}V^2_{2m} cos(2\omega_2 - \omega_1)t \\	
 \end{align*}
+Since these components come from sources with two frequencies $\omega_1$ and $\omega_2$, we call it {\bf intermodulation}. In general, the output contain components at frequencies such as $k_1 \omega_1 + k_2 \omega_2$. The order $O$ of the intermodulation is defined as the sum of the coefficients in the frequencies
+\begin{align*}
+	O = \sum_i|k_i|
+\end{align*}
+So we call $V^{(3)}_{out}$ as {\bf third order intermodulation power} because $|k_1| + |k_2| = 3$.
 if $V_{1m} = V_{2m} = V_m$
 \begin{align*}
-	P_3 = \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 - \omega_2)t +  cos(2\omega_2 - \omega_1)t]
+	V^{(3)}_{out} = \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 - \omega_2)t +  cos(2\omega_2 - \omega_1)t] \\
+					+ \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 + \omega_2)t +  cos(2\omega_2 + \omega_1)t]
 \end{align*}
-Since this power term has two frequency components, we call it {\bf intermodulation power}, and we cal $P_3$ as {\bf third order intermodulation power}.
+We are in particular interested in the components at $2\omega_1 - \omega_2$ and $2\omega_2 - \omega_1$,
+because as $\omega_1$ approaches $\omega_2$, they fall within the vicinity of the original frequency components, and may therefore interfere with the desired behavior. The intermodulation distortion({\bf IMD}) is the ratio of the output power at the combination frequency to the output power at the fundamental. For example, if $V_{1m} = V_{2m} = V_m$
+\begin{align*}
+	V^{(3)}_{out} = \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 - \omega_2)t +  cos(2\omega_2 - \omega_1)t] \\
+					+ \frac{3}{4}a_3 V^3_{m}[cos(2\omega_1 + \omega_2)t +  cos(2\omega_2 + \omega_1)t]
+\end{align*}
+For combination frequency $|2\omega_1 - \omega_2|$ and the fundamental $\omega_1$, the {\bf IMD} is
+\begin{align*}
+	IMD = (\frac{3a_3 V_m^2}{4 a_1})^2
+\end{align*}
 \subsection{3rd order intercept point}
 The output power at base frequency 
 \begin{align*}
