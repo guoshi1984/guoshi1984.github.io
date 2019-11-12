@@ -89,13 +89,21 @@ To find out the total current in y direction, we have to know the degeneracy, wh
 \begin{align*}
 	\frac{dn}{dk} = \frac{L_y}{2 \pi}
 \end{align*}
-The total current is
+If the total density of states is n, then the density in a unit length in y direction becomes $\frac{n}{L_y}$, the The total current is
 \begin{align*}
-	I_y = e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eEL_y}{2\pi B} \int k
+	I_y = = \frac{n}{L_y} e v_y =\frac{1}{L_y}e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eE}{2\pi B} \int dk
 \end{align*}
 The range of k in the above integral is tricky. From the wavefunction, we see the center of the harmonic oscillator in x direction is $x = -k\hbar/eB$, while $ 0 \leq x \leq L_x$, then $-L_x eB/\hbar  \leq k \leq 0$.
 \begin{align*}
-	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
+	I_y = \frac{eE}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EL_x
+\end{align*}
+Then the current density j is defined as the charge flows through a unit area within a unit of time. Since our system is 2 dimensional, the unit area becomes the unit length in x direction.
+\begin{align*}
+	j = \frac{I_y}{L_x} = \frac{e^2}{h}E = \sigma E
+\end{align*}
+where 
+\begin{align*}
+	\sigma = \frac{e^2}{h}
 \end{align*}
 The second way is purely quantum approach. We need the following steps in order to derive the expression of the current. 
 1) In quantum mechanics, we represent every physical quantity using an operator. So the first step is to find out the expression of velocity operator. \\
