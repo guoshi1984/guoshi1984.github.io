@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}\
+\documentclass[a4paper]{article}
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
@@ -10,8 +10,7 @@ We assume the stock prices following a geometric Brownian motion\\
 \begin{align*}
 	 dS(t) = \alpha S(t) dt + \sigma S(t) dW(t)\\
 \end{align*}
-                   
-
+ 
 \noindent 2) We have a portfolio X(t) which consists of $\Delta(t)$ share of stock  $\Delta(t) S(t)$, and $(X(t) - \Delta (t) S(t))$ money market account with interest rate r. \\  
 \begin{align*}
 	X(t) = \Delta(t) dS(t) + r(X(t) -\Delta(t) S(t)) dt\\
@@ -46,11 +45,22 @@ dW(t) term:
 \end{align*}
 dt term:
 \begin{align*}
-	rc(t, S)  = c_t (t, S(t)) + r S(t) + \frac{1}{2} \sigma^2 S^(t) \frac{\partial c(t, S(t))}{\partial S^2(t)}  \\
+	rc(t, S)  = c_t (t, S(t)) + r S(t) + \frac{1}{2} \sigma^2 S(t) \frac{\partial c(t, S(t))}{\partial S^2(t)}  \\
 \end{align*}
-which is known as Black-Scholes-Merton partial differential equation.\\
-
-
-
-
+which is known as Black-Scholes-Merton partial differential equation.
+\section{Connection to Faynman-Kac formula}
+In risk-neutral measure, we write the stock price as
+\begin{align*}
+	dS(t) = rS(t) dt + \sigma S(t) d \tilde W(t) 
+\end{align*}
+Where $W(t)$ is a standard Brownian motion under risk-neutral measure.\\
+According to the risk-neutral pricing formula, the price of the derivative security at time t is
+\begin{align*}
+	V(t) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)]
+\end{align*}
+Since the stock price is Markov and the payoff is a function fo the stock price alone, based on Faynman-Kac formula, there is a function $v(t,x)$ such that $V(t) = v(t, S(t))$, and $v(v, S(t))$ must satisfy discounted partial differential equation 
+\begin{align*}
+	v_t(t,x) + rx v_x(t,x) + \frac{1}{2} \sigma^2 x^2 v_{xx}(t,x) = rv(t,x)
+\end{align*}
+Now we have seen two ways of showing the Black-Scholes-Merton equation. One way is to reproduce the payoff of the option using a portfolio that consists of a saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
 \end{document}

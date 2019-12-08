@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  20 JUL 2019 21:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.30)  4 DEC 2019 10:04
 entering extended mode
 **"C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/stochastic_finance/change_measure.tex"
 ("C:/Users/shi.guo/OneDrive - Advantest/Desktop/study/notes/guoshi1984.github.io/stochastic_finance/change_measure.tex"
@@ -285,10 +285,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--71
 
  []
 
-Missing character: There is no ¡ in font cmr10!
-Missing character: There is no ¯ in font cmr10!
-Missing character: There is no ¡ in font cmr10!
-Missing character: There is no ¯ in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no ¿ in font cmr10!
+Missing character: There is no ½ in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no ¿ in font cmr10!
+Missing character: There is no ½ in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no ¿ in font cmr10!
+Missing character: There is no ½ in font cmr10!
+Missing character: There is no ï in font cmr10!
+Missing character: There is no ¿ in font cmr10!
+Missing character: There is no ½ in font cmr10!
 
 Underfull \hbox (badness 10000) in paragraph at lines 78--80
 
@@ -330,15 +338,29 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 155--157
+[3]
+
+! LaTeX Error: \begin{align*} on input line 142 ended by \end{aligh*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.145 \end{aligh*}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 165--167
 
  []
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.165 E^
+l.175 E^
         {'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]\\
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -346,18 +368,18 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.166 
+l.176 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 158--166
+Underfull \hbox (badness 10000) in paragraph at lines 168--176
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--169
+Underfull \hbox (badness 10000) in paragraph at lines 177--179
 
  []
 
@@ -368,24 +390,24 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.171 W
+l.181 W
        e model the stock price using geometric Brownian motion\\
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 174--176
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--181
+Underfull \hbox (badness 10000) in paragraph at lines 188--191
 
  []
 
@@ -399,7 +421,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  39i,10n,26p,657b,131s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on change_measure.pdf (6 pages, 139664 bytes).
+Output written on change_measure.pdf (6 pages, 140360 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

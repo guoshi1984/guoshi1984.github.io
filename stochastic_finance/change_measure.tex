@@ -70,7 +70,7 @@ Check  P[0,1] = 1; P(0)=0;\\
 Consider the transformation \\
 \begin{align*}
 	&P^{'}(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))\\
-	&dP{¡¯}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
+	&dP{ï¿½ï¿½}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
 \end{align*}
 So
 \begin{align*}
@@ -136,7 +136,17 @@ Then solve for p and q, we have
 p= \frac{r - \alpha + \sigma}{2 \sigma} \\
 q= \frac{\alpha - r + \sigma}{2 \sigma} \\
 \end{align*}
-We call this {\bf risk-neutral measure}. Under this measure, the expectation of the stock return is the same as the return of saving account. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is exactly 1+r. The same argument holds for $r < \alpha$. 
+We call $p$ and $q$ the probabilities under {\bf risk-neutral measure}. Under this measure, the expectation of the stock return is the same as the return of saving account. To understand this measure, we can see when $\alpha > r$ then $q(H)< q(T)$, so we lower the prob of stock moving up and raise the prob of the stock moving down such that the return is exactly 1+r. The same argument holds for $r < \alpha$. 
+
+A very important property of risk-neutral measure is the discounted price of the portfolio with respect to time is a {\bf martingale}. From the above equation, if we define the discounted price of S is DS, where 
+\begin{align*}
+DS_0 = S_0\\
+DS_1 = \frac{1}{1+r} S_1
+\end{aligh*}
+we can see
+\begin{align*}
+S_0 = \frac{1}{1+r} (p S_1(H) + q S_1(T)) = p DS_1(H) + q DS_1(T) = \tilde E[DS_1]
+\end{align*}
 
 
 \subsection{Girsanov's Theorem}
