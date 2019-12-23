@@ -80,7 +80,7 @@ and the energies are
 \begin{align*}
 	E_{n,k} = \hbar \omega_B (n+ \frac{1}{2}) -eE(\frac{\hbar k}{eB}+\frac{eE}{m\omega_B^2})+\frac{m}{2}\frac{E^2}{B^2}
 \end{align*}
-Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
+Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. In semiclassical approximation, we use a wave packet to describe the behavior of particles, and the velocity of the particle is the velocity of the wave pack. For given a wavevector k, the velocity is
 \begin{align*}
 	v_y = \frac{1}{\hbar} \frac{\partial E_{n,k}}{\partial k} = -\frac{E}{B}
 \end{align*}
@@ -91,11 +91,11 @@ To find out the total current in y direction, we have to know the degeneracy, wh
 \end{align*}
 If the total density of states is n, then the density in a unit length in y direction becomes $\frac{n}{L_y}$, the The total current is
 \begin{align*}
-	I_y = = \frac{n}{L_y} e v_y =\frac{1}{L_y}e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eE}{2\pi B} \int dk
+	I_y = \frac{n}{L_y} e v_y =\frac{1}{L_y}e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eE}{2\pi B} \int dk
 \end{align*}
 The range of k in the above integral is tricky. From the wavefunction, we see the center of the harmonic oscillator in x direction is $x = -k\hbar/eB$, while $ 0 \leq x \leq L_x$, then $-L_x eB/\hbar  \leq k \leq 0$.
 \begin{align*}
-	I_y = \frac{eE}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EL_x
+	I_y = \frac{eE}{2\pi B} \int_{-L_xeB/\hbar}^0 dk = \frac{e^2}{h}EL_x
 \end{align*}
 Then the current density j is defined as the charge flows through a unit area within a unit of time. Since our system is 2 dimensional, the unit area becomes the unit length in x direction.
 \begin{align*}
@@ -104,6 +104,10 @@ Then the current density j is defined as the charge flows through a unit area wi
 where 
 \begin{align*}
 	\sigma = \frac{e^2}{h}
+\end{align*}
+The above expression of conductivity is for the electrons in one filled Landau energy level. So if there are n Landau levels filled, the conductivity is
+\begin{align*}
+	\sigma = n\frac{e^2}{h}
 \end{align*}
 The second way is purely quantum approach. We need the following steps in order to derive the expression of the current. 
 1) In quantum mechanics, we represent every physical quantity using an operator. So the first step is to find out the expression of velocity operator. \\
@@ -165,7 +169,17 @@ The current operator is
 \end{align*}
 The integral is taken over the first Brillouin zone denoted by BZ.
 We need to consider several cases to discuss the current.\\
-1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
+1) If the system preserves time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. Here is a quick proof.\\
+When the system preserves the time reversal symmetry, we have $u_n(-k) = u_n(k)^{*}$. Let us call the second term in Eqn. \ref{velocity} $v_a(k)$, where subscript a stands for anomalous. Then
+\begin{align*}
+	v_a(-k) \\
+	= & i  (<\frac{\partial u_n(-k)}{\partial {\bf k}}| \frac{\partial u_n(-k)}{\partial t}> -<\frac{\partial u_n(-k)}{\partial t}| \frac{\partial u_n(-k)}{\partial {\bf k}}>) \\
+	= & i  (<\frac{\partial u_n(k)^{*}}{\partial {\bf k}}| \frac{\partial u_n(k)^{*}}{\partial t}> -<\frac{\partial u_n(k)^{*})}{\partial t}| \frac{\partial u_n(k)^{*}}{\partial {\bf k}}>) \\
+	= & i  (<\frac{\partial u_n(k)}{\partial {\bf t}}| \frac{\partial u_n(k)}{\partial k}> -<\frac{\partial u_n(k)}{\partial k}| \frac{\partial u_n(k)}{\partial {\bf t}}>) \\
+    = & -v_a(k)
+\end{align*}
+
+In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
 2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
 {\bf Quantized current}\\
 When the first term of the velocity vanishes(in the case that all bands are fully occupied), the expression of velocity reduces to
@@ -174,9 +188,21 @@ When the first term of the velocity vanishes(in the case that all bands are full
 \end{align}
 Using the relationship 
 \begin{align*}
-	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} = -\frac{e}{\hbar} {\bf E} \times \Omega^n({\bf k})
+	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} 
 \end{align*}
-where 
+Based on the definition of crystal momentum and Newton's law
+\begin{align*}
+	\partial_t(\hbar k) = -eE
+\end{align*}
+So
+\begin{align*}
+	\partial_t = -\frac{e}{\hbar} {\bf E} \cdot \nabla_{({\bf k})}
+\end{align*}
+
+\begin{align*}
+	v_a({\bf k}) = -\frac{e}{\hbar} {\bf E} \times \Omega^{n}({\bf k})  
+\end{align*}
+where
 \begin{align*}
 	\Omega^{n}({\bf k}) = \nabla_{\bf k} \times <u_n({\bf k})|i\nabla_{\bf k}|u_n({\bf k})>
 \end{align*}

@@ -1,5 +1,7 @@
 ./physics_ee/*.log
 ./physics_ee/*.aux
 ./machine_learning/*.log
+./stochastic_finance/*.log
+./stochastic_finance/*.aux
 ./src/java/linkedlist/*.class
 ./src/java/stack/*.class
