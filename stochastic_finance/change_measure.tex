@@ -41,7 +41,7 @@ so
 	Z(T) & = \frac{P^{'}(T)}{P(T)} = \frac{2}{3}\\
 \end{align*}
 This is the change of measure for a discrete random variable. \\
-\subsection{Change of measure for a continuously random variable(uniformly distributed) } \\
+\subsection{Change of Measure for a Continuously Random Variable(Uniformly Distributed) } \\
 
 Give a random variable  X($\omega$)=x where x in [0,1]\\
 1)	\\
@@ -70,7 +70,7 @@ Check  P[0,1] = 1; P(0)=0;\\
 Consider the transformation \\
 \begin{align*}
 	&P^{'}(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))\\
-	&dP{��}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
+	&dP{'}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
 \end{align*}
 So
 \begin{align*}
@@ -79,7 +79,7 @@ So
 This is the change of measure for a continuously random variable. \\
 
 
-\subsection{Change of measure for normal distributed random variable}\\
+\subsection{Change of Measure for a Normal Distributed Random Variable}\\
 We show an example of change of measure in normal distribution. If X is N(0,1), let Y = X+ u, so Y is N(u,1), so the random variable Y does not have mean 0. However, based
 on the definition of expectation\\
 \begin{align*}
@@ -147,7 +147,7 @@ we can see
 \begin{align*}
 S_0 = \frac{1}{1+r} (p S_1(H) + q S_1(T)) = p DS_1(H) + q DS_1(T) = \tilde E[DS_1]
 \end{align*}
-
+Where $\tilde E[DS_1]$ stands for expectation of the discounted price of asset S at time 1 under risk-neutral measure.\\
 
 \subsection{Girsanov's Theorem}
 \noindent{\bf Define change of measure for continous variable}\\
@@ -177,7 +177,7 @@ E^{'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]\\
 \noindent{\bf Girsanov's Theorem}\\
 Suppose w(t) is Brownian Motion given $\Omega, F, P$ and F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $W^{'}(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $P^{'}$, $W^{'}(t)$ is Brownian motion.\\
 
-\subsection{Risk neutral measure in filtration for stock price}\\
+\subsection{Risk Neutral Measure in Filtration for Stock Price}\\
 We model the stock price using geometric Brownian motion\\
 \begin{align*}
 dS(t) = \alpha(t) S(t) dt + \sigma(t) S(t) d W(t)
