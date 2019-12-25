@@ -72,7 +72,7 @@ Since we apply similar transformation by rotation matrix and eventually we can t
 \subsection{Algorithm}
 The Jacobi iteration for a matrix A is
 \begin{align*}
-	A^{(k)} = R^T_{pkqk}(\theta_k) A^{k-1} R_{pkqk} (\theta_k)
+	A^{(k)} = R^T^{(k)}_{pq}(\theta) A^{k-1} R_{pq}^{(k)} (\theta)
 \end{align*}
 Where
 \begin{align*}
@@ -140,12 +140,12 @@ so $Re$ is the eigenvector for A.
 	A = U \Sigma V^T
 \end{align*}
 \subsection{SVD using Jacobi}
-{\bf a Definition}\\
-A matrix $A(mxn)$ can be decompose into three matrix
+{\bf a. Definition}\\
+A matrix $A(m \times n)$ can be decompose into three matrix
 \begin{align*}
 	A = U \Sigma V^T
 \end{align*}
-where $U$ is $mxm$ matrix, $\Sigma$ is $mxn$ matrix with diagonal elements only, and $V$ is $nxn$ matrix.
+where $U$ is $m \times m$ matrix, $\Sigma$ is $m \times n$ matrix with diagonal elements only, and $V$ is $n \times n$ matrix.
 {\bf Jacobi method}
 SVD using Jacobi is based on the following fact
 \begin{align*}
@@ -154,7 +154,7 @@ SVD using Jacobi is based on the following fact
 	& A^T A V = V \Sigma^T \Sigma V^T V \\
 	& A^T A V = V \Sigma^T \Sigma = \Sigma^T \Sigma V
 \end{align*}
-So V is the eigenvector matrix of $A^T A$\\, and $\Sigma^T \Sigma$ is a diagonal matrix whose elements are $\sigma_i^2$, where $\sigma_i$ is the eigenvalue of A. This can be shown as the following.\\
+So V is the eigenvector matrix of $A^T A$, and $\Sigma^T \Sigma$ is a diagonal matrix whose elements are $\sigma_i^2$, where $\sigma_i$ is the eigenvalue of A. This can be shown as the following.\\
 If $m >n $, then\\
 \begin{align*}
 	\Sigma = \left(  \begin{array} {cc}
@@ -204,7 +204,7 @@ If $m < n $, then\\
 		0 & 0 & 0\\
 	\end{array} \right)
 \end{align*}
-So $sigma_i$ can be calculated by taking the square root of the first r = min(m,n) largest values of $sigma_i^2$.\\
+So $\sigma_i$ can be calculated by taking the square root of the first r = min(m,n) largest values of $\sigma_i^2$.\\
 The U can be obtains in two ways. One is using Jacobi method again.
 \begin{align*}
 	& A A^T =  U \Sigma V^T (U \Sigma V^T)^T = U \Sigma V^T V \Sigma U^T = U \Sigma \Sigma^T U^T \\
