@@ -59,23 +59,23 @@ Namely,\\
 	|A| = \sum_{ \sigma(\pi_j)} a_{1 j_1} a_{2 j_2}＃.a_{n j_n}
 \end{align*}
 2)	Minors:\\
-$|A_(i)(j)|$: the submatrix by removing ith row and jth colomn\\
-3)	Cofactors: $a_{ij} = (-1)^{i+j} |A_(i)(j)|$\\
+$|A_{(i)(j)}|$: the submatrix by removing ith row and jth colomn\\
+3)	Cofactors: $a_{ij} = (-1)^{i+j} |A_{(i)(j)}|$\\
 Adjugate matrix: $adj(A) = (a_{ij})^T$\\
 {\bf b.	Laplace expansion:}\\
 \begin{align*}
-	|A| = \sum_{i}{n} a_{ij} a_{(i)(j)}
+	|A| = \sum_{i}^{n} a_{ij} a_{(i)(j)}
 \end{align*}
 Property:\\
 $A adj(A) = |A|I$
 The off-diagonal elements are zero because it is the determinant of matrix with the same two rows(or column).
-So $A^{-1} = \frac{adj(A)}{|A|}$
+So $A^{-1} = \frac{adj(A)}{|A|}$\\
 {\bf c.	Diagonal expansion:}\\
 A matrix A+D where D is diagonal matrix with all same element d, then\\
 \begin{align*}
 	|A+D| = |A| + \sum_{i_1,i_2＃.i_n-1} |A_{i_1, ,i_2＃.i_n-1}| d
 +＃.+
- \sum_{i\=j} |A_(i,j)|d^{n-1} + 
+ \sum_{i\=j} |A_{(i,j)}|d^{n-1} + 
  \sum_{i} a_{i, i} d^{n-1} 
  d^{n}
 \end{align*}
@@ -108,9 +108,9 @@ n - 1 & 0 & 0 \\
 \right)
 \end{align*}
 \begin{align*}
-	|A+D - \lambda I|& = n (n 每 1 - \lambda)^(n-1) \\
-                                     + (n 每 1 - \lambda)^n \\
-                      &               = (n 每 1 - \lambda)*(2n 每 1 -\lambda) \\
+	|A+D - \lambda I| & = n (n - 1 - \lambda)^{(n-1)} \\
+                                     + (n - 1 - \lambda)^n \\
+                      &               = (n - 1 - \lambda)*(2n - 1 -\lambda) \\
 \end{align*}
  The first term is to choose n - 1 diagonal element in D, one element in $A- \lambda I$ , the second term is choose all diagonal element in D. All other permutations are zero when we select two or more rows in A since it is a matrix with same rows.\\
 {\bf e. Determinant of Matrix Product}\\
@@ -118,13 +118,13 @@ If A and B are square matrix and conformable for multiplication, then
 $|AB| = |A||B|$
 \section{Rank}
 {\bf a. Definition} \\
-The maximum number of linear dependent vectors(columns of rows) in a matrix is the rank of matrix 
+The maximum number of linear dependent vectors(columns of rows) in a matrix is the rank of matrix.\\ 
 {\bf b. Basic fact} \\
 The maximum number of linear dependent rows is the row rank, and the maximum number of linear dependent columns is the column rank, they are equal. See wiki for the proof\\
 {\bf c. Basic properties} \\
-1)	rank(AB) <= min(rank(A), rank(B)) \\
-2)	rank(A+B) <= rank(A) + rank(B) \\
-3)	rank(AB) >= rank(A) + rank(B) - n \\
+1)	rank(AB) $ \leq $ min(rank(A), rank(B)) \\
+2)	rank(A+B) $ \leq $ rank(A) + rank(B) \\
+3)	rank(AB) $ \geq $ rank(A) + rank(B) - n \\
 4)	rank(A) = r \\
       PAQ = matrix( $I_r$ 0) \\
 {\bf d. Full Rank Factorization}\\
