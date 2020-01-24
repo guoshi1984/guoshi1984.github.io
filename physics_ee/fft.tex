@@ -125,9 +125,12 @@ We consider a few examples\\
 \end{align*}
 Its Fourier transform is 
 \begin{align*}
-	F(f) = \frac{1}{2} \delta(f-f_0) + \frac{1}{2} \delta(f + f_0)
+	F(f) & = \int \frac{e^{i2\pi f_0 t} + e^{-i2\pi f_0 t}}{2} e^{i 2 \pi f t} dt \\
+		 & = \int \frac{1}{2} e^{i2\pi t (f_0  + f)} dt + \int \frac{1}{2} e^{i2\pi t (f - f_0)} dt \\ 	
+		 & = \frac{1}{2} \delta(f+f_0) + \frac{1}{2} \delta(f - f_0) \\     
 \end{align*}
-Since the delta function has width zero, so the the bandwidth in frequency domain is zero. We see a signal which is infinitely long in time domain has zero bandwidth in frequency domain. 
+The last line is based on $\int_{-\infty}^{\infty}e^{i2 \pi f t}  = \delta (f)$.\\
+Since the delta function has width zero, so the the bandwidth in frequency domain is zero. We see a signal which is infinitely long in time domain has zero bandwidth in frequency domain. \\
 2) We consider a function g(t) which has zero width in time, namely an impulse function.\\
 \begin{align*}
 	g(t) = \delta(t)

@@ -1,0 +1,134 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Quick Review of Second Quantization}
+Second quantization is also called as occupation number representation. In this formalism, the occupation number is written as operators. The formalism without occupation number representation is called first quantization. I have been long confused about the notation of second quantization. So I would like to work with a few examples to understand the second quantization formalism.\\
+\subsection{Operators in Second Quantization}
+(1). {\bf One-body operator}\\
+In first quantization, the one body operator for N particles is
+\begin{align*}
+	\hat H = \sum_i^N \hat h(x_i)
+\end{align*}
+In second quantization,
+\begin{align*}
+	\hat H = \sum_{\alpha,\beta} <\alpha | h | \beta> c^{+}_{\alpha} c_{\beta}
+\end{align*}
+where $\alpha, \beta$ are the single particle states.\\
+(2). {\bf Two-body operator}\\
+\begin{align*}
+	\hat H = \frac{1}{2}\sum_{i}^N \sum_{j}^{N} \hat h(x_i, x_j)
+\end{align*}
+In second quantization,
+\begin{align*}
+	\hat H = \sum_{\alpha,\beta, \gamma, \delta} <\alpha, \beta | h | \gamma, \delta> 
+	c^{+}_{\alpha} c^{+}_{\beta} c^{+}_{\gamma} c^{+}_{\delta}
+\end{align*}
+We see using the second quantization, we change the summation over all the individual particles to the summation over single particle states. This is the motivation of using second quantization formalism, because in many-body physics, writing Hamiltonian in single particle states helps us to understand the many-body interaction more easily.
+\subsection{Examples}
+a. {\bf Kinetic energy operator}\\
+Consider a system with two Fermions, occupying two states $\phi_{1}$ and $\phi_{2}$, then the wave function can be written as a Slater determinant.
+\begin{align*}
+	\Phi(x_1, x_2)
+	& =\frac{1}{\sqrt{2}}
+	\begin{vmatrix}
+		\phi_{1}(x_1) & \phi_{1} (x_2) \\ 
+		\phi_{2}(x_1)  & \phi_{2} (x_2)  \\ 
+	\end{vmatrix}
+	& = \frac{1}{\sqrt{2}} (\phi_{1}(x_1) & \phi_{2} (x_2) -
+		\phi_{2}(x_1)  & \phi_{1} (x_2))
+\end{align*}
+The kinetic energy operator is 
+\begin{align*}
+	\hat H = \sum_i^N \hat h(x_i)
+\end{align*}
+where $\hat h$ is $-\frac{1}{2}\nabla^2$ in atomic unit.\\
+The total kinetic energy\\
+\begin{align*}
+	<\Phi(x_1,x_2)| \hat H | \Phi(x_1, x_2)> 
+	= <\Phi(x_1,x_2)| \hat h(x_1) | \Phi(x_1, x_2)>  + <\Phi(x_1,x_2)| \hat h(x_2) | \Phi(x_1, x_2)>
+\end{align*}
+The first term is for particle one, and it expands to four terms. Based orthogonality only two terms survive.
+\begin{align*}
+	<\Phi(x_1,x_2)| \hat h(x_1) | \Phi(x_1, x_2)> 
+	= \frac{1}{2} <\phi_{1}(x_1) | \hat h(x_1)| \phi_{1} (x_1) + \frac{1}{2} <\phi_{2}(x_1) | \hat h(x_1)| \phi_{2} (x_1)>	
+\end{align*}
+From the last line of the expression we see the subscript $x_1$ is redundant as there is no $x_2$, so we can simplify\\
+\begin{align*}
+	<\Phi(x_1,x_2)| \hat h(x_1) | \Phi(x_1, x_2)>
+	= \frac{1}{2} <\phi_{1}|\hat h|\phi_{1}> + \frac{1}{2} <\phi_{2} | \hat h| \phi_{2}>	
+\end{align*}
+Same expression for particle two
+\begin{align*}
+	<\Phi(x_1,x_2)| \hat h(x_2) | \Phi(x_1, x_2)>
+	= \frac{1}{2} <\phi_{1}|\hat h|\phi_{1}> + \frac{1}{2} <\phi_{2} | \hat h| \phi_{2}>	
+\end{align*}
+Therefore,
+\begin{align*}
+	<\Phi(x_1,x_2)| \hat H | \Phi(x_1, x_2)>  
+	& =  <\phi_{1}|\hat h|\phi_{1}> +  <\phi_{2} | \hat h|\phi_{2}> \\
+	& = \sum_{\alpha}<\phi_{\alpha}|\hat h|\phi_{\alpha}> 
+\end{align*}
+So we see that for many-body states built by single particle state, the expectation value of an one body operator is the summation over the expectation value of single particle states.\\
+
+Now we turn to second quantization formalism. 
+\begin{align*}
+	\hat H = \sum_{\alpha,\beta} <\alpha | h | \beta> c^{+}_{\alpha} c_{\beta}
+\end{align*}
+Since
+\begin{align*}
+	 <\alpha | h | \beta> =  <\alpha | h | \beta> \delta_{\alpha, \beta} = <\alpha | h | \alpha>
+\end{align*}
+Then
+\begin{align*}
+	\hat H & = \sum_{\alpha,\beta} <\alpha | h | \beta> c^{+}_{\alpha} c_{\beta} \\
+		   & = 	\sum_{\alpha} <\alpha | h | \alpha> c^{+}_{\alpha} c_{\alpha}
+\end{align*}
+We know that $c^{+}_{\alpha} c_{\alpha}$ is the occupation number on state $\alpha$. Since we have fermions, so 
+ $c^{+}_{\alpha} c_{\alpha}$ =1. Therefore,
+
+\begin{align*}
+	\hat H & = \sum_{\alpha,\beta} <\alpha | h | \beta> c^{+}_{\alpha} c_{\beta} \\
+		   & = 	\sum_{\alpha} <\alpha | h | \alpha> 
+\end{align*}
+We see the derivation is much much simpler using the second quantization.\\
+b. {\bf Potential energy operator}\\
+We use the basis of plane wave states confined in volume $\Omega = L^3$.
+\begin{align*}
+	\phi_{\bf k}(\bf r) = \frac{1}{\sqrt{\Omega}} e^{i {\bf k} \cdot {\bf r}}
+\end{align*}
+Where
+\begin{align*}
+	{\bf k } = \frac{2 \pi}{L} (l, m, n)
+\end{align*}
+The potential energy involves the matrix element
+\begin{align*}
+	& V_{{\bf k}_1,{\bf k}_2, {\bf k}_3, {\bf k}_4} \\
+	& = \frac{1}{{\Omega^2}} \int d^3 {\bf r} \int d^3 {\bf r^{'}}
+	e^{-i {\bf k}_1 \cdot {\bf r}}  e^{-i {\bf k}_2 \cdot {\bf r^{'}}}
+	u({\bf r} -{\bf r^{'}} )
+	e^{i {\bf k_3 \cdot r}} e^{i{\bf k_4 \cdot r^{'}}} \\
+	& = \frac{1}{\Omega^2} \int d^3 {\bf r} 
+	e^{i ( - \bf{k}_1 - {\bf k}_2 + {\bf k}_3 + {\bf k}_4) \cdot {\bf r}}	
+	\int d^3 {\bf R} e^{i ( -{\bf k}_2 + {\bf k}_4) \cdot {\bf R}}
+	u({\bf R})\\
+ 	& = \frac{1}{\Omega} \delta(-k_1 - k_2 + k_3 + k_4) \tilde u(k_2 - k_4)	
+\end{align*}
+Where $ R = r - r^{'}$\\
+\begin{align*}
+	\tilde u (q) = \int d^3 R u(R) e^{-i q \cdot r}
+\end{align*}
+This gives the second quantized operator
+\begin{align*}
+	V & = \frac{1}{2 \Omega} \sum_{k_1, k_2, k_3, k_4} \tilde u(k_2 - k_4) c^{+}_{k_1} c^{+}_{k_2} 
+	c_{k_3} c_{k_4}
+\end{align*}
+let $k_2 - k_4 = q$, then $k_2 = k_4 + q$, while $k_1 + k_2 + k_3 + k_4 = 0$, so $k_1 = k_3 -q$.
+\begin{align*}
+	V & = \frac{1}{2 \Omega} \sum_{k_3, k_4, q} \tilde u(q) c^{+}_{k_3-q} c^{+}_{k_4 + q} 
+	c_{k_3} c_{k_4}
+	& =\frac{1}{2 \Omega} \sum_{k, k^{'}, q} \tilde u(q) c^{+}_{k+q} c^{+}_{k^{'} - q} 
+	c_{k^{'}} c_{k}
+\end{align*}
+So from the second quantization, we clearly see through Coulomb interaction, two particles exchange momentum $q$, and the total momentum is conserved.\\
+\end{document}
