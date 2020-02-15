@@ -47,7 +47,15 @@ dt term:
 \begin{align*}
 	rc(t, S)  = c_t (t, S(t)) + r S(t) + \frac{1}{2} \sigma^2 S(t) \frac{\partial c(t, S(t))}{\partial S^2(t)}  \\
 \end{align*}
-which is known as Black-Scholes-Merton partial differential equation.
+which is known as Black-Scholes-Merton partial differential equation.\\
+The terminal condition the equation satisfies for call option is
+\begin{align*}
+	c(T,S) = (S(T)-K)^+
+\end{align*}
+Similarly, for put option
+\begin{align*}
+	p(T,S) = (K-S(T))^+
+\end{align*}
 \section{Connection to Faynman-Kac formula}
 In risk-neutral measure, we write the stock price as
 \begin{align*}
@@ -66,7 +74,7 @@ Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation.
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
 These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
-\section{Black-Scholes-Merton Model: Analytic Solution for European option}
+\section{Black-Scholes-Merton Model: Analytic Solution for European Option}
 {\bf1. European call option}\\
 For European call option with payoff to be $V(T) = S(T) - K$, with K as strike price, let us assume constant volatility $\sigma$, and constant interest rate r. 
 Then we can obtain the solution to the BSM equation with martingale property without bothering solving the complex parital
@@ -80,7 +88,7 @@ We write
 	     = S(t) exp\{-\sigma \sqrt{\tau} Y + (r - \frac{1}{2}\sigma^2)\tau\}
 \end{align*}
 Where Y is the stardard normal random variable and $\tau = T - t$ is the time to expiration. We see we write S(T) as a product of S(t), which is F(t) measurable, and a random variable independent of F(t).
-Then sovling c(t, S(t)) becomes solving an expectation value of a random varible composed of a standard normal random variable. 
+Then solving c(t, S(t)) becomes solving an expectation value of a random varible composed of a standard normal random variable. 
 \begin{align*}
 	c(t,x) = \tilde E[e^{-\tau r}(x exp\{-\sigma \sqrt{\tau} Y + (r -\frac{1}{2}\sigma^2)\tau\}-K)^+]
 \end{align*}
@@ -91,16 +99,17 @@ After a little bit of math with integration, we have the solution to the Black-S
 \end{align*}
 Where
 \begin{align*}
-	d_1 = \frac{1}{\sigma \sqrt{T-t}}[ln(\frac{S_t}{K}) + (r+ \frac{\sigma^2}{2})(T-t)] \\
-	d_2 = d_1 - \sigma \sqrt{T-t}
+	d_1 = \frac{1}{\sigma \sqrt{\tau}}[ln(\frac{S_t}{K}) + (r+ \frac{\sigma^2}{2})\tau] \\
+	d_2 = d_1 - \sigma \sqrt{\tau}
 \end{align*}
 N() is the cumulative distribution function of the standard normail distribution
 {\bf 2. European put option}
 The payoff for the European put option is $V(T) = K - S(T)$, we can follow a similiar derivation and get the formula for put option
 \begin{align*}
-	p(t,x) = N(-d_2)Ke^{-r(T-t)} -N(-d_1)x
+	p(t,x) = N(-d_2)Ke^{-r\tau} -N(-d_1)x
 \end{align*}
 {\bf 3. Alternative formulation}
+If we introduce $F = e^{r\tau} S$, which is the forward price of the asset S. Then the equation pricing equation becomes
 \begin{align*}
 	C(F,\tau)= D[N(d_+)F - N(d_-)K] \\
 	P(F,\tau)= D[N(-d_-)K - N(-d_+)F] \\
@@ -109,5 +118,4 @@ The payoff for the European put option is $V(T) = K - S(T)$, we can follow a sim
 The variables are:\\
 $\tau = T - t$ is the time to expiry\\
 $D = e^{-r\tau}$ is the discount factor \\
-$F = e^{r\tau} S$ is the forward price of the asset S.
 \end{document}
