@@ -66,7 +66,8 @@ Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation.
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
 These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
-\section{Black-Scholes-Merton Model: Analytic Solution for European call option}
+\section{Black-Scholes-Merton Model: Analytic Solution for European option}
+{\bf1. European call option}\\
 For European call option with payoff to be $V(T) = S(T) - K$, with K as strike price, let us assume constant volatility $\sigma$, and constant interest rate r. 
 Then we can obtain the solution to the BSM equation with martingale property without bothering solving the complex parital
 differential equation. The call option value satisfies
@@ -80,9 +81,33 @@ We write
 \end{align*}
 Where Y is the stardard normal random variable and $\tau = T - t$ is the time to expiration. We see we write S(T) as a product of S(t), which is F(t) measurable, and a random variable independent of F(t).
 Then sovling c(t, S(t)) becomes solving an expectation value of a random varible composed of a standard normal random variable. 
+\begin{align*}
+	c(t,x) = \tilde E[e^{-\tau r}(x exp\{-\sigma \sqrt{\tau} Y + (r -\frac{1}{2}\sigma^2)\tau\}-K)^+]
+\end{align*}
+Where Y is a standard normal distribution under $\hat P$.\\
 After a little bit of math with integration, we have the solution to the Black-Scholes-Merton model for European call option
 \begin{align*}
 	c(\tau,x; K,r,\sigma) = xN(d_{+}(\tau,x)) - e^{-r\tau}KN(d_{-}(\tau,x))
-\end{align*}	
-Where Y is a standard normal distribution under $\hat P$.
+\end{align*}
+Where
+\begin{align*}
+	d_1 = \frac{1}{\sigma \sqrt{T-t}}[ln(\frac{S_t}{K}) + (r+ \frac{\sigma^2}{2})(T-t)] \\
+	d_2 = d_1 - \sigma \sqrt{T-t}
+\end{align*}
+N() is the cumulative distribution function of the standard normail distribution
+{\bf 2. European put option}
+The payoff for the European put option is $V(T) = K - S(T)$, we can follow a similiar derivation and get the formula for put option
+\begin{align*}
+	p(t,x) = N(-d_2)Ke^{-r(T-t)} -N(-d_1)x
+\end{align*}
+{\bf 3. Alternative formulation}
+\begin{align*}
+	C(F,\tau)= D[N(d_+)F - N(d_-)K] \\
+	P(F,\tau)= D[N(-d_-)K - N(-d_+)F] \\
+	d_{+/-} = \frac{1}{\sigma \sqrt{\tau}}[ln(\frac{F}{K})+/-\frac{1}{2}\sigma^2 \tau] \\
+\end{align*}
+The variables are:\\
+$\tau = T - t$ is the time to expiry\\
+$D = e^{-r\tau}$ is the discount factor \\
+$F = e^{r\tau} S$ is the forward price of the asset S.
 \end{document}
