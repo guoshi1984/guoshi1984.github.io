@@ -5,3 +5,4 @@
 ./stochastic_finance/*.aux
 ./src/java/linkedlist/*.class
 ./src/java/stack/*.class
+./src/java/quant/*.class
