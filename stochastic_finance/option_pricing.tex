@@ -103,12 +103,37 @@ Where
 	d_2 = d_1 - \sigma \sqrt{\tau}
 \end{align*}
 N() is the cumulative distribution function of the standard normail distribution
-{\bf 2. European put option}
+{\bf 2. European put option}\\
 The payoff for the European put option is $V(T) = K - S(T)$, we can follow a similiar derivation and get the formula for put option
 \begin{align*}
 	p(t,x) = N(-d_2)Ke^{-r\tau} -N(-d_1)x
 \end{align*}
-{\bf 3. Alternative formulation}
+{\bf 3. Boundary conditons}\\
+Using the solution $c(t,x)$ and $p(t,x)$, we can easily check the boundary conditions when
+time t approaches to expiration time T.\\
+As we know
+\begin{align*}
+	d_1 = \frac{1}{\sigma \sqrt{\tau}}ln(\frac{S}{K}) 
+	+ \frac{1}{\sigma}(r+\frac{\sigma^2}{2}\sqrt{\tau})
+\end{align*}
+When $\tau \to 0$, the second term decays much faster, so it vanishes. When $S>K$, $d_1$ goes to infinity, when $S<K$, $d_1$ goes to negative infinity.
+Therefore, when $S>K$
+\begin{align*}
+	c(t,x) = S*N(+\infty) - K*N(+\infty) = S-K
+\end{align*}
+Therefore, when $S<K$
+\begin{align*}
+	c(t,x) = S*N(-\infty) - K*N(-\infty) = 0-0 = 0
+\end{align*}
+{\bf 4. Examples}\\
+The following graphs show the change of option price with respect to different parameters.
+\\
+\\
+\\
+\\
+\includegraphics[scale = 0.5]{option_price1.eps}\\
+\includegraphics[scale = 0.5]{option_price2.eps}\\
+{\bf 5. Alternative formulation}\\
 If we introduce $F = e^{r\tau} S$, which is the forward price of the asset S. Then the equation pricing equation becomes
 \begin{align*}
 	C(F,\tau)= D[N(d_+)F - N(d_-)K] \\
@@ -118,4 +143,98 @@ If we introduce $F = e^{r\tau} S$, which is the forward price of the asset S. Th
 The variables are:\\
 $\tau = T - t$ is the time to expiry\\
 $D = e^{-r\tau}$ is the discount factor \\
+\section{Heston Stochasic Volatility Model}
+\subsection{Introduction}
+The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
+\begin{align*}
+	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
+\end{align*}
+and the volatility itself is governed by the equation
+\begin{align*}
+	dV(t) = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t)
+\end{align*}
+Where 
+\begin{align*}
+	\tilde dW_1(t) \tilde dW_2(t) = \rho dt
+\end{align*}
+At time t, the risk-neutral price of a call expiring at time $T \geq t$ in this model is
+\begin{align*}
+	c(t, S(t), V(t)) = \tilde E[e^{-r(T-t)}(S(T)-K)^+|F(t)]
+\end{align*}
+If we move the term $c^{rt}$ to the left hand side, we see
+\begin{align*}
+	e^{-rt}c(t, S(t), V(t)) = \tilde E[e^{-rT}(S(T)-K)^+|F(t)]
+\end{align*}
+which satisfies the martingale property.
+Then we take the differentiation of $e^{-rt}c(t, S(t), V(t))$. We get
+\begin{align*}
+	& d(e^{-rt}c(t, S(t), V(t))\\
+	= & \frac{\partial e^{-rt}}{\partial t} c(t, S(t), V(t)) 
+	+ e^{-rt}\frac{\partial c(t, S(t), V(t))}{\partial t} dt \\
+	= & -re^{-rt}c(t, S(t),V(t))dt \hspace{2mm} (1)\\
+	+ & e^{-rt} \frac{\partial c}{\partial t} dt \hspace{2mm} (2) \\
+	+ & e^{-rt} \frac{\partial c}{\partial S} dS \hspace{2mm} (3) \\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial S^2} dS dS \hspace{2mm} (4)\\
+	+ & e^{-rt} \frac{\partial c}{\partial V} dV \hspace{2mm} (5) \\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial V^2} dV dV\hspace{2mm} (6)\\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial V \partial S} dV dS\hspace{2mm} (7)
+\end{align*}
+As we are interested in only the dt terms, we find out the dt terms from (1) to (7)
+the dt term in (1) is
+\begin{align*}
+	-rc(t, S(t), V(t))e^{-rt}dt
+\end{align*}
+the dt term in (2) is
+\begin{align*}
+	\frac{\partial c}{\partial t}e^{-rt}dt
+\end{align*}
+the dt term in (3) is
+\begin{align*}
+	\frac{\partial c}{\partial S}rSe^{-rt}dt
+\end{align*}
+the dt term in (4) is
+\begin{align*}
+	\frac{1}{2} \frac{\partial^2 c}{\partial S^2}VS^2e^{-rt}dt
+\end{align*}
+the dt term in (5) is
+\begin{align*}
+	\frac{\partial c}{\partial V}(a-bV(t))e^{-rt}dt
+\end{align*}
+the dt term in (6) is
+\begin{align*}
+	\frac{1}{2} \frac{\partial^2 c}{\partial V^2}V\sigma^2e^{-rt}dt
+\end{align*}
+the dt term in (7) is
+\begin{align*}
+	\frac{\partial^2 c}{\partial V \partial S} VS\sigma e^{-rt}dt
+\end{align*}
+Collect all the dt terms and let those terms equal to zero, we get
+\begin{align*}
+	c_t + rs c_s + (a-bv)c_v + \frac{1}{2} s^2 v c_{ss} + \rho \sigma svc_{sv}
+	+\frac{1}{2} \sigma^2vc_{vv} = rc
+\end{align*}
+The function $c(t, s, v)$ satisfies boundary condition
+\begin{align*}
+	c(T, s, v) = (s-K)^+ \\
+	c(t, 0, v) = 0 \\
+	c(t, s, 0) = (s - e^{-r(T-t)}K)^+\\
+	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
+	lim_{v \to \infty} c(t, s, v) = s\\  
+\end{align*}
+If we guess the solution has the following form
+\begin{align*}
+	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
+\end{align*}	
+Then since c(t,s,v) satisfies the partial differential equation above, we can show that $f_0$ and $f_1$ satisfy the following
+\begin{align*}
+	f_t + (r + \frac{1}{2})f_x + (a-bv+\rho \sigma v)f_v 
+	+ \frac{1}{2}  v c_{vv} + \rho \sigma vf_{xv}
+        +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
+\end{align*}
+\begin{align*}
+	g_t + (r - \frac{1}{2})g_x + (a-bv)g_v 
+	+ \frac{1}{2}  v g_{vv} + \rho \sigma vg_{xv}
+        +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
+\end{align*}
+
 \end{document}
