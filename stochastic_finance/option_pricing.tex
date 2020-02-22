@@ -221,10 +221,11 @@ The function $c(t, s, v)$ satisfies boundary condition
 	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
 	lim_{v \to \infty} c(t, s, v) = s\\  
 \end{align*}
-If we guess the solution has the following form
+Based on the solution to the BSM equation, we can guess that the solution has the following form
 \begin{align*}
 	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
 \end{align*}	
+Where f and g can be intepreted as a cumulative distribution function.
 Then since c(t,s,v) satisfies the partial differential equation above, we can show that $f_0$ and $f_1$ satisfy the following
 \begin{align*}
 	f_t + (r + \frac{1}{2})f_x + (a-bv+\rho \sigma v)f_v 
@@ -235,6 +236,28 @@ Then since c(t,s,v) satisfies the partial differential equation above, we can sh
 	g_t + (r - \frac{1}{2})g_x + (a-bv)g_v 
 	+ \frac{1}{2}  v g_{vv} + \rho \sigma vg_{xv}
         +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
+\end{align*}
+The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
+\begin{align*}
+	f(T, x, v) = 1_{x\geq logK}\\
+	g(T, x, v) = 1_{x\geq logK}\\
+\end{align*}
+This implies that f and g can be intepreted as "Probabilities". We can define
+\begin{align*}
+	f(t, x, v) = E^{t,x,v}_{x\geq logK}\\
+\end{align*}
+We suppose a pair of stochastic process X(t), V(t) given by the following expression
+\begin{align*}
+	dX(t) = (r+\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
+	dV(t) = (a-bV(t)+ \rho \sigma V(t))dt + \sigma \sqrt{V(t)}dW_2(t)
+\end{align*}
+By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
+\begin{align*}
+	g(t, x, v) = E^{t,x,v}_{x\geq logK}\\
+\end{align*}
+\begin{align*}
+	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
+	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
 \end{align*}
 
 \end{document}
