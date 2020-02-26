@@ -60,14 +60,13 @@ In this case, $\Gamma = -1$. We can also check this by the definition of $\Gamma
 \section{S parameters}
 Consider a two port system with port 1 and port 2. For example, the system could be a band pass filter with one port as input, and the other port as output. We define $a_1$ and $a_2$ to be the incident waves and the  $b_1$ and $b_2$ to be the reflected waves with the subscript being port number.  
 In this case the relationship between the reflected, incident power waves and the S-parameter matrix is given by:
-
 \begin{align*}
 	\left(
 	\begin{array} {c}
 		 b_1 \\
 		 b_2\\
 	\end{array}
-	\right)\\
+	\right)
 		= 
 	\left( 
 	\begin{array} {c c}
@@ -79,8 +78,10 @@ In this case the relationship between the reflected, incident power waves and th
 	\begin{array}{c}
 		 a_1 \\
 		 a_2\\
-
 	\end{array}
 	\right)
 \end{align*}
+From definition above, we clearly see\\
+when $a_{2} = 0$, then $S_{11}$ is the reflection coefficient of port 1. 
+when $a_{1} = 0$, then $S_{22}$ is the reflection coefficient of port 2. 
 \end{document}
