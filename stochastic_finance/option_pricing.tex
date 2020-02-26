@@ -228,13 +228,13 @@ Based on the solution to the BSM equation, we can guess that the solution has th
 Where f and g can be intepreted as a cumulative distribution function.
 Then since c(t,s,v) satisfies the partial differential equation above, we can show that $f_0$ and $f_1$ satisfy the following
 \begin{align*}
-	f_t + (r + \frac{1}{2})f_x + (a-bv+\rho \sigma v)f_v 
-	+ \frac{1}{2}  v c_{vv} + \rho \sigma vf_{xv}
+	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
+	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
         +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
 \end{align*}
 \begin{align*}
-	g_t + (r - \frac{1}{2})g_x + (a-bv)g_v 
-	+ \frac{1}{2}  v g_{vv} + \rho \sigma vg_{xv}
+	g_t + (r - \frac{1}{2}v)g_x + (a-bv)g_v 
+	+ \frac{1}{2}  v g_{xx} + \rho \sigma vg_{xv}
         +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
 \end{align*}
 The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
@@ -244,7 +244,7 @@ The derivation is straightforward but one needs to keep in mind here we treat x 
 \end{align*}
 This implies that f and g can be intepreted as "Probabilities". We can define
 \begin{align*}
-	f(t, x, v) = E^{t,x,v}_{x\geq logK}\\
+	f(t, x, v) = E^{t,x,v}1_{x\geq logK}\\
 \end{align*}
 We suppose a pair of stochastic process X(t), V(t) given by the following expression
 \begin{align*}
@@ -253,11 +253,47 @@ We suppose a pair of stochastic process X(t), V(t) given by the following expres
 \end{align*}
 By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
 \begin{align*}
-	g(t, x, v) = E^{t,x,v}_{x\geq logK}\\
+	g(t, x, v) = E^{t,x,v} 1_{x\geq logK}\\
 \end{align*}
 \begin{align*}
-	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
+	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)\\
 	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
 \end{align*}
-
+To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. Let $\tau = T-t$
+\begin{align*}
+	\tilde f(k, v, \tau) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau)
+\end{align*}
+The inverse Fourier transform is
+\begin{align*}
+	f(x, v, \tau) = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx}
+	\tilde f(k, v, \tau)
+\end{align*}
+Substitute this into the PDE of f(x, v, t), then
+\begin{align*}
+	-\frac{\partial \tilde f}{\partial \tau}
+	+ (r + \frac{1}{2})ik \tilde f 
+	+ (a-bv+\rho \sigma v)\frac{\partial \tilde f}{\partial v}
+        -\frac{1}{2}vk^2 \tilde f 
+	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
+        +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
+\end{align*}
+Now the problem is to solve for f. We note when $\tau=0$,
+\begin{align*}
+	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
+			     = \int_{0}^{\infty}dx e^{-ikx}
+			     = \pi \delta(k) + \frac{1}{ik}
+\end{align*}
+when $\tau!=0$, we guest a general solution which has the following form
+\begin{align*}
+	\tilde f(k, v, \tau) = exp(C\tau +D\tau v) \tilde f(k,v,0)
+\end{align*}
+From above we easily see it match the terminal condition at $\tau to 0$. With inverse Fourier transform
+\begin{align*}
+	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
+			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + \tau v) \tilde f(k, v, 0)\\
+			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + \tau v) 
+			 	(pi \delta(k) + \frac{1}{ik}) \\
+			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(\frac{C\tau + \tau v}{ik}) 
+\end{align*}
+Now the only remaining task is to find C and D.
 \end{document}
