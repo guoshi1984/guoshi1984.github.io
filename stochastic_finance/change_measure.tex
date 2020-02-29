@@ -41,10 +41,9 @@ so
 	Z(T) & = \frac{P^{'}(T)}{P(T)} = \frac{2}{3}\\
 \end{align*}
 This is the change of measure for a discrete random variable. \\
-\subsection{Change of Measure for a Continuously Random Variable(Uniformly Distributed) } \\
-
+\subsection{Change of Measure for a Continuously Random Variable(Uniformly Distributed) } 
 Give a random variable  X($\omega$)=x where x in [0,1]\\
-1)	\\
+1)\\
 Define probability measure P \\
 P(a \textless x \textless b) = b - a, the pdf is 
 \begin{align*}
@@ -53,8 +52,8 @@ p(x) = 1
 This is a uniform measure.\\
 
 \noindent 2)\\
-Define another probability measure P^{'}\\
-P^{'}(a \textless x  \textless b) = $b^2$ - $a^2$, the pdf is 
+Define another probability measure $P^{'}$\\
+$P^{'}(a \textless x  \textless b) = b^2 - a^2$, the pdf is 
 \begin{align*}
 p(x) = 2x
 \end{align*}
@@ -62,8 +61,8 @@ So this is non-uniform measure\\
 
 
 \noindent 3)	To justify they both are probability measure\\
-Check  P[0,1] = 1; P(0)=0;\\
-       P^{'}[0,1] =1; P^{'}(0)=0;\\
+Check  $P[0,1] = 1$; $P(0)=0$;\\
+       $P^{'}[0,1] =1$; $P^{'}(0)=0$;\\
 
 
 \noindent 4) we can define change of measure to connect P and $P^{'}$ \\
@@ -79,7 +78,7 @@ So
 This is the change of measure for a continuously random variable. \\
 
 
-\subsection{Change of Measure for a Normal Distributed Random Variable}\\
+\subsection{Change of Measure for a Normal Distributed Random Variable}
 We show an example of change of measure in normal distribution. If X is N(0,1), let Y = X+ u, so Y is N(u,1), so the random variable Y does not have mean 0. However, based
 on the definition of expectation\\
 \begin{align*}
@@ -116,7 +115,7 @@ The pdf of Y under the new measure is
 This shows it is a standard normal distribution with mean 0.\\
 
 \section{Change of Measure for a Filtration(Series of Events in Time)}
-\subsection{Change of measure for Stock under binomial model - Risk neutral measure}\\
+\subsection{Change of measure for Stock under binomial model - Risk neutral measure}
 Suppose we have the following stock $S_0$ at t=0. At t=1, we can associate the value of $S_1$ to outcome of tossing a coin. When we toss a coin and if the coin is fair, we can get Head and Tail and each has 50\% probability. If we get a head, the stock moves to $S_1(H)$, and if we get a tail, the stock moves to $S_1(T)$. Clearly, the stock has 50\% to move up, and 50\% to move down.
 \begin{align*}
 S_1(H) & = (1+\alpha + \sigma) S_0\\  
@@ -142,7 +141,7 @@ A very important property of risk-neutral measure is the discounted price of the
 \begin{align*}
 DS_0 = S_0\\
 DS_1 = \frac{1}{1+r} S_1
-\end{aligh*}
+\end{align*}
 we can see
 \begin{align*}
 S_0 = \frac{1}{1+r} (p S_1(H) + q S_1(T)) = p DS_1(H) + q DS_1(T) = \tilde E[DS_1]
@@ -172,13 +171,13 @@ $E[Z(t)|F(s)] = E[E[Z|F(t)]|F(s)] = E[Z|F(s)] = Z(s)$\\
 2) $E^{'}[Y] = E[YZ(t)]$\\
 $E^{'}[Y]=E[YZ] = E[E[YZ|F(t)]]=E[Y E[Z|F(t)]] = E[YZ(t)]$\\
 3) Given $0<=s<=t<=T$, Y is F(t)- measurable, then\\
-E^{'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]\\
+$E^{'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]$\\
 
 \noindent{\bf Girsanov's Theorem}\\
 Suppose w(t) is Brownian Motion given $\Omega, F, P$ and F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $W^{'}(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $P^{'}$, $W^{'}(t)$ is Brownian motion.\\
 
-\subsection{Risk Neutral Measure in Filtration for Stock Price}\\
-We model the stock price using geometric Brownian motion\\
+\subsection{Risk Neutral Measure with a Filtration}
+We assume the stock price using geometric Brownian motion\\
 \begin{align*}
 dS(t) = \alpha(t) S(t) dt + \sigma(t) S(t) d W(t)
 \end{align*}
@@ -194,8 +193,9 @@ Discounted stock price\\
 \begin{align*}
 	d(D(t) S(t)) = \sigma(t) D(t) S(t) [\Theta(t) dt + dW(t)]\\
 \end{align*}
-where $\Theta(t) = \frac{\alpha(t) -R(t)}{\sigma(t)}$
-let $dW^{'}(t) = dW(t) + \theta(t) dt$, then $d(D(t)S(t)) = \sigma(t) D(t) S(t) dW^{'}(t)$, {\bf which implies martingale}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) dW^{'}(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, we can work out a little of math to show
+where $\Theta(t) = \frac{\alpha(t) -R(t)}{\sigma(t)}$\\
+We define a new Brownian motion with drift $dW^{'}(t) = dW(t) + \theta(t) dt$, this brownian motion consists of a standard brownian motion and a drift term $\theta(t)$. So if $W^{'}(0) = 0$, due to the drift term, $E[W^{'}(t) != 0$.However, using the change of measure theorem, we can define another probability measure $P^{'}$, such that under $\tilde P$, $W^{'}(t)$ becomes a standard brownian motion.\\
+Then we have $d(D(t)S(t)) = \sigma(t) D(t) S(t) dW^{'}(t)$ under $P^{'}$, {\bf which implies the discount price is a martingale under the risk-neutral measure $P^{'}$}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) d  W^{'}(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, we can work out a little of math to show
 \begin{align*}
 	d(D(t)X(t)) = \Delta(t) d(D(t)S(t))
 \end{align*}
