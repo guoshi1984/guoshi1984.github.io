@@ -1,0 +1,84 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Josephson Junction}
+basic IV relationship
+\begin{align*}
+	I_s = I_c sin(\phi)
+	\dot \phi = 2eV/\hbar
+\end{align*}
+where $\phi = \phi_1 - \phi_2$ is the phase difference between the two superconducting electronodes.\\
+The energy in a Josephson junction\\
+\begin{align*}
+        E = E_J(1 - cos \phi)
+\end{align*}
+subsection{Quantizing Electrical Circuits}
+An electrical circuit can be described as a number of nodes connected through circuit elements. As generalized coordinates for such a circuit it is often convenient to use the node fluxes
+\begin{align*}
+        \Phi_n(t) = \int_{-\infty}^{t} V_n(t^{'})dt^'
+\end{align*}
+Where $V_n$ denotes the node voltage at node n. The corresponding generalized momenta will usually, but not every time, be the node charges
+\begin{align*}
+        Q_n(t) = \int_{-\infty}^t I_n(t^{'}) dt^'
+\end{align*}
+Where $I_n$ denotes the node current. If there is a loop l in the circuit, the voltage drop around that loop should be zero, which implies
+\begin{align*}
+        \sum_{b\hspace{2mm} around \hspace{2mm} l} \Phi_b = \Phi_{ext}
+\end{align*}
+And the external magnetic flux is constrained by the quantization condition $\Phi_{ext} = m \Phi_0$, where $m\in Z$ and $\Phi_0 = \frac{h}{2e}$ is the flux quantum.\\
+The generalized coordinates obey the canonical commutation relation
+\begin{align*}
+        [\Phi, Q] = i \hbar
+\end{align*}
+Similarly, we can write down the energy for capacitor
+\begin{align*}
+        \frac{CV^2}{2} = \frac{C( \dot{\Phi}_1- \dot{\Phi}_2)}{2}
+\end{align*}
+\begin{align*}
+        \frac{LI^2}{2} = \frac{( \Phi_1- \Phi_2)}{2L}
+\end{align*}
+
+Node flux\\
+\begin{align*}
+	\Phi_n(t) = \int^t_{\-infty} V_n(t^{'}) dt^{'}
+\end{align*}
+Node charge\\
+\begin{align*}
+	Q_n(t) = \int^t_{\-infty} I_n(t^{'}) dt^{'}
+\end{align*}
+\end{document}
+Kirchhoff's law
+\begin{align*}
+	\sum_{loop} \Phi_b = \Phi_{ext}
+\end{align*}
+the $\Phi_{ext}$ is constrained by the quantization condition
+\begin{align*}
+	\Phi_{ext} = m \Phi_0
+\end{align*}
+Energy in capacitor
+\begin{align*}
+	\frac{CV^2}{2} = \frac{C(\dot \Phi_2 - \dot \Phi_1)}{2}
+\end{align*}
+Energy in inductor
+\begin{align*}
+	\frac{LI^2}{2} = \frac{(\Phi_1 - \Phi_2)^2}{2L}
+\end{align*}
+Energy in J jucntion
+\begin{align*}
+	\int^t_{-\infty} I(\tau)V(\tau)d\tau = E_J(1-cos\phi)
+\end{align*}
+
+Hamiltonian in Josephson junction
+\begin{align*}
+        H = E_{co} n^2 - E_J cos \phi - \hbar/(2e)I\phi
+\end{align*}
+Where $E_{co} = (2e)^2/(2C)$ is the charging energy.
+Hamiltonian for the charge qubit
+\begin{align*}
+	H_{CPB} = 4 E_C(n-n_g)^2-E_J cos\phi
+\end{align*}
+Hamiltonian for the phase qubit
+\begin{align*}
+	H_{CPB} = \frac{2\pi}{\Phi_0} \frac{p^2}{2C_J} -\frac{\Phi_0}{2\pi}I_b \phi-E_J cos\phi
+\end{align*}

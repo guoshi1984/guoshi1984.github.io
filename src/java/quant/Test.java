@@ -11,12 +11,9 @@ public class Test
 		double value = bsm.calculate(option);
 		System.out.println(value);
 		MonteCarlo mc = new MonteCarlo(option,
-			       1, 5000);
+			       1, 100000);
 		mc.initialize();
-		mc.evolve();
-		double mcValue = SamplePricing.calculatePrice(option, 
-				mc.samples); 
-		System.out.println(mcValue);
+		mc.run();
 		return;
 	}
 }

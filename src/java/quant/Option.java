@@ -26,11 +26,6 @@ enum OptionType
 	CALL
 	{
 		@Override
-		public double payoff(Option option)
-		{
-			return Math.max(option.underlying - option.strike,0);
-		}
-		@Override
 		public double payoff(double underlying, double strike)
 		{
 			return Math.max(underlying - strike,0);
@@ -39,17 +34,11 @@ enum OptionType
 	PUT
 	{
 		@Override
-		public double payoff(Option option)
-		{
-			return Math.max(0, option.strike - option.underlying);
-		}
-		@Override
 		public double payoff(double underlying, double strike)
 		{
 			return Math.max(strike - underlying, 0);
 		}
 	};
-	public abstract double payoff(Option option);
 	public abstract double payoff(double underlying, double strike);
 }
 

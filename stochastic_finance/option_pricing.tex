@@ -63,9 +63,9 @@ In risk-neutral measure, we write the stock price as
 \end{align*}
 Where $\tilde W(t)$ is a standard Brownian motion under risk-neutral measure.\\
 According to the risk-neutral pricing formula, the price of the derivative security at time t is
-\begin{align*}
-	V(t) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)]
-\end{align*}
+\begin{align}
+	V(t) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)] \label{rn}
+\end{align}
 Since the stock price is Markov and the payoff is a function fo the stock price alone, based on Faynman-Kac formula, there is a function $v(t,x)$ such that $V(t) = v(t, S(t))$, and $v(v, S(t))$ must satisfy discounted partial differential equation 
 \begin{align*}
 	v_t(t,x) + rx v_x(t,x) + \frac{1}{2} \sigma^2 x^2 v_{xx}(t,x) = rv(t,x)
@@ -87,12 +87,21 @@ We write
 	S(T) = S(t) exp\{\sigma(\tilde W(T) -\tilde W(t)) + (r - \frac{1}{2} \sigma^2) \tau\} \\
 	     = S(t) exp\{-\sigma \sqrt{\tau} Y + (r - \frac{1}{2}\sigma^2)\tau\}
 \end{align*}
-Where Y is the stardard normal random variable and $\tau = T - t$ is the time to expiration. We see we write S(T) as a product of S(t), which is F(t) measurable, and a random variable independent of F(t).
-Then solving c(t, S(t)) becomes solving an expectation value of a random varible composed of a standard normal random variable. 
+Where Y is the stardard normal random variable and $\tau = T - t$ is the time to expiration. 
 \begin{align*}
-	c(t,x) = \tilde E[e^{-\tau r}(x exp\{-\sigma \sqrt{\tau} Y + (r -\frac{1}{2}\sigma^2)\tau\}-K)^+]
+        Y = -\frac{\tilde W(T) - \tilde W(t)}{\sqrt{T - t}}
 \end{align*}
-Where Y is a standard normal distribution under $\hat P$.\\
+So we see that $S(T)$ is the product of the $F(t)$ measurable random variable S(t) and random variable
+\begin{align*}
+        exp\{-\sigma \sqrt{\tau} Y +(r - \frac{1}{2} \sigma^2) \tau \}
+\end{align*}
+Which is independent of $F(t)$.
+Therefore based on risk-neutral pricing formula[\ref{rn}]
+\begin{align*}
+        c(t,x) = \tilde E[e^{-r\tau}(x exp\{ -\sigma \sqrt{\tau} Y + (r - \frac{1}{2} \sigma^2)\tau\} -K)^+]\\
+        = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\tau r}(x exp\{-\sigma \sqrt{\tau} y
+        +(r -\frac{1}{2}\sigma^2)\tau \} -K)^+ e^{-\frac{1}{2}y^2} dy
+\end{align*}
 After a little bit of math with integration, we have the solution to the Black-Scholes-Merton model for European call option
 \begin{align*}
 	c(\tau,x; K,r,\sigma) = xN(d_{+}(\tau,x)) - e^{-r\tau}KN(d_{-}(\tau,x))
@@ -146,13 +155,13 @@ $D = e^{-r\tau}$ is the discount factor \\
 \section{Heston Stochasic Volatility Model}
 \subsection{Introduction}
 The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
-\begin{align*}
+\begin{align}
 	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
-\end{align*}
+\end{align}
 and the volatility itself is governed by the equation
-\begin{align*}
+\begin{align}
 	dV(t) = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t)
-\end{align*}
+\end{align}
 Where 
 \begin{align*}
 	\tilde dW_1(t) \tilde dW_2(t) = \rho dt
@@ -162,9 +171,9 @@ At time t, the risk-neutral price of a call expiring at time $T \geq t$ in this 
 	c(t, S(t), V(t)) = \tilde E[e^{-r(T-t)}(S(T)-K)^+|F(t)]
 \end{align*}
 If we move the term $c^{rt}$ to the left hand side, we see
-\begin{align*}
+\begin{align}
 	e^{-rt}c(t, S(t), V(t)) = \tilde E[e^{-rT}(S(T)-K)^+|F(t)]
-\end{align*}
+\end{align}
 which satisfies the martingale property.
 Then we take the differentiation of $e^{-rt}c(t, S(t), V(t))$. We get
 \begin{align*}
@@ -209,10 +218,10 @@ the dt term in (7) is
 	\frac{\partial^2 c}{\partial V \partial S} VS\sigma e^{-rt}dt
 \end{align*}
 Collect all the dt terms and let those terms equal to zero, we get
-\begin{align*}
+\begin{align}\label{c}
 	c_t + rs c_s + (a-bv)c_v + \frac{1}{2} s^2 v c_{ss} + \rho \sigma svc_{sv}
 	+\frac{1}{2} \sigma^2vc_{vv} = rc
-\end{align*}
+\end{align}
 The function $c(t, s, v)$ satisfies boundary condition
 \begin{align*}
 	c(T, s, v) = (s-K)^+ \\
@@ -222,21 +231,21 @@ The function $c(t, s, v)$ satisfies boundary condition
 	lim_{v \to \infty} c(t, s, v) = s\\  
 \end{align*}
 Based on the solution to the BSM equation, we can guess that the solution has the following form
-\begin{align*}
+\begin{align}
 	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
-\end{align*}	
+\end{align}	
 Where f and g can be intepreted as a cumulative distribution function.
-Then since c(t,s,v) satisfies the partial differential equation above, we can show that $f_0$ and $f_1$ satisfy the following
-\begin{align*}
+Then since c(t,s,v) satisfies the partial differential equation \ref{c}, we can show that $f$ and $g$ satisfy the following
+\begin{align}\label{f}
 	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
 	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
         +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
-\end{align*}
-\begin{align*}
+\end{align}
+\begin{align}
 	g_t + (r - \frac{1}{2}v)g_x + (a-bv)g_v 
 	+ \frac{1}{2}  v g_{xx} + \rho \sigma vg_{xv}
         +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
-\end{align*}
+\end{align}
 The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
 \begin{align*}
 	f(T, x, v) = 1_{x\geq logK}\\
@@ -255,11 +264,13 @@ By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
 \begin{align*}
 	g(t, x, v) = E^{t,x,v} 1_{x\geq logK}\\
 \end{align*}
+and the stochastic process of X(t) and V(t) are
 \begin{align*}
 	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)\\
 	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
 \end{align*}
-To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. Let $\tau = T-t$
+To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. 
+First we work out the function f(t, x, v. ). Let $\tau = T-t$
 \begin{align*}
 	\tilde f(k, v, \tau) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau)
 \end{align*}
@@ -268,7 +279,7 @@ The inverse Fourier transform is
 	f(x, v, \tau) = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx}
 	\tilde f(k, v, \tau)
 \end{align*}
-Substitute this into the PDE of f(x, v, t), then
+Substitute this into equation \ref{f}, then
 \begin{align*}
 	-\frac{\partial \tilde f}{\partial \tau}
 	+ (r + \frac{1}{2})ik \tilde f 
@@ -277,9 +288,10 @@ Substitute this into the PDE of f(x, v, t), then
 	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
         +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
 \end{align*}
-Now the problem is to solve for f. We note when $\tau=0$,
+Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
 \begin{align*}
-	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
+	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau=0)
+			  = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
 			     = \int_{0}^{\infty}dx e^{-ikx}
 			     = \pi \delta(k) + \frac{1}{ik}
 \end{align*}
@@ -290,10 +302,10 @@ when $\tau!=0$, we guest a general solution which has the following form
 From above we easily see it match the terminal condition at $\tau to 0$. With inverse Fourier transform
 \begin{align*}
 	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
-			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + \tau v) \tilde f(k, v, 0)\\
-			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + \tau v) 
-			 	(pi \delta(k) + \frac{1}{ik}) \\
-			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(\frac{C\tau + \tau v}{ik}) 
+			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
+			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + D\tau v) 
+			 	(\pi \delta(k) + \frac{1}{ik}) \\
+			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
 \end{align*}
 Now the only remaining task is to find C and D.
 \end{document}
