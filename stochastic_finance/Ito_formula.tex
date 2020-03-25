@@ -27,7 +27,7 @@ Define Ito integral\\
 \end{align*}
 
 \section{Ito formula }
-\noindent{\bf a. Ito formula}
+\noindent{\bf a. Ito formula}\\
 Suppose 
 $dX_t = u dt + \sigma dB_t$ \\
 If g(t, X) is twice continuously differentiable   $Y_t = g(t, X_t)$ \\
@@ -40,7 +40,25 @@ Where $(dX)^2 = d(X_t) d(X_t) = u^2 (dt)^2 + 2 u \sigma dt dB_t
 $dt * dt = dt * dB_t = 0$, $dB_t dB_t = dt$ \\
 So $(d X_t)^2 = \sigma^2 dt$. \\
 
-\noindent {\bf b. Example: Geometric Brownian motion}\\
+\noindent {\bf b. Example: Differentiation of Geometric Brownian motion}\\
+The geometric Brownian motion satisfies
+\begin{align*}
+	S(t) = S(0) exp((\mu - \frac{1}{2}\sigma^2)t + \sigma dW(t))
+\end{align*}
+Based on Ito's formula and chain rule
+\begin{align*}
+	&	\frac{dS}{dt} = S(\mu - \frac{1}{2}\sigma^2) \\
+	&	\frac{dS}{dW} = S(\sigma) \\ 
+	&	\frac{d^2S}{dW^2} = \frac{d}{dW}(\frac{dS}{dW}) = \frac{d}{dW}(S(\sigma)) 
+	= \sigma \frac{dS}{dW} = \sigma^2 S \\
+\end{align*}
+So 
+\begin{align*}
+	dS & = S(\mu - \frac{1}{2}\sigma^2)dt + \sigma S dW(t) + \frac{1}{2} S \sigma^2 dt \\
+           & = S((\mu dt +  \sigma dW(t))\\
+\end{align*}
+
+\noindent {\bf c. Example: Integral of Geometric Brownian motion}\\
 The geometric Brownian motion satisfies
 $d N_t /N_t= r  dt + \sigma dB_t$
 to solve this we consider\\

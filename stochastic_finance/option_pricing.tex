@@ -4,7 +4,8 @@
 \begin{document}
 Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \line(1,0){350}
-\section{Black Scholes Merton Equation: Introduction}
+\section{Option Pricing Models and Solutions}
+\subsection{Black Scholes Merton Equation: Introduction}
 We assume the stock prices following a geometric Brownian motion\\
 1) Stock price:\\
 \begin{align*}
@@ -56,7 +57,7 @@ Similarly, for put option
 \begin{align*}
 	p(T,S) = (K-S(T))^+
 \end{align*}
-\section{Connection to Faynman-Kac formula}
+\subsection{Connection to Faynman-Kac formula}
 In risk-neutral measure, we write the stock price as
 \begin{align*}
 	dS(t) = rS(t) dt + \sigma S(t) d \tilde W(t) 
@@ -74,7 +75,7 @@ Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation.
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
 These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
-\section{Black-Scholes-Merton Model: Analytic Solution for European Option}
+\subsection{Black-Scholes-Merton Model: Analytic Solution for European Option}
 {\bf1. European call option}\\
 For European call option with payoff to be $V(T) = S(T) - K$, with K as strike price, let us assume constant volatility $\sigma$, and constant interest rate r. 
 Then we can obtain the solution to the BSM equation with martingale property without bothering solving the complex parital
@@ -152,8 +153,7 @@ If we introduce $F = e^{r\tau} S$, which is the forward price of the asset S. Th
 The variables are:\\
 $\tau = T - t$ is the time to expiry\\
 $D = e^{-r\tau}$ is the discount factor \\
-\section{Heston Stochasic Volatility Model}
-\subsection{Introduction}
+\subsection{Heston Stochasic Volatility Model}
 The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
 \begin{align}
 	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
@@ -236,7 +236,7 @@ Based on the solution to the BSM equation, we can guess that the solution has th
 \end{align}	
 Where f and g can be intepreted as a cumulative distribution function.
 Then since c(t,s,v) satisfies the partial differential equation \ref{c}, we can show that $f$ and $g$ satisfy the following
-\begin{align}\label{f}
+\begin{align} \label{f}
 	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
 	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
         +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
@@ -280,14 +280,14 @@ The inverse Fourier transform is
 	\tilde f(k, v, \tau)
 \end{align*}
 Substitute this into equation \ref{f}, then
-\begin{align*}
+\begin{align} \label{ff}
 	-\frac{\partial \tilde f}{\partial \tau}
 	+ (r + \frac{1}{2})ik \tilde f 
 	+ (a-bv+\rho \sigma v)\frac{\partial \tilde f}{\partial v}
         -\frac{1}{2}vk^2 \tilde f 
 	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
         +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
-\end{align*}
+\end{align}
 Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
 \begin{align*}
 	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau=0)
@@ -295,17 +295,47 @@ Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
 			     = \int_{0}^{\infty}dx e^{-ikx}
 			     = \pi \delta(k) + \frac{1}{ik}
 \end{align*}
-when $\tau!=0$, we guest a general solution which has the following form
+when $\tau!=0$, we guess a general solution which has the following form
 \begin{align*}
 	\tilde f(k, v, \tau) = exp(C\tau +D\tau v) \tilde f(k,v,0)
 \end{align*}
-From above we easily see it match the terminal condition at $\tau to 0$. With inverse Fourier transform
-\begin{align*}
+From above we easily see it match the terminal condition at $\tau \to 0$. With inverse Fourier transform
+\begin{align} \label{fs}
 	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
-			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
-			 & = \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(C\tau + D\tau v) 
+			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
+			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) 
 			 	(\pi \delta(k) + \frac{1}{ik}) \\
-			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{2\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
+			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
+\end{align}
+Now the only remaining task is to find C and D. If we substitute \ref{fs} into \ref{ff}, we can get the expression C and D. 
+\section{Simulation Processes}
+1. BSM process\\
+\begin{align*}
+	& \mu = r - \frac{1}{2} \sigma^2\\
+	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sigma \sqrt{dt} dW) \\
 \end{align*}
-Now the only remaining task is to find C and D.
+2. Heston process\\
+To simulate Heston process needs to generate two Gaussian random variables that has correlation $\rho$, we do this by first generate two independent Gaussian random variables $W_1$, $W_2$, then
+\begin{align*}
+	W_1^{'} = W_1
+	W_2^{'} = \rho W_1 + \sqrt{1 - \rho^2} W_2
+\end{align*}
+We can easily check the mean of $W_2^{'}$
+\begin{align*}
+	&E[W_2^{'}] = \rho E[W_1] + \sqrt{1 - \rho^2} E[W_2] = 0\\
+	&Var[W_2^{'}] = \rho^2 Var[W_1] + (1 - \rho^2) Var[W_2] = \rho^2 + 1 - \rho^2 = 1 \\
+\end{align*}
+\begin{align*}
+	cor(W_1^{'}, W_2^{'}) & = \frac{E[W_1^{'}W_2^{'}]}{\sqrt{Var[W_1^{'}]}\sqrt{Var[W_2^{'}]}}\\
+		      & = E[W_1 (\rho W_1 +\sqrt{1 - \rho^2})W_2] \\
+		      & = \rho E[W_1^2] + \sqrt{1 - \rho^2} E[W_1 W_2] \\
+		      & = \rho \\
+\end{align*}
+The last step uses the fact $W_1$ and $W_2$ are independent, so $E[W_1 W_2] = E[W_1] E[W_2] = 0$.\\
+\begin{align*}
+	& \mu = r - \frac{1}{2} (V^{+(t)})\\
+	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sqrt{V^{+(t)}} \sqrt{dt} dW_1) \\
+	& V^{(t + dt)} = V^{(t)} + (a - b V^{+{t}}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho dW_1
+	+ \sqrt{1 - \rho^2}) dW_2 
+\end{align*}        
 \end{document}
