@@ -204,4 +204,41 @@ This means $D(t)X(t)$ is a martingale under $P^{'}$. Suppose T is the option pay
 	D(t)X(t) = E^{'} [D(T) X(T) | F(t)]
 \end{align*}
 {\bf This is our risk-neutral pricing formula.}
+\subsection{Risk Neutral Measure with Foreign Currency}
+There is an exchange rate Q(t), which gives units of domestic currency per unit of foreign currency. We assume the exchange rate satisfies
+\begin{align*}
+	dQ(t) = \gamma(t)Q(t)dt + \sigma_2(t)Q(t)dW_3(t)
+\end{align*}
+There is also a foreign interest rate $R^f(t)$, which leads to foreign money market account price
+\begin{align*}
+	M^f(t) = e^{\int_0^t R^f(u) du}
+\end{align*}
+The value of the foreign money market account in domestic currency is $M^f(t)Q(t)$, and its discounted value is $D(t)M^f(t)Q(t)$
+\begin{align*}
+	d(D(t)M^f(t)Q(t)) = D(t)M^f(t)Q(t)[(R^f - R(t) + \gamma(t))dt + \sigma_2(t) dW_3(t)]
+\end{align*}
+Now we create a risk-neutral measure $\tilde P$, under which $D(t)M^f(t)Q(t)$ is a martingale. This means
+\begin{align*}
+	& D(t)M^f(t)Q(t) = \tilde E[D(T)M^f(T)Q(T)|F(t)] \\
+	& d(D(t)M^f(t)Q(t)) = \sigma_2(t) D(t)M^f(t)Q(t)d\tilde W_3(t) \\
+\end{align*}
+And
+\begin{align*}
+	d(M^f(t)Q(t)) = M^f(t)Q(t)(R(t)dt + \sigma_2(t) d\tilde W_3(t))
+\end{align*}
+Finally, we obtain the exchange rate Q(t) and risk neutral measure
+\begin{align*}
+	dQ(t) = Q(t)((R(t) - R^f(t))dt + \sigma_2(t) d\tilde W_3(t))
+\end{align*}
+{\bf Example}
+Suppose $R(t)$ and $R^f(t)$ are fixed, then based on martingale property, 
+\begin{align*}
+	Q(0) = e^{-rT} e^{r^fT}Q(T)
+\end{align*}
+In the above Q(0) is the spot price S. Q(T) is the forward price F, we then get the price of the forward
+\begin{align*}
+	& S = e^{-rT} e^{r^fT}F \\
+	& F = e^{(r - r^f)T}S \\
+\end{align*}
 \end{document}
+
