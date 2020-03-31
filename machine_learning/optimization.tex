@@ -40,6 +40,65 @@ Stochastic Gradient &	Always fast & 	Faster & High & Very noisy\\
 
 \noindent {\bf c. Practical usage}\\
 Shuffle the data before running the stochastic gradient descent\\
+
+\subsection{Adam Optimization}
+(1) Weighted avarage of gradient\\
+A common pratice to avoid value fluctuations during the gradient descent update is using a weighted average. For each step,
+we average the gradients in the previous steps and do the update. If the cost function is $f(w)$ and its gradient is
+$g(w)=\nabla f(w)$, We define at step t
+\begin{align*}
+	m^{(t)} = \beta m^{(t-1)} + (1 - \beta)g^{(t)} \\
+	w^t = w^{(t-1)} - \alpha m^{(t)} \\
+\end{align*}
+Where beta is a hyperparameter. We usually choose 0.9 or 0.99. Using this weighted average, the gradient we use for update at each step is
+\begin{align*}
+	m^{(0)}  = 0 \\
+	m^{(1)}  = \beta m^{(0)} + (1 - \beta)g^{(1)} = (1 - \beta)g^{(1)} \\
+	m^{(2)}  = \beta m^{(1)} + (1 - \beta)g^{(2)} = \beta(1 - \beta)g^{(1)} + (1 - \beta)g^{(2)} \\
+	m^{(3)}  = \beta m^{(2)} + (1 - \beta)g^{(3)} = \beta^2(1 - \beta)g^{(1)} + \beta(1 - \beta)g^{(2)} + (1 - \beta)g^{(3)} \\
+\end{align*}
+We can write above as
+\begin{align*}
+	m^{(t)} = (1- \beta) \sum_{i=0}^t \beta^{t-i}g^{(i)}
+\end{align*}
+(2) First step bias correction\\
+The above weighted average causes a bias on the first step. Because the term $M^{(0)}$ is not defined and we arbitrarily set to zero. This leads to a bias on the first term, so we correct $m^{(t)}$ using $\tilde m^{(t)}$
+\begin{align*}
+	\tilde m^{(t)} = \frac{m_t}{1 - \beta^t} = \frac{1}{1 - \beta^t}(\beta m^{(t-1)} + (1 - \beta)g^{t})
+\end{align*}
+\begin{align*}
+	\tilde m^{(0)} & = m^0  = 0 \\
+	\tilde m^{(1)} & = \frac{m^{(1)}}{1 - \beta}= \frac{\beta}{1 - \beta} m^{(0)} + g^{(1)} = g^{(1)} \\
+	\tilde m^{(2)} & = \frac{m^{(2)}}{1 - \beta^2} = \frac{\beta}{1 - \beta^2} m^{(1)} 
+	+ \frac{1 - \beta}{1 - \beta^2}g^{(2)} 
+		= \frac{1}{1 - \beta^2}(\beta(1 - \beta)g^{(1)} + (1 - \beta)g^{(2)}) \\
+	\tilde m^{(3)} & =\frac{m^{(3)}}{1 - \beta^3} = \frac{\beta}{1 - \beta^3} m^{(2)} + \frac{(1 - \beta)}{1 - \beta^3}g^{(3)} 
+	= \frac{1}{1 - \beta^3}( \beta^2(1 - \beta)g^{(1)} + \beta(1 - \beta)g^{(2)} + (1 - \beta)g^{(3)} )\\
+\end{align*}
+\begin{align*}
+	\tilde	m^{(t)} = \frac{1 - \beta}{1 - \beta^t} \sum_{i=0}^t \beta^{t-i}g^{(i)}
+\end{align*}
+From above, we see that $m^{(1)} = g^{(1)}$, so gradient in the first iteration does not have any bias. Also under this correction, for any t, the sum of coefficients of $g^{(i)}$ is 1.
+\begin{align*}
+	\frac{1 - \beta}{1 - \beta^t} \sum_{i=0}^t \beta^{i} = \frac{1 - \beta}{1 - \beta^t}\frac{1 - \beta^t}{1 - \beta} = 1
+\end{align*}
+(3) Learning rate scaling\\
+So far we have a constant learning rate $\alpha$. This means during one step of update, the change of $w$ is large when the gradient is large and the value of the parameter would also fluctuate. To fix this, we modify the gradient by dividing its magnitute. Similarly to $m^{(t)}$, we define
+\begin{align*}
+	v^{(t)} = \beta_v v^{(t-1)} + (1 - \beta_v) g^2_t\\
+	\tilde v^{(t)} =  \frac{v^{(t)}}{1 - \beta_v^t}\\
+	w^{(t)} = w^{(t-1)} - \alpha \frac{\tilde m^{(t)}}{\sqrt{\tilde v^{(t)}} + \epsilon} \\
+\end{align*}
+Where the $\epsilon$ is a small positive number in order to prevent dividing by zero.
+(4) Summary 
+\begin{align*}
+	g^{(t)} = \nabla_w f(w)\\
+ 	m^{(t)} = \beta m^{(t-1)} + (1 - \beta)g^{(t)} \\
+	v^{(t)} = \beta_v v^{(t-1)} + (1 - \beta_v) g^2_t\\
+	 \tilde m^{(t)} = \frac{m_t}{1 - \beta^t} 
+	 \tilde v^{(t)} =  \frac{v^{(t)}}{1 - \beta_v^t}\\
+	 w^{(t)} = w^{(t-1)} - \alpha \frac{\tilde m^{(t)}}{\sqrt{\tilde v^{(t)}} + \epsilon} \\
+\end{align*}
 \subsection{Conjugate Gradient Method}
 {\bf a. Intuition}\\
 There exists tremendous materials online explaining conjugate gradient method. However, after reading many versions of explanations, I am still confused that why letting moving directions conjugate to each other eventually leads to a solution. So I will be explaining the intuition first such that the idea of CONJUGATE comes more natural to understand.\\
@@ -57,8 +116,8 @@ There exists tremendous materials online explaining conjugate gradient method. H
 			\end{array}
 			\right)
 			\left( \begin{array} {c}
-			x_1 & \\
-			x_2 & \\
+			x_1  \\
+			x_2  \\
 			\end{array}
 			\right)
 \end{align*}
@@ -167,22 +226,22 @@ While we know that
 \end{align*}
 This leads to
 \begin{align*}
-	d^{(0)}^T A e^{(1)} = 0
+	{d^{(0)}}^T A e^{(1)} = 0
 \end{align*}
-So by choosing $\alpha$ that minimize $f({\bf x^{(1)})$, we automatically guarantee that the moving direction is A-orthogonal to the error term. Proof completed. We note the in the proof above we use the moving direction at step 0 and the error term in step 1, but it is easy to generalize this relationship to any step. In other words, the following relationship holds at step i.
+So by choosing $\alpha$ that minimize $f({\bf x^{(1)}})$, we automatically guarantee that the moving direction is A-orthogonal to the error term. Proof completed. We note the in the proof above we use the moving direction at step 0 and the error term in step 1, but it is easy to generalize this relationship to any step. In other words, the following relationship holds at step i.
 \begin{align*}
-	d^{(i)}^T A e^{(i+1)} = 0
+	{d^{(i)}}^T A e^{(i+1)} = 0
 \end{align*}
 The orthogonality relationship is due to the nature that $f({\bf x})$is quadratic. If we take a f(x) with a different form, it is not guaranteed to have this relationship. \\
 7) 
 The A-orthogonal relationship provides us a way to solve for $\alpha$. We notice that $e^{(1)} = e^{(0)} + \alpha d^{(0)}$, then we have
 \begin{align*}
-	d^{(0)}^T A (e^{(0)} + \alpha d^{(0)}) = 0
+	{d^{(0)}}^T A (e^{(0)} + \alpha d^{(0)}) = 0
 \end{align*}
 Solve for $\alpha$\\
 \begin{align*}
-	\alpha & = \frac{d^{(0)}^T A e^{(0)} }{d^{(0)}^T A d^{(0)} }\\
-	       & = \frac{d^{(0)}^T A {\bf x_{min} - x^{(0)}} }{d^{(0)}^T A d^{(0)} }\\
+	\alpha & = \frac{{d^{(0)}}^T A e^{(0)} }{{d^{(0)}}^T A d^{(0)} }\\
+	       & = \frac{{d^{(0)}}^T A {\bf x_{min} - x^{(0)}} }{{d^{(0)}}^T A d^{(0)} }\\
 \end{align*}
 {\bf c. Steps of convergence}
 In the example we did in the intuition, the $f({\bf x})$ only has two variables. And we have proved that after moving one step, the error term is A-orthogonal to the moving direction. So we need to enforce the next moving direction is A-orthogonal to the current one. We now prove that by enforcing each moving directions are A-orthogonal to each other, we guarantee that the algorithm can converge using exact n step, where n is the number of variables.\\
@@ -191,16 +250,16 @@ We express the error term $e^{(0)}$ at step 0 as a linear combinations of n sear
 \begin{align*}
 	e^{(0)} = \sum_{j=0} ^{n-1} \delta_j d^{(j)}\\
 \end{align*}
-Where $\delta_j$ is a scalar. We find $\delta_j$ by multiplying $d^{(k)}^T A$ on both sides
+Where $\delta_j$ is a scalar. We find $\delta_j$ by multiplying ${d^{(k)}}^T A$ on both sides
 \begin{align*}
-	d^{(k)}^T A e^{(0)} & = \sum_{j=0} ^{n-1} \delta_j d^{(k)}^T A d^{(j)} \\
-	d^{(k)}^T A e^{(0)} & = \delta_k d^{(k)}^T A d^{(k)} \\
+	{d^{(k)}}^T A e^{(0)} & = \sum_{j=0} ^{n-1} \delta_j {d^{(k)}}^T A d^{(j)} \\
+	{d^{(k)}}^T A e^{(0)} & = \delta_k {d^{(k)}}^T A d^{(k)} \\
 \end{align*}
 
 \begin{align*}
-	\delta_k & = \frac{d^{(k)}^T A e^{(0)}}{d^{(k)}^T A d^{(k)}} \\
-			 & = \frac{d^{(k)}^T A e^{(k)} + \sum_{i=0}^{k-1} \alpha_i d^{(i)}}{d^{(k)}^T A d^{(k)}} \\
-			 & = \frac{d^{(k)}^T A e^{(k)}}{d^{(k)}^T A d^{(k)}}
+	\delta_k & = \frac{{d^{(k)}}^T A e^{(0)}}{{d^{(k)}}^T A d^{(k)}} \\
+			 & = \frac{{d^{(k)}}^T A e^{(k)} + \sum_{i=0}^{k-1} \alpha_i d^{(i)}}{{d^{(k)}}^T A d^{(k)}} \\
+			 & = \frac{{d^{(k)}}^T A e^{(k)}}{{d^{(k)}}^T A d^{(k)}}
 \end{align*}
 We found that 
 \begin{align*}
@@ -233,7 +292,7 @@ therefore
 
 \noindent{\bf b. Matrix Forms}
 \begin{align*}
-	x^{(t+1)} = x^{t}  - H^{-1}(f(x^{t})) \grad f(x^{t})
+	x^{(t+1)} = x^{t}  - H^{-1}(f(x^{t})) \nabla f(x^{t})
 \end{align*}
  where H is the Hessian matrix.\\
  
@@ -259,7 +318,7 @@ This is only exact when $\delta x$ approaches zero.  For 2nd order derivative, w
 Again this is only exact when $\delta$ is zero. Based on this idea we
 replace the Hessian Matrix with an approximation that satisfies the following approximation\\
 \begin{align*}
-	\grad f(x + \delta x) = \grad f(x) + B\delta x
+	\nabla f(x + \delta x) = \nabla f(x) + B\delta x
 \end{align*}
 This is quasi newton method. Various Quasi Newton methods exist with different choice of B.\\
 
