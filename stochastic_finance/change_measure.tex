@@ -240,5 +240,6 @@ In the above Q(0) is the spot price S. Q(T) is the forward price F, we then get 
 	& S = e^{-rT} e^{r^fT}F \\
 	& F = e^{(r - r^f)T}S \\
 \end{align*}
+Here is how we intepret negative sign of $r^f$. Consider one unit of foreign currency, when $r^f = 0$, then return of one unit of foreign currency has to match the return of the saving account in domestic currency based on risk-neutral measure. When we invest amount of S in domestic save account, the value at time T is $S(t) = e^{rt}S$, and the forward price of the foreign currency at time T has to match it, therefore $F = e^{rt} S$. When $r^f = r$, then if we invest one unit of foreign currency, after time T we get $e^{r^fT} = e^{rT}$ in foreign currency. This amount of foregin currecy is equal to $e^{rT}F$ amount in domestic currency and it has to match the value of the saving account in domestic currency $e^{rT}S$, so $F = S$.
 \end{document}
 
