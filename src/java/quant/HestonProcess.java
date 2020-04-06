@@ -1,6 +1,12 @@
 import java.util.*;
 class HestonProcess extends Process
 {
+	/* Define Heston Process
+	 * dS = rSdt + \sqrt{S} dW1
+	 * dV = \kappa(\theta - V)dt + \sigma \sqrt{V} dW2
+	 * cor[dW1, dW2] = \rho dt
+	 */
+
 	// constructor
 	public HestonProcess(double riskFreeRate, double volatility,
 				double kappa, double theta, 
@@ -13,17 +19,8 @@ class HestonProcess extends Process
 		this.sigma = sigma;
 		this.rho = rho;
 	}
-	// calcuate the drift
-	public double drift(double riskFreeRate, double volatility)
-	{
-		return riskFreeRate - 0.5*volatility*volatility;
-	}
-	// specify how the process change from time t to t + dt
-	public void evolve(double dt, double dw1, double dw2)
-	{
-		super.evolve(dt, dw1, dw2);
-		evolveVolatility(dt, dw1, dw2);
-	}
+	
+
 
 	// specify how the volatility changes
 	public void evolveVolatility(double dt, double dw1, double dw2)

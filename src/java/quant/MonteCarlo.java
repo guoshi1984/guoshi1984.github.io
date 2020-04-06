@@ -20,18 +20,6 @@ public class MonteCarlo
 		accumulator = new SampleAccumulator();
 	}
 
-	/*double evolve(double sample, double dt)
-	{
-		Random r = new Random();
-		double move = drift*dt + sigma*Math.sqrt(dt)*r.nextGaussian();
-		//double move = drift + sigma*r.nextGaussian();
-		double exp = Math.exp(move);
-		return sample*exp;
-		
-		
-		
-	}
-	*/
 	void run()
 	{
 		for(int i = 0; i<sampleSize; i++){
@@ -41,10 +29,8 @@ public class MonteCarlo
 			for(int j = 0; j < nTimeStep; j++)
 			{
 				Random random = new Random(); 
-				double dw1 = random.nextGaussian();
-				double dw2 = random.nextGaussian();
 				process.setSample(currentSample);
-				process.evolve(dt, dw1, dw2);	
+				process.evolve(dt);	
 				currentSample = process.getSample();
 			}
 				double discountPayoff = option.type.payoff(currentSample, option.strike)

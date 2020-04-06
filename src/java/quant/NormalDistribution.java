@@ -2,6 +2,20 @@ import java.util.*;
 public class NormalDistribution
 {
 
+	public static double create()
+	{
+		Random r = new Random();
+		double u1 = 0;
+		double u2 = 0;
+		double dsq = 0;
+		do {
+			u1 = (r.nextDouble() - 0.50)*2.0;
+			u2 = (r.nextDouble() - 0.50)*2.0;
+			dsq = u1*u1 + u2*u2;
+		} while (dsq > 1 );
+		return u1*Math.sqrt(-2*Math.log(dsq)/dsq);
+
+	}
 	// return pdf(x) = standard Gaussian pdf
     	public static double pdf(double x) {
         	return Math.exp(-x*x / 2) / Math.sqrt(2 * Math.PI);

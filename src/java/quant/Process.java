@@ -1,7 +1,8 @@
+import java.util.*;
 abstract class Process
 {
 	/*    Define stochastic process for asset and volatility
-	 *    dS = drift * dt + \sigma * dw	
+	 *    dS = drift*S*dt + volatility*S*dw	
 	 */
 
 	
@@ -17,20 +18,54 @@ abstract class Process
 		return this.sample;
 	}
 
-	// drift term for dt
-	public abstract double drift(double riskFreeRate, double volatility);
-	
-	// how the asset value evolves
-	public void evolve(double dt, double dw1, double dw2)
+	// setter for riskFreeRate
+	public void setRiskFreeRate(double riskFreeRate)
 	{
-		double drift = drift(riskFreeRate, volatility);
-                double move = drift*dt + volatility*Math.sqrt(dt)*dw1;
-                double exp = Math.exp(move);
-                this.setSample(this.sample*exp);
+		this.riskFreeRate = riskFreeRate;
+	}
+	
+	// setter for volatility
+	public void setVolatility(double volatitliy)
+	{
+		this.volatility = volatility;
+	}
+
+	public void evolve(double dt)
+	{
+		Random r = new Random();
+		double dw1 = r.nextGaussian();
+		double dw2 = r.nextGaussian();
+		evolveAsset(dt, dw1, dw2);
+		evolveVolatility(dt, dw1, dw2);
+	}
+
+	// how the asset value evolves
+	public void evolveAsset(double dt, double dw1, double dw2)
+	{
+		
+                double move = drift(dt) + diffuse(dt, dw1);
+                this.setSample(this.sample*Math.exp(move));
 
 	}
+
 	// how the volatility evolves
-	public abstract void evolveVolatility(double dt, double dw1, double dw2);
+	protected void evolveVolatility(double dt, double dw1, double dw2)
+	{
+		// do nothing unless subclass override it
+		return;
+	}
+	// drift term for dt
+	protected double drift(double dt)
+	{
+		return (riskFreeRate - 0.5*volatility*volatility)*dt;
+	}
+
+	// diffusion term drive by brownian motion
+	protected double diffuse(double dt, double dw)
+	{
+		return volatility*Math.sqrt(dt)*dw;
+	}	
+	
 	
 	// sample to be evolved by the process
 	protected double sample;

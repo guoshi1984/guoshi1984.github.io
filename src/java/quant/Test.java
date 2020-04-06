@@ -1,3 +1,4 @@
+import java.util.*;
 public class Test 
 {
 
@@ -17,13 +18,40 @@ public class Test
 		mc.initialize();
 		mc.run();
 		Process process2 = new HestonProcess(option.riskFreeRate,
-                                option.volatility, 1.0, 
-				option.volatility*option.volatility, 0.001, 0.0);
+                                option.volatility, 
+				1.0,  //kappa
+				option.volatility*option.volatility, //theta
+			       	0.001, //sigma
+				0.0); //rho
 	
 		MonteCarlo mc2 = new MonteCarlo(option,
 			       10, 100000, process2);
 		mc2.initialize();
 		mc2.run();
+		
+		double mo1 = 0;
+		double mo2 = 0;
+		double mo3 = 0;
+		double mo4 = 0;
+		int n = 1000;
+		Random r = new Random();
+		for (int i = 0; i < n; i++)
+		{
+			double gr = NormalDistribution.create();	
+		//	double gr = r.nextGaussian();
+			mo1 += gr;
+			mo2 += gr*gr;
+			mo3 += gr*gr*gr;
+			mo4 += gr*gr*gr*gr;
+		}
+		mo1 /= n;
+		mo2 /= n;
+		mo3 /= n;
+		mo4 /= n;
+		System.out.println(mo1);
+		System.out.println(mo2);
+		System.out.println(mo3);
+		System.out.println(mo4);
 		return;
 	}
 }
