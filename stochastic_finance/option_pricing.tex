@@ -308,6 +308,88 @@ From above we easily see it match the terminal condition at $\tau \to 0$. With i
 			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
 \end{align}
 Now the only remaining task is to find C and D. If we substitute \ref{fs} into \ref{ff}, we can get the expression C and D. 
+\subsection{Jump Diffusion Model}
+The BSM model and the Heston model assumes the asset prices follows the stochastic process driven by Brownian motion. Under this assumption, the asset price is continuous in time. The jump diffusion model extends the BSM model and Heston model by assuming asset price has discrete jump in time. Therefore in jump diffusion model, the stochastic process contains a continuous Brownian motion process and a discrete jump process.\\
+
+\noindent{\bf 1. Number of jumps during per unit time: Possion distribution}\\
+The number of jump should be either zero or a positive integer. Let N be the number of jump per unit of time and k be a nonnegative integer. Then the probability of $N = k$ should satisfies
+\begin{align*}
+	\sum_{k = 0}^\infty P(N = k) = 1
+\end{align*}
+In order to find the distribution, we borrow the idea of Taylor's expansion. We consider a function $e^{\lambda}$, its Taylor's expansion is
+\begin{align*}
+	e^{\lambda} = \sum_{k = 0}^\infty \frac{\lambda^k}{k!}
+\end{align*}
+Dividing $e^{\lambda}$ on both sides, we can
+\begin{align*}
+	1 = \sum_{k = 0}^\infty \frac{\lambda^k}{k!}e^{-\lambda} 
+\end{align*}
+So we can assign the probability
+\begin{align*}
+P(N = k) = \frac{\lambda^k}{k!}e^{-\lambda}
+\end{align*}
+This is the well-known Possion distribution. It is easy to show Possion distribution has mean and variance equal to $\lambda$. So $\lambda$ can be intepreted as the average number of jumps per unit of time.\\
+
+\noindent{\bf 2. Number of jumps during time interval $dt$: Possion process}\\
+Now we consider the number of jumps in a given time interval $dt$, and we call it $N(dt)$. The average jump during $dt$ is $\lambda dt$. So we can get the probability distribution by substitude $\lambda dt$ to $\lambda$
+\begin{align*}
+	P(N(dt) = k) = \frac{(\lambda dt)^k}{k!}e^{-\lambda dt}
+\end{align*}
+The mean of $N(dt)$ is $\lambda dt$.\\
+We define $S_k$ is the time when the kth jump occurs and we assume $S_0 = 0$. Then the Possion process is
+\begin{align*}
+	N(t) = k  \text{ if } S_k \leq t < S_{k+1}
+\end{align*}
+With $E[N(t)] = \lambda t$.
+Note the Poisson process defined above is right-continuous.\\
+
+\noindent{\bf 3. Compensated Poisson process}\\
+The Poisson process has a mean that is a function of time. As time evolves, the process has a non-zero drift so it is not a martingale. We define a compensated Poission process $M(t)$ which obeys the martingale property
+\begin{align*}
+	M(t) = N(t) - \lambda t
+	E[M(t)|F(s)] = M(s)
+\end{align*}
+\noindent{\bf 4. Compound Poisson process}\\
+In the above definition, we assume the jump size in the Possion process is 1. Now we allow the jump size to be random. Let N(t) be a Poisson process with mean $\lambda$ and $Y_i$ be a sequence of random variable with mean $E[Y] = m$. We define compound Poisson process
+\begin{align*}
+	Q(t) = \sum_{i=1}^{N(t)} Y_i
+\end{align*}
+The number of jumps follows Poisson distribution, and at each jump, the size of the jump is $Y_i$. In other words, the first jump size is $Y_1$ and the second jump size is $Y_2$, etc.
+
+The mean of the compound Poisson process is the product of the number of jumps and the size of the jumps, as these two are independent.
+\begin{align*}
+	EQ(t) = m \lambda t
+\end{align*}
+
+We can also define a compensated compound Poisson process
+\begin{align*}
+	\tilde M(t) = Q(t) - \beta \lambda t
+\end{align*}
+And this is a martingale.\\
+
+\noindent{\bf 5. Geometric Possion process with constant jump size}\\
+In the compound Possion process, let the jump size be a constant $y$. When jump occurs, we have 
+\begin{align*}
+	Q(t_i) = Q(t_{i-}) + y 
+\end{align*}
+The asset value in the financial market follows the geometric Possion process. Let S(t) be the asset price, let
+\begin{align*}
+	S(t_i) = S(t_{i-}) y
+	\frac{S(t_i) - S(t_{i-})}{S(t_{i-})} =  y - 1
+	 \delta S(t) =  (y - 1) S(t) \delta N(t)  
+\end{align*}
+Where $dN(t) = 1$ when jump occurs, $0$ otherwise. So when $N(t) = 1$, in other words, if there is one jump from time zero up to t, $S(t) = yS(0)$. When $N(t) = 2$, $S(t) = y^2 S(0)$. So for any abitrary $N(t)$
+\begin{align*}
+	S(t) = S(0)y^{N(t)} 
+\end{align*}
+In order to fulfill the martingale condition, we write
+\begin{align*}
+	dS(t) = (y - 1)S(t) dN(t) - y\lambda S(t) dt
+\end{align*}
+Its integral form is
+\begin{align*}
+	S(t) = S(0)y^{N(t)} exp(-y\lambda t) 
+\end{align*}
 \section{Simulation Processes}
 1. BSM process\\
 \begin{align*}
