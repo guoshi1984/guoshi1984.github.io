@@ -62,6 +62,25 @@ In this case, $\Gamma = -1$. We can also check this by the definition of $\Gamma
 \begin{align*}
 	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0} = \frac{0 + Z_0}{0 - Z_0} = -1
 \end{align*}
+{\bf c. Smith Chart}
+The reflection coefficient $\Gamma$ is a complex number and we can write
+\begin{align*}
+	\Gamma = |\Gamma|e^{j \theta}
+\end{align*}
+If we define a normalized coefficient $z = \frac{Z_L}{Z_0}$, then
+\begin{align*}
+	z = \frac{1 + |\Gamma|e^{j \theta}} {1 - |\Gamma|e^{j \theta}}
+\end{align*}
+Let $ \Gamma = \Gamma_r + j \Gamma_i$, and $z = r + j x$, we have
+\begin{align*}
+	r + jx = \frac{1 + \Gamma_r + j \Gamma_i}{ 1 - \Gamma_r - \Gamma_i}
+\end{align*}
+If we equal the real part and imaginary part on both sides, 
+\begin{align*}
+	(\Gamma_r - \frac{r}{1+r})^2 + \Gamma^2_i = (\frac{1}{1+r})^2 \\
+	(\Gamma_r - 1)^2 + (\Gamma_i - \frac{1}{x})^2 = (\frac{1}{x})^2\\
+\end{align*}
+If we plot the $\Gamma = 1$ circle and two above circle in a complex coordinate graph, we get {\bf Smith Chart}. Any arbitrary point on the circle represent a value of $z$. 
 \section{S parameters}
 Consider a two port system with port 1 and port 2. For example, the system could be a band pass filter with one port as input, and the other port as output. We define $a_1$ and $a_2$ to be the incident waves and the  $b_1$ and $b_2$ to be the reflected waves with the subscript being port number.  
 In this case the relationship between the reflected, incident power waves and the S-parameter matrix is given by:
