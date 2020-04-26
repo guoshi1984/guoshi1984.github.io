@@ -4,7 +4,7 @@
 \begin{document}
 \section{Transmission Line}
 The transmission line in general refers two conductor line with some kind of dielectric materials in between. The two conductor lines build oscillating voltage across each other and a E-M waves is transmitted inside the dielectric materials.
-When the oscillating voltage signal has higher frequency, typically the length of conducting wire is comparable to the wavelength, we have to use the transmission line to transmit the signal. The reason is\\
+When the oscillating voltage signal has a frequency high enough such that the length of conducting wire is comparable to signal's wavelength, we have to use the transmission line to transmit the signal. The reason is\\
 (1) When at high frequency, due to skin effect, the signal only lies on and near the surface of the conduction, inside the conductor, the amplitude of the signal decays very rapidly. This effect cause the signal to lose most of the power when being conducting use wires.\\
 (2) When at high frequency, the wire has a high inductance impedance, the conductor can not be treated as it is in the case of DC.
 \subsection{Transmission Line Model}
@@ -26,15 +26,17 @@ It is possible to show that $V(z)$ and $I(z)$ satisfy
 \end{align*}
 Where $Z_0 = \sqrt{\frac{L}{C}}$\\
 {\bf b. Characteristic impedance}\\
-The reason we define a characteristic impedance is that with characteristic impedance we are able to use Ohm's law as the voltage current relationship. We all know Ohm's law applies to the DC case. In an AC circuit with capacitors and inductors, the voltage and current change over time and they are not always in phase, therefore it is not easy to apply Ohm's law directly. With characteristic impedance defined in both magnitude and phase, we are able to generalize the Ohm's in AC circuit.\\
+In DC circuit, the well-known Ohm's law tells us there is a simple and linear relationship between the current and voltage. 
+In an AC circuit with capacitors and inductors, however, both voltage and current change over time, which prevents us to apply Ohm's law directly as the current voltage relationship are not linear anymore. That is why we define the characteristic impedance to generalize the Ohm's in AC circuit.\\
 Based on the derivation above, the characteristic impedance is 
 \begin{align*}
 	Z_0 = \sqrt{\frac{L}{C}}
 \end{align*}
-There is one property of the characteristic impedance is it does not depend on length. From the previous derivation we assume the capacitance and inductance take the unit length. If they have real length  $\Delta z$, then the characteristic impedance becomes
+it is good to note that the characteristic impedance is it does not depend on length. From the previous derivation we assume the capacitance and inductance take the unit length. If they have real length  $\Delta z$, then the characteristic impedance becomes
 \begin{align*}
 	Z_0 = \sqrt{\frac{L \Delta z}{C \Delta z}} = \sqrt{\frac{L}{C}}
 \end{align*}
+As we see the lengths are cancelled out leaving the impedance length independent.
 \subsection{Reflection Coefficients and Impedance Matching}
 {a. Reflection coefficients}\\
 When the voltage propagates along the transmission line, eventually it will hit the end of the transmission line. What happens next and how do we solve it? In general, every EM problem can be answered by solving Maxwell's equations plus boundary conditions. In this particular case, we can solve it using wave equation derived above based on Maxwell's equations plus the Kirchhoff's law as our boundary conditions. When a wave reaches the boundary of two different media, there usually exists reflection wave. Here we define the reflection coefficient as ratio of refection voltage to the incident voltage. If a resistor $Z_L$ is connected across two conductor wires at the end of the transmission line, then the refection coefficients can be derived
@@ -58,7 +60,7 @@ When $Z_L = 0$, at the end point, the voltage is always zero. By Kirchhoff's law
 \end{align*}
 In this case, $\Gamma = -1$. We can also check this by the definition of $\Gamma$
 \begin{align*}
-	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0} = \frac{0 + Z_0}{0 - Z_0} = 1
+	\Gamma = \frac{Z_L + Z_0}{Z_L - Z_0} = \frac{0 + Z_0}{0 - Z_0} = -1
 \end{align*}
 \section{S parameters}
 Consider a two port system with port 1 and port 2. For example, the system could be a band pass filter with one port as input, and the other port as output. We define $a_1$ and $a_2$ to be the incident waves and the  $b_1$ and $b_2$ to be the reflected waves with the subscript being port number.  
