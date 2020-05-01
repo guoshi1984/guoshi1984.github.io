@@ -5,20 +5,33 @@
 Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \line(1,0){350}
 \section{Basic of Fourier Transform}
-If $f(x)= f(x+T)$ then $f(x)$ can be written as
+If $f(t)= f(t+T)$ then $f(t)$ can be written as
 \begin{align*}
-f(x) = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	
+f(t) = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k t}{T}}	
 \end{align*}
-i is the imaginary unit, and k is an integer.  The above expression is eligible 
+i is the imaginary unit, and k is an integer. The above expression is eligible because $e^{\frac{2 \pi i k t}{T}}$ is a periodic function 
 \begin{align*}
-	e^{\frac{2 \pi i k x}{T}} = e^{\frac{2 \pi i k(x+T)}{T}}
+	e^{\frac{2 \pi i k t}{T}} = e^{\frac{2 \pi i k(t+T)}{T}}
 \end{align*}
 Each basis $e^{\frac{2 \pi i }{T}}$ represents a signal with frequency $F_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta F = \frac{1}{T}$.
 
-Based on orthogonality,
+Based on orthogonality, we can get $c_k$
 \begin{align*}
-	c_k = \frac{1}{T} \int_0^T f(x) e^{-i\frac{2 \pi k x}{T}} dx
+	c_k = \frac{1}{T} \int_0^T f(t) e^{-i\frac{2 \pi k t}{T}} dt
 \end{align*}
+{\bf Example}
+\begin{align*}
+f(t) = cos(2 \pi f t) = \frac{1}{2} (e^{i 2 \pi f t} + e^{-i 2 \pi f t})
+\end{align*}
+\begin{align*}
+	c_k & = \frac{1}{T} \int_0^T f(t) e^{-i\frac{2 \pi k t}{T}} dt \\
+	    & = \frac{1}{T} \int_0^T \frac{1}{2} (e^{i 2 \pi f t} + e^{-i 2 \pi f t}) e^{-i\frac{2 \pi k t}{T}} dt 
+\end{align*}
+Only terms with k = +/-1 in the above expression can survive, so
+\begin{align*}
+        c_1 = \frac{1}{T} \int_0^T \frac{1}{2} dt = \frac{1}{2}
+\end{align*}
+Similarly, $c_{-1} = \frac{1}{2}$.\\
 The above is the Fourier transform in continuous case, in discrete case
 If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
 \begin{align*}
@@ -29,10 +42,26 @@ If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier seri
 	c_k = \frac{1}{N \Delta t} \sum_{n=1}^{N} f(n \Delta t) e^{-i 2\pi k \frac{1}{N\Delta t} n \Delta t} d(n \Delta t)
 	=\frac{1}{N} \sum_{n = 1} ^ {N} f(n) e^{-i 2 \pi k \frac{n}{N}}
 \end{align*}
-This is the discrete Fourier transform.
+This is the discrete Fourier transform.\\
 \begin{align*}
 	\Delta F = \frac{1}{T} = \frac{1}{N \Delta t}
 \end{align*}
+{\bf Example\\}
+Let N = 4, and \\
+\begin{align*}
+	f(n) = cos(2 \pi \frac{n}{4}) = \frac{1}{2} (e^{i 2 \pi \frac{n}{4}} + e^{-i 2 \pi \frac{n}{4}})
+\end{align*}
+\begin{align*}
+	c_k & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} (e^{i 2 \pi \frac{n}{4} } + e^{-i 2 \pi \frac{n}{4} }) e^{-i\frac{2 \pi k n}{4}} 
+\end{align*}
+Similary to the continuous case, only terms with k = +/-1  in the above expression can survive, when $k=1$
+\begin{align*}
+	c_1 & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} e^{i 2 \pi \frac{n}{4} } e^{-i\frac{2 \pi n}{4}} \\
+	& = \frac{1}{4}\frac{1}{2}4 \\
+ 	& = \frac{1}{2} \\
+\end{align*}
+What about case for $k=-1$? We define k = {1, 2, 3, 4} so $k = -1$ is not defined. However, in discrete case we note $c_{-1} = c_{3}$ due to the periodicity.
+Similarly, we can calculate $c_{3} = \frac{1}{2}$.\\
 N is the total sample within time T.\\
 {\bf Properties}\\
 \noindent 1) To be eligible, f(x) has to be a period function with time T(with frequency $F=\frac{1}{T}$) in both continuous case and discrete case.  The requirement in discrete case leads to uniform sampling theorem used in signal processing. The total sampling time $T_{sampling}$ has to be an integer multiple of $T$.
@@ -42,9 +71,9 @@ T_{sampling} = M T
 while $T= \frac{N}{F_s}$
 So
 \begin{align*}
-	M T = N \delta t
+	M T = N \Delta t
 \end{align*}
-if we let $\delta t= \frac{1}{F_s}$, where $F_s$ is the sampling frequency, and $T=\frac{1}{F}$, we have
+if we let $\Delta t= \frac{1}{F_s}$, where $F_s$ is the sampling frequency, and $T=\frac{1}{F}$, we have
 \begin{align*}
 	\frac{M}{F} = \frac{N}{F_s}
 \end{align*}
@@ -64,7 +93,6 @@ $c_{-k} = |c_k| e^{- j \theta_k}$. And in complex representation, we can combine
 \begin{align*}
 	c_k e^{j 2 \pi k F_0 t} + c_{-k} e^{- j 2 \pi k F_0 t} = 2 |c_k| cos(2 \pi k F_0 t + \theta_k)
 \end{align*}
-
 \begin{align*}
 f(x) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	 \\
 & = c_0 + 2 \sum_{k=1}^{\infty} |c_k| cos(2 \pi k F_0 t + \theta_k) \\
@@ -116,7 +144,32 @@ As noted, the above derivation is for $k<N/2$, a very similar derivation for $N/
 \end{align*}
 Now we have divided the FFT of N points to two FFT with N/2 points
 Keep going till we reach the size to one, then combine together recursively.
-\subsection{Connection with Uncertainty Principle}
+\section{Fourier Transform of Useful Functions}
+{\bf The Fourier Transform of White Noise}\\
+Assuming noise we sample in time is $n[m]$, where m = 0,... M-1. $n[m]$ is a Gaussian random variable with zero mean and variance $\sigma^2$. The the FFT of $n[m]$ is
+\begin{align*}
+        N[k] &= \frac{1}{M}\sum_{m=0}^{M-1} n[m] e^{-i2\pi m k/M}\\
+             &= \frac{1}{M}\sum_{m=0}^{M-1} n[m] (cos(2\pi m k/M) - i \textrm{ }n[m] sin(2\pi m k/M))\\
+\end{align*}
+The expected value is
+\begin{align*}
+        E[N[k]] & = E[\frac{1}{M} \sum_0^{M-1} n[m] e^{-i2\pi m k/M}]\\
+                        & = \frac{1}{M}\sum_0^{M-1} E[n[m]] e^{-i2\pi m k/M}] \\
+                        & = 0 \textrm{(because E[n[m]] = 0)} \\
+\end{align*}
+The variance of the real part is
+\begin{align*}
+        Var[R[N[k]]] & = E[(\frac{1}{M}\sum_{m=0}^{M-1} n[m] (cos(2\pi m k/M))
+        *(\frac{1}{M}\sum_{p=0}^{M-1} n[p] (cos(2\pi p k/M))]\\
+                     & = \frac{1}{M^2}
+                     E[\sum_{m=0}^{M-1} n[m] n[p] \delta(n-p) cos(2\pi m k/M)* cos(2\pi p k/M)]\\
+                     & = \frac{1}{M^2} \sum_{m=0}^{M-1} E[n[m]^2]  cos^2(2\pi m k/M) \\
+                     & = \frac{1}{M^2} \sigma^2(\sum_{m=0}^{M-1}  cos^2(2\pi m k/M)) \\
+                     & = \frac{1}{M^2} \sigma^2(\frac{M}{2} + \frac{cos((M+1)2 \pi k/M) sin(2 \pi M k /M)}{2sin(2 \pi k /M)})\\
+                                 & = \frac{1}{M} \frac{\sigma^2}{2}
+\end{align*}
+The same derivation applies for the imaginary part. So the FFT is Gaussian noise with mean zero and variance $\sigma^2$.
+\section{Connection with Uncertainty Principle}
 {\bf Relationship between time length and frequency bandwidth}\\
 We consider a few examples\\
 1) We consider a function g(t) which is infinitely long in time domain\\
