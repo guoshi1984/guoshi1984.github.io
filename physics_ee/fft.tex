@@ -168,7 +168,15 @@ The variance of the real part is
                      & = \frac{1}{M^2} \sigma^2(\frac{M}{2} + \frac{cos((M+1)2 \pi k/M) sin(2 \pi M k /M)}{2sin(2 \pi k /M)})\\
                                  & = \frac{1}{M} \frac{\sigma^2}{2}
 \end{align*}
-The same derivation applies for the imaginary part. So the FFT is Gaussian noise with mean zero and variance $\sigma^2$.
+The same derivation applies for the imaginary part. So the FFT is Gaussian noise with mean zero and variance $\sigma^2$.\\
+{\bf The Fourier Transform of Gaussian}\\
+\begin{align*}
+	f(t) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{t^2}{2\sigma^2}}
+\end{align*}
+\begin{align*}
+	F(f) = e^{-2 \pi^2 \sigma^2 f^2}
+\end{align*}
+So the Fourier transform of a Gaussian function is another Gaussian function.\\
 \section{Connection with Uncertainty Principle}
 {\bf Relationship between time length and frequency bandwidth}\\
 We consider a few examples\\
