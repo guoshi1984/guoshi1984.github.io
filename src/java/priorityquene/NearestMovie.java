@@ -25,6 +25,13 @@ public class NearestMovie
 			this.neighbors.add(mv);
 			return this;
 		}
+
+		@Override
+		public String toString()
+		{
+			return Integer.toString(id);
+		}
+		
 	}
 	
  	static	class CompMovie implements Comparator<Movie>
@@ -55,7 +62,8 @@ public class NearestMovie
 					System.out.println("nbr: " + nbr.id);
 					pq.offer(nbr);
 					if(pq.size()>k)
-					{
+					{	
+						System.out.println("pq " + pq);
 						pq.poll();
 					}	
 					q.offer(nbr);
@@ -85,7 +93,7 @@ public class NearestMovie
 		Movie mv10 = new Movie(10,10);
 		mv1.addNeighbors(mv2).addNeighbors(mv3);	
 		mv2.addNeighbors(mv3).addNeighbors(mv1);	
-		mv3.addNeighbors(mv1).addNeighbors(mv2);	
+		mv3.addNeighbors(mv1).addNeighbors(mv4);	
 		mv4.addNeighbors(mv5).addNeighbors(mv6);	
 		mv5.addNeighbors(mv4).addNeighbors(mv6);	
 		mv6.addNeighbors(mv4).addNeighbors(mv5);	
@@ -93,7 +101,7 @@ public class NearestMovie
 		mv8.addNeighbors(mv9).addNeighbors(mv10).addNeighbors(mv7);	
 		mv9.addNeighbors(mv7).addNeighbors(mv8).addNeighbors(mv10);	
 		mv10.addNeighbors(mv7).addNeighbors(mv8).addNeighbors(mv9);	
-		find(mv7,2);
+		find(mv1,2);
 			
 	}
 } 
