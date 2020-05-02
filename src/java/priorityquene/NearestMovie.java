@@ -5,6 +5,13 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+
+/* Amazon QA
+ * Given a movie, each movie has a id and rating. It also has a list of similar movies.
+ * The movie class is defined as follows.
+ * The question is: Suppose we have a collection of movies, each has its list of similar movies with the collection. Given a movie, and a number k, find its k similar movies
+ * with highest rating. A movie A can be similar to C if B is in A's similar movie list and C is in B's similar movie list.
+ */
 public class NearestMovie
 {
 	public static class Movie
