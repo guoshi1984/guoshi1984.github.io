@@ -123,20 +123,20 @@ There exists tremendous materials online explaining conjugate gradient method. H
 \end{align*}
 It is straightforward to calculate the gradient
 \begin{align*}
-   \nabla f(x_1, x_2) = (\frac{\partial }{\partial x_1} f(x_1,x_2) \hat x, 
+   \nabla f(x_1, x_2) = (\frac{\partial }{\partial x_1} f(x_1,x_2) \hat x_1, 
 	\frac{\partial }{\partial x_2} f(x_1, x_2) \hat x_2) = (4x_1 \hat x_1, \hat x_2)\\
 \end{align*}
-\noindent 2) Suppose we start at point $(x^{(0)}, y^{(0)}) = (-\frac{1}{2}, 1)$. Based on the principle of gradient descent, we move point 0 to point 1 along the opposite direction of the gradient. Namely, the direction we move should be
+\noindent 2) Suppose we arbitrarily choose a starting point $(x^{(0)}, y^{(0)}) = (-\frac{1}{2}, 1)$. Based on the principle of gradient descent, we move point 0 to point 1 along the opposite direction of the gradient. Namely, the direction we move should be
 \begin{align*}
-	{\bf \hat d} = \frac{1}{||d||} (-4x \hat x_1, -\hat x_2)\\ 
+	{\bf \hat d} = \frac{1}{||d||} (-4x \hat x_1, -\hat x_2)^T\\ 
 \end{align*}
 At point $(x_1^{(0)}, x_2^{(0)})$, $\hat d$ is
 \begin{align*}
-	{\bf \hat d}^{(0)} = \frac{1}{||d^{(0)}||} (-4x_1^{(0)} \hat x_1, -x_2^{(0)}\hat x_2)\\ 
-	 = \frac{1}{||d^{(0)}||} (-4(-\frac{1}{2}) \hat x_1, -1 \hat x_2) 
-	 = (\frac{2}{\sqrt{5}}, -\frac{1}{\sqrt{5}})
+	{\bf \hat d}^{(0)} = \frac{1}{||d^{(0)}||} (-4x_1^{(0)} \hat x_1, -x_2^{(0)}\hat x_2)^T\\ 
+	 = \frac{1}{||d^{(0)}||} (-4(-\frac{1}{2}) \hat x_1, -1 \hat x_2)^T 
+	 = (\frac{2}{\sqrt{5}}, -\frac{1}{\sqrt{5}})^T
 \end{align*}
-3)After finding the direction, we need to determine the step $\alpha$ that we need to move, our next point is
+3)To simplify our calculation, we ignore the normalization factor of the direction and choose ${\bf d}$ to be $(2, -1 )^T$. After finding the direction, we need to determine the step $\alpha$ that we need to move, our next point is
 \begin{align*}
 	  (x_1^{(1)}, x_2^{(1)}) & = (x_1^{(0)}, x_2^{(0)}) + \alpha {\bf \hat d}^{(0)} \\
 	  					 & = (-\frac{1}{2} + 2 \alpha, 1 -\alpha)\\
@@ -150,7 +150,7 @@ $\frac{\partial f }{\partial \alpha} =0 $. We get $\alpha = \frac{5}{17}$, and t
 	 x_2^{(1)} & = 1 - \frac{5}{17} = \frac{12}{17}\\
 \end{align*}
 4)Error term.\\
-Since we can easily know the the minimum point of $f(x_1, x_2)$ is (0,0) without doing any calculation. We can calculate the error term which gives us how far we are still off the minimum point. We define the error term as
+Since we can easily know the minimum point of $f(x_1, x_2)$ is (0,0) without doing any calculation. We can calculate the error term which gives us how far we are still off the minimum point. We define the error term as
 \begin{align*}
 	e^{(1)} = (0, 0) - (x_1^{(1)}, x_2^{(1)}) = (-\frac{3}{34}, -\frac{12}{17}).
 \end{align*}
@@ -159,7 +159,7 @@ Since we can easily know the the minimum point of $f(x_1, x_2)$ is (0,0) without
 	&{\bf d^{(0)}} A {\bf e^{(1)}} \\
 	& = \left( 
 	\begin{array}{c c}
-	\frac{2}{\sqrt{5}} & -\frac{1}{\sqrt{5}}\\
+	2 & -1\\
 	\end{array}
 	\right)
 	\left( 
@@ -233,17 +233,17 @@ So by choosing $\alpha$ that minimize $f({\bf x^{(1)}})$, we automatically guara
 	{d^{(i)}}^T A e^{(i+1)} = 0
 \end{align*}
 The orthogonality relationship is due to the nature that $f({\bf x})$is quadratic. If we take a f(x) with a different form, it is not guaranteed to have this relationship. \\
-7) 
 The A-orthogonal relationship provides us a way to solve for $\alpha$. We notice that $e^{(1)} = e^{(0)} + \alpha d^{(0)}$, then we have
 \begin{align*}
 	{d^{(0)}}^T A (e^{(0)} + \alpha d^{(0)}) = 0
 \end{align*}
 Solve for $\alpha$\\
 \begin{align*}
-	\alpha & = \frac{{d^{(0)}}^T A e^{(0)} }{{d^{(0)}}^T A d^{(0)} }\\
-	       & = \frac{{d^{(0)}}^T A {\bf x_{min} - x^{(0)}} }{{d^{(0)}}^T A d^{(0)} }\\
+	\alpha & = -\frac{{d^{(0)}}^T A e^{(0)} }{{d^{(0)}}^T A d^{(0)} }\\
+	       & = \frac{{d^{(0)}}^T A  (x_{min} - x^{(0)}) }{{d^{(0)}}^T A d^{(0)} }\\
+	       & = \frac{{d^{(0)}}^T b  - {d^{(0)}}^T A  x^{(0)} }{{d^{(0)}}^T A d^{(0)} }\\
 \end{align*}
-{\bf c. Steps of convergence}
+{\bf c. Steps of convergence}\\
 In the example we did in the intuition, the $f({\bf x})$ only has two variables. And we have proved that after moving one step, the error term is A-orthogonal to the moving direction. So we need to enforce the next moving direction is A-orthogonal to the current one. We now prove that by enforcing each moving directions are A-orthogonal to each other, we guarantee that the algorithm can converge using exact n step, where n is the number of variables.\\
 \noindent Proof:\\
 We express the error term $e^{(0)}$ at step 0 as a linear combinations of n searching directions\\
