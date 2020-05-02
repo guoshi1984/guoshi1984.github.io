@@ -61,7 +61,9 @@ public class BinarySearchTree
         }
 
   
-	/* A recursive function to delete a key in BST */
+	/* A recursive function to delete a key in BST 
+	 * Leetcode 450
+	 * */
     	public static BinaryTree.Node remove(BinaryTree.Node node, int data) 
     	{ 
         	if (node == null)  return node; 
@@ -104,7 +106,13 @@ public class BinarySearchTree
 		return node;
 	}
 
-
+	/* Build a Binary Search Tree from inorder
+	 * The middle element should be the root
+	 * Then build the left subtree using the nodes to left of the middle and right subtree to the right of the middle element recursively 
+	 * when no elements availble, it means we have reached the bottom of the tree, return null, go to the parent level
+	 * After a node's left subtree and right subtree have been built, return the node itself, go to the parent level
+	 * keep return the node and reach the root node. Done
+	 */ 
 	public static BinaryTree.Node buildBinarySearchTreeFromInorder(List<Integer> nums, int start, int end)
 	{
 		if(start <= end) {

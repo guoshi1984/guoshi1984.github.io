@@ -1,4 +1,5 @@
-/** Given a binary search tree and a target node K, find the node
+/* Leetcode 270
+ * Given a binary search tree and a target node K, find the node
 ** with minimum absolute difference with give target value K
 */
 public class ClosedValue
@@ -23,7 +24,7 @@ public class ClosedValue
 	
 	public static void test1()
 	{
-		find(BinaryTree.tree1, 18);
+		find(BinaryTree.tree2, 18);
 		
 		System.out.println(result);
 	}
