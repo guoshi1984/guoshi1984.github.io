@@ -1,7 +1,7 @@
-/**
-*Given two string s and t, write a function to determine
-*if t is an anagram of s.
-*/
+/* Leetcode 242
+ * Given two string s and t, write a function to determine
+ * if t is an anagram of s.
+ */
 public class IsAnagram{
 	public static boolean isAnagram(String s, String t)
 	{
