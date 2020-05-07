@@ -1,11 +1,12 @@
-/* Given a binary tree, change the tree structure to its mirror. The mirror tree of binary
- * tree is defined as a tree with all its left and right children of all no-leaf nodes
- * interchanged
- */
 
 public class MirrorTree
 {
-		
+	
+	/* LeetCode 226 Invert Binary Tree
+	 * Given a binary tree, change the tree structure to its mirror. The mirror tree of binary
+	 * tree is defined as a tree with all its left and right children of all no-leaf nodes
+	 * interchanged
+ 	 */
 	public static BinaryTree.Node doMirrorTree(BinaryTree.Node node)
 	{
 		if(node == null)
@@ -25,7 +26,8 @@ public class MirrorTree
 	 * Traverse the tree recursively to its bottom, when finding an empty node, stop and 
 	 * return to the last recursive call.
 	 *
-	 * For each node, exchange the left and right node. 
+	 * For each node, exchange the left and right node.
+	 */ 
 	public static void doMirrorTree2(BinaryTree.Node node)
 	{
 		if(node == null) return;

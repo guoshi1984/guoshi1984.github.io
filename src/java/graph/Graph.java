@@ -61,9 +61,15 @@ class Graph
                 Node node13 = new Node(3);
                 Node node14 = new Node(4);
 		Node node15 = new Node(5);
+		//            1        1->2  1->3 
+		//           /  \       
+		//  	    2    3     2->2  2->4 3->4  3->5
+		//         /_|\ / \  
+		//            4 - 5   5->4     
                 node11.addAdj(node12).addAdj(node13);
                 node12.addAdj(node12).addAdj(node14);
                 node13.addAdj(node14).addAdj(node15);
+                node15.addAdj(node14);
 		graph1.addVertex(node11);
 		graph1.addVertex(node12);
 		graph1.addVertex(node13);
@@ -75,7 +81,13 @@ class Graph
                 Node node23 = new Node(3);
 		Node node24 = new Node(4);
 		Node node25 = new Node(5);
-                node25.addAdj(node22).addAdj(node20);
+		//    5   4      5->2  5->0 4->0  4->1
+		//   / \ / \
+		//  2   0   1    2->3 
+		//   \     /
+		//    \   /     
+		//      3        3->1
+		node25.addAdj(node22).addAdj(node20);
                 node24.addAdj(node20).addAdj(node21);
                 node22.addAdj(node23);
 		node23.addAdj(node21);

@@ -51,7 +51,8 @@ public class BinarySearchTree
 	*/
 
 
-	/* A recursive function to insert a new key in BST */
+	/* Leetcode 701
+	 * A recursive function to insert a new node in BST */
         private static BinaryTree.Node insert(BinaryTree.Node node, int data)
         {
                 if(node == null) return new BinaryTree.Node(data);
@@ -61,7 +62,7 @@ public class BinarySearchTree
         }
 
   
-	/* A recursive function to delete a key in BST 
+	/* A recursive function to delete a node in BST 
 	 * Leetcode 450
 	 * */
     	public static BinaryTree.Node remove(BinaryTree.Node node, int data) 
@@ -106,7 +107,8 @@ public class BinarySearchTree
 		return node;
 	}
 
-	/* Build a Binary Search Tree from inorder
+	/* LeetCode 109
+	 * Build a Binary Search Tree from inorder
 	 * The middle element should be the root
 	 * Then build the left subtree using the nodes to left of the middle and right subtree to the right of the middle element recursively 
 	 * when no elements availble, it means we have reached the bottom of the tree, return null, go to the parent level
@@ -208,6 +210,23 @@ public class BinarySearchTree
 
 
 	}
+
+
+	public static void test4()
+	{
+		System.out.println("Test 4: build BST from inorder traversal");
+		List<Integer> nums = new ArrayList<Integer>(Arrays.asList(-10, -3, 0, 5, 9));
+		BinaryTree.Node node = buildBinarySearchTreeFromInorder(nums);
+		List<Integer> target = BinaryTree.inOrder(node);
+		System.out.println(target.toString());
+		boolean result = target.equals(nums);
+                if(result == true)
+                        System.out.println("Test 4 passed.");
+                else System.out.println("Test 4 failed");
+
+
+	}
+
 	// test valid binary search tree
         public static void test7()
         {
@@ -229,6 +248,7 @@ public class BinarySearchTree
 		test1();
 		test2();
 		test3();
+		test4();
 		test7();
                 test8();
 	}

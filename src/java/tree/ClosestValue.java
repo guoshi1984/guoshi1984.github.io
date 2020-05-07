@@ -2,7 +2,7 @@
  * Given a binary search tree and a target node K, find the node
 ** with minimum absolute difference with give target value K
 */
-public class ClosedValue
+public class ClosestValue
 {
 	
 	static int min = Integer.MAX_VALUE;

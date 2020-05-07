@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 /* Problem:
+ * LeetCode 1
  * Given a array a[] and a number target, write a function that returns indices of a pair in a[] 
  * whose sum equals to target.
  */

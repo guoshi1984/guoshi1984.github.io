@@ -1,4 +1,8 @@
 import java.util.*;
+/* Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.
+ * A subtree of a tree is the node which have at least 1 child plus all its descendants. 
+ * The average value of a subtree is the sum of its values, divided by the number of nodes.
+ */
 public class MaximumAverageSubtree
 {
 	public static class Node

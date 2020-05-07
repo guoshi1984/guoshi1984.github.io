@@ -1,9 +1,9 @@
-/* Given two binary tree, check if they are the same
+/* LeetCode 100
+ * Given two binary tree, check if they are the same
  */
 public class SameTree
 {
 
-	// Preorder order traversal, from the top to the bottom	
 	public static boolean checkSame(BinaryTree.Node t1, BinaryTree.Node t2)
 	{
 		if(t1 == null && t2 ==null)

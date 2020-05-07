@@ -1,6 +1,7 @@
 public class RangeSumOfBinarySearchTree
 {
-	/* Traverse the whole tree, for each node the return value is 
+	/* LeetCode 938
+	 * Traverse the whole tree, for each node the return value is 
 	 * the sum of nodes including itself and all the children whose values are within the give range. 
 	 * Traverse the whole tree all the way down to the null node, 
 	 * if node value is within the range, add it to the total sum and return to the parent level.

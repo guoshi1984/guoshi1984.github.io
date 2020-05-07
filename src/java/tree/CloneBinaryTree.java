@@ -8,19 +8,17 @@ public class CloneBinaryTree
 	 * 1. Duplicate each node.
 	 * 2. for each duplicated node, assign its left and right children. In order to assign 
 	 * the childre the children has to exsit first. So we use post order travesal. 
-	 *
-	 * Wasy to traverse: post traversal
 	 * 
 	 * Ways to pass variables: function return
 	 * In order to access the child nodes that are created in the last recursion call, 
 	 * we use function return to pass the copied node so the current recussion call can access it.
-	 * /
+	 */
 	public static BinaryTree.Node clone(BinaryTree.Node nd)
 	{
 		if(nd == null) return null;
 		BinaryTree.Node ndCopy = new BinaryTree.Node(nd.getData());
-		ndCopy.setLeft(clone(nd.left));
-		ndCopy.setRight(clone(nd.right));
+		ndCopy.setLeft(clone(nd.getLeft()));
+		ndCopy.setRight(clone(nd.getRight()));
 		return ndCopy;	
 	}
 
@@ -55,7 +53,8 @@ public class CloneBinaryTree
 
 	/* Ways to traverse: combination
 	 * use preorder traverse to duplicate node
-	 * use postorder traverse to assign children 
+	 * use postorder traverse to assign children
+	 */ 
 	public static void clone3(BinaryTree.Node node, Map<BinaryTree.Node, BinaryTree.Node> map)
 	{
 		if(node == null) return;
@@ -80,12 +79,14 @@ public class CloneBinaryTree
 
 	public static void test1()
 	{
+		System.out.println("Test 1: Clone a Binary Tree");
 		BinaryTree.Node copy = clone(BinaryTree.tree1);	
-		BinaryTree.inOrder(BinaryTree.tree1);
-		System.out.println();	
-		BinaryTree.inOrder(copy);
-		System.out.println();	
-
+		List<Integer> originalList = BinaryTree.inOrder(BinaryTree.tree1);
+		List<Integer> copyList = BinaryTree.inOrder(copy);
+		if(originalList.equals(copyList)) 
+			System.out.println("Test 1 passed.");
+		else
+			System.out.println("Test 1 failed.");
 	}
 
 	public static void test2()
