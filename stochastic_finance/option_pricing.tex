@@ -154,7 +154,7 @@ The variables are:\\
 $\tau = T - t$ is the time to expiry\\
 $D = e^{-r\tau}$ is the discount factor \\
 \subsection{Heston Stochasic Volatility Model}
-The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
+The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. The following content refers to the paper: "A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options" by Steven Heston. Suppose a stock price under risk-neutral measure is governed by
 \begin{align}
 	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
 \end{align}
@@ -330,12 +330,21 @@ P(N = k) = \frac{\lambda^k}{k!}e^{-\lambda}
 \end{align*}
 This is the well-known Possion distribution. It is easy to show Possion distribution has mean and variance equal to $\lambda$. So $\lambda$ can be intepreted as the average number of jumps per unit of time.\\
 
-\noindent{\bf 2. Number of jumps during time interval $dt$: Possion process}\\
-Now we consider the number of jumps in a given time interval $dt$, and we call it $N(dt)$. The average jump during $dt$ is $\lambda dt$. So we can get the probability distribution by substitude $\lambda dt$ to $\lambda$
+\noindent{\bf 2. Number of jumps during time interval $\Delta t$: Possion process}\\
+Now we consider the number of jumps in a given time interval $\Delta t$, and we call it $\Delta N$. The average jump during $\Delta t$ is $\lambda \Delta t$. So we can get the probability distribution by substitude $\lambda \Delta t$ to $\lambda$
 \begin{align*}
-	P(N(dt) = k) = \frac{(\lambda dt)^k}{k!}e^{-\lambda dt}
+	P(\Delta N = k) = \frac{(\lambda \Delta t)^k}{k!}e^{-\lambda \Delta t}
 \end{align*}
-The mean of $N(dt)$ is $\lambda dt$.\\
+The mean of $\Delta N$ is $\lambda \Delta t$.\\
+
+Let $\Delta t$ be really small time interval $dt$, and from above we see
+\begin{align*}
+	P(dN = 0) = e^{-\lambda dt} \approx 1 - \lambda dt \\
+	P(dN = 1) = \lambda dt e^{-\lambda dt} \approx \lambda dt (1 - \lambda dt) \approx \lambda dt \\
+	P(dN = 2) = (-\lambda dt)^2 e^{- \lambda dt} \approx 0 \\
+\end{align*}
+This makes perfectly sense, as during an infinitesimal time interval, the jump can either not happen or happen only once.\\
+
 We define $S_k$ is the time when the kth jump occurs and we assume $S_0 = 0$. Then the Possion process is
 \begin{align*}
 	N(t) = k  \text{ if } S_k \leq t < S_{k+1}
@@ -346,9 +355,10 @@ Note the Poisson process defined above is right-continuous.\\
 \noindent{\bf 3. Compensated Poisson process}\\
 The Poisson process has a mean that is a function of time. As time evolves, the process has a non-zero drift so it is not a martingale. We define a compensated Poission process $M(t)$ which obeys the martingale property
 \begin{align*}
-	M(t) = N(t) - \lambda t
+	M(t) = N(t) - \lambda t \\
 	E[M(t)|F(s)] = M(s)
 \end{align*}
+
 \noindent{\bf 4. Compound Poisson process}\\
 In the above definition, we assume the jump size in the Possion process is 1. Now we allow the jump size to be random. Let N(t) be a Poisson process with mean $\lambda$ and $Y_i$ be a sequence of random variable with mean $E[Y] = m$. We define compound Poisson process
 \begin{align*}
@@ -363,7 +373,7 @@ The mean of the compound Poisson process is the product of the number of jumps a
 
 We can also define a compensated compound Poisson process
 \begin{align*}
-	\tilde M(t) = Q(t) - \beta \lambda t
+	\tilde M(t) = Q(t) - m \lambda t
 \end{align*}
 And this is a martingale.\\
 
@@ -374,33 +384,63 @@ In the compound Possion process, let the jump size be a constant $y$. When jump 
 \end{align*}
 The asset value in the financial market follows the geometric Possion process. Let S(t) be the asset price, let
 \begin{align*}
-	S(t_i) = S(t_{i-}) y
-	\frac{S(t_i) - S(t_{i-})}{S(t_{i-})} =  y - 1
-	 \delta S(t) =  (y - 1) S(t) \delta N(t)  
+	& S(t_i) = S(t_{i-}) y \\
+	& \frac{S(t_i) - S(t_{i-})}{S(t_{i-})} =  y - 1 \\
+	&  \Delta S(t_i) =  (y - 1) S(t_{i-}) \Delta N(t)  \\
 \end{align*}
-Where $dN(t) = 1$ when jump occurs, $0$ otherwise. So when $N(t) = 1$, in other words, if there is one jump from time zero up to t, $S(t) = yS(0)$. When $N(t) = 2$, $S(t) = y^2 S(0)$. So for any abitrary $N(t)$
+Where $\Delta N(t) = 1$ when jump occurs, $0$ otherwise. When $N(t) = 1$, there is one jump from time zero up to t, so $S(t) = yS(0)$. When $N(t) = 2$, $S(t) = y^2 S(0)$. So for any abitrary $N(t)$
 \begin{align*}
 	S(t) = S(0)y^{N(t)} 
 \end{align*}
 In order to fulfill the martingale condition, we write
 \begin{align*}
-	dS(t) = (y - 1)S(t) dN(t) - y\lambda S(t) dt
+	dS(t) = (y - 1)S(t) dN(t) - (y - 1) \lambda S(t) dt
 \end{align*}
 Its integral form is
 \begin{align*}
-	S(t) = S(0)y^{N(t)} exp(-y\lambda t) 
+	S(t) = S(0)y^{N(t)} exp(- (y - 1) \lambda t) 
 \end{align*}
+\noindent{\bf 6. Geometric Poisson process with log-normal jump size: Bates jump diffusion model}\\
+If the jump size Y is random in the geometric Poisson process, then to model the asset price, we need to modify
+the last equation by changing $y^{N(t)}$ to $\Pi_{i=1}^{N(t)} Y_i$, and $y - 1$ to E[Y] - 1. 
+\begin{align*}
+	S(t) = S(0)\Pi_{i=1}^{N(t)} Y_i exp(- (E[Y] - 1) \lambda t) 
+\end{align*}
+We need to model the jump size $Y_i$. $Y_i$ is a strictly positive random variable so a good candidate is the exponential of normal random variable which is log-nomal random variable. If we have a normal distributed random variable $J \sim N(\nu, \delta^2)$, and let $Y$ be $e^{J}$. Then $Y$ follows log-normal distribution with mean $e^{\nu + \frac{1}{2}\delta^2}$. We can write S(t) using $J$
+\begin{align*}
+	S(t) = S(0) exp{\sum_i^{N(t)} J_i} exp(-(e^{\nu + \frac{1}{2}\delta^2}-1) \lambda t) 
+\end{align*}
+Let $Z = \sum_i^{N(t)} J_i$, which is a sum of normal random variable. Then $Z \sim Normal(N(t)\nu, N(t)\delta^2)$. So
+\begin{align*}
+	S(t) = S(0) exp{(Z -(e^{\nu + \frac{1}{2}\delta^2}-1) \lambda t)} 
+\end{align*}
+Where $ Z \sim Normal(N(t)\nu, N(t)\delta^2)$ given $N(t) \sim Poisson(\lambda t)$.\\
 \section{Simulation Processes}
+In simulation, we decompose the time evolvement of an asset price into three components: drift, diffusion, jump. The
+drift term is dt term, the diffusion term has Brownian motion component, the jump term has Possion component. Let us look at the following examples. \\ 
 1. BSM process\\
+In BSM process, the asset price follows
+\begin{align*}
+	S(t) = S(0)exp((r - \frac{1}{2} \sigma^2 ) dt + \sigma dW(t)) \\
+\end{align*}
+The drift term is clearly $r - \frac{1}{2} \sigma^2$ for any given dt.  For the diffusion term, we need to generate W(t).
+We know the W(t) is a Normal random variable with mean 0 and variance t. So suppose we generate a Gaussian random variable $\hat W$, it turns out $W = \sqrt{t} \hat W$ is normally distributed with variance t. 
 \begin{align*}
 	& \mu = r - \frac{1}{2} \sigma^2\\
-	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sigma \sqrt{dt} dW) \\
+	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sigma \sqrt{dt} \hat W) \\
 \end{align*}
 2. Heston process\\
+The Heston model states
+\begin{align*}
+        dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t) \\
+        dV(t) = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+        \tilde dW_1(t) \tilde dW_2(t) = \rho dt \\
+\end{align*}
+{\bf a. Generating two Brownian motions with correlation. }\\
 To simulate Heston process needs to generate two Gaussian random variables that has correlation $\rho$, we do this by first generate two independent Gaussian random variables $W_1$, $W_2$, then
 \begin{align*}
-	W_1^{'} = W_1
-	W_2^{'} = \rho W_1 + \sqrt{1 - \rho^2} W_2
+	W_1^{'} = \hat W_1 \\
+	W_2^{'} = \rho \hat W_1 + \sqrt{1 - \rho^2} \hat W_2 \\
 \end{align*}
 We can easily check the mean of $W_2^{'}$
 \begin{align*}
@@ -414,10 +454,42 @@ We can easily check the mean of $W_2^{'}$
 		      & = \rho \\
 \end{align*}
 The last step uses the fact $W_1$ and $W_2$ are independent, so $E[W_1 W_2] = E[W_1] E[W_2] = 0$.\\
+{\bf b. Coping with negative V(t). } \\
+The Heston model setting provides a non-negative V(t). This can be seen when V(t) is positively moving close to zero, the drift term $adt$ pulls the V(t) up and avoid $V(t)$ to cross zero. However, in discretized version $V(t)$ may attain negative values. There exists several methods to deal with this issue.\\
+(1) Absorption: Keep positive part of the previous $V(t)$ and use it to calculate next step $V(t+dt)$ and X(t+dt)\\
+\begin{align*}
+	V^{(t + dt)} = V^{+(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2)
+\end{align*}
+(2) Relection: Keep the absolute value of the previous $V(t)$ and use it to calculate next step $V(t+dt)$ and X(t+dt)\\
+\begin{align*}
+	V^{(t + dt)} = |V^{(t)}| + (a - b |V^{(t)}|) \sqrt{dt} + \sigma \sqrt{|V^{(t)}|}  dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2)
+\end{align*}
+(3) Partial truncation: Using the posivive part in diffusion term of $V(t+dt)$ and in $X(t + dt)$\\
+\begin{align*}
+	V^{(t + dt)} = V^{(t)} + (a - b V^{(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2)
+\end{align*}
+(4) Full truncation: Using the positive part in drift and diffusion terms of $V(t + dt)$, and in $X(t + dt)$. 
+This scheme is proved to have the lowest bias. Reference: A comparison of biased simulation schemes for stochastic volatility models by Roger Lord, Quantitative Finance,2010.
+\begin{align*}
+	V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2)
+\end{align*}
+Together with formula for the drift and asset price, we write
 \begin{align*}
 	& \mu = r - \frac{1}{2} (V^{+(t)})\\
-	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sqrt{V^{+(t)}} \sqrt{dt} dW_1) \\
-	& V^{(t + dt)} = V^{(t)} + (a - b V^{+{t}}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho dW_1
-	+ \sqrt{1 - \rho^2}) dW_2 
+	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sqrt{V^{+(t)}} \sqrt{dt} W_1) \\
+	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2) 
 \end{align*}        
+3. Bates process\\
+\begin{align*}
+	& \mu = r - \frac{1}{2} (V^{+(t)}) - \lambda (e^{\nu + \frac{1}{2}\delta^2}  -1) \\
+	& S^{(t + dt)} = S^{(t)}exp(\mu dt  + \sqrt{V^{+(t)}} \sqrt{dt} dW_1 
+	   + (\nu_*N+\delta^2*\sqrt{N})*dW_3)\\
+	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2 )
+\end{align*}
 \end{document}
