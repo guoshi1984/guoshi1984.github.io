@@ -2,7 +2,7 @@ import java.util.*;
 public class NormalDistribution
 {
 
-	public static double create()
+	public static double generate()
 	{
 		Random r = new Random();
 		double u1 = 0;

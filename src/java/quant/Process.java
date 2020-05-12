@@ -43,7 +43,7 @@ abstract class Process
 	public void evolveAsset(double dt, double dw1, double dw2)
 	{
 		
-                double move = drift(dt) + diffuse(dt, dw1);
+                double move = drift(dt) + diffuse(dt, dw1) + jump(dt);
                 this.setSample(this.sample*Math.exp(move));
 
 	}
@@ -60,13 +60,17 @@ abstract class Process
 		return (riskFreeRate - 0.5*volatility*volatility)*dt;
 	}
 
-	// diffusion term drive by brownian motion
+	// diffusion term driven by Brownian motion
 	protected double diffuse(double dt, double dw)
 	{
 		return volatility*Math.sqrt(dt)*dw;
 	}	
-	
-	
+
+ 	// jump term driven by Poisson process	
+	protected double jump(double dt) {
+		return 0;
+	}
+
 	// sample to be evolved by the process
 	protected double sample;
 	
@@ -80,7 +84,8 @@ abstract class Process
 	public enum ProcessType
 	{
 		BSM,
-		Heston
+		Heston,
+		Bates
 	}
 }
 

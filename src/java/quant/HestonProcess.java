@@ -23,6 +23,7 @@ class HestonProcess extends Process
 
 
 	// specify how the volatility changes
+	@Override
 	public void evolveVolatility(double dt, double dw1, double dw2)
 	{
 		double nu = this.kappa*(this.theta - this.volatility*this.volatility);

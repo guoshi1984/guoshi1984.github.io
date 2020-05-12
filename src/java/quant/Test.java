@@ -37,7 +37,7 @@ public class Test
 		Random r = new Random();
 		for (int i = 0; i < n; i++)
 		{
-			double gr = NormalDistribution.create();	
+			double gr = NormalDistribution.generate();	
 		//	double gr = r.nextGaussian();
 			mo1 += gr;
 			mo2 += gr*gr;
