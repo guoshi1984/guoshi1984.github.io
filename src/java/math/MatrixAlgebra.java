@@ -82,6 +82,29 @@ public class MatrixAlgebra{
 			a[i][index] = v[i];
 		}
 	}
+	
+	/* Multiply a matrix and a vector with compatible dimension
+	 *
+	 * @param a The first matrix to be multiplied
+	 * @param b The second matrix to be multiplied
+	 * @return the product of axb
+	 * */
+	public static double[] matrixMultiply(double[][] a, double[] b)
+	{
+		if(a[0].length != b.length)
+			throw new IllegalArgumentException("Matrix dimensions do not match.");
+
+		double[] c = new double[a.length];
+		for(int i=0; i<a.length; i++)
+		{
+			c[i] = 0;
+			for(int k=0; k<a[0].length; k++)
+			{
+				c[i] += a[i][k]*b[k];	
+			}
+		}
+		return c;
+	}	
 
 	/* Multiply two matrix with compatible dimension
 	 *
