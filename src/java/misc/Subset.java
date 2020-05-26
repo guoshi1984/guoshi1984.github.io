@@ -1,6 +1,8 @@
 import java.lang.*;
 import java.util.List;
 import java.util.LinkedList;
+/* Leetcode 78 SubSets
+ */
 public class Subset
 {
 	public static List<List<Integer>> find(int[] nums)
