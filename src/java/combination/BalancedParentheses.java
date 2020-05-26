@@ -1,4 +1,5 @@
-/* write a function to generate all possible n pairs of balanced parentheses
+/* LeetCode 22
+ * write a function to generate all possible n pairs of balanced parentheses
  *
  * Analysis: Each possible solution is a string with characters "(" or ")". We use a recursion call to generate
  * each character at each time until the size of characters reaches n. We build the string of characters based
@@ -15,7 +16,8 @@ public class BalancedParentheses
 	 * @param n The total size
 	 * @param numberOfOpen The number of open parentheses that have been generated
 	 * @param numberOfClose The number of close paratheses that have been generated
-	private static void generateBalancedParentheses(String str, int n, int numberOfOpen, int numberOfClose)
+	 */
+ 	 private static void generateBalancedParentheses(String str, int n, int numberOfOpen, int numberOfClose)
 	{
 		if(numberOfClose == n)
 		{
