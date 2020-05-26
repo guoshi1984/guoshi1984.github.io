@@ -1,3 +1,4 @@
+package quant;
 import java.util.*;
 /*
  * dS = r*S*dt + volatility*dW

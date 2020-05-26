@@ -1,3 +1,4 @@
+package quant;
 import java.util.*;
 class BatesProcess extends Process
 {
@@ -13,7 +14,7 @@ class BatesProcess extends Process
 	public BatesProcess(double riskFreeRate, double volatility,
 				double kappa, double theta, 
 				double sigma, double rho,
-				double lambda) {
+				double lambda, double nu, double delta) {
 		this.riskFreeRate = riskFreeRate;
 		this.volatility = volatility;
 		this.kappa = kappa;
@@ -39,20 +40,18 @@ class BatesProcess extends Process
 	// specify how the volatility changes
 	@Override
 	public void evolveVolatility(double dt, double dw1, double dw2) {
-		HestonProcess::evolveVolatility(dt, dw1, dw2);
-		//double nu = this.kappa*(this.theta - this.volatility*this.volatility);
-		//double vol2 =  this.volatility*this.volatility + nu*dt 
-		//	+ this.sigma*this.volatility*(this.rho*dw1 
-		//			+ Math.sqrt(1 - this.rho * this.rho)*dw2);	
-		//this.volatility = (vol2 > 0) ? Math.sqrt(vol2) : 0.0;
+		//HestonProcess::evolveVolatility(dt, dw1, dw2);
+		double nu = this.kappa*(this.theta - this.volatility*this.volatility);
+		double vol2 =  this.volatility*this.volatility + nu*dt 
+			+ this.sigma*this.volatility*(this.rho*dw1 
+					+ Math.sqrt(1 - this.rho * this.rho)*dw2);	
+		this.volatility = (vol2 > 0) ? Math.sqrt(vol2) : 0.0;
 	}
 
 	// override the jump
-	public double jump(double dt) {
+	public double jump(double dt, double dw) {
 		int k = PoissonDistribution.generate(lambda*dt);
-		Random r = new Random();
-		dw = r.nextGaussion();
-		return k*nu+delta*Math.sqrt{k}*dw
+		return k*nu+delta*Math.sqrt(k)*dw;
 	}
 
 	private double sigma;

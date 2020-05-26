@@ -1,44 +1,49 @@
+package quant;
 public class Option
 {
-	public Option(OptionType type, double underlying,
+	public Option(ExerciseStyle style, OptionType type, double underlying,
 			double strike, double riskFreeRate, 
 			double volatility, double time)
 	{
+		this.style = style;
 		this.type = type;
 		this.underlying = underlying;
 		this.strike = strike;
 		this.riskFreeRate = riskFreeRate;
 		this.volatility = volatility;
 		this.time = time;
+		this.isPathDependent = (style == ExerciseStyle.AMERICAN) ? true : false;
 	}
 
-	public OptionType type;
-	public double underlying;
-	public double strike;
-	public double riskFreeRate;
-	public double volatility;
-	public double time;
+	protected OptionType type;
+	protected ExerciseStyle style;
+	protected double underlying;
+	protected double strike;
+	protected double riskFreeRate;
+	protected double volatility;
+	protected double time;
+	protected boolean isPathDependent;
+
 	
 }
 
-enum OptionType
-{
-	CALL
-	{
+enum OptionType {
+	CALL {
 		@Override
-		public double payoff(double underlying, double strike)
-		{
+		public double payoff(double underlying, double strike) {
 			return Math.max(underlying - strike,0);
 		}
 	}, 
-	PUT
-	{
+	PUT {
 		@Override
-		public double payoff(double underlying, double strike)
-		{
+		public double payoff(double underlying, double strike) {
 			return Math.max(strike - underlying, 0);
 		}
 	};
 	public abstract double payoff(double underlying, double strike);
 }
 
+enum ExerciseStyle {
+	EUROPEAN,
+	AMERICAN;
+}

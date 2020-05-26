@@ -1,3 +1,4 @@
+package quant;
 public class PoissonDistribution {
 	public static int generate(double lambda) {
 		double L = Math.exp(-lambda);

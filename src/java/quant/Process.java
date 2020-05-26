@@ -1,3 +1,4 @@
+package quant;
 import java.util.*;
 abstract class Process
 {
@@ -35,15 +36,16 @@ abstract class Process
 		Random r = new Random();
 		double dw1 = r.nextGaussian();
 		double dw2 = r.nextGaussian();
-		evolveAsset(dt, dw1, dw2);
+		double dw3 = r.nextGaussian();
+		evolveAsset(dt, dw1, dw2, dw3);
 		evolveVolatility(dt, dw1, dw2);
 	}
 
 	// how the asset value evolves
-	public void evolveAsset(double dt, double dw1, double dw2)
+	public void evolveAsset(double dt, double dw1, double dw2, double dw3)
 	{
 		
-                double move = drift(dt) + diffuse(dt, dw1) + jump(dt);
+                double move = drift(dt) + diffuse(dt, dw1) + jump(dt, dw3);
                 this.setSample(this.sample*Math.exp(move));
 
 	}
@@ -67,7 +69,7 @@ abstract class Process
 	}	
 
  	// jump term driven by Poisson process	
-	protected double jump(double dt) {
+	protected double jump(double dt, double dw3) {
 		return 0;
 	}
 
@@ -83,9 +85,10 @@ abstract class Process
 	
 	public enum ProcessType
 	{
-		BSM,
-		Heston,
-		Bates
+		
+		BSM,  // drift and diffusion
+		Heston,  // drift, diffusion, stochastic volatility 
+		Bates    // drift, diffusion, jump, stochastic volatility 
 	}
 }
 

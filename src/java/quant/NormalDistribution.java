@@ -1,3 +1,4 @@
+package quant;
 import java.util.*;
 public class NormalDistribution
 {
