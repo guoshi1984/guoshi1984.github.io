@@ -4,7 +4,7 @@
 \begin{document}
 Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \line(1,0){350}
-\section{Option Pricing Models and Solutions}
+\section{European Option Pricing Models}
 \subsection{Black Scholes Merton Equation: Introduction}
 We assume the stock prices following a geometric Brownian motion\\
 1) Stock price:\\
@@ -105,20 +105,39 @@ Therefore based on risk-neutral pricing formula[\ref{rn}]
 \end{align*}
 After a little bit of math with integration, we have the solution to the Black-Scholes-Merton model for European call option
 \begin{align*}
-	c(\tau,x; K,r,\sigma) = xN(d_{+}(\tau,x)) - e^{-r\tau}KN(d_{-}(\tau,x))
+	c(\tau,x; K, r, \sigma) = xN(d_1(\tau,x)) - e^{-r\tau}KN(d_2(\tau,x))
 \end{align*}
 Where
 \begin{align*}
 	d_1 = \frac{1}{\sigma \sqrt{\tau}}[ln(\frac{S_t}{K}) + (r+ \frac{\sigma^2}{2})\tau] \\
 	d_2 = d_1 - \sigma \sqrt{\tau}
 \end{align*}
-N() is the cumulative distribution function of the standard normail distribution
+N() is the cumulative distribution function of the standard normal distribution
 {\bf 2. European put option}\\
 The payoff for the European put option is $V(T) = K - S(T)$, we can follow a similiar derivation and get the formula for put option
 \begin{align*}
-	p(t,x) = N(-d_2)Ke^{-r\tau} -N(-d_1)x
+	p(\tau,x; K, r, \sigma) = Ke^{-r\tau}N(-d_2)-xN(-d_1)
 \end{align*}
-{\bf 3. Boundary conditons}\\
+{\bf 3. Options based on dividend-paying stock}\\
+The value of dividend-paying stock consists of two parts. One is the value of the stock, the other one is the value of dividend. Suppose the dividend rate is a, then the change of value of dividend-paying stock over time dt is $dS(t) + aS(t)dt$. In order to make the discounted value a martingale, we require 
+\begin{align*}
+	\frac{dS(t) + aS(t)dt}{S(t)} = rdt + \sigma \tilde dW(t)
+\end{align*}
+so
+\begin{align*}
+	dS(t) = (r-a) S(t)dt + \sigma S(t) \tilde dW(t)
+\end{align*}
+\begin{align*}
+	S(T) = S(t) exp\{\sigma(\tilde W(T) -\tilde W(t)) + (r - a - \frac{1}{2} \sigma^2) \tau\} \\
+\end{align*}
+Following similar derivation, for call option we can get
+\begin{align*}
+	c(\tau,x; K, r, \sigma) = xe^{-a\tau} N(d_1(\tau,x)) - e^{-r\tau} K N(d_2(\tau,x))
+\end{align*}
+\begin{align*}
+	p(\tau,x; K, r, \sigma) = Ke^{-r\tau} N(-d_2)-xe^{-a \tau}N(-d_1)
+\end{align*}
+{\bf 4. Boundary conditons}\\
 Using the solution $c(t,x)$ and $p(t,x)$, we can easily check the boundary conditions when
 time t approaches to expiration time T.\\
 As we know
@@ -135,7 +154,7 @@ Therefore, when $S<K$
 \begin{align*}
 	c(t,x) = S*N(-\infty) - K*N(-\infty) = 0-0 = 0
 \end{align*}
-{\bf 4. Examples}\\
+{\bf 5. Examples}\\
 The following graphs show the change of option price with respect to different parameters.
 \\
 \\
@@ -143,8 +162,8 @@ The following graphs show the change of option price with respect to different p
 \\
 \includegraphics[scale = 0.5]{option_price1.eps}\\
 \includegraphics[scale = 0.5]{option_price2.eps}\\
-{\bf 5. Alternative formulation}\\
-If we introduce $F = e^{r\tau} S$, which is the forward price of the asset S. Then the equation pricing equation becomes
+{\bf 6. Alternative formulation}\\
+If we introduce $F = e^{(r-a)\tau} S$, which is the forward price of the asset S. Then the equation pricing equation becomes
 \begin{align*}
 	C(F,\tau)= D[N(d_+)F - N(d_-)K] \\
 	P(F,\tau)= D[N(-d_-)K - N(-d_+)F] \\
@@ -415,7 +434,7 @@ Let $Z = \sum_i^{N(t)} J_i$, which is a sum of normal random variable. Then $Z \
 	S(t) = S(0) exp{(Z -(e^{\nu + \frac{1}{2}\delta^2}-1) \lambda t)} 
 \end{align*}
 Where $ Z \sim Normal(N(t)\nu, N(t)\delta^2)$ given $N(t) \sim Poisson(\lambda t)$.\\
-\section{Simulation Processes}
+\section{Monte Carlo Simulation Processes}
 In simulation, we decompose the time evolvement of an asset price into three components: drift, diffusion, jump. The
 drift term is dt term, the diffusion term has Brownian motion component, the jump term has Possion component. Let us look at the following examples. \\ 
 1. BSM process\\
@@ -492,4 +511,38 @@ Together with formula for the drift and asset price, we write
 	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2 )
 \end{align*}
+\section{Simulation of Stopping Time }
+{\bf Determine the stop time}\\
+Let us assume the option has a payoff function $h(S, K)$, where K is strike price.
+Suppose we have M samples, the current asset price at time i is $S^{(m)}_i$, where $0 \geq i \leq T$. The discount factor $D_{i,j}$ means discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
+For each sample, the asset price forms a price path from $i = 0$ to $T$, and we define a stopping time $\tau^{(m)}$ for each path. \\
+(1) set $\tau^{(m)}$ to T for each sample path m.\\
+(2) for t from T - 1 to 1:\\
+\indent  for each sample:\\
+\indent  (2b) calculate discount payoff value: $DV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K) $\\
+\indent  (2c) calculate the current payoff value: $h(S^{(m)}_t)$\\
+\indent	 (2d) regress $DV$ on ${S_t}$ using least square and get estimated \\
+\indent      discount payoff value $EDV = f(X_t)$\\
+\indent	 (2e) if $h(S^{(m)}_t) > EDV^{(m)}(X^{(m)}_i)$, \\
+\indent       this means we can exercise the option, then upate $\tau^{(m)} = t$.\\
+(3) for each path calculate the present value of the payoff at stopping time $\tau$ \\
+$PV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K)$\\
+(4) average $PV^{(m)}$ to get the price of the option\\
+\section{Result}
+{\bf Simulation of option value with BSM process using both analytical(ANAL) and Monte Carlo(MC)}\\
+We calcuate value of  option of different type and style listed below. For MC method, we choose 100 timesteps and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one.
+\begin{table}
+	\begin{tabular} { l  c  c   c  c  c       c       c          }
+		Style 	 & Type & S  & K & r & $\sigma$ & NPV(ANAL) & NPV(MC)\\
+	\hline 
+		European & Call & 36.0 & 40 & 0.06 & 0.2 & 4.28 & 4.27(3) \\
+		American & Call & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.28(3) \\
+		European & Put  & 36.0 & 40 & 0.06 & 0.2 & 3.76 & 3.76(2) \\
+		American & Put  & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.81(3) \\
+	\hline
+	\end{tabular}\\
+	{\raggedright S: Underlying Asset Price, K: strike price, r: interest rate, 
+	$\sigma$: volatility}
+\end{table}
+
 \end{document}
