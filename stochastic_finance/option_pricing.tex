@@ -1,9 +1,12 @@
 \documentclass[a4paper]{article}
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
+\title{A Review of Option Pricing Models and Simulations}
+\author{Shi Guo} 
 \begin{document}
-Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
-\line(1,0){350}
+\maketitle
+{\bf Abstract} In this article, we review the straties and a variety methods for pricing options. We first review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusion with jumps. Then we discuss the Monte Carlo simulation algorithms of each model and how to treat the stopping time for American style options. Finally, we present the simulation result. \\
+\line(1,0) {350}
 \section{European Option Pricing Models}
 \subsection{Black Scholes Merton Equation: Introduction}
 We assume the stock prices following a geometric Brownian motion\\
@@ -511,8 +514,8 @@ Together with formula for the drift and asset price, we write
 	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2 )
 \end{align*}
-\section{Simulation of Stopping Time }
-{\bf Determine the stop time}\\
+\section{Simulation of Stopping Time for American Option}
+American Option can be exercised at any time. So in Monte Carlo Simulation, for each path we need to determine the stopping time, in other words, time for the option to be exerciesed. LongStaff\cite{americanoption} proposed a algorithm to determine the stopping time and here we briefly outline the algorithm\\
 Let us assume the option has a payoff function $h(S, K)$, where K is strike price.
 Suppose we have M samples, the current asset price at time i is $S^{(m)}_i$, where $0 \geq i \leq T$. The discount factor $D_{i,j}$ means discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
 For each sample, the asset price forms a price path from $i = 0$ to $T$, and we define a stopping time $\tau^{(m)}$ for each path. \\
@@ -544,5 +547,10 @@ We calcuate value of  option of different type and style listed below. For MC me
 	{\raggedright S: Underlying Asset Price, K: strike price, r: interest rate, 
 	$\sigma$: volatility}
 \end{table}
-
+\begin{thebibliography}{9}
+\bibitem{americanoption} 
+Francis Longstaff, Eduardo Schwartz 
+\textit{The Review of Financial Studies}. 
+Spring 2001 Vol. 14, No. 1, pp. 113-147.
+\end{thebibliography}
 \end{document}

@@ -194,8 +194,8 @@ Discounted stock price\\
 	d(D(t) S(t)) = \sigma(t) D(t) S(t) [\Theta(t) dt + dW(t)]\\
 \end{align*}
 where $\Theta(t) = \frac{\alpha(t) -R(t)}{\sigma(t)}$\\
-We define a new Brownian motion with drift $dW^{'}(t) = dW(t) + \theta(t) dt$, this brownian motion consists of a standard brownian motion and a drift term $\theta(t)$. So if $W^{'}(0) = 0$, due to the drift term, $E[W^{'}(t) != 0$.However, using the change of measure theorem, we can define another probability measure $P^{'}$, such that under $\tilde P$, $W^{'}(t)$ becomes a standard brownian motion.\\
-Then we have $d(D(t)S(t)) = \sigma(t) D(t) S(t) dW^{'}(t)$ under $P^{'}$, {\bf which implies the discount price is a martingale under the risk-neutral measure $P^{'}$}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) d  W^{'}(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, we can work out a little of math to show
+We define a new Brownian motion with drift $dW^{'}(t) = dW(t) + \theta(t) dt$, this brownian motion consists of a standard brownian motion and a drift term $\theta(t)$. So if $W^{'}(0) = 0$, due to the drift term, $E[W^{'}(t)] != 0$.However, using the change of measure theorem, we can define another probability measure $P^{'}$, such that under $\tilde P$, $W^{'}(t)$ becomes a standard brownian motion.\\
+Then we have $d(D(t)S(t)) = \sigma(t) D(t) S(t) dW^{'}(t)$ under $P^{'}$, {\bf which implies the discount price is a martingale under the risk-neutral measure $P^{'}$}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) d  W^{'}(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, if we consider a portfolio composed with Stock and interesting account, we can work out a little of math to show
 \begin{align*}
 	d(D(t)X(t)) = \Delta(t) d(D(t)S(t))
 \end{align*}
@@ -204,6 +204,29 @@ This means $D(t)X(t)$ is a martingale under $P^{'}$. Suppose T is the option pay
 	D(t)X(t) = E^{'} [D(T) X(T) | F(t)]
 \end{align*}
 {\bf This is our risk-neutral pricing formula.}
+\subsection{Risk Newtral Pricing Examples}
+1. European Call Option\\
+For European call option, Let V(t) be the price of the option at time t.  $V(T) = (S(T) - K)^{+}$ where K is the striking price. Then under risk neutral measure, suppose interest rate is a constant, then
+\begin{align*}
+	V(t) = E^{'}[e^{r(t-T)}V(T)|F(t)]
+\end{align*}
+2. Forward Price
+Suppose K is the forward price at time t for delivering one share of stock at time T, whose price is S(T). Then under risk-neutral measure, the discount stock price is a martingale, which means
+\begin{align*}
+	D(t)S(t) = E^{'}[D(T) S(T)|F(t)]
+\end{align*}
+again, if we assume interest rate r is a constant,
+\begin{align*}
+	S(t) = E^{'}[e^{r(t-T)S(T)}|F(t)]
+\end{align*}
+This expectation value of the discounted stock has to equal to the present value of K to ensure no arbitrage, so
+\begin{align*}
+	S(t) = E^{'}[e^{r(t-T)S(T)}|F(t)] = e^{r(t-T)}K
+\end{align*}
+So
+\begin{align*}
+	K = e^{r(T-T)}S(t)
+\end{align*}
 \subsection{Risk Neutral Measure with Foreign Currency}
 There is an exchange rate Q(t), which gives units of domestic currency per unit of foreign currency. We assume the exchange rate satisfies
 \begin{align*}
