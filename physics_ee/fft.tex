@@ -5,33 +5,55 @@
 Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \line(1,0){350}
 \section{Basic of Fourier Transform}
-If $f(t)= f(t+T)$ then $f(t)$ can be written as
+{\bf Fourier Series }\\
+If $x(t)= x(t+T)$ then $x(t)$ can be written as
 \begin{align*}
-f(t) = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k t}{T}}	
+x(t) = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k t}{T}}	
 \end{align*}
 i is the imaginary unit, and k is an integer. The above expression is eligible because $e^{\frac{2 \pi i k t}{T}}$ is a periodic function 
 \begin{align*}
 	e^{\frac{2 \pi i k t}{T}} = e^{\frac{2 \pi i k(t+T)}{T}}
 \end{align*}
-Each basis $e^{\frac{2 \pi i }{T}}$ represents a signal with frequency $F_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta F = \frac{1}{T}$.
-
-Based on orthogonality, we can get $c_k$
+Each basis $e^{\frac{2 \pi i }{T}}$ represents a signal with frequency $f_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta f = \frac{1}{T}$.
+Based on orthogonality, we can get $c_k$ 
 \begin{align*}
-	c_k = \frac{1}{T} \int_0^T f(t) e^{-i\frac{2 \pi k t}{T}} dt
+	c_k = \frac{1}{T} \int_0^T x(t) e^{-i\frac{2 \pi k t}{T}} dt
 \end{align*}
-{\bf Example}
+{\bf Fourier Series: Example}\\
 \begin{align*}
-f(t) = cos(2 \pi f t) = \frac{1}{2} (e^{i 2 \pi f t} + e^{-i 2 \pi f t})
+x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{i 2 \pi f_0 t} + e^{-i 2 \pi f_0 t})
 \end{align*}
+where $f_0 = \frac{1}{T}$
 \begin{align*}
-	c_k & = \frac{1}{T} \int_0^T f(t) e^{-i\frac{2 \pi k t}{T}} dt \\
-	    & = \frac{1}{T} \int_0^T \frac{1}{2} (e^{i 2 \pi f t} + e^{-i 2 \pi f t}) e^{-i\frac{2 \pi k t}{T}} dt 
+	c_k & = \frac{1}{T} \int_0^T x(t) e^{-i\frac{2 \pi k t}{T}} dt \\
+	    & = \frac{1}{T} \int_0^T \frac{1}{2} (e^{\frac{2 i  \pi  t}{T}} 
+	      + e^{\frac{- 2i \pi  t}{T}}) e^{-i\frac{2 \pi  k t}{T}} dt 
 \end{align*}
 Only terms with k = +/-1 in the above expression can survive, so
 \begin{align*}
         c_1 = \frac{1}{T} \int_0^T \frac{1}{2} dt = \frac{1}{2}
 \end{align*}
 Similarly, $c_{-1} = \frac{1}{2}$.\\
+
+{\noindent \bf Fourier Transform}\\
+We can generalize the Fourier series to non-periodic functions. We define the Fourier transform as
+\begin{align*}
+	\mathcal F(f) = \int_{-\infty}^{\infty} x(t) e^{-2 \pi i f t} dt
+\end{align*}
+With the inverse Fourier transform defined as
+\begin{align*}
+	x(t) = \int_{-\infty}^{\infty} \mathcal F(f) e^{2 \pi i f t} df
+\end{align*}
+{\bf Fourier Transform: Example}\\
+Take the same x(t) as above
+\begin{align*}
+x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{2 i \pi f_0 t} + e^{- 2 i \pi f_0 t})
+\end{align*}
+\begin{align*}
+	\mathcal F(f) & = \int_{-\infty}^{\infty} \frac{1}{2} (e^{2 i  \pi f_0 t} + e^{- 2i \pi f_0 t})  e^{- 2 i\pi  f t} dt
+	     & = \frac{1}{2}\delta(f - f_0) + \frac{1}{2} \delta(f + f_0)	
+\end{align*}
+{\bf Discrete Fourier Transform}\\
 The above is the Fourier transform in continuous case, in discrete case
 If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
 \begin{align*}
@@ -145,6 +167,43 @@ As noted, the above derivation is for $k<N/2$, a very similar derivation for $N/
 Now we have divided the FFT of N points to two FFT with N/2 points
 Keep going till we reach the size to one, then combine together recursively.
 \section{Fourier Transform of Useful Functions}
+{\bf The Fourier Transform of Gaussian}\\
+\begin{align*}
+	f(t) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{t^2}{2\sigma^2}}
+\end{align*}
+\begin{align*}
+	\mathcal F(f) = e^{-2 \pi^2 \sigma^2 f^2}
+\end{align*}
+So the Fourier transform of a Gaussian function is another Gaussian function but with different width.\\
+
+{\noindent \bf The Fourier Transform of Dirac Comb} \\
+\begin{align*}
+	x(t) = \sum_{n = -\infty} ^{\infty} \delta(t - n T)
+\end{align*}
+It is clearly that x(t) is periodic with period T. So we can expand that into Fourier series
+\begin{align*}
+	x(t) = \sum_{k = -\infty}^{\infty} c_k e^{2\pi i k t/T}
+\end{align*}
+Where 
+\begin{align*}
+	c_k & = \frac{1}{T} \int_{-T/2}^{T/2} x(t) e^{-i\frac{2 \pi k t}{T}} dt \\
+	    & = \frac{1}{T} \int_{-T/2}^{T/2} \delta(0) e^{-i\frac{2 \pi k t}{T}} \\
+	    & = \frac{1}{T}\\
+\end{align*}
+So 
+\begin{align*} 
+	x(t) = \sum_{k = -\infty}^{\infty} \frac{1}{T} e^{2\pi i k t/T}
+\end{align*}
+On the other hand, based on the formula of Fourier transform
+\begin{align*}
+	\mathcal F(f) & = \int \sum_{n = -\infty} ^{\infty} \delta(t - n T) e^{-2\pi i f t} dt 
+		      & = \sum_{n = -\infty} ^{\infty} e^{-2\pi i  n T f}
+		      & = \sum_{n = -\infty} ^{\infty} e^{-2\pi i  n f /f_0 }
+\end{align*}
+Comparing the Fourier series of x(t) and the expression of F(f), they are the same except T being changed to $f_0$. Therefore we can conclude that F(f) itself is also a Dirac comb, which is
+\begin{align*}
+	\mathcal F(f) = f_0 \sum_{n = -\infty} ^{\infty} \delta(f - nf_0)
+\end{align*}
 {\bf The Fourier Transform of White Noise}\\
 Assuming noise we sample in time is $n[m]$, where m = 0,... M-1. $n[m]$ is a Gaussian random variable with zero mean and variance $\sigma^2$. The the FFT of $n[m]$ is
 \begin{align*}
@@ -169,14 +228,6 @@ The variance of the real part is
                                  & = \frac{1}{M} \frac{\sigma^2}{2}
 \end{align*}
 The same derivation applies for the imaginary part. So the FFT is Gaussian noise with mean zero and variance $\sigma^2$.\\
-{\bf The Fourier Transform of Gaussian}\\
-\begin{align*}
-	f(t) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{t^2}{2\sigma^2}}
-\end{align*}
-\begin{align*}
-	F(f) = e^{-2 \pi^2 \sigma^2 f^2}
-\end{align*}
-So the Fourier transform of a Gaussian function is another Gaussian function.\\
 \section{Connection with Uncertainty Principle}
 {\bf Relationship between time length and frequency bandwidth}\\
 We consider a few examples\\
