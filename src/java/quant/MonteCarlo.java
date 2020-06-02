@@ -47,7 +47,7 @@ public class MonteCarlo
 
 	public void updateStoppingTime() {
 		for(int t = nTimeStep - 2; t >= 0; t--) {
-			System.out.println("TimeStep " + t);
+			//System.out.println("TimeStep " + t);
 			double[][] Xs = new double[sampleSize][3];
 			double[] Ys = new double[sampleSize];
 			int count = 0;
@@ -84,10 +84,10 @@ public class MonteCarlo
                                 double currentSample = reloadSample(earlyCandidateIndex[c], t);
                                 if(option.type.payoff(currentSample, option.strike) > Yhat[c]) {
 					paths.get(earlyCandidateIndex[c]).setStoppingTime(t);
-					System.out.println("Update stopping time " + earlyCandidateIndex[c]
-							+ " " + t);
-					System.out.println(" Get stopping time " 
-							+ paths.get(earlyCandidateIndex[c]).getStoppingTime() );					
+					//System.out.println("Update stopping time " + earlyCandidateIndex[c]
+					//		+ " " + t);
+					//System.out.println(" Get stopping time " 
+					//		+ paths.get(earlyCandidateIndex[c]).getStoppingTime() );					
 				}
                         }
 

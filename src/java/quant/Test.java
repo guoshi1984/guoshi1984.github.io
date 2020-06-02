@@ -282,7 +282,7 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       10, 50000, process);
+			       100, 50000, process);
 		mc.initialize();
 		mc.run();
 		mc.showResult();
