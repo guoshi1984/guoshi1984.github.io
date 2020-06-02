@@ -3,6 +3,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
+/* Leetcode 205
+ */
 public class IsomorphicString2
 {
 	public static boolean check(String s1, String s2)

@@ -12,9 +12,9 @@ public class AddTwoFloatString
 		final int d2 = s2.indexOf('.');
 		final int intlen = Math.max(d1, d2);
 		final int declen = Math.max(n1 - d1, n2 - d2)-1;
-		System.out.println(n1 + " "+ n2);
-		System.out.println(d1 + " "+ d2);
-		System.out.println(intlen + " "+ declen);
+		//System.out.println(n1 + " "+ n2);
+		//System.out.println(d1 + " "+ d2);
+		//System.out.println(intlen + " "+ declen);
 		int carry = 0;
 		StringBuilder sb = new StringBuilder("");
 		for(int i = declen; i >= -1*intlen; i--)
@@ -28,12 +28,13 @@ public class AddTwoFloatString
 			int i2 = 0;
 			i1 = getDigit(s1, d1, i);
 			i2 = getDigit(s2, d2, i);
-			System.out.println("i1 " + i1 + "i2 " + i2);
+			//System.out.println("i1 " + i1 + "i2 " + i2);
 			sb = sb.insert(0, (i1+i2+carry)%10);
-			carry = (i1+i2+carry)/10;
-			
-			
+			carry = (i1+i2+carry)/10;		
 		}
+
+		if(carry != 0)
+			sb = sb.insert(0, carry);
 		return sb.toString();
 
 	}
@@ -45,11 +46,24 @@ public class AddTwoFloatString
 		else
 			return s.charAt(dotIndex + i) -'0';
 	}
-	public static void main(String[] args)
-	{
+	
+	public static void test1() {
 		String s1 = "12.9";
-		String s2 = ".8";
-		String s = add(s1, s2);
-		System.out.println(s);
+                String s2 = ".8";
+                String s = add(s1, s2);
+                System.out.println(s);
+	}
+
+	public static void test2() {
+		String s1 = "19.9";
+                String s2 = "38.8";
+                String s = add(s1, s2);
+                System.out.println(s);
+	}
+	
+	public static void main(String[] args) {
+		test1();
+		test2();
+	
 	}
 }

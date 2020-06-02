@@ -1,4 +1,5 @@
-/*Given a string, check if it is a palindrom
+/* Leetcode 125
+ * Given a string, check if it is a palindrom
  */
 public class IsPalindrome
 {

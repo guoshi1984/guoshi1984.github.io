@@ -1,5 +1,6 @@
 /*Given two strings, check if one string is anagram substring of the other.
- *
+ */
+
 public class IsAnagramSubstring{
 	public static boolean isAnagram(String s, String t)
 	{
