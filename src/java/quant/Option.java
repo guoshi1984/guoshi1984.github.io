@@ -3,8 +3,7 @@ public class Option
 {
 	public Option(ExerciseStyle style, OptionType type, double underlying,
 			double strike, double riskFreeRate, 
-			double volatility, double time)
-	{
+			double volatility, double time) {
 		this.style = style;
 		this.type = type;
 		this.underlying = underlying;
@@ -15,6 +14,17 @@ public class Option
 		this.isPathDependent = (style == ExerciseStyle.AMERICAN) ? true : false;
 	}
 
+	public void showInfo() {
+		System.out.println("Option Style: " + style);
+                System.out.println("Option Type: " + type);
+                System.out.println("Underlying Price: " + underlying);
+                System.out.println("Strike Price: " + strike);
+		System.out.println("Expiring Time: "+ time + " years ");
+		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
+                System.out.println("Volatility: " + volatility);
+
+
+	}  
 	protected OptionType type;
 	protected ExerciseStyle style;
 	protected double underlying;

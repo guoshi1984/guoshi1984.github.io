@@ -4,7 +4,7 @@ public class Test
 {
 
 	public static void testOption1() {
-		System.out.println("Test European Call Option Pricing Model");
+		System.out.println("Test Option Pricing Model using Black-Scholes Model");
 		
 		//parameters for option
 		OptionType type = OptionType.CALL;
@@ -15,13 +15,6 @@ public class Test
 		double riskFreeRate = 0.06;
 		double volatility = 0.2;
 		double time = 2;
-		
-		//paramters for heston model
-		double kappa = 2.0;
-		double theta = 0.01;
-		double sigma = 0.1;
-		double rho = 0.5;
-	
 			
 		//paramters for MC
 		int timeStepPerYear = 20;
@@ -31,13 +24,8 @@ public class Test
 			strike, riskFreeRate, 
 			volatility, time);
 		System.out.println("=============================");
-		System.out.println("Pricing Method 1: Black-Scholes Analytical: ");
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
+		System.out.println("Pricing task: European Call Option Black-Scholes Analytical: ");
+		option.showInfo();
 		BSMCalculator bsm = new BSMCalculator();
 		double npv1 = bsm.calculate(option);
 		System.out.println("Net Present Value: "+ npv1);
@@ -46,13 +34,8 @@ public class Test
 		
 
 		System.out.println("=============================");
-		System.out.println("Pricing Method 2: Monte Carlo for Black-Scholes Model: ");
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
+		System.out.println("Pricing Task: European Call Option Black-Scholes Monte Carlo: ");
+		option.showInfo();
 		Process process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		MonteCarlo mc = new MonteCarlo(option,
@@ -62,15 +45,101 @@ public class Test
 		mc.showResult();
 		System.out.println();
 
-		volatility = 0.2;
+		
+		style = ExerciseStyle.AMERICAN;
+		type = OptionType.CALL;
+		option = new Option(style,
+				type, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		
+		System.out.println("=============================");
+		System.out.println("Pricing Task: American Call Option Black-Scholes Monte Carlo: ");
+		option.showInfo();
+		process = new BSMProcess(option.riskFreeRate,
+                                option.volatility);
+		mc = new MonteCarlo(option,
+			       10, 100000, process);
+		mc.initialize();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+		
+		style = ExerciseStyle.EUROPEAN;
+		type = OptionType.PUT;
+		option = new Option(style,
+				type, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		System.out.println("=============================");
+		System.out.println("Pricing Task: European Put Black-Scholes Analytical: ");
+		option.showInfo();
+		double npv2 = bsm.calculate(option);
+		System.out.println("Net Present Value: "+ npv2);
+		System.out.println();	
+		
+		
+		System.out.println("=============================");
+		System.out.println("Pricing Task: Eueopean Put Black-Scholes Monte Carlo: ");
+		option.showInfo();
+		process = new BSMProcess(option.riskFreeRate,
+                                option.volatility);
+		mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process);
+		mc.initialize();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+		
+		timeStepPerYear = 100;
+		style = ExerciseStyle.AMERICAN;
+		type = OptionType.PUT;
+		option = new Option(style,
+				type, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		System.out.println("=============================");
+		System.out.println("Pricing Task: American Put Black-Scholes Monte Carlo  ");
+		option.showInfo();
+		process = new BSMProcess(option.riskFreeRate,
+                                option.volatility);
+		mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process);
+		mc.initialize();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+	}
+
+	public static void testOption2() {
+		//parameters for option
+		OptionType type = OptionType.CALL;
+		ExerciseStyle style = ExerciseStyle.EUROPEAN;
+		
+		double underlying = 36.0;
+		double strike = 40.0;
+		double riskFreeRate = 0.06;
+		double volatility = 0.2;
+		double time = 2;
+		
+	
+			
+		//paramters for MC
+		int timeStepPerYear = 20;
+		int SampleSize = 100000;	
+		Option option = new Option(style,
+				OptionType.CALL, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		//paramters for heston model
+		double kappa = 2.0;
+		double theta = 0.01;
+		double sigma = 0.1;
+		double rho = 0.5;
 		// Monte carlo for Heston, theta is set so the model is the same as BSM model
 		System.out.println("=============================");
 		System.out.println("Pricing Method 3: Monte Carlo for Heston: ");
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
+		option.showInfo();
 		System.out.println("Kappa: " + kappa);
 		System.out.println("Theta: " + theta);
 		System.out.println("Volatility of volatility: " + sigma);
@@ -94,11 +163,7 @@ public class Test
 		// Monte carlo for Heston, theta is set so the model is different from BSM model
 		System.out.println("=============================");
 		System.out.println("Pricing Method 4: Monte Carlo for Heston: ");
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
+		option.showInfo();
 		System.out.println("Kappa: " + kappa);
 		System.out.println("Theta: " + theta);
 		System.out.println("Volatility of volatility: " + sigma);
@@ -127,11 +192,7 @@ public class Test
 		double delta = 0;
 		System.out.println("=============================");
 		System.out.println("Pricing Method 5: Monte Carlo for Bates: ");
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
+		option.showInfo();
 		System.out.println("Kappa: " + kappa);
 		System.out.println("Theta: " + theta);
 		System.out.println("Volatility of volatility: " + sigma);
@@ -167,6 +228,7 @@ public class Test
 		sigma = 0.01;
 		System.out.println("=============================");
 		System.out.println("Pricing Method 6: Monte Carlo for Bates: ");
+		option.showInfo();
 		System.out.println("Option Type: " + type);
 		System.out.println("Underlying Price: " + underlying);
 		System.out.println("Strike Price: " + strike);
@@ -197,96 +259,8 @@ public class Test
 		mc3.run();
 		mc3.showResult();
 		System.out.println();
-		
-		style = ExerciseStyle.AMERICAN;
-		type = OptionType.CALL;
-		option = new Option(style,
-				type, underlying,
-			strike, riskFreeRate, 
-			volatility, time);
-		
-		System.out.println("=============================");
-		System.out.println("Pricing Method 7: Monte Carlo for Black-Scholes Model for American Call: ");
-		System.out.println("Exercise Style: "+ style);
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
-		process = new BSMProcess(option.riskFreeRate,
-                                option.volatility);
-		mc = new MonteCarlo(option,
-			       10, 100000, process);
-		mc.initialize();
-		mc.run();
-		mc.showResult();
-		System.out.println();
-		
-		style = ExerciseStyle.EUROPEAN;
-		type = OptionType.PUT;
-		option = new Option(style,
-				type, underlying,
-			strike, riskFreeRate, 
-			volatility, time);
-		System.out.println("=============================");
-		System.out.println("Pricing Method 8: Black-Scholes Analytical for European Put: ");
-		System.out.println("Exercise Style: " + style);
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
-		double npv2 = bsm.calculate(option);
-		System.out.println("Net Present Value: "+ npv2);
-		System.out.println();	
-		
-		
-		System.out.println("=============================");
-		System.out.println("Pricing Method 9: Monte Carlo for Black-Scholes Model for European Put: ");
-		System.out.println("Exercise Style: " + style);
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
-		process = new BSMProcess(option.riskFreeRate,
-                                option.volatility);
-		mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
-		mc.initialize();
-		mc.run();
-		mc.showResult();
-		System.out.println();
-		
-		timeStepPerYear = 100;
-		style = ExerciseStyle.AMERICAN;
-		type = OptionType.PUT;
-		option = new Option(style,
-				type, underlying,
-			strike, riskFreeRate, 
-			volatility, time);
-		System.out.println("=============================");
-		System.out.println("Pricing Method 10: Monte Carlo for Black-Scholes Model for American Put: ");
-		System.out.println("Exercise Style: " + style);
-		System.out.println("Option Type: " + type);
-		System.out.println("Underlying Price: " + underlying);
-		System.out.println("Strike Price: " + strike);
-		System.out.println("Risk Free Interest Rate: " + riskFreeRate);
-		System.out.println("Volatility: " + volatility);
-		System.out.println("Expiring Time: "+ time + " years ");	
-		process = new BSMProcess(option.riskFreeRate,
-                                option.volatility);
-		mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
-		mc.initialize();
-		mc.run();
-		mc.showResult();
-		System.out.println();
-	}
 
+	}
 	public static void main(String[] args) {
 		testOption1();
 //		Option option = new Option(OptionType.CALL, 36.0,
