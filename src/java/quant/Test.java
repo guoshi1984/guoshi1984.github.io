@@ -5,13 +5,27 @@ public class Test
 
 	public static void testOption1() {
 		System.out.println("Test European Call Option Pricing Model");
+		
+		//parameters for option
 		OptionType type = OptionType.CALL;
 		ExerciseStyle style = ExerciseStyle.EUROPEAN;
+		
 		double underlying = 36.0;
 		double strike = 40.0;
 		double riskFreeRate = 0.06;
 		double volatility = 0.2;
-		double time = 2.0;
+		double time = 2;
+		
+		//paramters for heston model
+		double kappa = 2.0;
+		double theta = 0.01;
+		double sigma = 0.1;
+		double rho = 0.5;
+	
+			
+		//paramters for MC
+		int timeStepPerYear = 20;
+		int SampleSize = 100000;	
 		Option option = new Option(style,
 				OptionType.CALL, underlying,
 			strike, riskFreeRate, 
@@ -42,17 +56,14 @@ public class Test
 		Process process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		MonteCarlo mc = new MonteCarlo(option,
-			       10, 100000, process);
+			       timeStepPerYear, SampleSize, process);
 		mc.initialize();
 		mc.run();
 		mc.showResult();
 		System.out.println();
 
+		volatility = 0.2;
 		// Monte carlo for Heston, theta is set so the model is the same as BSM model
-		double kappa = 1.0;
-		double theta = volatility*volatility;
-		double sigma = 0.001;
-		double rho = 0.0;
 		System.out.println("=============================");
 		System.out.println("Pricing Method 3: Monte Carlo for Heston: ");
 		System.out.println("Option Type: " + type);
@@ -73,7 +84,7 @@ public class Test
 				rho);
 	
 		MonteCarlo mc2 = new MonteCarlo(option,
-			       10, 100000, process2);
+			       timeStepPerYear, SampleSize, process2);
 		mc2.initialize();
 		mc2.run();
 		mc2.showResult();
@@ -81,10 +92,6 @@ public class Test
 
 
 		// Monte carlo for Heston, theta is set so the model is different from BSM model
-		kappa = 1.0;
-		theta = 0.039;
-		sigma = 0.001;
-		rho = 0.0;
 		System.out.println("=============================");
 		System.out.println("Pricing Method 4: Monte Carlo for Heston: ");
 		System.out.println("Option Type: " + type);
@@ -105,7 +112,7 @@ public class Test
 				rho);
 	
 		mc2 = new MonteCarlo(option,
-			       10, 100000, process2);
+			       timeStepPerYear, SampleSize, process2);
 		mc2.initialize();
 		mc2.run();
 		mc2.showResult();
@@ -145,7 +152,7 @@ public class Test
 
 	
 		MonteCarlo mc3 = new MonteCarlo(option,
-			       10, 100000, process3);
+			       timeStepPerYear, SampleSize, process3);
 		mc3.initialize();
 		mc3.run();
 		mc3.showResult();
@@ -185,7 +192,7 @@ public class Test
 
 	
 		mc3 = new MonteCarlo(option,
-			       10, 100000, process3);
+			       timeStepPerYear, SampleSize, process3);
 		mc3.initialize();
 		mc3.run();
 		mc3.showResult();
@@ -193,11 +200,6 @@ public class Test
 		
 		style = ExerciseStyle.AMERICAN;
 		type = OptionType.CALL;
-		underlying = 36.0;
-		strike = 40.0;
-		riskFreeRate = 0.06;
-		volatility = 0.2;
-		time = 2.0;
 		option = new Option(style,
 				type, underlying,
 			strike, riskFreeRate, 
@@ -223,11 +225,6 @@ public class Test
 		
 		style = ExerciseStyle.EUROPEAN;
 		type = OptionType.PUT;
-		underlying = 36.0;
-		strike = 40.0;
-		riskFreeRate = 0.06;
-		volatility = 0.2;
-		time = 2.0;
 		option = new Option(style,
 				type, underlying,
 			strike, riskFreeRate, 
@@ -258,12 +255,13 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       10, 100000, process);
+			       timeStepPerYear, SampleSize, process);
 		mc.initialize();
 		mc.run();
 		mc.showResult();
 		System.out.println();
 		
+		timeStepPerYear = 100;
 		style = ExerciseStyle.AMERICAN;
 		type = OptionType.PUT;
 		option = new Option(style,
@@ -282,7 +280,7 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       100, 50000, process);
+			       timeStepPerYear, SampleSize, process);
 		mc.initialize();
 		mc.run();
 		mc.showResult();
