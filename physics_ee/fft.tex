@@ -45,7 +45,23 @@ With the inverse Fourier transform defined as
 	x(t) = \int_{-\infty}^{\infty} \mathcal F(f) e^{2 \pi i f t} df
 \end{align*}
 {\bf Fourier Transform: Example}\\
-Take the same x(t) as above
+1. Constant Function
+\begin{align*}
+	x(t) = 1
+\end{align*}
+\begin{align*}
+	\mathcal F(f) &=  \int_{-\infty}^{\infty} x(t) e^{-2 \pi i f t} dt \\
+	              &=  \int_{-\infty}^{\infty} e^{-2 \pi i f t} dt \\
+		      &=  \lim_{a \to \infty}\int_{-a}^{a} e^{-2 \pi i f t} dt \\
+		      &=  \lim_{a \to \infty} \frac{1}{-2 \pi i ft} e^{-2 \pi i ft} |_{-a}^{a} \\
+		      &=  \lim_{a \to \infty} \frac{1}{-2 \pi i fa} (e^{-2 \pi i fa} - e^{2 \pi i fa}) \\
+		      &=  \lim_{a \to \infty} \frac{1}{2 \pi i fa} (e^{2 \pi i fa} - e^{-2 \pi i fa}) \\
+		      &=  \lim_{a \to \infty} 2 \frac{sin(2\pi f a)}{2 \pi f a} \\
+		      &=  2\lim_{a \to \infty}  \frac{sin(2\pi f a)}{2 \pi f a} \\
+		      &= \delta(f)\\
+\end{align*}
+2. Trigeometic Function
+Take the same x(t) as above in the discrete case
 \begin{align*}
 x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{2 i \pi f_0 t} + e^{- 2 i \pi f_0 t})
 \end{align*}
@@ -167,6 +183,39 @@ As noted, the above derivation is for $k<N/2$, a very similar derivation for $N/
 Now we have divided the FFT of N points to two FFT with N/2 points
 Keep going till we reach the size to one, then combine together recursively.
 \section{Fourier Transform of Useful Functions}
+{\bf The Fourier Transform of Step Function}\\
+Let $u(t)$ be a step function: $u(t) = 1$ when $t \geq 0$, $u(t) = 0$ when $t < 0$. And its derivative is a delta function\\
+\begin{align*}
+\frac{d\operatorname u(t)}{dt}=\delta(t)\\
+\end{align*}
+Taking Fourier transform on both sides yields
+\begin{align*}
+2\pi i f \mathcal F(f) = 1\\
+\end{align*}
+So 
+\begin{align*}
+\mathcal F(f) = \frac{1}{2 \pi i f }|_{f\ne 0} + \mathcal F(f)|_{f=0}\\
+\end{align*}
+Since any function with a different constant can have the same derivative, the Fourier transform of the original function has to have a constant, which corresponds to zero frequency component $F(0)$. The constant component of function $u(t)$ is its offset to zero, which is $1/2$.
+so 
+\begin{align*}
+	F(f) = \frac{1}{2 \pi i f }|_{f\ne 0} + \frac{1}{2}\delta(f)\
+\end{align*}
+{\bf The Fourier Transform of a Shifted Step Function}\\
+Let $u(t)$ be a step function: $u(t - \tau) = 1$ when $t \geq \tau$, $u(t - \tau) = 0$ when $t < \tau$.\\
+Then 
+\begin{align*}
+	\mathcal F(f) = \int_{-\infty}^{\infty} u(t - \tau) e^{-2\pi f t}dt\\
+\end{align*}
+Let $t^{'} = t - \tau$, then
+\begin{align*}
+	\mathcal F(f) & = e^{-2\pi i f \tau}\int_{-\infty}^{\infty} u(t^{'}) e^{-2\pi f t^{'}}dt^{'}\\
+\end{align*}
+So we see this is a factor times Fourier transform of step function, therefore 
+\begin{align*}
+	\mathcal F(f) & = e^{-2\pi i f \tau} (\frac{1}{2 \pi i f }|_{f\ne 0} + \frac{1}{2}\delta(f)) \\
+		      & = e^{-2\pi i f \tau} \frac{1}{2 \pi i f }|_{f\ne 0} + \frac{1}{2}\delta(f) \\
+\end{align*}
 {\bf The Fourier Transform of Gaussian}\\
 \begin{align*}
 	f(t) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{t^2}{2\sigma^2}}
