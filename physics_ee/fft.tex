@@ -44,6 +44,16 @@ With the inverse Fourier transform defined as
 \begin{align*}
 	x(t) = \int_{-\infty}^{\infty} \mathcal F(f) e^{2 \pi i f t} df
 \end{align*}
+To see why the above makes sense, it is easy to prove the identity.
+\begin{align*} %\label{identity}
+	x(t^{'}) & = \int_{-\infty}^{\infty} \mathcal F(f) e^{2 \pi i f t^{'}} df \\
+		 & = \int_{-\infty}^{\infty} 
+		 (\mathcal \int_{-\infty}^{\infty} x(t) e^{-2 \pi i f t} dt) e^{2 \pi i f t^{'}} df \\
+		 & = \int_{-\infty}^{\infty} x(t)  
+		 (\int_{-\infty}^{\infty} e^{-2 \pi i f t} e^{2 \pi i f t^{'}}) df \\
+		 & = \int_{-\infty}^{\infty} x(t) \delta(t - t^{'}) dt \\
+		 & = x(t^{'}) \\
+\end{align*}
 {\bf Fourier Transform: Example}\\
 1. Constant Function
 \begin{align*}
@@ -69,7 +79,7 @@ x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{2 i \pi f_0 t} + e^{- 2 i \pi f_0 t})
 	\mathcal F(f) & = \int_{-\infty}^{\infty} \frac{1}{2} (e^{2 i  \pi f_0 t} + e^{- 2i \pi f_0 t})  e^{- 2 i\pi  f t} dt
 	     & = \frac{1}{2}\delta(f - f_0) + \frac{1}{2} \delta(f + f_0)	
 \end{align*}
-{\bf Discrete Fourier Transform}\\
+{\bf Discrete Fourier Series }\\
 The above is the Fourier transform in continuous case, in discrete case
 If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
 \begin{align*}
@@ -80,9 +90,33 @@ If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier seri
 	c_k = \frac{1}{N \Delta t} \sum_{n=1}^{N} f(n \Delta t) e^{-i 2\pi k \frac{1}{N\Delta t} n \Delta t} d(n \Delta t)
 	=\frac{1}{N} \sum_{n = 1} ^ {N} f(n) e^{-i 2 \pi k \frac{n}{N}}
 \end{align*}
-This is the discrete Fourier transform.\\
+This is the discrete Fourier series.\\
 \begin{align*}
-	\Delta F = \frac{1}{T} = \frac{1}{N \Delta t}
+	\Delta f = \frac{1}{T} = \frac{1}{N \Delta t}
+\end{align*}
+{\bf Discrete Fourier Transform}
+In the discrete case, suppose we sample a signal N times within time T.  Then $t = n\Delta t$, where $\Delta t = N/T$ , the integral in the Fourier transform becomes a summation. So we write the Fourier transform as
+\begin{align*}
+	\mathcal F(f) = \sum_{0}^{N} x(n\delta t) e^{-2 \pi i f n \Delta t} \frac{T}{N}
+\end{align*}
+In frequency domain, the frequency also becomes discrete, and $\Delta f = \frac{1}{T}$. Let $f = k \Delta f$, then 
+\begin{align*}
+	\mathcal F(k\Delta f) & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k \Delta f n \Delta t} \frac{T}{N} \\
+			     & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } \frac{T}{N}	
+\end{align*}
+Then we work out the Fourier transform and inverse Fourier transform identity
+\begin{align*}
+	x(n^{'}\Delta t) & = \sum_{k = 0}^{N} \mathcal F(k\Delta f) e^{2 \pi i k n^{'} /N } \Delta f \\
+	& = \sum_{k = 0}^{N} (\sum_{n = 0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } \frac{T}{N})e^{2 \pi i k n^{'} /N } \Delta f \\
+& \sum_{k = 0}^{N}\frac{1}{N}(\sum_{n = 0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } )e^{2 \pi i k n^{'} /N } \\
+\end{align*}
+So we define discrete Fourier transform
+\begin{align*}
+	\mathcal F(k) & = \sum_{n = 0}^{N} x(n) e^{-2 \pi i k n /N }
+\end{align*}
+and the discrete inverse Fourier transform
+\begin{align*}
+	x(n) = \frac{1}{N}\sum_{n = 0}^{N} \mathcal F(k) e^{2 \pi i k n /N }
 \end{align*}
 {\bf Example\\}
 Let N = 4, and \\
