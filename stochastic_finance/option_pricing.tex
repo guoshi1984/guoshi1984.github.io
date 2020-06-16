@@ -8,8 +8,9 @@
 {\bf Abstract} In this article, we review the straties and a variety methods for pricing options. We first review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusion with jumps. Then we discuss the Monte Carlo simulation algorithms of each model and how to treat the stopping time for American style options. Finally, we present the simulation result. \\
 \line(1,0) {350}
 \section{European Option Pricing Models}
+In this section we firstly present two approach for pricing European options: One is to solve Black-Scholes-Merton partial equation and the other one is using Martingale property. We are going to show these two ways are equivalent as they are connnected through Faynman-Kac formula. Then we present the analytical solutions and discussions. 
 \subsection{Black Scholes Merton Equation: Introduction}
-We assume the stock prices following a geometric Brownian motion\\
+Here is basic idea for pricing options. We consider a portfolio composed of certain shares of stock and a saving account with an interest rate then use the portfolio to replicate the payoff of the option. If we are able to replicate the payoff successfully, we use the value of the portfolio to price the option. We briefly go through the steps to derive the Black Scholes Merton equation. We assume the stock prices following a geometric Brownian motion\\
 1) Stock price:\\
 \begin{align*}
 	 dS(t) = \alpha S(t) dt + \sigma S(t) dW(t)\\
@@ -31,10 +32,10 @@ We assume the stock prices following a geometric Brownian motion\\
 \end{align*}
 
 \noindent 5) With a few steps, we get change of the present value of the portfolio with respect to time\\
-\begin{align*}
- & d(e^{- r t} X(t)) \\
- = & \Delta(t) (\alpha - r) e^{-rt} S(t) dt + \Delta(t) \sigma e^{-rt} S(t) dW(t)\\
-\end{align*}
+\begin{align}\label{discounted X}
+  d(e^{- r t} X(t)) 
+ =  \Delta(t) (\alpha - r) e^{-rt} S(t) dt + \Delta(t) \sigma e^{-rt} S(t) dW(t)
+\end{align}
 
 \noindent 6) Assume the option value is $c(t,S(t))$ and we apply Ito's formula\\
 \begin{align*}
@@ -48,9 +49,10 @@ dW(t) term:
 	\Delta(t) = \frac{\partial c(t,S(t))}{\partial S(t)} \\	
 \end{align*}
 dt term:
-\begin{align*}
-	rc(t, S)  = c_t (t, S(t)) + r S(t) + \frac{1}{2} \sigma^2 S(t) \frac{\partial c(t, S(t))}{\partial S^2(t)}  \\
-\end{align*}
+\begin{align}\label{BSM}
+	rc(t, S)  = c_t (t, S(t)) 
+	+ r S(t) \frac{\partial c(t, S(t))}{\partial S(t)}+ \frac{1}{2} \sigma^2 S(t) \frac{\partial^2 c(t, S(t))}{\partial S^2(t)}  
+\end{align}
 which is known as Black-Scholes-Merton partial differential equation.\\
 The terminal condition the equation satisfies for call option is
 \begin{align*}
@@ -60,20 +62,35 @@ Similarly, for put option
 \begin{align*}
 	p(T,S) = (K-S(T))^+
 \end{align*}
-\subsection{Connection to Faynman-Kac formula}
+\subsection{Martingale Approach}
 In risk-neutral measure, we write the stock price as
 \begin{align*}
 	dS(t) = rS(t) dt + \sigma S(t) d \tilde W(t) 
 \end{align*}
-Where $\tilde W(t)$ is a standard Brownian motion under risk-neutral measure.\\
-According to the risk-neutral pricing formula, the price of the derivative security at time t is
-\begin{align}
-	V(t) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)] \label{rn}
-\end{align}
-Since the stock price is Markov and the payoff is a function fo the stock price alone, based on Faynman-Kac formula, there is a function $v(t,x)$ such that $V(t) = v(t, S(t))$, and $v(v, S(t))$ must satisfy discounted partial differential equation 
+Where $\tilde W(t)$ is a standard Brownian motion under risk-neutral measure. So by subsituting $\alpha = r$ in Eq. \ref{discounted X}, we have
 \begin{align*}
-	v_t(t,x) + rx v_x(t,x) + \frac{1}{2} \sigma^2 x^2 v_{xx}(t,x) = rv(t,x)
+ d(e^{- r t} X(t)) 
+ =  \Delta(t) \sigma e^{-rt} S(t) dW(t)
 \end{align*}
+As the expecation of $dW(t)$ is 0, the expectation of discounted value of the portifolio does not change with time, which implies the discounted value of the portifolio is a martingale. Using this martingale property, we can get the value of the portfolio at time t 
+\begin{align*}
+	X(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]
+\end{align*}
+where X(T) = V(T).
+We set the option price $c(t, S(t))$ to be $X(t)$
+\begin{align*}
+	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)]
+\end{align*}
+\subsection{Connection to Faynman-Kac formula}
+From above, we know
+\begin{align}
+	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)] \label{rn}
+\end{align}
+Based on Faynman-Kac formula, there is a function $c(t,S(t))$ which must satisfy discounted partial differential equation 
+\begin{align*}
+	c_t(t,S) + rx c_S(t,S) + \frac{1}{2} \sigma^2 S^2 c_{SS}(t,S) = rc(t,S)
+\end{align*}
+Where $c_(T,S(T)) = V(S(T))$.
 Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation. 
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
@@ -176,160 +193,80 @@ The variables are:\\
 $\tau = T - t$ is the time to expiry\\
 $D = e^{-r\tau}$ is the discount factor \\
 \subsection{Heston Stochasic Volatility Model}
-The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model assumes the volatility to follow a stochastic process. The following content refers to the paper: "A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options" by Steven Heston. Suppose a stock price under risk-neutral measure is governed by
+The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model\cite{heston} assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
 \begin{align}
 	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
 \end{align}
 and the volatility itself is governed by the equation
 \begin{align}
-	dV(t) = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t)
+	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
 \end{align}
 Where 
 \begin{align*}
 	\tilde dW_1(t) \tilde dW_2(t) = \rho dt
 \end{align*}
-At time t, the risk-neutral price of a call expiring at time $T \geq t$ in this model is
+The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$.\\ 
+{\bf Fourier Transform Solution to Heston Model}\\
+For Heston model, the same martingale property still holds. And the option price is
 \begin{align*}
-	c(t, S(t), V(t)) = \tilde E[e^{-r(T-t)}(S(T)-K)^+|F(t)]
+	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
 \end{align*}
-If we move the term $c^{rt}$ to the left hand side, we see
-\begin{align}
-	e^{-rt}c(t, S(t), V(t)) = \tilde E[e^{-rT}(S(T)-K)^+|F(t)]
-\end{align}
-which satisfies the martingale property.
-Then we take the differentiation of $e^{-rt}c(t, S(t), V(t))$. We get
+Let x = $ln(S_T)$, and $\tau = T - t$, then, and pdf of $ln(x_T)$ is p(x)
 \begin{align*}
-	& d(e^{-rt}c(t, S(t), V(t))\\
-	= & \frac{\partial e^{-rt}}{\partial t} c(t, S(t), V(t)) 
-	+ e^{-rt}\frac{\partial c(t, S(t), V(t))}{\partial t} dt \\
-	= & -re^{-rt}c(t, S(t),V(t))dt \hspace{2mm} (1)\\
-	+ & e^{-rt} \frac{\partial c}{\partial t} dt \hspace{2mm} (2) \\
-	+ & e^{-rt} \frac{\partial c}{\partial S} dS \hspace{2mm} (3) \\
-	+ & e^{-rt} \frac{\partial^2 c}{\partial S^2} dS dS \hspace{2mm} (4)\\
-	+ & e^{-rt} \frac{\partial c}{\partial V} dV \hspace{2mm} (5) \\
-	+ & e^{-rt} \frac{\partial^2 c}{\partial V^2} dV dV\hspace{2mm} (6)\\
-	+ & e^{-rt} \frac{\partial^2 c}{\partial V \partial S} dV dS\hspace{2mm} (7)
+	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^x - K) p(x) dx \\
+	           & = e^{-r \tau}\int_{lnK}^{\infty} e^x pdf(x) dx - e^{-r\tau} K \int_{lnK}^{\infty}  p(x) dx \\
+		   & = S_0 f -  e^{-r \tau} K g\\
 \end{align*}
-As we are interested in only the dt terms, we find out the dt terms from (1) to (7)
-the dt term in (1) is
+where 
 \begin{align*}
-	-rc(t, S(t), V(t))e^{-rt}dt
+	f = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
 \end{align*}
-the dt term in (2) is
 \begin{align*}
-	\frac{\partial c}{\partial t}e^{-rt}dt
+	g = \int_{lnK}^{\infty}  p(x) dx
 \end{align*}
-the dt term in (3) is
+
+To evaluate $f$ and $g$ is difficult as the analytical form of f(x) does not exist. However, literauture has proposed that the characteristic function of pdf of x exist. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate it in the Appendix.
+Suppose $\phi(u)$ is the characteristic function of $p(x)$, then using inverse Fourier transform
 \begin{align*}
-	\frac{\partial c}{\partial S}rSe^{-rt}dt
+	p(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du
 \end{align*}
-the dt term in (4) is
+with $\phi(u)$, 
 \begin{align*}
-	\frac{1}{2} \frac{\partial^2 c}{\partial S^2}VS^2e^{-rt}dt
+	g  = \int_{lnK}^{\infty}  p(x) dx
+	   = \int_{lnK}^{\infty} ( \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du) dx
 \end{align*}
-the dt term in (5) is
+Changing the order the integration yields
 \begin{align*}
-	\frac{\partial c}{\partial V}(a-bV(t))e^{-rt}dt
+	g & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u) (\int_{lnK}^{\infty} e^{-iux}  dx) du \\
+	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)(\int_{-\infty}^{\infty} {\bf 1}_{x > lnK}e^{-iux}dx) du\\
 \end{align*}
-the dt term in (6) is
+The inner integral is the inverse Fourier transform of a step function and the result is well-known.
 \begin{align*}
-	\frac{1}{2} \frac{\partial^2 c}{\partial V^2}V\sigma^2e^{-rt}dt
+	g & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( e^{-i u lnK}\frac{1}{iu } + \pi \delta(u)) du \\
+	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( e^{-i u lnK}\frac{1}{iu } ) du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2}
 \end{align*}
-the dt term in (7) is
+f is a little tricky, 
 \begin{align*}
-	\frac{\partial^2 c}{\partial V \partial S} VS\sigma e^{-rt}dt
+        f = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
+	  = \frac{1}{S_0} e^{-r \tau}\frac{\int_{lnK}^{\infty} e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
+	  \int_{-\infty}^{\infty} e^x pdf(x) dx
 \end{align*}
-Collect all the dt terms and let those terms equal to zero, we get
-\begin{align}\label{c}
-	c_t + rs c_s + (a-bv)c_v + \frac{1}{2} s^2 v c_{ss} + \rho \sigma svc_{sv}
-	+\frac{1}{2} \sigma^2vc_{vv} = rc
-\end{align}
-The function $c(t, s, v)$ satisfies boundary condition
+Based on martingale property $\int_{-\infty}^{\infty} e^x p(x) dx = e^{rT}S_0$, so
 \begin{align*}
-	c(T, s, v) = (s-K)^+ \\
-	c(t, 0, v) = 0 \\
-	c(t, s, 0) = (s - e^{-r(T-t)}K)^+\\
-	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
-	lim_{v \to \infty} c(t, s, v) = s\\  
+	f = \int_{lnK}^{\infty} \frac{e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
+	 =  \int_{lnK}^{\infty} {p}^{'} dx
 \end{align*}
-Based on the solution to the BSM equation, we can guess that the solution has the following form
-\begin{align}
-	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
-\end{align}	
-Where f and g can be intepreted as a cumulative distribution function.
-Then since c(t,s,v) satisfies the partial differential equation \ref{c}, we can show that $f$ and $g$ satisfy the following
-\begin{align} \label{f}
-	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
-	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
-        +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
-\end{align}
-\begin{align}
-	g_t + (r - \frac{1}{2}v)g_x + (a-bv)g_v 
-	+ \frac{1}{2}  v g_{xx} + \rho \sigma vg_{xv}
-        +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
-\end{align}
-The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
+The Fourier transform of function ${p}^{'}$ is
 \begin{align*}
-	f(T, x, v) = 1_{x\geq logK}\\
-	g(T, x, v) = 1_{x\geq logK}\\
+	&\frac{\int_{-\infty}^{\infty} e^{iux + x}p(x)dx}{\int_{-\infty}^{\infty} e^{i(-i)x} p(x) dx} \\
+	=&\frac{\phi(u-i)}{\phi(-i)}\\
 \end{align*}
-This implies that f and g can be intepreted as "Probabilities". We can define
+Therefore we can write f as
 \begin{align*}
-	f(t, x, v) = E^{t,x,v}1_{x\geq logK}\\
+	f = \frac{1}{\pi}\int_0^{\infty}\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)}du
 \end{align*}
-We suppose a pair of stochastic process X(t), V(t) given by the following expression
-\begin{align*}
-	dX(t) = (r+\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
-	dV(t) = (a-bV(t)+ \rho \sigma V(t))dt + \sigma \sqrt{V(t)}dW_2(t)
-\end{align*}
-By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
-\begin{align*}
-	g(t, x, v) = E^{t,x,v} 1_{x\geq logK}\\
-\end{align*}
-and the stochastic process of X(t) and V(t) are
-\begin{align*}
-	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)\\
-	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
-\end{align*}
-To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. 
-First we work out the function f(t, x, v. ). Let $\tau = T-t$
-\begin{align*}
-	\tilde f(k, v, \tau) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau)
-\end{align*}
-The inverse Fourier transform is
-\begin{align*}
-	f(x, v, \tau) = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx}
-	\tilde f(k, v, \tau)
-\end{align*}
-Substitute this into equation \ref{f}, then
-\begin{align} \label{ff}
-	-\frac{\partial \tilde f}{\partial \tau}
-	+ (r + \frac{1}{2})ik \tilde f 
-	+ (a-bv+\rho \sigma v)\frac{\partial \tilde f}{\partial v}
-        -\frac{1}{2}vk^2 \tilde f 
-	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
-        +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
-\end{align}
-Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
-\begin{align*}
-	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau=0)
-			  = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
-			     = \int_{0}^{\infty}dx e^{-ikx}
-			     = \pi \delta(k) + \frac{1}{ik}
-\end{align*}
-when $\tau!=0$, we guess a general solution which has the following form
-\begin{align*}
-	\tilde f(k, v, \tau) = exp(C\tau +D\tau v) \tilde f(k,v,0)
-\end{align*}
-From above we easily see it match the terminal condition at $\tau \to 0$. With inverse Fourier transform
-\begin{align} \label{fs}
-	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
-			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
-			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) 
-			 	(\pi \delta(k) + \frac{1}{ik}) \\
-			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
-\end{align}
-Now the only remaining task is to find C and D. If we substitute \ref{fs} into \ref{ff}, we can get the expression C and D. 
 \subsection{Jump Diffusion Model}
 The BSM model and the Heston model assumes the asset prices follows the stochastic process driven by Brownian motion. Under this assumption, the asset price is continuous in time. The jump diffusion model extends the BSM model and Heston model by assuming asset price has discrete jump in time. Therefore in jump diffusion model, the stochastic process contains a continuous Brownian motion process and a discrete jump process.\\
 
@@ -493,8 +430,8 @@ The Heston model setting provides a non-negative V(t). This can be seen when V(t
 	V^{(t + dt)} = V^{(t)} + (a - b V^{(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2)
 \end{align*}
-(4) Full truncation: Using the positive part in drift and diffusion terms of $V(t + dt)$, and in $X(t + dt)$. 
-This scheme is proved to have the lowest bias. Reference: A comparison of biased simulation schemes for stochastic volatility models by Roger Lord, Quantitative Finance,2010.
+(4) Full truncation\cite{fulltruncation}: Using the positive part in drift and diffusion terms of $V(t + dt)$, and in $X(t + dt)$. 
+This scheme is proved to have the lowest bias.
 \begin{align*}
 	V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2)
@@ -514,11 +451,14 @@ Together with formula for the drift and asset price, we write
 	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2 )
 \end{align*}
-\section{Simulation of Stopping Time for American Option}
-American Option can be exercised at any time. So in Monte Carlo Simulation, for each path we need to determine the stopping time, in other words, time for the option to be exerciesed. LongStaff\cite{americanoption} proposed a algorithm to determine the stopping time and here we briefly outline the algorithm\\
+\section{Simulation for American Option}
+American Option can be exercised at any time. So in Monte Carlo Simulation, for each path we need to determine the stopping time, in other words, time for the option to be exerciesed. For each sample path at each time step point, we need to compare the current payoff value with the value to keep holding this option. If the current payoff value is great than the value to keep holding this option, we choose to exercise, otherwise we hold it. To evaluate the value to hold this option requires another Monte Carlo simulation, so the simulation for American option has a "Monte Carlo on Monte Carlo feature", and this is very computationally expensive. To see why it is expensive, consider the case of M samples and we are at time step 1. To determine the value of holding the option, we need generate another Monte Carlo simulation which has M sample paths. As we move on the time step, each step needs the number of sample path M times the previous one, therefore, the total number of Monte Carlo simulation grows exponentially as time step grows. 
+
+However, this does not mean there is no feasible way to evaluate American options. One idea is to avoid doing additional Monte Carlo simulation at each step to determine the value of holding the option and utilizing the simulation path of the European options. LongStaff\cite{americanoption} proposed an algorithm to determine the stopping time by using least square regression and here we briefly outline the algorithm.
+
 Let us assume the option has a payoff function $h(S, K)$, where K is strike price.
-Suppose we have M samples, the current asset price at time i is $S^{(m)}_i$, where $0 \geq i \leq T$. The discount factor $D_{i,j}$ means discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
-For each sample, the asset price forms a price path from $i = 0$ to $T$, and we define a stopping time $\tau^{(m)}$ for each path. \\
+The algorhim simply has two parts. The first part is to follow the standard simulation scheme for European options. We generate M samples path from timestep 0 to timestep T. For each sample, the asset price forms a price path from $i = 0$ to $T$ and the current asset price at a given timestep i is $S^{(m)}_i$, where $0 \leq i \geq T$. We define a discount factor $D_{i,j}$ to discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
+Then the second part is to define a stopping time $\tau^{(m)}$ for each path. \\
 (1) set $\tau^{(m)}$ to T for each sample path m.\\
 (2) for t from T - 1 to 1:\\
 \indent  for each sample:\\
@@ -533,24 +473,207 @@ $PV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K)$\\
 (4) average $PV^{(m)}$ to get the price of the option\\
 \section{Result}
 {\bf Simulation of option value with BSM process using both analytical(ANAL) and Monte Carlo(MC)}\\
-We calcuate value of  option of different type and style listed below. For MC method, we choose 100 timesteps and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one.
+We calcuate value of  option of different type and style listed in Table. \ref{option_bsm}. For MC method, we choose 100 timesteps and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one. Our data matches the data presented in \cite{americanoption}. The result verified that for European option, there is no incentive to exercise early as the payoff function given the risk-neutral measure is a submartingale and has the trend to increase. For American put option, the NPV is larger than the NPV of European option by 1.05, so the early exercise value is clearly visible.
 \begin{table}
-	\begin{tabular} { l  c  c   c  c  c       c       c          }
-		Style 	 & Type & S  & K & r & $\sigma$ & NPV(ANAL) & NPV(MC)\\
+	\begin{tabular} { l  c  c   c  c  c       c       c        c  }
+		Style 	 & Type & S  & K & r & $\sigma$ & NPV(ANAL) & NPV(MC) &Ref\cite{americanoption}\\
 	\hline 
-		European & Call & 36.0 & 40 & 0.06 & 0.2 & 4.28 & 4.27(3) \\
-		American & Call & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.28(3) \\
-		European & Put  & 36.0 & 40 & 0.06 & 0.2 & 3.76 & 3.76(2) \\
-		American & Put  & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.81(3) \\
+		European & Call & 36.0 & 40 & 0.06 & 0.2 & 4.28 & 4.27(3) & \\
+		American & Call & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.28(3) &\\
+		European & Put  & 36.0 & 40 & 0.06 & 0.2 & 3.76 & 3.76(2) &\\
+		American & Put  & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.81(3) & 4.82(1)\\
+		European & Call & 36.0 & 40 & 0.06 & 0.4 & 8.22 & 8.27(6) &\\
+		American & Call & 36.0 & 40 & 0.06 & 0.4 & N/A  & 8.23(6) &\\
+		European & Put  & 36.0 & 40 & 0.06 & 0.4 & 7.70 & 7.70(4) &\\
+		American & Put  & 36.0 & 40 & 0.06 & 0.4 & N/A  & 8.50(3) & 8.49(2)\\
+		European & Call & 44.0 & 40 & 0.06 & 0.2 & 9.95 & 9.93(5) &\\
+		American & Call & 44.0 & 40 & 0.06 & 0.2 & N/A  & 9.91(5) &\\
+		European & Put  & 44.0 & 40 & 0.06 & 0.2 & 1.43 & 1.44(1) &\\
+		American & Put  & 44.0 & 40 & 0.06 & 0.2 & N/A  & 1.67(3) & 1.68(1)\\
+		European & Call & 44.0 & 40 & 0.06 & 0.4 & 13.73 & 13.81(9) &\\
+		American & Call & 44.0 & 40 & 0.06 & 0.4 & N/A  & 13.75(8) &\\
+		European & Put  & 44.0 & 40 & 0.06 & 0.4 & 5.20 &  5.18(3)&\\
+		American & Put  & 44.0 & 40 & 0.06 & 0.4 & N/A  &  5.58(3)& 5.62(2)\\
 	\hline
 	\end{tabular}\\
-	{\raggedright S: Underlying Asset Price, K: strike price, r: interest rate, 
-	$\sigma$: volatility}
+\caption{Simulation result of different options using BSM process.
+	S: Underlying Asset Price. K: strike price. r: interest rate. 
+	$\sigma$: volatility. NPV(ANAL): Analytical result of net present value.
+	NPV(MC): Monte Carlo result of net present value.}\label{option_bsm}
 \end{table}
+\appendix
+\section{Applendices}
+\subsection{Semi-analytical Solution to Heston Model}
+\begin{align}
+	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
+\end{align}
+and the volatility itself is governed by the equation
+\begin{align}
+	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+\end{align}
+Where 
+\begin{align*}
+	\tilde dW_1(t) \tilde dW_2(t) = \rho dt
+\end{align*}
+At time t, the risk-neutral price of a call expiring at time $T \geq t$ in this model is
+\begin{align*}
+	c(t, S(t), V(t)) = \tilde E[e^{-r(T-t)}(S(T)-K)^+|F(t)]
+\end{align*}
+If we move the term $c^{rt}$ to the left hand side, we see
+\begin{align}
+	e^{-rt}c(t, S(t), V(t)) = \tilde E[e^{-rT}(S(T)-K)^+|F(t)]
+\end{align}
+which satisfies the martingale property.
+Then we take the differentiation of $e^{-rt}c(t, S(t), V(t))$. We get
+\begin{align*}
+	& d(e^{-rt}c(t, S(t), V(t))\\
+	= & \frac{\partial e^{-rt}}{\partial t} c(t, S(t), V(t)) 
+	+ e^{-rt}\frac{\partial c(t, S(t), V(t))}{\partial t} dt \\
+	= & -re^{-rt}c(t, S(t),V(t))dt \hspace{2mm} (1)\\
+	+ & e^{-rt} \frac{\partial c}{\partial t} dt \hspace{2mm} (2) \\
+	+ & e^{-rt} \frac{\partial c}{\partial S} dS \hspace{2mm} (3) \\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial S^2} dS dS \hspace{2mm} (4)\\
+	+ & e^{-rt} \frac{\partial c}{\partial V} dV \hspace{2mm} (5) \\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial V^2} dV dV\hspace{2mm} (6)\\
+	+ & e^{-rt} \frac{\partial^2 c}{\partial V \partial S} dV dS\hspace{2mm} (7)
+\end{align*}
+As we are interested in only the dt terms, we find out the dt terms from (1) to (7)
+the dt term in (1) is
+\begin{align*}
+	-rc(t, S(t), V(t))e^{-rt}dt
+\end{align*}
+the dt term in (2) is
+\begin{align*}
+	\frac{\partial c}{\partial t}e^{-rt}dt
+\end{align*}
+the dt term in (3) is
+\begin{align*}
+	\frac{\partial c}{\partial S}rSe^{-rt}dt
+\end{align*}
+the dt term in (4) is
+\begin{align*}
+	\frac{1}{2} \frac{\partial^2 c}{\partial S^2}VS^2e^{-rt}dt
+\end{align*}
+the dt term in (5) is
+\begin{align*}
+	\frac{\partial c}{\partial V}(a-bV(t))e^{-rt}dt
+\end{align*}
+the dt term in (6) is
+\begin{align*}
+	\frac{1}{2} \frac{\partial^2 c}{\partial V^2}V\sigma^2e^{-rt}dt
+\end{align*}
+the dt term in (7) is
+\begin{align*}
+	\frac{\partial^2 c}{\partial V \partial S} VS\sigma e^{-rt}dt
+\end{align*}
+Collect all the dt terms and let those terms equal to zero, we get
+\begin{align}\label{c}
+	c_t + rs c_s + (a-bv)c_v + \frac{1}{2} s^2 v c_{ss} + \rho \sigma svc_{sv}
+	+\frac{1}{2} \sigma^2vc_{vv} = rc
+\end{align}
+The function $c(t, s, v)$ satisfies boundary condition
+\begin{align*}
+	c(T, s, v) = (s-K)^+ \\
+	c(t, 0, v) = 0 \\
+	c(t, s, 0) = (s - e^{-r(T-t)}K)^+\\
+	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
+	lim_{v \to \infty} c(t, s, v) = s\\  
+\end{align*}
+Based on the solution to the BSM equation, we can guess that the solution has the following form
+\begin{align}
+	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
+\end{align}	
+Where f and g can be intepreted as a cumulative distribution function.
+Then since c(t,s,v) satisfies the partial differential equation \ref{c}, we can show that $f$ and $g$ satisfy the following
+\begin{align} \label{f}
+	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
+	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
+        +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
+\end{align}
+\begin{align}
+	g_t + (r - \frac{1}{2}v)g_x + (a-bv)g_v 
+	+ \frac{1}{2}  v g_{xx} + \rho \sigma vg_{xv}
+        +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
+\end{align}
+The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
+\begin{align*}
+	f(T, x, v) = 1_{x\geq logK}\\
+	g(T, x, v) = 1_{x\geq logK}\\
+\end{align*}
+This implies that f and g can be intepreted as "Probabilities". We can define
+\begin{align*}
+	f(t, x, v) = E^{t,x,v}1_{x\geq logK}\\
+\end{align*}
+We suppose a pair of stochastic process X(t), V(t) given by the following expression
+\begin{align*}
+	dX(t) = (r+\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
+	dV(t) = (a-bV(t)+ \rho \sigma V(t))dt + \sigma \sqrt{V(t)}dW_2(t)
+\end{align*}
+By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
+\begin{align*}
+	g(t, x, v) = E^{t,x,v} 1_{x\geq logK}\\
+\end{align*}
+and the stochastic process of X(t) and V(t) are
+\begin{align*}
+	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)\\
+	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
+\end{align*}
+To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. 
+First we work out the function f(t, x, v. ). Let $\tau = T-t$
+\begin{align*}
+	\tilde f(k, v, \tau) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau)
+\end{align*}
+The inverse Fourier transform is
+\begin{align*}
+	f(x, v, \tau) = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx}
+	\tilde f(k, v, \tau)
+\end{align*}
+Substitute this into equation \ref{f}, then
+\begin{align} \label{ff}
+	-\frac{\partial \tilde f}{\partial \tau}
+	+ (r + \frac{1}{2})ik \tilde f 
+	+ (a-bv+\rho \sigma v)\frac{\partial \tilde f}{\partial v}
+        -\frac{1}{2}vk^2 \tilde f 
+	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
+        +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
+\end{align}
+Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
+\begin{align*}
+	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau=0)
+			  = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
+			     = \int_{0}^{\infty}dx e^{-ikx}
+			     = \pi \delta(k) + \frac{1}{ik}
+\end{align*}
+when $\tau!=0$, we guess a general solution which has the following form
+\begin{align*}
+	\tilde f(k, v, \tau) = exp(C\tau +D\tau v) \tilde f(k,v,0)
+\end{align*}
+From above we easily see it match the terminal condition at $\tau \to 0$. With inverse Fourier transform
+\begin{align} \label{fs}
+	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
+			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
+			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) 
+			 	(\pi \delta(k) + \frac{1}{ik}) \\
+			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
+\end{align}
+Now the only remaining task is to find C and D. If we substitute \ref{fs} into \ref{ff}, we can get the expression C and D. 
 \begin{thebibliography}{9}
-\bibitem{americanoption} 
-Francis Longstaff, Eduardo Schwartz 
-\textit{The Review of Financial Studies}. 
-Spring 2001 Vol. 14, No. 1, pp. 113-147.
+	\bibitem{heston}
+		SL Heston,
+		\textit{The Review of Financial Studies},
+		"A Closed-Form Solution for Options with Stochastic Volatility with Applications 
+		to Bond and Currency Options"
+		Vol. 6, Issue 2, April 1993, Pages 327-343
+	\bibitem{americanoption} 
+		Francis Longstaff, Eduardo Schwartz, 
+		"Valuing American Options by Simulation: A Simple Least-Squares Approach"
+		\textit{The Review of Financial Studies}, 
+		Vol. 14, Issue 1, January 2001, pp. 113-147.
+	\bibitem{fulltruncation}
+		Roger Lord, Remmert Koekkoek, Dick Van Dijk, 
+		"A comparison of biased simulation schemes for stochastic volatility models", 
+		\textit{Quantitative Finance}, 
+		Vol. 10, pp. 177-194, 2010.
 \end{thebibliography}
 \end{document}
