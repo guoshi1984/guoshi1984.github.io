@@ -70,7 +70,7 @@ In risk-neutral measure, we write the stock price as
 Where $\tilde W(t)$ is a standard Brownian motion under risk-neutral measure. So by subsituting $\alpha = r$ in Eq. \ref{discounted X}, we have
 \begin{align*}
  d(e^{- r t} X(t)) 
- =  \Delta(t) \sigma e^{-rt} S(t) dW(t)
+ =  \Delta(t) \sigma e^{-rt} S(t) d \tilde W(t)
 \end{align*}
 As the expecation of $dW(t)$ is 0, the expectation of discounted value of the portifolio does not change with time, which implies the discounted value of the portifolio is a martingale. Using this martingale property, we can get the value of the portfolio at time t 
 \begin{align*}
@@ -141,11 +141,11 @@ The payoff for the European put option is $V(T) = K - S(T)$, we can follow a sim
 {\bf 3. Options based on dividend-paying stock}\\
 The value of dividend-paying stock consists of two parts. One is the value of the stock, the other one is the value of dividend. Suppose the dividend rate is a, then the change of value of dividend-paying stock over time dt is $dS(t) + aS(t)dt$. In order to make the discounted value a martingale, we require 
 \begin{align*}
-	\frac{dS(t) + aS(t)dt}{S(t)} = rdt + \sigma \tilde dW(t)
+	\frac{dS(t) + aS(t)dt}{S(t)} = rdt + \sigma d \tilde W(t)
 \end{align*}
 so
 \begin{align*}
-	dS(t) = (r-a) S(t)dt + \sigma S(t) \tilde dW(t)
+	dS(t) = (r-a) S(t)dt + \sigma S(t) d \tilde W(t)
 \end{align*}
 \begin{align*}
 	S(T) = S(t) exp\{\sigma(\tilde W(T) -\tilde W(t)) + (r - a - \frac{1}{2} \sigma^2) \tau\} \\
@@ -195,77 +195,58 @@ $D = e^{-r\tau}$ is the discount factor \\
 \subsection{Heston Stochasic Volatility Model}
 The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model\cite{heston} assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
 \begin{align}
-	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
+	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) d \tilde W_1(t)
 \end{align}
 and the volatility itself is governed by the equation
 \begin{align}
-	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
-	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} d \tilde W_2(t) \\
+	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} d \tilde W_2(t) \\
 \end{align}
 Where 
 \begin{align*}
-	\tilde dW_1(t) \tilde dW_2(t) = \rho dt
+	d\tilde W_1(t) d\tilde W_2(t) = \rho dt
 \end{align*}
-The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$.\\ 
-{\bf Fourier Transform Solution to Heston Model}\\
-For Heston model, the same martingale property still holds. And the option price is
+The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$. To solve the option pricing for this model, We apply the same martingale property. And the option price under risk-neutral measure is
 \begin{align*}
 	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
 \end{align*}
-Let x = $ln(S_T)$, and $\tau = T - t$, then, and pdf of $ln(x_T)$ is p(x)
+Let $x_T = ln(S_T)$, and $\tau = T - t$, then, and we assume the pdf of $ln(x_T)$ given $x_t$is $p(x_T | x_t)$, then
 \begin{align*}
-	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^x - K) p(x) dx \\
-	           & = e^{-r \tau}\int_{lnK}^{\infty} e^x pdf(x) dx - e^{-r\tau} K \int_{lnK}^{\infty}  p(x) dx \\
-		   & = S_0 f -  e^{-r \tau} K g\\
+	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^{x_T} - K) p(x_T| x_t) dx_T \\
+		   & = e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} pdf(x_T| x_t) dx_T 
+		   - e^{-r\tau} K \int_{lnK}^{\infty}  p(x_T | x_t) dx_T \\
+		   & = S_0 f_1 -  e^{-r \tau} K f_2\\
 \end{align*}
 where 
 \begin{align*}
-	f = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
+	f_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} p(x_T | x_t) dx_T
 \end{align*}
 \begin{align*}
-	g = \int_{lnK}^{\infty}  p(x) dx
+	f_2 = \int_{lnK}^{\infty}  p(x_T | x_t) dx_T
 \end{align*}
-
-To evaluate $f$ and $g$ is difficult as the analytical form of f(x) does not exist. However, literauture has proposed that the characteristic function of pdf of x exist. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate it in the Appendix.
-Suppose $\phi(u)$ is the characteristic function of $p(x)$, then using inverse Fourier transform
+So as long as we know the pdf of $x_T$, we can solve these two integral and get $C(t, S(t))$. But unlike in the BSM model, the analytical form of pdf of x does not exist for Heston model. Fortunately, literauture shows the characteristic function of x exists. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate the derivation in the Appendix. \\
+Suppose $\phi(u, x_t)$ is the characteristic function of $p(x_T| x_t)$, Heston shows $\phi(u,x_t)$ takes the form of
 \begin{align*}
-	p(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du
+	\phi(u) = exp(C(\tau, u) + D(\tau, u)V_0 + iux_t)
 \end{align*}
-with $\phi(u)$, 
+With C and D defined as
+\begin{align} 
+	C(\tau, u) = iru\tau + \frac{\kappa \theta}{\sigma^2}
+	[(\kappa - i\rho \sigma u + d)\tau - 2ln(\frac{1 - g e^{d\tau}}{1 - g})] \label{heston_C}
+\end{align}
+\begin{align} 
+	D(\tau, u) = \frac{\kappa - i\rho \sigma u + d}{\sigma^2} (\frac{1 - e^{d\tau}}{1-ge^{d\tau}})
+		\label{heston_D}
+\end{align}
+Where
 \begin{align*}
-	g  = \int_{lnK}^{\infty}  p(x) dx
-	   = \int_{lnK}^{\infty} ( \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du) dx
+	d = \sqrt{(i\rho \sigma u - \kappa)^2 - \sigma^2(-i  u - u^2)} \\
+	g = \frac{\kappa - i \rho \sigma u + d}{\kappa - i \rho \sigma u -d} \\
 \end{align*}
-Changing the order the integration yields
+then using inverse Fourier transform
 \begin{align*}
-	g & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u) (\int_{lnK}^{\infty} e^{-iux}  dx) du \\
-	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)(\int_{-\infty}^{\infty} {\bf 1}_{x > lnK}e^{-iux}dx) du\\
-\end{align*}
-The inner integral is the inverse Fourier transform of a step function and the result is well-known.
-\begin{align*}
-	g & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( e^{-i u lnK}\frac{1}{iu } + \pi \delta(u)) du \\
-	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( e^{-i u lnK}\frac{1}{iu } ) du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} \int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2}
-\end{align*}
-f is a little tricky, 
-\begin{align*}
-        f = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
-	  = \frac{1}{S_0} e^{-r \tau}\frac{\int_{lnK}^{\infty} e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
-	  \int_{-\infty}^{\infty} e^x pdf(x) dx
-\end{align*}
-Based on martingale property $\int_{-\infty}^{\infty} e^x p(x) dx = e^{rT}S_0$, so
-\begin{align*}
-	f = \int_{lnK}^{\infty} \frac{e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
-	 =  \int_{lnK}^{\infty} {p}^{'} dx
-\end{align*}
-The Fourier transform of function ${p}^{'}$ is
-\begin{align*}
-	&\frac{\int_{-\infty}^{\infty} e^{iux + x}p(x)dx}{\int_{-\infty}^{\infty} e^{i(-i)x} p(x) dx} \\
-	=&\frac{\phi(u-i)}{\phi(-i)}\\
-\end{align*}
-Therefore we can write f as
-\begin{align*}
-	f = \frac{1}{\pi}\int_0^{\infty}\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)}du
+	f_1 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re(\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)})du +\frac{1}{2} \\
+	f_2 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{e^{-i u lnK}}{iu} \phi(u))  du + \frac{1}{2} \\
 \end{align*}
 \subsection{Jump Diffusion Model}
 The BSM model and the Heston model assumes the asset prices follows the stochastic process driven by Brownian motion. Under this assumption, the asset price is continuous in time. The jump diffusion model extends the BSM model and Heston model by assuming asset price has discrete jump in time. Therefore in jump diffusion model, the stochastic process contains a continuous Brownian motion process and a discrete jump process.\\
@@ -504,6 +485,108 @@ We calcuate value of  option of different type and style listed in Table. \ref{o
 \appendix
 \section{Applendices}
 \subsection{Semi-analytical Solution to Heston Model}
+\subsubsection{Solve for the Characteristic Function of $ln(S_t)$}
+The stochastic process of $ln(S_t)$ can be obtained by Ito's formula
+\begin{align*}
+	d(ln(S_t)) & = \frac{ln(S_t)}{S_t} dS_t - \frac{1}{2S_t^2} (dS_t)^2 \\
+		   & = \frac{1}{S_t} (rS(t)dt + \sqrt{V(t)}S(t)dW_1(t))
+		      - \frac{1}{2S_t^2} (rS(t)dt + \sqrt{V(t)}S(t)dW_1(t))^2 \\
+\end{align*}
+We only would like to keep the first-order terms, so
+\begin{align*}
+	d(ln(S_t)) & = (r dt + \sqrt{V(t)}dW_1(t)) - \frac{1}{2}V dt \\
+		  & = (r - \frac{1}{2}V(t)) dt + \sqrt{V(t)} dW_1(t) \\
+\end{align*}
+Let $x_t = ln(S_t)$, the characteristic function of $x_T$ given $x_t$ is defined as
+\begin{align*}
+	\phi(u, t, x_t) = E[e^{iuX_T}|x_t]
+\end{align*}
+with $\phi(u, T, X_T) = e^{iuX_T}$. Then based on Feynman-Kac formula, $\phi(u, t, x_t)$ satisfies the partial
+differential equation
+\begin{align}
+	\frac{\partial \phi(u, t, x_t)}{\partial t} + (r - \frac{1}{2}V_t)\frac{\partial \phi(u, t, x_t)}{\partial x_t} 
+	+ (\kappa(\theta-V_t)) \frac{\partial \phi(u, t, x_t)}{ \partial V_t}   \nonumber \\ 
+	+ \frac{1}{2}  V_t \frac{\partial^2 \phi(u, t, x_t)}{ \partial x_t \partial x_t } 
+	+ \rho \sigma V_t \frac{\partial^2 \phi(u, t, x_t)}{ \partial x_t \partial V_t}
+	+\frac{1}{2} \sigma^2 V_t \frac{\partial^2 \phi(u, t, x_t)}{ \partial V_t \partial V_t}  = 0 \label{characteristic_pde1}
+\end{align}
+We guess $\phi(u)$ has the form 
+\begin{align}
+	\phi(u,t, x) = exp(C(T-t, u) + D(T-t, u)V_t + iux_t) \label{phi}
+\end{align}
+which satisfy the terminal condition $\phi(T, x_T) = e^{iux_T}$. With Eq. \ref{phi}, we easily see
+\begin{align*}
+	\frac{\partial \phi(u, t, x_t)}{\partial x_t} = iu\phi(u, t, x_t) \\
+	\frac{\partial^2 \phi(u, t, x_t)}{\partial x_t \partial x_t} = -u^2\phi(u, t, x_t)
+\end{align*}
+So Eq. \ref{characteristic_pde1} becomes
+\begin{align*}	
+	-\frac{\partial \phi}{\partial \tau}
+	+ (r - \frac{1}{2}V)iu \phi 
+	+ (\kappa(\theta-V)) \frac{\partial \phi}{\partial V}
+        -\frac{1}{2}Vu^2 \phi
+	+ \rho \sigma V iu \frac{\partial \phi}{\partial V}
+	+\frac{1}{2} \sigma^2 V \frac{\partial^2 \phi}{\partial V^2}  = 0\\ \label{characteristic_pde}
+\end{align*}
+If we substitude the expression of $\phi(u, t, x)$ in Eq. \ref{phi} into Eq. \ref{characteristic_pde}, work out the derivative terms and separate the term with and without $V$, we can get the following two equations
+\begin{align*}
+	\frac{\partial D}{\partial t} - \kappa D - \frac{1}{2}u^2 -\frac{1}{2}iu + i\rho \sigma u D
+	+\frac{1}{2} \sigma^2 D^2 = 0 \\
+	\frac{\partial C}{\partial t} + iru + \kappa \theta D = 0
+\end{align*}
+These equations can be solved and we can get the expression of C and D as in Eq. \ref{heston_C} and Eq. \ref{heston_D}.
+\begin{align*} 
+	C(\tau, u) = iru\tau + \frac{\kappa \theta}{\sigma^2}
+	[(\kappa - i\rho \sigma u + d)\tau - 2ln(\frac{1 - g e^{d\tau}}{1 - g})] 
+\end{align*}
+\begin{align*} 
+	D(\tau, u) = \frac{\kappa - i\rho \sigma u + d}{\sigma^2} (\frac{1 - e^{d\tau}}{1-ge^{d\tau}})
+\end{align*}
+\subsubsection{Option Price Solution based on Characteristic Function}
+
+Using inverse Fourier transform, we have
+\begin{align*}
+	p(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du
+\end{align*}
+Then we can write $f_2$ as
+\begin{align*}
+	f_2  = \int_{lnK}^{\infty}  p(x) dx
+	   = \int_{lnK}^{\infty} ( \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du) dx
+\end{align*}
+Changing the order the integration yields
+\begin{align*}
+	f_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u) (\int_{lnK}^{\infty} e^{-iux}  dx) du \\
+	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)(\int_{-\infty}^{\infty} {\bf 1}_{x > lnK}e^{-iux}dx) du\\
+\end{align*}
+The inner integral is the inverse Fourier transform of a step function and the result is well-known.
+\begin{align*}
+	f_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} + \pi \delta(u)) du \\
+	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} ) du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} (\int_{-\infty}^{0}\frac{1}{iu }\phi(u) e^{-i u lnK} +  \int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu } ) du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{\infty}^{0}\phi(-u) e^{i u lnK}\frac{1}{i(-u) }d(-u) +\int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{0}^{\infty}\phi(-u) e^{i u lnK}\frac{1}{i(-u) }du +\int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{0}^{\infty}(\phi(-u) e^{i u lnK}\frac{1}{i(-u) } + \phi(u) e^{-i u lnK}\frac{1}{iu })  du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \phi(u) e^{-i u lnK}\frac{1}{iu })  du + \frac{1}{2} \\
+\end{align*}
+$f_1$ is a little tricky, 
+\begin{align*}
+        f_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
+	  = \frac{1}{S_0} e^{-r \tau}\frac{\int_{lnK}^{\infty} e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
+	  \int_{-\infty}^{\infty} e^x pdf(x) dx
+\end{align*}
+Based on martingale property $\int_{-\infty}^{\infty} e^x p(x) dx = e^{rT}S_0$, so
+\begin{align*}
+	f_1 = \int_{lnK}^{\infty} \frac{e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
+	 =  \int_{lnK}^{\infty} {p}^{'} dx
+\end{align*}
+The Fourier transform of function ${p}^{'}$ is
+\begin{align*}
+	&\frac{\int_{-\infty}^{\infty} e^{iux + x}p(x)dx}{\int_{-\infty}^{\infty} e^{i(-i)x} p(x) dx} \\
+	=&\frac{\phi(u-i)}{\phi(-i)}\\
+\end{align*}
+
+\subsubsection{Partial Differential Equation for Heston Model} 
+The Heston model states the asset price follows
 \begin{align}
 	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t)
 \end{align}
@@ -580,84 +663,6 @@ The function $c(t, s, v)$ satisfies boundary condition
 	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
 	lim_{v \to \infty} c(t, s, v) = s\\  
 \end{align*}
-Based on the solution to the BSM equation, we can guess that the solution has the following form
-\begin{align}
-	c(t,s,v) = sf(t, logs, v) - e^{-r(T-t)}Kg(t,logs,v)
-\end{align}	
-Where f and g can be intepreted as a cumulative distribution function.
-Then since c(t,s,v) satisfies the partial differential equation \ref{c}, we can show that $f$ and $g$ satisfy the following
-\begin{align} \label{f}
-	f_t + (r + \frac{1}{2}v)f_x + (a-bv+\rho \sigma v)f_v 
-	+ \frac{1}{2}  v f_{xx} + \rho \sigma vf_{xv}
-        +\frac{1}{2} \sigma^2 vf_{vv} = 0\\
-\end{align}
-\begin{align}
-	g_t + (r - \frac{1}{2}v)g_x + (a-bv)g_v 
-	+ \frac{1}{2}  v g_{xx} + \rho \sigma vg_{xv}
-        +\frac{1}{2} \sigma^2 vg_{vv} = 0\\
-\end{align}
-The derivation is straightforward but one needs to keep in mind here we treat x and v as two independent variables. The above PDE for f and g satisfy boundary condition
-\begin{align*}
-	f(T, x, v) = 1_{x\geq logK}\\
-	g(T, x, v) = 1_{x\geq logK}\\
-\end{align*}
-This implies that f and g can be intepreted as "Probabilities". We can define
-\begin{align*}
-	f(t, x, v) = E^{t,x,v}1_{x\geq logK}\\
-\end{align*}
-We suppose a pair of stochastic process X(t), V(t) given by the following expression
-\begin{align*}
-	dX(t) = (r+\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)
-	dV(t) = (a-bV(t)+ \rho \sigma V(t))dt + \sigma \sqrt{V(t)}dW_2(t)
-\end{align*}
-By F-K formula, we can show that f satisfies the PDE above. Similarly, we have
-\begin{align*}
-	g(t, x, v) = E^{t,x,v} 1_{x\geq logK}\\
-\end{align*}
-and the stochastic process of X(t) and V(t) are
-\begin{align*}
-	dX(t) = (r-\frac{1}{2}V(t))dt + \sqrt{V(t)}dW_1(t)\\
-	dV(t) = (a-bV(t))dt + \sigma \sqrt{V(t)}dW_2(t)
-\end{align*}
-To find the analytical solution of f(t, x, v) and g(t, x, v) is not an easy task. Instead, we do Fourier transform of f and g. 
-First we work out the function f(t, x, v. ). Let $\tau = T-t$
-\begin{align*}
-	\tilde f(k, v, \tau) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau)
-\end{align*}
-The inverse Fourier transform is
-\begin{align*}
-	f(x, v, \tau) = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx}
-	\tilde f(k, v, \tau)
-\end{align*}
-Substitute this into equation \ref{f}, then
-\begin{align} \label{ff}
-	-\frac{\partial \tilde f}{\partial \tau}
-	+ (r + \frac{1}{2})ik \tilde f 
-	+ (a-bv+\rho \sigma v)\frac{\partial \tilde f}{\partial v}
-        -\frac{1}{2}vk^2 \tilde f 
-	+ \rho \sigma v ik \frac{\partial \tilde f}{\partial v}
-        +\frac{1}{2} \sigma^2 v \frac{\partial^2 \tilde f}{\partial v^2}  = 0\\
-\end{align}
-Now the problem is to solve for $\tilde f$. We note when $\tau=0$,
-\begin{align*}
-	\tilde f(k, v, 0) = \int_{-\infty}^{\infty}dx e^{-ikx}f(x, v, \tau=0)
-			  = \int_{-\infty}^{\infty}dx e^{-ikx}1_{x \geq logK}
-			     = \int_{0}^{\infty}dx e^{-ikx}
-			     = \pi \delta(k) + \frac{1}{ik}
-\end{align*}
-when $\tau!=0$, we guess a general solution which has the following form
-\begin{align*}
-	\tilde f(k, v, \tau) = exp(C\tau +D\tau v) \tilde f(k,v,0)
-\end{align*}
-From above we easily see it match the terminal condition at $\tau \to 0$. With inverse Fourier transform
-\begin{align} \label{fs}
-	f(x, v, \tau, x) & = \int_{-\infty}^{\infty}\frac{dk}{2\pi} e^{ikx} \tilde f(k, v, \tau)\\
-			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) \tilde f(k, v, 0)\\
-			 & = \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(C\tau + D\tau v) 
-			 	(\pi \delta(k) + \frac{1}{ik}) \\
-			 & = \frac{1}{2} + \int_{0}^{\infty}\frac{dk}{\pi} e^{ikx} exp(\frac{C\tau + D\tau v}{ik}) 
-\end{align}
-Now the only remaining task is to find C and D. If we substitute \ref{fs} into \ref{ff}, we can get the expression C and D. 
 \begin{thebibliography}{9}
 	\bibitem{heston}
 		SL Heston,
