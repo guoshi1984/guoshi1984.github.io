@@ -562,11 +562,12 @@ The inner integral is the inverse Fourier transform of a step function and the r
 \begin{align*}
 	f_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} + \pi \delta(u)) du \\
 	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} ) du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} (\int_{-\infty}^{0}\frac{1}{iu }\phi(u) e^{-i u lnK} +  \int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu } ) du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} \int_{\infty}^{0}\phi(-u) e^{i u lnK}\frac{1}{i(-u) }d(-u) +\int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} \int_{0}^{\infty}\phi(-u) e^{i u lnK}\frac{1}{i(-u) }du +\int_{0}^{\infty}\phi(u) e^{-i u lnK}\frac{1}{iu }  du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} \int_{0}^{\infty}(\phi(-u) e^{i u lnK}\frac{1}{i(-u) } + \phi(u) e^{-i u lnK}\frac{1}{iu })  du + \frac{1}{2} \\
-	  & = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \phi(u) e^{-i u lnK}\frac{1}{iu })  du + \frac{1}{2} \\
+	  & = \frac{1}{2\pi} (\int_{-\infty}^{0}\frac{1}{iu}\phi(u) e^{-i u lnK} +  \int_{0}^{\infty}\frac{1}{iu }\phi(u) e^{-i u lnK}) du + \frac{1}{2} \\
+	  & = \frac{1}{2\pi} \int_{\infty}^{0}\frac{1}{i(-u)}\phi(-u) e^{i u lnK}d(-u) +\int_{0}^{\infty}\frac{1}{iu }\phi(u) e^{-i u lnK}  du + \frac{1}{2} \\
+	  & = \frac{1}{2\pi} \int_{0}^{\infty}\frac{1}{i(-u)}\phi(-u) e^{i u lnK}du +\int_{0}^{\infty}\frac{1}{iu }\phi(u) e^{-i u lnK}  du + \frac{1}{2} \\
+	  & = \frac{1}{2\pi} \int_{0}^{\infty}(\frac{1}{i(-u)}\phi(-u) e^{i u lnK} + \frac{1}{iu}\phi(u) e^{-i u lnK})  du + \frac{1}{2} \\
+	  & = \frac{1}{2\pi} \int_{0}^{\infty}\mathcal Re( 2\frac{1}{iu }\phi(u) e^{-i u lnK})  du + \frac{1}{2} \\
+	  & = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{1}{iu }\phi(u) e^{-i u lnK})  du + \frac{1}{2} \\
 \end{align*}
 $f_1$ is a little tricky, 
 \begin{align*}
