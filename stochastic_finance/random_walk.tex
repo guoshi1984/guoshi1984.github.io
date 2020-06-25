@@ -4,7 +4,7 @@
 \begin{document}
 \section{Random Walk}
 \subsection{Symmetric Random Walk}
-\noindent{\bf a. Definition}\\
+\subsubsection{Definition}
 Starting from coin toss, \\
 def:
 \begin{align*}
@@ -13,36 +13,38 @@ X_j & =  1 \hspace{2mm} &if \hspace{2mm} w_j = H\\
 \end{align*}
 Let $M_k = \sum_{j=1} ^{k} X_j$, $M_k$ is symmetric random walk, and its distribution is binomial.\\
 
-\noindent{\bf b. Expectation and Variance}\\
+\subsubsection{Expectation and Variance}
 $E(X_j) =0$, $Var(X_j) =1$,\\
 $Var(M_k - M_l) = \sum_{i=l}^{k} Var(X_i) = k - l$;\\
 
-\noindent{\bf c. Martingale Property} \\
+\subsubsection{Martingale Property} 
 $E(M_l| F_k)$\\
 $=E((M_l - M_k + M_k) | F_k)$\\
 $=E((M_l - M_k) | F_k) + E(M_k | F_k)$\\
 $=0 + M_k = M_k$\\
 
-\subsection{Scaled Random Walk}\\
+\subsection{Scaled Random Walk}
+\subsubsection{Scaled Symmetric Random Walk Definition}
+\begin{align*}
+W^{(n)}(t) = 1/\sqrt{n} M_{nt}  \\
+= 1/\sqrt{n} \sum_{i=1}^{nt} X^{(n)}(t)\\
+= \sum_{i=1} ^{nt}  1/\sqrt{n} X^{(n)}(t) \\
+\end{align*}
+\subsubsection{Expectation and Variance}
+\begin{align*}
+E(W^{(n)}(t) - W^{(n)}(s)) =0 \\
+Var(W^{(n)}(t) - W^{(n)}(s)) = n(t-s) Var(1/\sqrt{n} X^{(n)} (t-s) )
+=t - s
+\end{align*}
 
-\noindent{ \bf a. Scaled Symmetric Random Walk Definition}\\
-$W^{(n)}(t) = 1/\sqrt{n} M_{nt} $ \\
-$= 1/\sqrt{n} \sum_{i=1} ^{nt} X_^{(n)}(t)$\\
-$= \sum_{i=1} ^{nt}  1/\sqrt{n} X_^{(n)}(t)$ \\
 
-\noindent{ \bf b. Expectation and Variance}\\
-$E(W^{(n)}(t) - W^{(n)}(s)) =0, $\\
-$Var(W^{(n)}(t) - W^{(n)}(s)) = n(t-s) Var(1/\sqrt{n} X^{(n)} (t-s) )$\\
-$=t - s$ \\
-
-
-\subsection{Brownian Motion}\\
-\noindent { \bf a. Limit of Scaled Symmetric Random Walk: Brownian Motion} \\
+\subsection{Brownian Motion}
+\subsubsection{Limit of Scaled Symmetric Random Walk: Brownian Motion} 
 When $n-> \inf$, based on Central Limit Theorem\\ 
 $W^{(n)}(t)$ starting from 0 follows a normal distribution N(0, t)\\
 We view $W^{(n)}(t)$ as a Brownian motion\\
 
-\noindent { \bf b.	Quadratic variation of Brownian motion } \\
+\subsubsection {Quadratic variation of Brownian motion }
  Given a Brownian motion $W_{t_j}$
  Define 
  \begin{align*}
@@ -58,9 +60,9 @@ We view $W^{(n)}(t)$ as a Brownian motion\\
     When |C| = 0, \\
     Var(Q) = 0 \\
  \end{align*}
-        This is simply written in differential form $dW dW$ = $dt$\\
+This is simply written in differential form $dW dW$ = $dt$\\
 
-\noindent{ \bf c. From Scaled Asymmetric Random Walk to Geometric Brownian motion}\\
+\subsubsection{From Scaled Asymmetric Random Walk to Geometric Brownian motion}
 
 Consider a scaled asymmetric random walk with factor of $\sigma$ and drift $\alpha$
   \begin{align*}

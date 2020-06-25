@@ -25,7 +25,7 @@ Check 1)  $\Omega$ = {H, T} \\
 Enumerate all of the subsets of $\Omega$, we get\\
 $F_1$ = \{0, $\Omega$, H, T\} \\
 Check 2) $\emptyset^c = \Omega$, $\Omega^c = \emptyset$, $H_c$ = T in $F_1$, $T_c$ = H in $F_1$\\
-Check 3) H \cup T = $\Omega$ in $F_1$ \\
+Check 3) $H \cup T$ = $\Omega$ in $F_1$ \\
 So we confirm\\ 
 $F_1$ = {0, $\Omega$, H, T} \\
 
@@ -43,10 +43,10 @@ $TT^c$ = $HH \cup HT \cup TH$ in $F_2$\\
 The rest check is ignored.\\
 3) is easy to check too. 
 So we confirm\\
-$F_2$ = \{ \emptyset, $\Omega$, HH, HT, TH, TT, \\
-$HH^c$, $HT^c$, $TH^c$, $TT^c$ \\
-HH U HT, HH U TH, HH U TT, HT U TH, HT U TT, TH U TT,   \\
-$TT^c$, $TH^c$, $HT^c$, $HH^c$ \} \\
+$F_2 = \{ \emptyset, \Omega, HH, HT, TH, TT, \\
+HH^c, HT^c, TH^c, TT^c \\
+HH \cup HT, HH \cup TH, HH \cup TT, HT \cup TH, HT \cup TT, TH \cup TT,   \\
+TT^c, TH^c, HT^c, HH^c \} $\\
 
 \noindent{ \bf c.	Why define sigma algebra? }\\
 On top of the sigma algebra, we can define the probability, because the object that probability measure takes is the sigma algebra. \\
@@ -60,7 +60,7 @@ The collection of sigma algebra $F_1$, $F_2$бн $F_n$ is called a Filtration.\\
 
 \section{Random variable}
 {\bf a. Definition} \\
-A random variable is function from $\Omega$ to R, with the property that for every Borel subset B of R, the subset of $\Omega$ is in $\sigma$-algebra F. \\
+A random variable is function from $\Omega$ to R, with the property that for every Borel subset B of R, its inverse image from the subset of $\Omega$ is in $\sigma$-algebra F. \\
 
 \noindent {\bf b. Example} \\
 Consider 3 toss case, H with prob p, T with prob q\\
@@ -88,7 +88,7 @@ is completely determined by F, then S is F measurable. \\
 \section{Conditional Expectation}
 
 \noindent {\bf a. Definition }\\
-1)	$E[X|G ]$ is G measurable, which means the value of $E[X\G]$ is completely determined by G$ \\
+1)	$E[X|G ]$ is G measurable, which means the value of $E[X|G]$ is completely determined by G \\
 2)	$\int_A E[X|G](w)dP(w)= \int_A X(w)dP(w)$ for all A which belongs to G\\
 
 
@@ -110,7 +110,7 @@ Expectation of 3 tosses random variable $S_3$ give the first two is HH\\
 & E_2(S_3 | TT)  P(TT)= prob(HTH) S_3(TTH) + prob(TTT)  S_3(TTT) \\
 \end{align*}
 This confirms def 2),  for A = HH or HT or TH or TT \\
-$\int \E_2(S_3|G)(w) dP(w) = \int _A X(w)dP(w)$\\
+$\int E_2(S_3|G)(w) dP(w) = \int _A X(w)dP(w)$\\
 
 \noindent{\bf c. Properties}\\
 

@@ -24,21 +24,21 @@ Probability measure 1:\\
 P(head) & = \frac{1}{2}\\ 
 P(tail) & = \frac{1}{2}\\
 \end{align*}
-We can also define the probability measure $P^{'}$, under $P^{'}$\\ 
+We can also define the probability measure $\tilde P$, under $\tilde P$\\ 
 \begin{align*}
-P^{'}(head) & = \frac{2}{3}\\ 
-P^{'}(tail) & = \frac{1}{3}\\
+\tilde P(head) & = \frac{2}{3}\\ 
+\tilde P(tail) & = \frac{1}{3}\\
 \end{align*}
  
 
-\noindent 3)We can define change of measure to connect P and $P^{'}$. Consider the transformation 
+\noindent 3)We can define change of measure to connect P and $\tilde P$. Consider the transformation 
 \begin{align*}
-	Z(\omega) = \frac{P^{'}(\omega)}{P(\omega)}
+	Z(\omega) = \frac{\tilde P(\omega)}{P(\omega)}
 \end{align*}
 so 
 \begin{align*}
-	Z(H) & = \frac{P^{'}(H)}{P(H)} = \frac{4}{3}\\
-	Z(T) & = \frac{P^{'}(T)}{P(T)} = \frac{2}{3}\\
+	Z(H) & = \frac{\tilde P(H)}{P(H)} = \frac{4}{3}\\
+	Z(T) & = \frac{\tilde P(T)}{P(T)} = \frac{2}{3}\\
 \end{align*}
 This is the change of measure for a discrete random variable. \\
 \subsection{Change of Measure for a Continuously Random Variable(Uniformly Distributed) } 
@@ -52,8 +52,8 @@ p(x) = 1
 This is a uniform measure.\\
 
 \noindent 2)\\
-Define another probability measure $P^{'}$\\
-$P^{'}(a \textless x  \textless b) = b^2 - a^2$, the pdf is 
+Define another probability measure $\tilde P$\\
+$\tilde P(a \textless x  \textless b) = b^2 - a^2$, the pdf is 
 \begin{align*}
 p(x) = 2x
 \end{align*}
@@ -62,14 +62,14 @@ So this is non-uniform measure\\
 
 \noindent 3)	To justify they both are probability measure\\
 Check  $P[0,1] = 1$; $P(0)=0$;\\
-       $P^{'}[0,1] =1$; $P^{'}(0)=0$;\\
+       $\tilde P[0,1] =1$; $\tilde P(0)=0$;\\
 
 
-\noindent 4) we can define change of measure to connect P and $P^{'}$ \\
+\noindent 4) we can define change of measure to connect P and $\tilde P$ \\
 Consider the transformation \\
 \begin{align*}
-	&P^{'}(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))\\
-	&dP{'}(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
+	&\tilde P(a < X(\omega) = x < b) = \int _a ^b 2x dx = \int _a ^b 2x dx = \int_a ^b 2x dP(X(\omega))\\
+	&d\tilde P(X(\omega)) = Z(X(\omega)) dP(X(\omega)) \\
 \end{align*}
 So
 \begin{align*}
@@ -97,12 +97,12 @@ E(Z)  & = \int exp(-ux-1/2u^2) \frac{1}{\sqrt{2\pi}} exp(-1/2x^2) dx\\
 & = 1 \\
 \end{align*}
 
-So $P^{'}(w) = \int Z(w) dP(w)$ is a new probability measure
+So $\tilde P(w) = \int Z(w) dP(w)$ is a new probability measure
 
 The pdf of Y under the new measure is
 
 \begin{align*}
-	P^{'}(Y(\omega) \leq b) & = \int_{Y(\omega) \leq b} d P^{'}(\omega) \\
+	\tilde P(Y(\omega) \leq b) & = \int_{Y(\omega) \leq b} d \tilde P(\omega) \\
 &= \int_{Y(\omega)<=b} Z(\omega) dP(\omega) \\
 &= \int 1_{X(\omega)<=b-u} exp(-uX- \frac{1}{2} u^2 )dP(\omega) \\
 &=\int 1_{X(\omega)<=b-u} exp(-uX- \frac{1}{2} u^2 ) pdf(N(0,1)) dx \\
@@ -152,13 +152,13 @@ Where $\tilde E[DS_1]$ stands for expectation of the discounted price of asset S
 \noindent{\bf Define change of measure for continous variable}\\
 For $(\Omega, F, P)$, given random variable Z with $E(Z) = 1$, define new probability measure
 \begin{align}
-	P^{'} = \int_A Z(\omega) dP(\omega)\\
+	\tilde P = \int_A Z(\omega) dP(\omega)\\
 \end{align}
 We have two expectation defined, one is under P, the other under $P^{'}$
 \begin{align*}
-	&E^{'}[X] = E[XZ]\\ 
-	&dP^{'}(\omega) = Z(\omega) dP(\omega)\\
-	&Z(\omega) = \frac{dP^{'}(\omega)}{dP(\omega)}\\
+	&\tilde E[X] = E[XZ]\\ 
+	&d\tilde P(\omega) = Z(\omega) dP(\omega)\\
+	&Z(\omega) = \frac{d\tilde P(\omega)}{dP(\omega)}\\
 \end{align*}
 
 \noindent{\bf Define change of measure for filtration}\\
@@ -168,13 +168,13 @@ $E[Z] = 1$ and $Z(t) = E[Z|F(t)]$\\
 1) Martingale\\
 Given $0 <= s <=t <= T$\\
 $E[Z(t)|F(s)] = E[E[Z|F(t)]|F(s)] = E[Z|F(s)] = Z(s)$\\
-2) $E^{'}[Y] = E[YZ(t)]$\\
-$E^{'}[Y]=E[YZ] = E[E[YZ|F(t)]]=E[Y E[Z|F(t)]] = E[YZ(t)]$\\
+2) $\tilde E[Y] = E[YZ(t)]$\\
+$\tilde E[Y]=E[YZ] = E[E[YZ|F(t)]]=E[Y E[Z|F(t)]] = E[YZ(t)]$\\
 3) Given $0<=s<=t<=T$, Y is F(t)- measurable, then\\
-$E^{'}[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]$\\
+$\tilde E[Y|F(s)] = \frac{1}{Z(s)} E[YZ(t)|F(s)]$\\
 
 \noindent{\bf Girsanov's Theorem}\\
-Suppose w(t) is Brownian Motion given $\Omega, F, P$ and F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $W^{'}(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $P^{'}$, $W^{'}(t)$ is Brownian motion.\\
+Suppose W(t) is Brownian Motion given $\Omega, F, P$ and F(t) is the filtration. Let $\Theta(t)$, $0<=t<=T$ is adapted process, define $Z(t) = exp(-\int_0^{t} \Theta(u) dW(u))$, and $\tilde W(t) = W(t) + \int_0^t \Theta(u) du$, s.t. $E[\int_0^T \Theta^2(u) Z^2(u) du < \infty]$. Then $E[Z]=1$, and under $\tilde P$, $\tilde W(t)$ is Brownian motion.\\
 
 \subsection{Risk Neutral Measure with a Filtration}
 We assume the stock price using geometric Brownian motion\\
@@ -194,38 +194,43 @@ Discounted stock price\\
 	d(D(t) S(t)) = \sigma(t) D(t) S(t) [\Theta(t) dt + dW(t)]\\
 \end{align*}
 where $\Theta(t) = \frac{\alpha(t) -R(t)}{\sigma(t)}$\\
-We define a new Brownian motion with drift $dW^{'}(t) = dW(t) + \theta(t) dt$, this brownian motion consists of a standard brownian motion and a drift term $\theta(t)$. So if $W^{'}(0) = 0$, due to the drift term, $E[W^{'}(t)] != 0$.However, using the change of measure theorem, we can define another probability measure $P^{'}$, such that under $\tilde P$, $W^{'}(t)$ becomes a standard brownian motion.\\
-Then we have $d(D(t)S(t)) = \sigma(t) D(t) S(t) dW^{'}(t)$ under $P^{'}$, {\bf which implies the discount price is a martingale under the risk-neutral measure $P^{'}$}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) d  W^{'}(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, if we consider a portfolio composed with Stock and interesting account, we can work out a little of math to show
+We define a new Brownian motion with drift $d\tilde W(t) = dW(t) + \theta(t) dt$, this brownian motion consists of a standard brownian motion and a drift term $\theta(t)$. So if $\tilde W(0) = 0$, due to the drift term, $E[\tilde W(t)] != 0$.However, using the change of measure theorem, we can define another probability measure $\tilde P$, such that under $\tilde P$, $\tilde W(t)$ becomes a standard brownian motion.\\
+Then we have $d(D(t)S(t)) = \sigma(t) D(t) S(t) d\tilde W(t)$ under $\tilde P$, {\bf which implies the discount price is a martingale under the risk-neutral measure $\tilde P$}, then $dS(t) = R(t) S(t) dt + \sigma(t) S(t) d  \tilde W(t)$. The drift term now change from $\alpha$ to risk-free interest Rate R. Knowing $d(D(t)S(t))$ is a martingale, if we consider a portfolio $X(t)$ composed with a $\Delta(t)$ share of stock and interesting account, 
+\begin{align*}
+	d X(t) = \Delta(t) dS(t) + r(1 - Delta(t)S(t))dt
+\end{align*}
+we can work out a little of math to show
 \begin{align*}
 	d(D(t)X(t)) = \Delta(t) d(D(t)S(t))
 \end{align*}
-This means $D(t)X(t)$ is a martingale under $P^{'}$. Suppose T is the option payoff time, then 
+This means $D(t)X(t)$ is a martingale under $\tilde P$. We have
 \begin{align*}
-	D(t)X(t) = E^{'} [D(T) X(T) | F(t)]
+	D(t)X(t) = \tilde E [D(T) X(T) | F(t)]
 \end{align*}
+We can use this martigale property to price financial instruments.
 {\bf This is our risk-neutral pricing formula.}
-\subsection{Risk Newtral Pricing Examples}
-1. European Call Option\\
+\subsection{Risk Neutral Pricing Examples}
+{\bf 1. European Call Option}\\
 For European call option, Let V(t) be the price of the option at time t.  $V(T) = (S(T) - K)^{+}$ where K is the striking price. Then under risk neutral measure, suppose interest rate is a constant, then
 \begin{align*}
-	V(t) = E^{'}[e^{r(t-T)}V(T)|F(t)]
+	V(t) = \tilde E[e^{r(t-T)}V(T)|F(t)]
 \end{align*}
-2. Forward Price
+{\bf 2. Forward Price}\\
 Suppose K is the forward price at time t for delivering one share of stock at time T, whose price is S(T). Then under risk-neutral measure, the discount stock price is a martingale, which means
 \begin{align*}
-	D(t)S(t) = E^{'}[D(T) S(T)|F(t)]
+	D(t)S(t) = \tilde E[D(T) S(T)|F(t)]
 \end{align*}
 again, if we assume interest rate r is a constant,
 \begin{align*}
-	S(t) = E^{'}[e^{r(t-T)S(T)}|F(t)]
+	S(t) = \tilde E[e^{r(t-T)S(T)}|F(t)]
 \end{align*}
 This expectation value of the discounted stock has to equal to the present value of K to ensure no arbitrage, so
 \begin{align*}
-	S(t) = E^{'}[e^{r(t-T)S(T)}|F(t)] = e^{r(t-T)}K
+	S(t) = \tilde E[e^{r(t-T)S(T)}|F(t)] = e^{r(t-T)}K
 \end{align*}
 So
 \begin{align*}
-	K = e^{r(T-T)}S(t)
+	K = e^{r(T-t)}S(t)
 \end{align*}
 \subsection{Risk Neutral Measure with Foreign Currency}
 There is an exchange rate Q(t), which gives units of domestic currency per unit of foreign currency. We assume the exchange rate satisfies
@@ -256,9 +261,9 @@ Finally, we obtain the exchange rate Q(t) and risk neutral measure
 {\bf Example}
 Suppose $R(t)$ and $R^f(t)$ are fixed, then based on martingale property, 
 \begin{align*}
-	Q(0) = e^{-rT} e^{r^fT}Q(T)
+	Q(0) = D(T) M^f(T)Q(T) = e^{-rT} e^{r^fT}Q(T)
 \end{align*}
-In the above Q(0) is the spot price S. Q(T) is the forward price F, we then get the price of the forward
+In the above if we call Q(0) the spot price(S) of the exchange rate and Q(T) the forward price F of the exchange rate, we then get the price of the forward
 \begin{align*}
 	& S = e^{-rT} e^{r^fT}F \\
 	& F = e^{(r - r^f)T}S \\
