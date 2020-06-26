@@ -17,7 +17,7 @@ Strike Price: 40.0
 Risk Free Interest Rate: 0.06
 Volatility: 0.2
 Expiring Time: 2.0 years 
-Net Present Value 4.2723951245548015 +/- 0.026326204476276968
+Net Present Value 4.285237227992699 +/- 0.026322561229394064
 
 =============================
 Pricing Method 3: Monte Carlo for Heston: 
@@ -25,13 +25,13 @@ Option Type: CALL
 Underlying Price: 36.0
 Strike Price: 40.0
 Risk Free Interest Rate: 0.06
-Volatility: 0.2
-Kappa: 1.0
-Theta: 0.04000000000000001
-Volatility of volatility: 0.001
-Process correlation: 0.0
+Volatility: 0.01
+Kappa: 2.0
+Theta: 0.01
+Volatility of volatility: 0.1
+Process correlation: 0.5
 Expiring Time: 2.0 years 
-Net Present Value 4.332495452316105 +/- 0.02654147924295996
+Net Present Value 2.2823545301122556 +/- 0.013388372740821197
 
 =============================
 Pricing Method 4: Monte Carlo for Heston: 
@@ -39,13 +39,13 @@ Option Type: CALL
 Underlying Price: 36.0
 Strike Price: 40.0
 Risk Free Interest Rate: 0.06
-Volatility: 0.2
-Kappa: 1.0
-Theta: 0.039
-Volatility of volatility: 0.001
-Process correlation: 0.0
+Volatility: 0.01
+Kappa: 2.0
+Theta: 0.01
+Volatility of volatility: 0.1
+Process correlation: 0.5
 Expiring Time: 2.0 years 
-Net Present Value 4.197512955130023 +/- 0.025804501532183426
+Net Present Value 2.2573548207045473 +/- 0.013343299539722204
 
 =============================
 Pricing Method 5: Monte Carlo for Bates: 
@@ -53,16 +53,16 @@ Option Type: CALL
 Underlying Price: 36.0
 Strike Price: 40.0
 Risk Free Interest Rate: 0.06
-Volatility: 0.2
+Volatility: 0.01
 Kappa: 1.0
 Theta: 0.04
 Volatility of volatility: 0.001
-Process correlation: 0.0
+Process correlation: 0.5
 Lambda: 0.0
 Nu: 0.0
 Delta: 0.0
 Expiring Time: 2.0 years 
-Net Present Value 4.317502412940413 +/- 0.02646188736709822
+Net Present Value 4.3024041631765275 +/- 0.02651830501581529
 
 =============================
 Pricing Method 6: Monte Carlo for Bates: 
@@ -70,16 +70,16 @@ Option Type: CALL
 Underlying Price: 36.0
 Strike Price: 40.0
 Risk Free Interest Rate: 0.06
-Volatility: 0.2
+Volatility: 0.01
 Kappa: 1.0
 Theta: 0.04
 Volatility of volatility: 0.01
-Process correlation: 0.0
+Process correlation: 0.5
 Lambda: 1.0
 Nu: 0.01
 Delta: 0.0
 Expiring Time: 2.0 years 
-Net Present Value 4.304115111482722 +/- 0.026418114820649576
+Net Present Value 4.322124835016533 +/- 0.02704414815749728
 
 =============================
 Pricing Method 7: Monte Carlo for Black-Scholes Model for American Call: 
@@ -88,44 +88,5 @@ Option Type: CALL
 Underlying Price: 36.0
 Strike Price: 40.0
 Risk Free Interest Rate: 0.06
-Volatility: 0.2
+Volatility: 0.01
 Expiring Time: 2.0 years 
-Net Present Value 4.27988466362715 +/- 0.02636926693093985
-
-=============================
-Pricing Method 8: Black-Scholes Analytical for European Put: 
-Exercise Style: EUROPEAN
-Option Type: PUT
-Underlying Price: 36.0
-Strike Price: 40.0
-Risk Free Interest Rate: 0.06
-Volatility: 0.2
-Expiring Time: 2.0 years 
-Net Present Value: 3.763000927669731
-
-=============================
-Pricing Method 9: Monte Carlo for Black-Scholes Model for European Put: 
-Exercise Style: EUROPEAN
-Option Type: PUT
-Underlying Price: 36.0
-Strike Price: 40.0
-Risk Free Interest Rate: 0.06
-Volatility: 0.2
-Expiring Time: 2.0 years 
-Net Present Value 3.761479945270186 +/- 0.019131116129014678
-
-=============================
-Pricing Method 10: Monte Carlo for Black-Scholes Model for American Put: 
-Exercise Style: AMERICAN
-Option Type: PUT
-Underlying Price: 36.0
-Strike Price: 40.0
-Risk Free Interest Rate: 0.06
-Volatility: 0.2
-Expiring Time: 2.0 years 
-Net Present Value 4.805048819840574 +/- 0.026097879997874277
-
-0.028525070771850566
-0.9637178102691659
-0.18196801292036666
-2.7572256288327694

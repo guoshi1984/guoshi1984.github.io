@@ -28,10 +28,12 @@ class HestonProcess extends Process
 	public void evolveVolatility(double dt, double dw1, double dw2)
 	{
 		double nu = this.kappa*(this.theta - this.volatility*this.volatility);
-		double vol2 =  this.volatility*this.volatility + nu*dt 
+		double volsq =  this.volatility*this.volatility + nu*dt 
 			+ this.sigma*this.volatility*Math.sqrt(dt)*(this.rho*dw1 
 					+ Math.sqrt(1 - this.rho * this.rho)*dw2);	
-		this.volatility = (vol2 > 0) ? Math.sqrt(vol2) : 0.0;
+		this.volatility = (volsq > 0) ? Math.sqrt(volsq) : 0.0;
+		//System.out.println("evolve volatility " + this.volatility);
+		
 	}
 
 

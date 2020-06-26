@@ -4,8 +4,7 @@ import math.*;
 public class MonteCarlo
 {
 	public MonteCarlo(Option option,
-			int nTimeStep, int sampleSize, Process process)
-	{
+			int nTimeStep, int sampleSize, Process process) {
 		this.option = option;
 		this.init = option.underlying;
 		this.nTimeStep = nTimeStep;
@@ -13,8 +12,12 @@ public class MonteCarlo
 		this.process = process;
 	}
 
-	public void initialize()
-	{
+	public void  showInfo() {
+		System.out.println("TimeSteps per Year: " + nTimeStep);
+		System.out.println("Number of Samples: " + sampleSize);
+	}
+
+	public void initialize() {
 		samples = new ArrayList<Double>(sampleSize);
 		for(int i = 0; i<sampleSize; i++){
 			samples.add(init);
@@ -106,7 +109,6 @@ public class MonteCarlo
 			double dt = option.time/nTimeStep;
 			//System.out.println(nTimeStep);	
 			for(int t = 0; t < nTimeStep; t++) {
-				Random random = new Random(); 
 				process.setSample(currentSample);
 				process.evolve(dt);	
 				currentSample = process.getSample();

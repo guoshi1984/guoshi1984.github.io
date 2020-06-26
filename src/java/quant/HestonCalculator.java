@@ -1,86 +1,57 @@
 package quant;
 import math.*;
-public class BSMCalculator
+public class HestonCalculator
 {
 	
-	BSMCalculator(Option option) {
+	HestonCalculator(Option option, double kappa, double theta, double sigma, double rho) {
 		this.underlying = option.underlying;
 		this.strike = option.strike;
 		this.riskFreeRate = option.riskFreeRate;
-		this.volatility = option.volatility;
 		this.time = option.time;
 		this.type = option.type;
+		this.theta = theta;
+		this.sigma = sigma;
+		this.rho = rho;
 	}
 
-	public double calculate()
-	{
-		if (time < 0.000001) 
-			return underlying > strike? underlying - strike: 0;
-		double forward = underlying
-			*Math.exp(riskFreeRate*time);
-		double d1 = Math.log(forward/strike)/(volatility*Math.sqrt(time))
-			+ 0.5*volatility*Math.sqrt(time);
-		double d2 = d1 - volatility*Math.sqrt(time);
-		double c1 = NormalDistribution.cdf(d1);	
-		double c2 = NormalDistribution.cdf(d2);
-		double value;
-		switch(type){
-			case CALL:
-				value = Math.exp(-riskFreeRate*time)
-					*(forward*c1 + strike*(-c2));
-				break;
-			case PUT:			
-				value = Math.exp(-riskFreeRate*time)
-					*(forward*(c1-1)+ strike*(1-c2));
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid option type.");
-		}	
-		return value;
-		/*if (option.time < 0.000001) 
-			return option.underlying > option.strike? option.underlying - option.strike: 0;
-		double forward = option.underlying
-			*Math.exp(option.riskFreeRate*option.time);
-		double d1 = Math.log(forward/option.strike)/(option.volatility*Math.sqrt(option.time))
-			+ 0.5*option.volatility*Math.sqrt(option.time);
-		double d2 = d1 - option.volatility*Math.sqrt(option.time);
-		double c1 = NormalDistribution.cdf(d1);	
-		double c2 = NormalDistribution.cdf(d2);
-		double value;
-		switch(option.type){
-			case CALL:
-				value = Math.exp(-option.riskFreeRate*option.time)
-					*(forward*c1 + option.strike*(-c2));
-				break;
-			case PUT:			
-				value = Math.exp(-option.riskFreeRate*option.time)
-					*(forward*(c1-1)+ option.strike*(1-c2));
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid option type.");
-		}	
-		return value;
-		*/
-	}
 
-	public Complex getCharacteristicFunction(double u) {
-		double imag = (Math.log(underlying) 
-			+ (riskFreeRate - .5*volatility*volatility)*time)*u;
-		double real = -.5*volatility*volatility*time*u*u;
-		Complex exponent = new Complex(real, imag);
-		return exponent.exp();
-	}
 
 	public Complex getCharacteristicFunction(Complex u) {
-		Complex usq = u.times(u);
-		double real1 = (Math.log(underlying) 
-			+ (riskFreeRate - .5*volatility*volatility)*time);
-		double real2 = -.5*volatility*volatility*time;
-	
-		Complex exponent1 = u.times(new Complex(0, 1)).times(new Complex(real1, 0)); 
-		Complex exponent2 = usq.times(new Complex(real2, 0));
-		Complex exponent = exponent1.plus(exponent2);
-		return exponent.exp();
+		// aa = i\rho \sigma u
+		Complex aa = u.times(new Complex(0, rho*sigma)); 
+		// d1 = aa - kappa
+		Complex d1 = aa.plus(kappa);
+		// d2 = \sigma^2 (u^2 + iu)
+		Complex d2 = u.times(u).plus(u.times(new Complex(0, 1))).times(sigma*sigma);
+		// d = sqrt(d1^2 + d2)
+		Complex d = d1.times(d1).plus(d2);
+		d = d.sqrt();
+			
+		// g1 = kappa - aa + d
+		Complex g1 = d.minus(aa).plus(kappa);
+		// g2 = kappa - aa - d
+		Complex g2 = d.times(-1.0).minus(aa).plus(kappa, 0);
+		// g = g1 /g2 
+		Complex g= g1.divides(g2);
+		// ffd = 1 - e^{d\tau} 
+		Complex ffd = d.times(time).exp().times(-1).plus(1.0);
+		// ffn = 1 - g e^{d\tau}
+		Complex ffn = d.times(time).exp().times(g).times(-1,0).plus(1.0);
+		// ff = ffd/ffn
+		Complex ff = ffd.divides(ffn);
+		// D = g1/\sigma^2 * ff
+		Complex D = g1.divides(sigma*sigma).times(g);
+		// C21 = g1\tau
+		Complex C21 = g1.times(time);
+		// C22 = -2 log(ff)
+		Complex C22 = ff.log().times(-2.0);
+		// C1 = iru\tau
+		Complex C1 = u.times(riskFreeRate).times(time).times(new Complex(0, 1));
+		// C2 = \kappa \theta /sigma^2 *(g1 \tau + C22)
+		Complex C2 = g1.times(time).plus(C22).times(kappa*theta*sigma*sigma);
+		
+		Complex C = C1.plus(C2);
+		return new Complex(0, 0);
 	}
 
 
@@ -149,6 +120,7 @@ public class BSMCalculator
 			return chf.times(num).divides(den).getReal();
 		};
 
+                System.out.println(integrand1.calculateIntegrand(0.0000001));
                 
 
 		double i1 = .5+ 1/3.1415926*integrate(0.001, 100, integrand1);
