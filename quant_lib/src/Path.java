@@ -1,4 +1,3 @@
-package quant;
 import java.util.*;
 public class Path {
 	public List<Double> values;

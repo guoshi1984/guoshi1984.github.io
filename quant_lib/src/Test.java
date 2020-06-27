@@ -1,4 +1,3 @@
-package quant;
 import java.util.*;
 public class Test 
 {
@@ -315,7 +314,7 @@ public class Test
 		System.out.println("NPV using Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
 	}
 	public static void main(String[] args) {
-		//testOption1();
+		testOption1();
 		//testOption2();
 		testOption3();
 //		Option option = new Option(OptionType.CALL, 36.0,

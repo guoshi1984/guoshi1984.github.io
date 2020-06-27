@@ -1,4 +1,3 @@
-package quant;
 import java.util.*;
 import math.*;
 public class MonteCarlo

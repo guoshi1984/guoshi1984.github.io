@@ -1,4 +1,3 @@
-package quant;
 import math.*;
 public class BSMCalculator
 {

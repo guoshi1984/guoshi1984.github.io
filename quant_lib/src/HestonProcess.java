@@ -1,4 +1,3 @@
-package quant;
 import java.util.*;
 class HestonProcess extends Process
 {

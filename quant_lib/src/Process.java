@@ -1,4 +1,3 @@
-package quant;
 import java.util.*;
 abstract class Process
 {
@@ -65,6 +64,7 @@ abstract class Process
 	// diffusion term driven by Brownian motion
 	protected double diffuse(double dt, double dw)
 	{
+		//System.out.println("diffuse " + volatility);
 		return volatility*Math.sqrt(dt)*dw;
 	}	
 

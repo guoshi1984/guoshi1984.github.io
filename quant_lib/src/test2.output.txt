@@ -1,0 +1,239 @@
+Test European Call Option Pricing Model
+=============================
+Pricing Method 1: Black-Scholes Analytical: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+Net Present Value: 4.286183458983436
+
+=============================
+Pricing Method 2: Monte Carlo for Black-Scholes Model: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+Net Present Value 4.268709457671615 +/- 0.026166407591129443
+
+=============================
+Pricing Method 3: Monte Carlo for Heston: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 2.0
+Theta: 0.01
+Volatility of volatility: 0.1
+Process correlation: 0.5
+Expiring Time: 2.0 years 
+Net Present Value 2.2601346372292492 +/- 0.013382986879492634
+
+=============================
+Pricing Method 4: Monte Carlo for Heston: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 2.0
+Theta: 0.01
+Volatility of volatility: 0.1
+Process correlation: 0.5
+Expiring Time: 2.0 years 
+Net Present Value 2.2354401571910034 +/- 0.013222923716250981
+
+=============================
+Pricing Method 5: Monte Carlo for Bates: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 1.0
+Theta: 0.04
+Volatility of volatility: 0.001
+Process correlation: 0.5
+Lambda: 0.0
+Nu: 0.0
+Delta: 0.0
+Expiring Time: 2.0 years 
+Net Present Value 4.248309502669502 +/- 0.026163683708125114
+
+=============================
+Pricing Method 6: Monte Carlo for Bates: 
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 1.0
+Theta: 0.04
+Volatility of volatility: 0.01
+Process correlation: 0.5
+Lambda: 1.0
+Nu: 0.01
+Delta: 0.0
+Expiring Time: 2.0 years 
+Net Present Value 4.309184900412914 +/- 0.026840247846301225
+
+=============================
+Pricing Method 7: Monte Carlo for Black-Scholes Model for American Call: 
+Exercise Style: AMERICAN
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+TimeStep 8
+TimeStep 7
+TimeStep 6
+TimeStep 5
+TimeStep 4
+TimeStep 3
+TimeStep 2
+TimeStep 1
+TimeStep 0
+Net Present Value 4.256229199535737 +/- 0.026258681724876453
+
+=============================
+Pricing Method 8: Black-Scholes Analytical for European Put: 
+Exercise Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+Net Present Value: 3.763000927669731
+
+=============================
+Pricing Method 9: Monte Carlo for Black-Scholes Model for European Put: 
+Exercise Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+Net Present Value 3.775224834124804 +/- 0.01922115653292154
+
+=============================
+Pricing Method 10: Monte Carlo for Black-Scholes Model for American Put: 
+Exercise Style: AMERICAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Expiring Time: 2.0 years 
+TimeStep 98
+TimeStep 97
+TimeStep 96
+TimeStep 95
+TimeStep 94
+TimeStep 93
+TimeStep 92
+TimeStep 91
+TimeStep 90
+TimeStep 89
+TimeStep 88
+TimeStep 87
+TimeStep 86
+TimeStep 85
+TimeStep 84
+TimeStep 83
+TimeStep 82
+TimeStep 81
+TimeStep 80
+TimeStep 79
+TimeStep 78
+TimeStep 77
+TimeStep 76
+TimeStep 75
+TimeStep 74
+TimeStep 73
+TimeStep 72
+TimeStep 71
+TimeStep 70
+TimeStep 69
+TimeStep 68
+TimeStep 67
+TimeStep 66
+TimeStep 65
+TimeStep 64
+TimeStep 63
+TimeStep 62
+TimeStep 61
+TimeStep 60
+TimeStep 59
+TimeStep 58
+TimeStep 57
+TimeStep 56
+TimeStep 55
+TimeStep 54
+TimeStep 53
+TimeStep 52
+TimeStep 51
+TimeStep 50
+TimeStep 49
+TimeStep 48
+TimeStep 47
+TimeStep 46
+TimeStep 45
+TimeStep 44
+TimeStep 43
+TimeStep 42
+TimeStep 41
+TimeStep 40
+TimeStep 39
+TimeStep 38
+TimeStep 37
+TimeStep 36
+TimeStep 35
+TimeStep 34
+TimeStep 33
+TimeStep 32
+TimeStep 31
+TimeStep 30
+TimeStep 29
+TimeStep 28
+TimeStep 27
+TimeStep 26
+TimeStep 25
+TimeStep 24
+TimeStep 23
+TimeStep 22
+TimeStep 21
+TimeStep 20
+TimeStep 19
+TimeStep 18
+TimeStep 17
+TimeStep 16
+TimeStep 15
+TimeStep 14
+TimeStep 13
+TimeStep 12
+TimeStep 11
+TimeStep 10
+TimeStep 9
+TimeStep 8
+TimeStep 7
+TimeStep 6
+TimeStep 5
+TimeStep 4
+TimeStep 3
+TimeStep 2
+TimeStep 1
+TimeStep 0
+Net Present Value 4.824844471670558 +/- 0.018590861480319187
+
+0.040719565706962134
+1.0252639469684866
+0.1250120158297419
+2.992752112493492

@@ -1,4 +1,3 @@
-package quant;
 public class Option
 {
 	public Option(ExerciseStyle style, OptionType type, double underlying,
