@@ -1,3 +1,4 @@
+package math;
 public class FFT {
 	public static final double PI = 3.1415926535897;
 	// separate the waveform to even indices and ood indices
