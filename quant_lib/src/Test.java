@@ -1,4 +1,5 @@
 import java.util.*;
+import math.*;
 public class Test 
 {
 
@@ -292,6 +293,12 @@ public class Test
 		double volatility = 0.15;
 		double time = 1;
 		
+		//paramters for heston model
+		double kappa = 2.0;
+		double theta = 0.0225;
+		double sigma = 0.01;
+		double rho = 0.000001;
+		
 		Option option = new Option(style,
 				type, underlying,
 			strike, riskFreeRate, 
@@ -300,8 +307,15 @@ public class Test
 
 		BSMCalculator bsm = new BSMCalculator(option);
 		System.out.println("NPV using BSM formula:  "+ bsm.calculate());
-		System.out.println("NPV using Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
+		System.out.println("NPV using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
 	
+		HestonCalculator heston = new HestonCalculator(option, kappa, theta, sigma, rho);
+		for(int i = 0; i< 100;i++) {
+		//	System.out.println(i);
+		//	heston.getCharacteristicFunction(new Complex(i*1.0, 0));
+		}
+		System.out.println("NPV using Heston Characteristic function: "+  heston.calculateUsingCharacteristicFunction());
+
 		type = OptionType.PUT;
 		option = new Option(style,
 				type, underlying,
@@ -311,10 +325,10 @@ public class Test
 
 		bsm = new BSMCalculator(option);
 		System.out.println("NPV using BSM formula:  "+ bsm.calculate());
-		System.out.println("NPV using Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
+		System.out.println("NPV using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
 	}
 	public static void main(String[] args) {
-		testOption1();
+		//testOption1();
 		//testOption2();
 		testOption3();
 //		Option option = new Option(OptionType.CALL, 36.0,

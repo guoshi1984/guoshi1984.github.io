@@ -100,7 +100,7 @@ public class Complex {
 	public Complex sqrt() {
 		double r = Math.sqrt(this.mod());
 	        double phase = this.phase()/2;
-	        return new Complex(Math.cos(phase), r*Math.sin(phase));
+	        return new Complex(r*Math.cos(phase), r*Math.sin(phase));
 	}
 
 	// return a new Complex object whose value is the complex exponential of this
