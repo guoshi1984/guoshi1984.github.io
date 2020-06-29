@@ -1,0 +1,67 @@
+Test Option Pricing Model using Black-Scholes Model
+=============================
+Pricing task: European Call Option Black-Scholes Analytical: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value: 4.286183458983436
+
+=============================
+Pricing Task: European Call Option Black-Scholes Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value 4.276310456927613 +/- 0.026251267831828854
+
+=============================
+Pricing Task: American Call Option Black-Scholes Monte Carlo: 
+Option Style: AMERICAN
+Option Type: CALL
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value 4.300835319255634 +/- 0.02649544800509234
+
+=============================
+Pricing Task: European Put Black-Scholes Analytical: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value: 3.763000927669731
+
+=============================
+Pricing Task: Eueopean Put Black-Scholes Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value 3.7884319625801166 +/- 0.019300017396393244
+
+=============================
+Pricing Task: American Put Black-Scholes Monte Carlo  
+Option Style: AMERICAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Net Present Value 4.8259060946683014 +/- 0.01861752633308731
+

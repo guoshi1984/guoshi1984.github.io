@@ -1,0 +1,33 @@
+======================================
+Test Option Pricing using Heston Model
+======================================
+
+Pricing task: European Call Option Analytical: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 100.0
+Strike Price: 100.0
+Expiring Time: 1.0 years 
+Risk Free Interest Rate: 0.05
+Volatility: 0.15
+Net Present Value using Analytical Formula: 8.591658312089178
+Net Present Value using BSM Characteristic function: 8.590882063690508
+Net Present Value using Heston Characteristic function: 8.590621653984037
+
+Pricing Task: European Call Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 100.0
+Strike Price: 100.0
+Expiring Time: 1.0 years 
+Risk Free Interest Rate: 0.05
+Volatility: 0.15
+Kappa: 2.0
+Theta: 0.0225
+Volatility of volatility: 0.01
+Process correlation: 1.0E-6
+Expiring Time: 1.0 years 
+TimeSteps per Year: 20
+Number of Samples: 100000
+Net Present Value 8.649284292712622 +/- 0.04457129462271758
+
