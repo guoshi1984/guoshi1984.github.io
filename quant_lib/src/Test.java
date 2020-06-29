@@ -114,6 +114,7 @@ public class Test
 		mc.showInfo();
 		mc.run();
 		mc.showResult();
+		System.out.println("=============================");
 		System.out.println();
 	}
 
@@ -121,41 +122,44 @@ public class Test
 		//parameters for option
 		
 		
-		System.out.println("=============================");
-		System.out.println("Test Option Pricing Model using Heston Model");
-		System.out.println("=============================");
+		System.out.println("======================================");
+		System.out.println("Test Option Pricing using Heston Model");
+		System.out.println("======================================");
+		System.out.println();
 		OptionType type = OptionType.CALL;
 		ExerciseStyle style = ExerciseStyle.EUROPEAN;
 		
 		double underlying = 100.0;
 		double strike = 100.0;
-		double riskFreeRate = 0.0;
-		double volatility = 0.1;
-		double time = 0.5;
+		double riskFreeRate = 0.05;
+		double volatility = 0.15;
+		double time = 1;
 		
 	
 			
 		//paramters for MC
 		int timeStepPerYear = 20;
-		int SampleSize = 20000;	
+		int SampleSize = 100000;	
 		Option option = new Option(style,
 				OptionType.CALL, underlying,
 			strike, riskFreeRate, 
 			volatility, time);
-		System.out.println("Pricing task: European Call Option Black-Scholes Analytical: ");
+		System.out.println("Pricing task: European Call Option Analytical: ");
 		option.showInfo();
 		BSMCalculator bsm = new BSMCalculator(option);
 		double npv1 = bsm.calculate();
-		System.out.println("Net Present Value: "+ npv1);
-		System.out.println();	
+		System.out.println("Net Present Value using Analytical Formula: "+ npv1);
+		System.out.println("Net Present Value using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
 		//paramters for heston model
 		double kappa = 2.0;
-		double theta = 0.01;
-		double sigma = 0.1;
-		double rho = 0.5;
+		double theta = 0.0225;
+		double sigma = 0.01;
+		double rho = 0.000001;
+		HestonCalculator heston = new HestonCalculator(option, kappa, theta, sigma, rho);
+		System.out.println("Net Present Value using Heston Characteristic function: "+  heston.calculateUsingCharacteristicFunction());
+		System.out.println();
 		// Monte carlo for Heston, theta is set so the model is the same as BSM model
-		System.out.println("=============================");
-		System.out.println("Pricing Task: Monte Carlo for Heston: ");
+		System.out.println("Pricing Task: European Call Option Monte Carlo: ");
 		option.showInfo();
 		System.out.println("Kappa: " + kappa);
 		System.out.println("Theta: " + theta);
@@ -179,7 +183,7 @@ public class Test
 
 
 		// Monte carlo for Heston, theta is set so the model is different from BSM model
-		System.out.println("=============================");
+		/*System.out.println("=============================");
 		System.out.println("Pricing Task: Monte Carlo for Heston: ");
 		option.showInfo();
 		System.out.println("Kappa: " + kappa);
@@ -201,8 +205,9 @@ public class Test
 		mc2.run();
 		mc2.showResult();
 		System.out.println();
-	
+		*/
 		// Bates process, lambda, nu, delta are set to 0 to reproduce Heston 	
+		/*
 		kappa = 1;
 		theta = 0.04;
 		sigma = 0.001;
@@ -278,12 +283,15 @@ public class Test
 		mc3.run();
 		mc3.showResult();
 		System.out.println();
-
+		*/
 	}
 
 	public static void testOption3() {
+		System.out.println("=============================");
 		System.out.println("Test BSM characteristic function");
-		
+		System.out.println("=============================");
+		System.out.println();
+		System.out.println("Pricing task: European Call Option Based on Heston Model: ");
 		OptionType type = OptionType.CALL;
 		ExerciseStyle style = ExerciseStyle.EUROPEAN;
 		
@@ -306,16 +314,15 @@ public class Test
 		option.showInfo();
 
 		BSMCalculator bsm = new BSMCalculator(option);
-		System.out.println("NPV using BSM formula:  "+ bsm.calculate());
-		System.out.println("NPV using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
+		System.out.println("Net Present Value using BSM formula:  "+ bsm.calculate());
+		System.out.println("Net Present Value using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
 	
 		HestonCalculator heston = new HestonCalculator(option, kappa, theta, sigma, rho);
-		for(int i = 0; i< 100;i++) {
-		//	System.out.println(i);
-		//	heston.getCharacteristicFunction(new Complex(i*1.0, 0));
-		}
-		System.out.println("NPV using Heston Characteristic function: "+  heston.calculateUsingCharacteristicFunction());
+		System.out.println("Net Present Value using Heston Characteristic function: "+  heston.calculateUsingCharacteristicFunction());
+		System.out.println();
 
+
+		System.out.println("Pricing task: European Put Option Based on Heston Model: ");
 		type = OptionType.PUT;
 		option = new Option(style,
 				type, underlying,
@@ -326,11 +333,14 @@ public class Test
 		bsm = new BSMCalculator(option);
 		System.out.println("NPV using BSM formula:  "+ bsm.calculate());
 		System.out.println("NPV using BSM Characteristic function: "+  bsm.calculateUsingCharacteristicFunction());
+		heston = new HestonCalculator(option, kappa, theta, sigma, rho);
+		System.out.println("NPV using Heston Characteristic function: "+  heston.calculateUsingCharacteristicFunction());
+		System.out.println();
 	}
 	public static void main(String[] args) {
 		//testOption1();
-		//testOption2();
-		testOption3();
+		testOption2();
+//		testOption3();
 //		Option option = new Option(OptionType.CALL, 36.0,
 //			40.0, 0.06, 
 //			0.2, 2.0);

@@ -18,10 +18,10 @@ public class HestonCalculator
 
 
 	public Complex getCharacteristicFunction(Complex u) {
-		System.out.println("u" + u);
+		//System.out.println("u" + u);
 		// aa = i\rho \sigma u
 		Complex aa = u.times(new Complex(0, rho*sigma)); 
-		System.out.println("aa "+ aa);
+		//System.out.println("aa "+ aa);
 		// d1 = (aa - kappa)^2
 		Complex d1 = aa.plus(-1.0*kappa);
 		d1 = d1.times(d1);
@@ -32,14 +32,14 @@ public class HestonCalculator
 		// d = sqrt(d1^2 + d2)
 		Complex d = d1.plus(d2);
 		d = d.sqrt();
-		System.out.println("d " + d);	
+		//System.out.println("d " + d);	
 		// gminus = kappa - aa - d
 		Complex gplus = d.minus(aa).plus(kappa);
-		System.out.println("gplus "+ gplus);		
+		//System.out.println("gplus "+ gplus);		
 		// gplus = kappa - aa - d
 		Complex gminus = d.times(-1.0).minus(aa)
 			.plus(kappa);
-		System.out.println("gminus "+ gminus);		
+		//System.out.println("gminus "+ gminus);		
 		// g = g1 /g2
 		Complex g;
 		if(gminus.mod() > 0.000001) 
@@ -47,7 +47,7 @@ public class HestonCalculator
 		else 
 			g = new Complex(999999, 0); 
 		// ffd = 1 - e^{d\tau}
-		System.out.println("g "+ g);		
+		//System.out.println("g "+ g);		
 
 		//edtau = e^{d\tau}
 		Complex edtau = d.times(time).exp();
@@ -55,12 +55,12 @@ public class HestonCalculator
 		Complex gedtau = d.times(time).exp().times(g);
 		// D = g1/sigma^2*ff 
 		Complex ffd = edtau.times(-1).plus(1.0).divides(gedtau.times(-1).plus(1.0));
-		System.out.println("ffd " + ffd);
+		//System.out.println("ffd " + ffd);
 		// D = g1/\sigma^2 * ff
 		//Complex D = gplus.times(ffd);
 		//System.out.println("D "+ D);		
 		Complex D = gplus.times(1.0/sigma/sigma).times(ffd);
-		System.out.println("D "+ D);		
+		//System.out.println("D "+ D);		
 		// C = C1 + C2
 		// C1 = iru\tau
 		Complex C1 = u.times(riskFreeRate).times(time).times(new Complex(0, 1));
@@ -70,19 +70,19 @@ public class HestonCalculator
 		
 		// C22 = -2 log(ff)
 		Complex C22 = gedtau.times(-1).plus(1.0).divides(g.times(-1.0).plus(1.0)).log().times(-2.0);
-		System.out.println("C22 "+ C22);		
+		//System.out.println("C22 "+ C22);		
 		// C2 = \kappa \theta /sigma^2 *(C21 + C22)
 		Complex C2 = C21.plus(C22).times(kappa*theta/sigma/sigma);
-		System.out.println("C2 "+ C2);		
+		//System.out.println("C2 "+ C2);		
 		
 		Complex C = C1.plus(C2);
-		System.out.println("C "+ C);	
-		System.out.println("DV" + D.times(volatility*volatility));	
-		System.out.println("C + DV "+ C.plus(D.times(volatility*volatility)));	
+		//System.out.println("C "+ C);	
+		//System.out.println("DV" + D.times(volatility*volatility));	
+		//System.out.println("C + DV "+ C.plus(D.times(volatility*volatility)));	
 		Complex ch = C.plus(D.times(volatility*volatility)).plus(u.times(Math.log(underlying)).times(new Complex(0,1)));
-		System.out.println("ch base "+ ch);
+		//System.out.println("ch base "+ ch);
 		ch = ch.exp();
-		System.out.println("ch "+ ch);
+		//System.out.println("ch "+ ch);
 		return ch; 
 	}
 
