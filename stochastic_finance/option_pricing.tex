@@ -97,7 +97,7 @@ saving account. Another way is based on the risk-neutral pricing formula and Fey
 These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
 \subsection{Black-Scholes-Merton Model: Analytic Solution for European Option}
 {\bf1. European call option}\\
-For European call option with payoff to be $V(T) = S(T) - K$, with K as strike price, let us assume constant volatility $\sigma$, and constant interest rate r. 
+For European call option with payoff to be $V(T) = max(S(T) - K, 0)$, with K as strike price, let us assume constant volatility $\sigma$, and constant interest rate r. 
 Then we can obtain the solution to the BSM equation with martingale property without bothering solving the complex parital
 differential equation. The call option value satisfies
 \begin{align*}
@@ -134,7 +134,7 @@ Where
 \end{align*}
 N() is the cumulative distribution function of the standard normal distribution
 {\bf 2. European put option}\\
-The payoff for the European put option is $V(T) = K - S(T)$, we can follow a similiar derivation and get the formula for put option
+The payoff for the European put option is $V(T) = max(K - S(T), 0)$, we can follow a similiar derivation and get the formula for put option
 \begin{align*}
 	p(\tau,x; K, r, \sigma) = Ke^{-r\tau}N(-d_2)-xN(-d_1)
 \end{align*}
@@ -206,24 +206,24 @@ Where
 \begin{align*}
 	d\tilde W_1(t) d\tilde W_2(t) = \rho dt
 \end{align*}
-The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$. To solve the option pricing for this model, We apply the same martingale property. And the option price under risk-neutral measure is
+The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$. To solve the option pricing for this model, we apply the same martingale property under risk-neutral measure. The value of the European call option is
 \begin{align*}
-	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
+	C(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
 \end{align*}
 Let $x_T = ln(S_T)$, and $\tau = T - t$, then, and we assume the pdf of $ln(x_T)$ given $x_t$is $p(x_T | x_t)$, then
 \begin{align*}
 	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^{x_T} - K) p(x_T| x_t) dx_T \\
 		   & = e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} pdf(x_T| x_t) dx_T 
 		   - e^{-r\tau} K \int_{lnK}^{\infty}  p(x_T | x_t) dx_T \\
-		   & = S_0 f_1 -  e^{-r \tau} K f_2\\
+		   & = S_0 I_1 -  e^{-r \tau} K I_2\\
 \end{align*}
 where 
-\begin{align*}
-	f_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} p(x_T | x_t) dx_T
-\end{align*}
-\begin{align*}
-	f_2 = \int_{lnK}^{\infty}  p(x_T | x_t) dx_T
-\end{align*}
+\begin{align}
+	I_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} p(x_T | x_t) dx_T \label{I_1}
+\end{align}
+\begin{align}
+	I_2 = \int_{lnK}^{\infty}  p(x_T | x_t) dx_T \label{I_2}
+\end{align}
 So as long as we know the pdf of $x_T$, we can solve these two integral and get $C(t, S(t))$. But unlike in the BSM model, the analytical form of pdf of x does not exist for Heston model. Fortunately, literauture shows the characteristic function of x exists. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate the derivation in the Appendix. \\
 Suppose $\phi(u, x_t)$ is the characteristic function of $p(x_T| x_t)$, Heston shows $\phi(u,x_t)$ takes the form of
 \begin{align*}
@@ -530,9 +530,9 @@ So Eq. \ref{characteristic_pde1} becomes
 \end{align*}
 If we substitude the expression of $\phi(u, t, x)$ in Eq. \ref{phi} into Eq. \ref{characteristic_pde}, work out the derivative terms and separate the term with and without $V$, we can get the following two equations
 \begin{align*}
-	\frac{\partial D}{\partial t} - \kappa D - \frac{1}{2}u^2 -\frac{1}{2}iu + i\rho \sigma u D
+	-\frac{\partial D}{\partial \tau} - \kappa D - \frac{1}{2}u^2 -\frac{1}{2}iu + i\rho \sigma u D
 	+\frac{1}{2} \sigma^2 D^2 = 0 \\
-	\frac{\partial C}{\partial t} + iru + \kappa \theta D = 0
+	-\frac{\partial C}{\partial \tau} + iru + \kappa \theta D = 0
 \end{align*}
 These equations can be solved and we can get the expression of C and D as in Eq. \ref{heston_C} and Eq. \ref{heston_D}.
 \begin{align*} 
@@ -548,24 +548,30 @@ Where
 	g = \frac{\kappa - i \rho \sigma u + d}{\kappa - i \rho \sigma u -d} \\
 \end{align*}
 \subsubsection{Option Price Solution based on Characteristic Function}
-
+From Eq. \ref{I_1} and Eq. \ref{I_2}
+\begin{align*}
+	I_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} p(x_T | x_t) dx_T 
+\end{align*}
+\begin{align*}
+	I_2 = \int_{lnK}^{\infty}  p(x_T | x_t) dx_T 
+\end{align*}
 Using inverse Fourier transform, we have
 \begin{align*}
 	p(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du
 \end{align*}
-Then we can write $f_2$ as
+Then we can write $I_2$ as
 \begin{align*}
-	f_2  = \int_{lnK}^{\infty}  p(x) dx
+	I_2  = \int_{lnK}^{\infty}  p(x) dx
 	   = \int_{lnK}^{\infty} ( \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-iux}  \phi(u) du) dx
 \end{align*}
 Changing the order the integration yields
 \begin{align*}
-	f_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u) (\int_{lnK}^{\infty} e^{-iux}  dx) du \\
+	I_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u) (\int_{lnK}^{\infty} e^{-iux}  dx) du \\
 	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)(\int_{-\infty}^{\infty} {\bf 1}_{x > lnK}e^{-iux}dx) du\\
 \end{align*}
 The inner integral is the inverse Fourier transform of a step function and the result is well-known.
 \begin{align*}
-	f_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} + \pi \delta(u)) du \\
+	I_2 & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} + \pi \delta(u)) du \\
 	  & = \frac{1}{2\pi} \int_{-\infty}^{\infty}\phi(u)( \frac{1}{iu }e^{-i u lnK} ) du + \frac{1}{2} \\
 	  & = \frac{1}{2\pi} (\int_{-\infty}^{0}\frac{1}{iu}\phi(u) e^{-i u lnK} +  \int_{0}^{\infty}\frac{1}{iu }\phi(u) e^{-i u lnK}) du + \frac{1}{2} \\
 	  & = \frac{1}{2\pi} \int_{\infty}^{0}\frac{1}{i(-u)}\phi(-u) e^{i u lnK}d(-u) +\int_{0}^{\infty}\frac{1}{iu }\phi(u) e^{-i u lnK}  du + \frac{1}{2} \\
@@ -574,15 +580,15 @@ The inner integral is the inverse Fourier transform of a step function and the r
 	  & = \frac{1}{2\pi} \int_{0}^{\infty}\mathcal Re( 2\frac{1}{iu }\phi(u) e^{-i u lnK})  du + \frac{1}{2} \\
 	  & = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{1}{iu }\phi(u) e^{-i u lnK})  du + \frac{1}{2} \\
 \end{align*}
-$f_1$ is a little tricky, 
+$I_1$ is a little tricky, 
 \begin{align*}
-        f_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
+        I_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^x p(x) dx
 	  = \frac{1}{S_0} e^{-r \tau}\frac{\int_{lnK}^{\infty} e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
-	  \int_{-\infty}^{\infty} e^x pdf(x) dx
+	  \int_{-\infty}^{\infty} e^x p(x) dx
 \end{align*}
 Based on martingale property $\int_{-\infty}^{\infty} e^x p(x) dx = e^{rT}S_0$, so
 \begin{align*}
-	f_1 = \int_{lnK}^{\infty} \frac{e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
+	I_1 = \int_{lnK}^{\infty} \frac{e^x p(x) dx}{\int_{-\infty}^{\infty} e^x p(x) dx}
 	 =  \int_{lnK}^{\infty} {p}^{'} dx
 \end{align*}
 The Fourier transform of function ${p}^{'}$ is
@@ -590,7 +596,10 @@ The Fourier transform of function ${p}^{'}$ is
 	&\frac{\int_{-\infty}^{\infty} e^{iux + x}p(x)dx}{\int_{-\infty}^{\infty} e^{i(-i)x} p(x) dx} \\
 	=&\frac{\phi(u-i)}{\phi(-i)}\\
 \end{align*}
-
+So $I_1$ is
+\begin{align*}
+	I_1 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re(\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)})du +\frac{1}{2} \\
+\end{align*}
 \subsubsection{Partial Differential Equation for Heston Model} 
 The Heston model states the asset price follows
 \begin{align}
