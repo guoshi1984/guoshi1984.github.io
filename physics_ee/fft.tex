@@ -14,7 +14,7 @@ i is the imaginary unit, and k is an integer. The above expression is eligible b
 \begin{align*}
 	e^{\frac{2 \pi i k t}{T}} = e^{\frac{2 \pi i k(t+T)}{T}}
 \end{align*}
-Each basis $e^{\frac{2 \pi i }{T}}$ represents a signal with frequency $f_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta f = \frac{1}{T}$.
+Each basis $e^{\frac{2 \pi i k t }{T}}$ represents a signal with frequency $f_k = \frac{k}{T}$. So the interval between each adjacent frequency $\Delta f = \frac{1}{T}$.
 Based on orthogonality, we can get $c_k$ 
 \begin{align*}
 	c_k = \frac{1}{T} \int_0^T x(t) e^{-i\frac{2 \pi k t}{T}} dt
@@ -83,7 +83,7 @@ x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{2 i \pi f_0 t} + e^{- 2 i \pi f_0 t})
 The above is the Fourier transform in continuous case, in discrete case
 If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
 \begin{align*}
-	f(n) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k n \Delta t}{N \Delta t}}\\
+	x(n) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k n \Delta t}{N \Delta t}}\\
 	     & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k n }{N }}\\
 \end{align*}
 \begin{align*}
@@ -132,19 +132,19 @@ and the discrete inverse Fourier transform
 {\bf Example\\}
 Let N = 4, and \\
 \begin{align*}
-	f(n) = cos(2 \pi \frac{n}{4}) = \frac{1}{2} (e^{i 2 \pi \frac{n}{4}} + e^{-i 2 \pi \frac{n}{4}})
+	x(n) = cos(2 \pi \frac{n}{4}) = \frac{1}{2} (e^{i 2 \pi \frac{n}{4}} + e^{-i 2 \pi \frac{n}{4}})
 \end{align*}
 \begin{align*}
-	c_k & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} (e^{i 2 \pi \frac{n}{4} } + e^{-i 2 \pi \frac{n}{4} }) e^{-i\frac{2 \pi k n}{4}} 
+	\mathcal F(k) & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} (e^{i 2 \pi \frac{n}{4} } + e^{-i 2 \pi \frac{n}{4} }) e^{-i\frac{2 \pi k n}{4}} 
 \end{align*}
 Similary to the continuous case, only terms with k = +/-1  in the above expression can survive, when $k=1$
 \begin{align*}
-	c_1 & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} e^{i 2 \pi \frac{n}{4} } e^{-i\frac{2 \pi n}{4}} \\
+	\mathcal F(1) & = \frac{1}{4} \sum_{n=1}^4 \frac{1}{2} e^{i 2 \pi \frac{n}{4} } e^{-i\frac{2 \pi n}{4}} \\
 	& = \frac{1}{4}\frac{1}{2}4 \\
  	& = \frac{1}{2} \\
 \end{align*}
 What about case for $k=-1$? We define k = {1, 2, 3, 4} so $k = -1$ is not defined. However, in discrete case we note $c_{-1} = c_{3}$ due to the periodicity.
-Similarly, we can calculate $c_{3} = \frac{1}{2}$.\\
+Similarly, we can calculate $\mathcal F(3) = \frac{1}{2}$.\\
 N is the total sample within time T.\\
 {\bf Properties}\\
 \noindent 1) To be eligible, f(x) has to be a period function with time T(with frequency $F=\frac{1}{T}$) in both continuous case and discrete case.  The requirement in discrete case leads to uniform sampling theorem used in signal processing. The total sampling time $T_{sampling}$ has to be an integer multiple of $T$.
@@ -160,7 +160,7 @@ if we let $\Delta t= \frac{1}{F_s}$, where $F_s$ is the sampling frequency, and 
 \begin{align*}
 	\frac{M}{F} = \frac{N}{F_s}
 \end{align*}
-\noindent 2) If $f(x)$ is real, which means $f(x) = f^{*}(x)$. We then substitute Fourier series for both $f(x)$ and $f*(x)$,  
+\noindent 2) If $x(n)$ is real, which means $x(n) = x^{*}(n)$. We then substitute Fourier series for both $x(n)$ and $x*(n)$,  
 \begin{align} \label{eq1}
 	\sum_{-\infty}^{+\infty} c_k e^{2 \pi i \frac{1}{T} kx} = \sum_{-\infty}^{+\infty} c_k^* e^{-2 \pi i \frac{1}{T} kx}
 \end{align}
@@ -181,8 +181,8 @@ f(x) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	 \\
 & = c_0 + 2 \sum_{k=1}^{\infty} |c_k| cos(2 \pi k F_0 t + \theta_k) \\
 & = a_0 + \sum_{k=1}^{\infty} (a_k cos(2 \pi k F_0 t)  - b_k sin(2 \pi k F_0 t) ) \\
 \end{align*}
-where $a_0 = c_0$, $a_k = 2 |c_k|cos \theta_k$, $b_k = 2 |c_k| sin \theta_k$. 
-\noindent 4) $c_k = c_{k+N}$. So when a signal contains frequency component no larger than $B$, in other words, the bandwidth of the signal is $2B(-B\textrm( to )B)$, then in order to capture the whole bandwidth of the signal, $N \Delta f > 2B$. This leads to Nyquist sampling theorem $F_s > 2B(bandwidth)$.\\
+where $a_0 = c_0$, $a_k = 2 |c_k|cos \theta_k$, $b_k = 2 |c_k| sin \theta_k$. \\ 
+\noindent 4) $f(k) = f(k+N)$. So when a signal contains frequency component no larger than $B$, in other words, the bandwidth of the signal is $2B(-B\textrm( to )B)$, then in order to capture the whole bandwidth of the signal, $N \Delta f > 2B$. This leads to Nyquist sampling theorem $F_s > 2B(bandwidth)$.\\
 \noindent 5) Power density
 \begin{align*}
 	P_x & = \frac{1}{T} \int |x(t)|^2 dt \\
