@@ -96,21 +96,28 @@ The interval in the frequency domain is
 	\Delta f = f_{k+1} - f_{k} = \frac{k+1}{T}  - \frac{k}{T} = \frac{1}{T} = \frac{1}{N \Delta t}
 \end{align*}
 {\bf Discrete Fourier Transform}\\
-In the discrete case, suppose we sample a signal N times within time T.  Then $t = n\Delta t$, where $\Delta t = N/T$ , the integral in the Fourier transform becomes a summation. So we write the Fourier transform as
+In the discrete case, suppose we sample a signal N times within time T.  We divide time T into N time intevals with length being $\Delta t = N/T$. Then we can let $t = n\Delta t$, the integral in the Fourier transform becomes a summation. So we write the Fourier transform as
 \begin{align*}
 	\mathcal F(f) = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i f n \Delta t} \frac{T}{N}
 \end{align*}
 In frequency domain, the frequency also becomes discrete, and same as the case in discrete Fourier series,
-$\Delta f = \frac{1}{T}$. Another way of seeing $\Delta f$ is when we confine the length of time domain to T, the function in time domain has to be periodic function with period T. Therefore, we have to require
+$\Delta f = \frac{1}{T}$. Another way of seeing $\Delta f$ is when we confine the length of time domain to T, the function in time domain has to be periodic function with period T. So we have
 \begin{align*}
-	2\pi f(n + N)\Delta t = 2\pi f n \Delta t + 2\pi k
+	e^{2\pi f (n\Delta t + T)} = e^{2\pi f n \Delta t} 
 \end{align*}
-where k is integer. This leads to
+This requires 
 \begin{align*}
-	f N\Delta t = f T = k\\
+	2\pi f T = 2 \pi k
+\end{align*}
+where k is integer. This leads discrete frequencies
+\begin{align*}
+	f = \frac{k}{T}
+\end{align*}
+and 
+\begin{align*}
 	\Delta f = \frac{1}{T} \\ 
 \end{align*}
-Let $f = k \Delta f$, then 
+Using $f = k \Delta f$, we can rewrite our Fourier transform 
 \begin{align*}
 	\mathcal F(k\Delta f) & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k \Delta f n \Delta t} \frac{T}{N} \\
 			     & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } \frac{T}{N}	
@@ -169,7 +176,7 @@ Since the summation on the right hand side is from $-\infty$ to $\infty$, it is 
 	\sum_{-\infty}^{+\infty} c_k^* e^{-2 \pi i \frac{1}{T} kx}
 = \sum_{\infty}^{-\infty} c_{-k}^* e^{2 \pi i \frac{1}{T} kx}
 \end{align}
-Combine the above two equations \ref{eq1} and \ref{eq2}, we can see $c_k = c_{-k}^*$. This means they are complex conjugate: their magnitude are equal, their phase are opposite.  Namely $||c_k|| = ||c_{-k}||$, $\phi(c_k) = \phi(c_{-k})$.\\
+Combine the above two equations \ref{eq1} and \ref{eq2}, we can see $c_k = c_{-k}^*$. This means they are complex conjugate: their magnitude are equal, their phase are opposite.  Namely $||c_k|| = ||c_{-k}||$, $\phi(c_k) = \phi(c_{-k})$. Similarly, for discrete Fourier transform, $||\mathcal F_k|| = ||\mathcal F_{-k}||$\\
 \noindent 3) Connection between complex representation and real representation.\\
 We have shown that for real signal $c_k = c_{-k}^*$ and $c_k = |c_k| e^{j \theta_k}$, 
 $c_{-k} = |c_k| e^{- j \theta_k}$. And in complex representation, we can combine the term with index k and -k,
@@ -182,7 +189,7 @@ f(x) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	 \\
 & = a_0 + \sum_{k=1}^{\infty} (a_k cos(2 \pi k F_0 t)  - b_k sin(2 \pi k F_0 t) ) \\
 \end{align*}
 where $a_0 = c_0$, $a_k = 2 |c_k|cos \theta_k$, $b_k = 2 |c_k| sin \theta_k$. \\ 
-\noindent 4) $f(k) = f(k+N)$. So when a signal contains frequency component no larger than $B$, in other words, the bandwidth of the signal is $2B(-B\textrm( to )B)$, then in order to capture the whole bandwidth of the signal, $N \Delta f > 2B$. This leads to Nyquist sampling theorem $F_s > 2B(bandwidth)$.\\
+\noindent 4) $\mathcal F(k) = \mathcal F(k+N)$. We remember $\Delta f = \frac{1}{T}$, so the Fourier transform function is also periodic with period $\frac{N}{T}$. Therefore, it is sufficient enough for us to confine k to be within the range $-N/2 < k \leq N$. For all the integers of $k^'$ which are beyond this range, we can an equivalent integer of k within $-N/2 < k \leq N$ that satisfies $\mathcal F(k^{'}) = \mathcal F(k)$.  With sample frequency $F_s = \frac{N}{T}$, the maximum frequecy of the signal(bandwidth B) we can tell is $B = \frac{N}{2T} = \frac{F_s}{2}$. In other words, in order to capture the whole bandwidth B of the signal, we must have $F_s \leq 2B$. This is Nyquist sampling theorem.\\
 \noindent 5) Power density
 \begin{align*}
 	P_x & = \frac{1}{T} \int |x(t)|^2 dt \\
