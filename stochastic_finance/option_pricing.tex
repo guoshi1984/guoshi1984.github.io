@@ -195,18 +195,17 @@ $D = e^{-r\tau}$ is the discount factor \\
 \subsection{Heston Stochasic Volatility Model}
 The Black-Scholes equation assumes the volatility is constant, which is the ideal case and not practical in the real market. The Heston model\cite{heston} assumes the volatility to follow a stochastic process. Suppose a stock price under risk-neutral measure is governed by
 \begin{align}
-	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) d \tilde W_1(t)
+	dS(t) = rS(t)dt + \sqrt{V(t)} S(t) d \tilde W_1(t) 
 \end{align}
 and the volatility itself is governed by the equation
 \begin{align}
-	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} d \tilde W_2(t) \\
-	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} d \tilde W_2(t) \\
+	dV(t) & = \kappa (\theta -V(t))dt + \sigma \sqrt{V(t)} d \tilde W_2(t) \label{heston_volatility}
 \end{align}
 Where 
 \begin{align*}
 	d\tilde W_1(t) d\tilde W_2(t) = \rho dt
 \end{align*}
-The parameter $\frac{a}{b}$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$. To solve the option pricing for this model, we apply the same martingale property under risk-neutral measure. The value of the European call option is
+The parameter $\theta$ can be viewed as a long-term average variance. And the instantaneous variance is pulled elastically towards the long-term variance by a speed controlled by parameter $b$. To solve the option pricing for this model, we apply the same martingale property under risk-neutral measure. The value of the European call option is
 \begin{align*}
 	C(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
 \end{align*}
@@ -226,9 +225,9 @@ where
 \end{align}
 So as long as we know the pdf of $x_T$, we can solve these two integral and get $C(t, S(t))$. But unlike in the BSM model, the analytical form of pdf of x does not exist for Heston model. Fortunately, literauture shows the characteristic function of x exists. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate the derivation in the Appendix. \\
 Suppose $\phi(u, x_t)$ is the characteristic function of $p(x_T| x_t)$, Heston shows $\phi(u,x_t)$ takes the form of
-\begin{align*}
-	\phi(u) = exp(C(\tau, u) + D(\tau, u)V_0 + iux_t)
-\end{align*}
+\begin{align}
+	\phi(u) = exp(C(\tau, u) + D(\tau, u)V_0 + iux_t) \label{heston_characteristic}
+\end{align}
 With C and D defined as
 \begin{align} 
 	C(\tau, u) = iru\tau + \frac{\kappa \theta}{\sigma^2}
@@ -373,7 +372,7 @@ We know the W(t) is a Normal random variable with mean 0 and variance t. So supp
 The Heston model states
 \begin{align*}
         dS(t) = rS(t)dt + \sqrt{V(t)} S(t) \tilde dW_1(t) \\
-        dV(t) = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+        dV(t) = \kappa (\theta - V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
         \tilde dW_1(t) \tilde dW_2(t) = \rho dt \\
 \end{align*}
 {\bf a. Generating two Brownian motions with correlation. }\\
@@ -398,38 +397,39 @@ The last step uses the fact $W_1$ and $W_2$ are independent, so $E[W_1 W_2] = E[
 The Heston model setting provides a non-negative V(t). This can be seen when V(t) is positively moving close to zero, the drift term $adt$ pulls the V(t) up and avoid $V(t)$ to cross zero. However, in discretized version $V(t)$ may attain negative values. There exists several methods to deal with this issue.\\
 (1) Absorption: Keep positive part of the previous $V(t)$ and use it to calculate next step $V(t+dt)$ and X(t+dt)\\
 \begin{align*}
-	V^{(t + dt)} = V^{+(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	V^{(t + dt)} = V^{+(t)} + \kappa (\theta -  V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2)
 \end{align*}
 (2) Relection: Keep the absolute value of the previous $V(t)$ and use it to calculate next step $V(t+dt)$ and X(t+dt)\\
 \begin{align*}
-	V^{(t + dt)} = |V^{(t)}| + (a - b |V^{(t)}|) \sqrt{dt} + \sigma \sqrt{|V^{(t)}|}  dt (\rho \hat W_1
+	V^{(t + dt)} = |V^{(t)}| + \kappa (\theta -  |V^{(t)}|) \sqrt{dt} + \sigma \sqrt{|V^{(t)}|}  dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2)
 \end{align*}
 (3) Partial truncation: Using the posivive part in diffusion term of $V(t+dt)$ and in $X(t + dt)$\\
 \begin{align*}
-	V^{(t + dt)} = V^{(t)} + (a - b V^{(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	V^{(t + dt)} = V^{(t)} + \kappa(\theta -  V^{(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2)
 \end{align*}
 (4) Full truncation\cite{fulltruncation}: Using the positive part in drift and diffusion terms of $V(t + dt)$, and in $X(t + dt)$. 
 This scheme is proved to have the lowest bias.
-\begin{align*}
-	V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
-	+ \sqrt{1 - \rho^2} \hat W_2)
-\end{align*}
+\begin{align}
+	V^{(t + dt)} = V^{(t)} + \kappa(\theta -  V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	+ \sqrt{1 - \rho^2} \hat W_2)  \label{full_truncation}
+\end{align}
 Together with formula for the drift and asset price, we write
 \begin{align*}
 	& \mu = r - \frac{1}{2} (V^{+(t)})\\
 	& S^{(t + dt)} = S^{(t)}exp(\mu dt + \sqrt{V^{+(t)}} \sqrt{dt} W_1) \\
-	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	& V^{(t + dt)} = V^{(t)} + \kappa (\theta - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2) 
-\end{align*}        
+\end{align*}
+All these above belong to the Euler discretization schemes which lead to more or less discretization errors. There exists an exact but computationaly expensive simulation scheme proposed by Broadie and Kaya\ref{exact_heston} by sampling the transition probability of $V(t)$ given $V(u)$（$u < t$) using chi-square distribution.
 3. Bates process\\
 \begin{align*}
 	& \mu = r - \frac{1}{2} (V^{+(t)}) - \lambda (e^{\nu + \frac{1}{2}\delta^2}  -1) \\
 	& S^{(t + dt)} = S^{(t)}exp(\mu dt  + \sqrt{V^{+(t)}} \sqrt{dt} dW_1 
 	   + (\nu_*N+\delta^2*\sqrt{N})*dW_3)\\
-	& V^{(t + dt)} = V^{(t)} + (a - b V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
+	& V^{(t + dt)} = V^{(t)} + \kappa(\theta -  V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2 )
 \end{align*}
 \section{Simulation for American Option}
@@ -453,34 +453,58 @@ Then the second part is to define a stopping time $\tau^{(m)}$ for each path. \\
 $PV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K)$\\
 (4) average $PV^{(m)}$ to get the price of the option\\
 \section{Result}
-{\bf Simulation of option value with BSM process using both analytical(ANAL) and Monte Carlo(MC)}\\
-We calcuate value of  option of different type and style listed in Table. \ref{option_bsm}. For MC method, we choose 100 timesteps and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one. Our data matches the data presented in \cite{americanoption}. The result verified that for European option, there is no incentive to exercise early as the payoff function given the risk-neutral measure is a submartingale and has the trend to increase. For American put option, the NPV is larger than the NPV of European option across different strike prices and volatilities, so the early exercise value is clearly visible.
+{\bf Simulation of option value with BSM model using both analytical(ANAL) and Monte Carlo(MC).} We calcuate the values of  option of different types and styles listed in Table. \ref{option_bsm}. For MC method, we choose 100 timesteps per year and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one. Our data matches the data presented in \cite{americanoption}. The result verified that for European option, there is no incentive to exercise early as the payoff function given the risk-neutral measure is a submartingale and has the trend to increase. For American put option, we observe that the NPV is larger than the NPV of European option across different strike prices and volatilities, so the early exercise value is clearly visible.
+
 \begin{table}
-	\begin{tabular} { l  c  c   c  c  c       c       c        c  }
-		Style 	 & Type & S  & K & r & $\sigma$ & NPV(ANAL) & NPV(MC) &Ref\cite{americanoption}\\
+	\begin{tabular} { l  c  c   c  c  c   c    c       c        c  }
+		Style 	 & Type & S  & K & r & Time &$\sigma$ & NPV(ANAL) & NPV(MC) &Ref\cite{americanoption}\\
 	\hline 
-		European & Call & 36.0 & 40 & 0.06 & 0.2 & 4.28 & 4.27(3) & \\
-		American & Call & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.28(3) &\\
-		European & Put  & 36.0 & 40 & 0.06 & 0.2 & 3.76 & 3.76(2) &\\
-		American & Put  & 36.0 & 40 & 0.06 & 0.2 & N/A  & 4.81(3) & 4.82(1)\\
-		European & Call & 36.0 & 40 & 0.06 & 0.4 & 8.22 & 8.27(6) &\\
-		American & Call & 36.0 & 40 & 0.06 & 0.4 & N/A  & 8.23(6) &\\
-		European & Put  & 36.0 & 40 & 0.06 & 0.4 & 7.70 & 7.70(4) &\\
-		American & Put  & 36.0 & 40 & 0.06 & 0.4 & N/A  & 8.50(3) & 8.49(2)\\
-		European & Call & 44.0 & 40 & 0.06 & 0.2 & 9.95 & 9.93(5) &\\
-		American & Call & 44.0 & 40 & 0.06 & 0.2 & N/A  & 9.91(5) &\\
-		European & Put  & 44.0 & 40 & 0.06 & 0.2 & 1.43 & 1.44(1) &\\
-		American & Put  & 44.0 & 40 & 0.06 & 0.2 & N/A  & 1.67(3) & 1.68(1)\\
-		European & Call & 44.0 & 40 & 0.06 & 0.4 & 13.73 & 13.81(9) &\\
-		American & Call & 44.0 & 40 & 0.06 & 0.4 & N/A  & 13.75(8) &\\
-		European & Put  & 44.0 & 40 & 0.06 & 0.4 & 5.20 &  5.18(3)&\\
-		American & Put  & 44.0 & 40 & 0.06 & 0.4 & N/A  &  5.58(3)& 5.62(2)\\
+		European & Call & 36.0 & 40 &2 & 0.06 & 0.2 & 4.28 & 4.27(3) & \\
+		American & Call & 36.0 & 40 &2 & 0.06 & 0.2 & N/A  & 4.28(3) &\\
+		European & Put  & 36.0 & 40 &2 & 0.06 & 0.2 & 3.76 & 3.76(2) &\\
+		American & Put  & 36.0 & 40 &2 & 0.06 & 0.2 & N/A  & 4.81(3) & 4.82(1)\\
+		European & Call & 36.0 & 40 &2 & 0.06 & 0.4 & 8.22 & 8.27(6) &\\
+		American & Call & 36.0 & 40 &2 & 0.06 & 0.4 & N/A  & 8.23(6) &\\
+		European & Put  & 36.0 & 40 &2 & 0.06 & 0.4 & 7.70 & 7.70(4) &\\
+		American & Put  & 36.0 & 40 &2 & 0.06 & 0.4 & N/A  & 8.50(3) & 8.49(2)\\
+		European & Call & 44.0 & 40 &2 & 0.06 & 0.2 & 9.95 & 9.93(5) &\\
+		American & Call & 44.0 & 40 &2 & 0.06 & 0.2 & N/A  & 9.91(5) &\\
+		European & Put  & 44.0 & 40 &2 & 0.06 & 0.2 & 1.43 & 1.44(1) &\\
+		American & Put  & 44.0 & 40 &2 & 0.06 & 0.2 & N/A  & 1.67(3) & 1.68(1)\\
+		European & Call & 44.0 & 40 &2 & 0.06 & 0.4 & 13.73 & 13.81(9) &\\
+		American & Call & 44.0 & 40 &2 & 0.06 & 0.4 & N/A  & 13.75(8) &\\
+		European & Put  & 44.0 & 40 &2 & 0.06 & 0.4 & 5.20 &  5.21(3)&\\
+		American & Put  & 44.0 & 40 &2 & 0.06 & 0.4 & N/A  &  5.65(3)& 5.62(2)\\
 	\hline
 	\end{tabular}\\
-\caption{Simulation result of different options using BSM process.
-	S: Underlying Asset Price. K: strike price. r: interest rate. 
+\caption{Simulation result of different options using BSM model.
+	S: Underlying Asset Price. K: strike price. r: interest rate. Time: time to expiration.
 	$\sigma$: volatility. NPV(ANAL): Analytical result of net present value.
 	NPV(MC): Monte Carlo result of net present value.}\label{option_bsm}
+\end{table}
+
+
+{\bf Simulation of option value with Heston model using both analytical(ANAL) and Monte Carlo(MC)} We calcluate the values of different options using Heston model and list
+ the result in Table \ref{option_heston}. For the parameters, $\theta$ is chosen to be the square of the initial volatility. And $\rho$ is chosen to be a negative value because there is negatived correlated relationship between the change of the stock price and the change of volatility in Ref. \ref{geske}, Eq. 17.In the table, with each set of parameters, we present two ways of calculation. The first one is using characteristic function inversion defined in Eq \ref{heston_characteristic}, Eq \ref{heston_C}, Eq \ref{heston_D} and we label it as NPV(ANAL). The second is Monte Carlo labeled as NPV(MC). In Monte Carlo method, we use full truncation scheme to prevent $V(t)$ to be negative. 40 time steps per year and 10000 samples are used. We see that these two methods agree pretty well.
+
+\begin{table}
+	\begin{tabular} { l    c c  c  c  c    c c c    c       c          }
+		 Type & S  & K & r& Time & $\kappa$& $\theta$ & $\sigma$ & $\rho$ & NPV(ANAL) & NPV(MC) \\
+	\hline 
+		 Call & 36.0 & 40 & 0.06&   2 &  2 &  0.04  & 0.1& -0.5 & 4.26 & 4.26(1)  \\
+		 Put  & 36.0 & 40 & 0.06&   2 &  2 &  0.04  & 0.1& -0.5 & 3.74 & 3.73(1) \\
+		 Call & 36.0 & 40 & 0.06&   2 &  2 &  0.16  & 0.1& -0.5 & 8.18 & 8.19(3) \\
+		 Put  & 36.0 & 40 & 0.06&   2 &  2 &  0.16  & 0.1& -0.5 & 7.65 & 7.64(2) \\
+		 Call & 44.0 & 40 & 0.06&   2 &  2 &  0.04  & 0.1& -0.5 & 10.01 & 10.03(2) \\
+		 Put  & 44.0 & 40 & 0.06&   2 &  2 &  0.04  & 0.1& -0.5 & 1.49 & 1.48(1) \\
+		 Call & 44.0 & 40 & 0.06&   2 &  2 &  0.16  & 0.1& -0.5 & 13.73 & 13.75(4) \\
+		 Put  & 44.0 & 40 & 0.06&   2 &  2 &  0.16  & 0.1& -0.5 & 5.20 &  5.18(1)\\
+	\hline
+	\end{tabular}\\
+\caption{Simulation result of European options based on Heston model.
+	S: Underlying Asset Price. K: strike price. r: interest rate. $\kappa$, $\theta$, $\sigma$, $\rho$ are defined in Eq \ref{heston_volatility}.
+	 NPV(ANAL): Analytical result of net present value.
+	NPV(MC): Monte Carlo result of net present value.}\label{option_heston}
 \end{table}
 \appendix
 \section{Applendices}
@@ -607,8 +631,7 @@ The Heston model states the asset price follows
 \end{align}
 and the volatility itself is governed by the equation
 \begin{align}
-	dV(t) & = (a -bV(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
-	      & = b(\frac{a}{b} -V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
+	dV(t) & = \kappa(\theta -V(t))dt + \sigma \sqrt{V(t)} \tilde dW_2(t) \\
 \end{align}
 Where 
 \begin{align*}
@@ -695,5 +718,15 @@ The function $c(t, s, v)$ satisfies boundary condition
 		"A comparison of biased simulation schemes for stochastic volatility models", 
 		\textit{Quantitative Finance}, 
 		Vol. 10, pp. 177-194, 2010.
+	\bibitem{exact_heston}
+		Mark Broadie, Ozgur Kaya,
+		"Exact Simulation of Stochastic Volatility and Other Affine Jump Diffusion Processes",
+		\textit{Operations Research},
+		Vol. 54, No. 2, 2006.
+	\bibitem{geske}
+		Robert Geske,
+		"The Valuation of Compound Options"
+		\textit{Journal of Financial Economics},
+		Vol. 7 pp. 63-81, 1979.
 \end{thebibliography}
 \end{document}
