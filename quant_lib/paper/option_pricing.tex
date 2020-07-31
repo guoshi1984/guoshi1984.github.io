@@ -76,21 +76,21 @@ As the expecation of $dW(t)$ is 0, the expectation of discounted value of the po
 \begin{align*}
 	X(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]
 \end{align*}
-where X(T) = V(T).
-We set the option price $c(t, S(t))$ to be $X(t)$
+To find the value of the option at time t, we use the replicating strategy, in which we replicate the payoff of option g(T) at time T using portfolio X(T) by setting X(T) = g(T)
+Based on martingale property of X(t), the option price $c(t, S(t))$ is
 \begin{align*}
-	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)]
+	c(t, S(t)) = x(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]= \tilde E[e^{-r(T-t)}g(T)| F(t)]
 \end{align*}
 \subsection{Connection to Faynman-Kac formula}
 From above, we know
 \begin{align}
-	c(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}h(S(T))| F(t)] \label{rn}
+	c(t, S(t)) = \tilde E[e^{-r(T-t)}g(T)| F(t)] = \tilde E[e^{-r(T-t)}g(S(T),T)| F(t)] \label{rn}
 \end{align}
 Based on Faynman-Kac formula, there is a function $c(t,S(t))$ which must satisfy discounted partial differential equation 
 \begin{align*}
 	c_t(t,S) + rx c_S(t,S) + \frac{1}{2} \sigma^2 S^2 c_{SS}(t,S) = rc(t,S)
 \end{align*}
-Where $c_(T,S(T)) = V(S(T))$.
+Where $c(T,S(T)) = g(S(T), T)$.
 Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation. 
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
@@ -181,6 +181,8 @@ The following graphs show the change of option price with respect to different p
 \\
 \\
 \includegraphics[scale = 0.5]{option_price1.eps}\\
+\\
+\\
 \includegraphics[scale = 0.5]{option_price2.eps}\\
 {\bf 6. Alternative formulation}\\
 If we introduce $F = e^{(r-a)\tau} S$, which is the forward price of the asset S. Then the equation pricing equation becomes
@@ -210,12 +212,12 @@ The parameter $\theta$ can be viewed as a long-term average variance. And the in
 	C(t, S(t)) = \tilde E[e^{-r(T-t)}V(T)| F(t)] = \tilde E[e^{-r(T-t)}(S_T - K)^{+}| F(t)]
 \end{align*}
 Let $x_T = ln(S_T)$, and $\tau = T - t$, then, and we assume the pdf of $ln(x_T)$ given $x_t$is $p(x_T | x_t)$, then
-\begin{align*}
-	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^{x_T} - K) p(x_T| x_t) dx_T \\
+\begin{align}
+	C(t, S(t)) & = e^{ -r \tau } \int_{lnK}^{\infty} (e^{x_T} - K) p(x_T| x_t) dx_T \nonumber \\ 
 		   & = e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} pdf(x_T| x_t) dx_T 
-		   - e^{-r\tau} K \int_{lnK}^{\infty}  p(x_T | x_t) dx_T \\
-		   & = S_0 I_1 -  e^{-r \tau} K I_2\\
-\end{align*}
+		   - e^{-r\tau} K \int_{lnK}^{\infty}  p(x_T | x_t) dx_T \nonumber \\
+		   & = S_0 I_1 -  e^{-r \tau} K I_2 \label{heston_solution_form}
+\end{align}
 where 
 \begin{align}
 	I_1 = \frac{1}{S_0} e^{-r \tau}\int_{lnK}^{\infty} e^{x_T} p(x_T | x_t) dx_T \label{I_1}
@@ -244,9 +246,10 @@ Where
 \end{align*}
 then using inverse Fourier transform
 \begin{align*}
-	f_1 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re(\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)})du +\frac{1}{2} \\
-	f_2 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{e^{-i u lnK}}{iu} \phi(u))  du + \frac{1}{2} \\
+	I_1 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re(\frac{e^{-iuln(K)}\phi(u-i)}{iu\phi(-i)})du +\frac{1}{2} \\
+	I_2 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{e^{-i u lnK}}{iu} \phi(u))  du + \frac{1}{2} \\
 \end{align*}
+With $I_1$ and $I_2$, we can have the solution of the value of the option using Eq. \ref{heston_solution_form}.
 \subsection{Jump Diffusion Model}
 The BSM model and the Heston model assumes the asset prices follows the stochastic process driven by Brownian motion. Under this assumption, the asset price is continuous in time. The jump diffusion model extends the BSM model and Heston model by assuming asset price has discrete jump in time. Therefore in jump diffusion model, the stochastic process contains a continuous Brownian motion process and a discrete jump process.\\
 
@@ -442,18 +445,18 @@ The algorhim simply has two parts. The first part is to follow the standard simu
 Then the second part is to define a stopping time $\tau^{(m)}$ for each path. \\
 (1) set $\tau^{(m)}$ to T for each sample path m.\\
 (2) for t from T - 1 to 1:\\
-\indent  for each sample:\\
-\indent  \indent(2b) calculate discount payoff value: $DV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K) $\\
-\indent  \indent(2c) calculate the current payoff value: $h(S^{(m)}_t)$\\
-\indent	 \indent(2d) regress $DV$ on ${S_t}$ using least square and get estimated \\
-\indent  \indent    discount payoff value $EDV = f(X_t)$\\
-\indent	 \indent(2e) if $h(S^{(m)}_t) > EDV^{(m)}(X^{(m)}_i)$, \\
-\indent  \indent     this means we can exercise the option, then upate $\tau^{(m)} = t$.\\
+\indent  \indent  for each sample:\\
+\indent  \indent \indent(2a) calculate discount payoff value: $DV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K) $\\
+\indent  \indent \indent(2b) calculate the current payoff value: $h(S^{(m)}_t)$\\
+\indent	 \indent \indent(2c) regress $DV$ on ${S_t}$ using least square and get estimated \\
+\indent  \indent \indent    discount payoff value $EDV = f(X_t)$\\
+\indent	 \indent \indent(2d) if $h(S^{(m)}_t) > EDV^{(m)}(X^{(m)}_i)$, \\
+\indent  \indent \indent     this means we can exercise the option, then upate $\tau^{(m)} = t$.\\
 (3) for each path calculate the present value of the payoff at stopping time $\tau$ \\
 $PV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K)$\\
 (4) average $PV^{(m)}$ to get the price of the option\\
 \section{Result}
-{\bf Simulation of option value with BSM model using both analytical(ANAL) and Monte Carlo(MC).} We calcuate the values of  option of different types and styles listed in Table. \ref{option_bsm}. For MC method, we choose 100 timesteps per year and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one. Our data matches the data presented in \cite{americanoption}. The result verified that for European option, there is no incentive to exercise early as the payoff function given the risk-neutral measure is a submartingale and has the trend to increase. For American put option, we observe that the NPV is larger than the NPV of European option across different strike prices and volatilities, so the early exercise value is clearly visible.
+{\bf Simulation of option value with BSM model using both analytical(ANAL) and Monte Carlo(MC).} We calcuate the values of  option of different types and styles listed in Table. \ref{option_bsm}. For MC method, we choose 100 timesteps per year and 100000 sample paths. For Eurpoean style, we also compare the result with the analytical one. Our data matches the data presented in \cite{americanoption}. The result verified that for European option, there is no incentive to exercise early as the payoff function given the risk-neutral measure is a submartingale and has the trend to increase(Proof in Appendix). For American put option, we observe that the NPV is larger than the NPV of European option across different strike prices and volatilities, so the early exercise value is clearly visible.
 
 \begin{table}
 	\begin{tabular} { l  c  c   c  c  c   c    c       c        c  }
@@ -701,6 +704,34 @@ The function $c(t, s, v)$ satisfies boundary condition
 	lim_{s \to \infty} \frac{c(t, s, v)}{s-K} = 1 \\
 	lim_{v \to \infty} c(t, s, v) = s\\  
 \end{align*}
+\subsection{Proof of Submartingale Property of European Call Option}
+We know the under risk-neutral measure, the stock price $S_t$ is a martingale
+\begin{align*}
+	S_t = E[e^{-r(T-t)}S_T | \mathcal F(t)]
+\end{align*}
+Let g(T) be the European call option payoff function. Then
+\begin{align*}
+	g(S_t) = g(E[e^{-r(T-t)}S_T | \mathcal F(t)])
+\end{align*}
+By Jensen's inequality
+\begin{align*}
+	g(E[e^{-r(T-t)}S_T | \mathcal F(t)]) \leq E[g(e^{-r(T-t)}S_T)| \mathcal F(t)]
+\end{align*}
+for convex function g, we note, given $0 < \lambda < 1$
+\begin{align*}
+	g(\lambda s_1 + (1 - \lambda) s_2 ) \leq \lambda g(s_1) + (1 - \lambda)g(s_2)
+\end{align*}
+	and for call option payoff we have $g(0) = 0$, so by taking $s_2 = 0$ and $\lambda = e^{-r(T-t)}$, we have
+\begin{align*}
+	E[g(e^{-r(T-t)}S_T)| \mathcal F(t)] \leq E[e^{-r(T-t)}g(S_T) | \mathcal F(t)]
+\end{align*}
+We need to pay attention that the above equation only holds for call option. For put option, since $g(0) != 0$, so the above equation does not hold.
+Combining all equations above, we have
+\begin{align*}
+	g(S_t) \leq E[e^{-r(T-t)}g(S_T) | \mathcal F(t)]\\
+	e^{-rt}g(S_t) \leq E[e^{-rT}g(S_T)| \mathcal F(t)]\\
+\end{align*}
+	This shows payoff function $g(S_t)$ is a submartingale with respect to time t.
 \begin{thebibliography}{9}
 	\bibitem{heston}
 		SL Heston,
