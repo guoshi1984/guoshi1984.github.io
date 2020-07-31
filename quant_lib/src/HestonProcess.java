@@ -20,7 +20,13 @@ class HestonProcess extends Process
 		this.rho = rho;
 	}
 	
-
+	/*public void showInfo() {
+                System.out.println("Kappa: " + kappa);
+                System.out.println("Theta: " + theta);
+                System.out.println("Volatility of volatility: " + sigma);
+                System.out.println("Process correlation: " + rho);
+        }
+	*/
 
 	// specify how the volatility changes
 	@Override

@@ -189,7 +189,7 @@ f(x) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k x}{T}}	 \\
 & = a_0 + \sum_{k=1}^{\infty} (a_k cos(2 \pi k F_0 t)  - b_k sin(2 \pi k F_0 t) ) \\
 \end{align*}
 where $a_0 = c_0$, $a_k = 2 |c_k|cos \theta_k$, $b_k = 2 |c_k| sin \theta_k$. \\ 
-\noindent 4) $\mathcal F(k) = \mathcal F(k+N)$. We remember $\Delta f = \frac{1}{T}$, so the Fourier transform function is also periodic with period $\frac{N}{T}$. Therefore, it is sufficient enough for us to confine k to be within the range $-N/2 < k \leq N$. For all the integers of $k^'$ which are beyond this range, we can an equivalent integer of k within $-N/2 < k \leq N$ that satisfies $\mathcal F(k^{'}) = \mathcal F(k)$.  With sample frequency $F_s = \frac{N}{T}$, the maximum frequecy of the signal(bandwidth B) we can tell is $B = \frac{N}{2T} = \frac{F_s}{2}$. In other words, in order to capture the whole bandwidth B of the signal, we must have $F_s \leq 2B$. This is Nyquist sampling theorem.\\
+\noindent 4) $\mathcal F(k) = \mathcal F(k+N)$, which means $\mathcal F(k)$ is periodic with period N. We remember $\Delta f = \frac{1}{T}$, so the period of N correspond to time length of $\frac{N}{T}$. Therefore, it is sufficient enough for us to confine k to be within the range $-N/2 < k \leq N/2$. For all the integers of $k^{'}$ which are beyond this range, we can find an equivalent integer of k which is within $-N/2 < k \leq N$ that satisfies $\mathcal F(k^{'}) = \mathcal F(k)$.  With sample frequency $F_s = \frac{N}{T}$, the maximum frequecy of the signal(bandwidth B) we can tell is $B = \frac{N}{2T} = \frac{F_s}{2}$. In other words, in order to capture the whole bandwidth B of the signal, we must have $F_s \geq 2B$. This is {\bf Nyquist sampling theorem}.\\
 \noindent 5) Power density
 \begin{align*}
 	P_x & = \frac{1}{T} \int |x(t)|^2 dt \\
@@ -352,8 +352,8 @@ Since this function is not a periodic function, we assume its period is infinity
 \begin{align*}
 	F(f) = \int_{-\infty}^{\infty} \delta(t) e^{-2\pi f t} = 1
 \end{align*}
-Now we see a signal which has zero width in time has infinitely long frequency bandwidth. This leads to the uncertainty principle.\\
-{\bf Uncertainty Principle}
+Now we see a signal which has zero width in time has infinitely long frequency bandwidth. Typically, for a signal, the width in its time domain and the width in its frequency domain can not shrink to zero simultaneously. This leads to the uncertainty principle.\\
+{\bf Uncertainty Principle}\\
 In quantum mechanics, if there is a particle with position x and momentum p, then uncertainty principle states
 \begin{align*}
 	\Delta x \Delta p \geq \frac{\hbar}{2}
@@ -367,4 +367,15 @@ $E = \hbar \omega$. Then
 \begin{align*}
 	\Delta t \Delta \omega \geq \frac{1}{2}
 \end{align*}
+\section{Connection to Bloch Theorem in Solid State Physics}
+In solid state physics, the crystal lattice is periodic so as the periodic potential. The wavefunction $\Psi$ at the presence of a periodic potential has the following property.
+\begin{align*}
+	\Psi({\bf r} + {\bf R}_n) = e^{i{\bf k} \cdot {\bf R}_n}\Psi({\bf r})
+\end{align*}
+This is the Bloch Theorem. And the wavefunction $\Psi(r)$ can be written as
+\begin{align*}
+	\Psi({\bf r}) = e^{i{\bf k} \cdot {\bf r}} u({\bf r})
+\end{align*}
+Where $u({\bf r})$ is periodic too with $u({\bf r}) = u({\bf r} + {\bf R}_n)$. In above, ${\bf R}_n$ is the crystal translation vector, and ${\bf k}$ is a vector. For simplicity, we consider one dimension crystal and the lattice basis vector is ${\bf a}$, therefore ${\bf R}_n = n {\bf a}$.\\
+We note for a $k$ vector which holds the Bloch theorem, $k + l \frac{2 \pi}{a}$ (where $l$ is an integer) can also holds the Bloch theorem. As in the discrete Fourier transform, where $\mathcal F(k)$ is periodic function with period N and we confine the frequency to be in the range of $[-N/2T, N/2T]$, the function $\Psi(k)$ here is also a periodic function with $\frac{2\pi}{a}$. So to make k unique, we usually confine k to be within the range$-\frac{2 \pi}{a}, \frac{2 \pi}{a}$, and we call this the First Brillioun zone.  
 \end{document}

@@ -14,7 +14,13 @@ public class HestonCalculator
 		this.sigma = sigma;
 		this.rho = rho;
 	}
-
+	
+	public void showInfo() {
+		System.out.println("Kappa: " + kappa);
+                System.out.println("Theta: " + theta);
+                System.out.println("Volatility of volatility: " + sigma);
+                System.out.println("Process correlation: " + rho);
+	}
 
 
 	public Complex getCharacteristicFunction(Complex u) {

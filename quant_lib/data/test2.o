@@ -5,29 +5,176 @@ Test Option Pricing using Heston Model
 Pricing task: European Call Option Analytical: 
 Option Style: EUROPEAN
 Option Type: CALL
-Underlying Price: 100.0
-Strike Price: 100.0
-Expiring Time: 1.0 years 
-Risk Free Interest Rate: 0.05
-Volatility: 0.15
-Net Present Value using Analytical Formula: 8.591658312089178
-Net Present Value using BSM Characteristic function: 8.590882063690508
-Net Present Value using Heston Characteristic function: 8.590621653984037
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+Kappa: 2.0
+Theta: 0.16
+Volatility of volatility: 0.1
+Process correlation: -0.5
+Net Present Value using Analytical Formula: 8.223222119009336
+Net Present Value using BSM Characteristic function: 8.219579532561793
+Net Present Value using Heston Characteristic function: 8.180854305099185
 
 Pricing Task: European Call Option Monte Carlo: 
 Option Style: EUROPEAN
 Option Type: CALL
-Underlying Price: 100.0
-Strike Price: 100.0
-Expiring Time: 1.0 years 
-Risk Free Interest Rate: 0.05
-Volatility: 0.15
-Kappa: 2.0
-Theta: 0.0225
-Volatility of volatility: 0.01
-Process correlation: 1.0E-6
-Expiring Time: 1.0 years 
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
 TimeSteps per Year: 20
-Number of Samples: 100000
-Net Present Value 8.649284292712622 +/- 0.04457129462271758
+Number of Samples: 400000
+Net Present Value 8.194118065583096 +/- 0.029154256020749673
+
+Pricing task: European Put Option Analytical: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+Kappa: 2.0
+Theta: 0.16
+Volatility of volatility: 0.1
+Process correlation: -0.5
+NPV using BSM formula:  7.7000395876956285
+NPV using BSM Characteristic function: 7.696397001248091
+Net Present Value using Heston Characteristic function: 7.657671773785486
+
+Pricing Task: European Put Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 36.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+TimeSteps per Year: 20
+Number of Samples: 400000
+Net Present Value 7.682955216328588 +/- 0.018070084732643918
+
+======================================
+Test Option Pricing using Heston Model
+======================================
+
+Pricing task: European Call Option Analytical: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+Kappa: 2.0
+Theta: 0.16
+Volatility of volatility: 0.1
+Process correlation: -0.5
+Net Present Value using Analytical Formula: 13.725177842578116
+Net Present Value using BSM Characteristic function: 13.720546143769688
+Net Present Value using Heston Characteristic function: 13.72797598922089
+
+Pricing Task: European Call Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+TimeSteps per Year: 40
+Number of Samples: 400000
+Net Present Value 13.7264607523479 +/- 0.04150347907065654
+
+Pricing task: European Put Option Analytical: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+Kappa: 2.0
+Theta: 0.16
+Volatility of volatility: 0.1
+Process correlation: -0.5
+NPV using BSM formula:  5.201995311264417
+NPV using BSM Characteristic function: 5.197363612455982
+Net Present Value using Heston Characteristic function: 5.204793457907188
+
+Pricing Task: European Put Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.4
+TimeSteps per Year: 40
+Number of Samples: 400000
+Net Present Value 5.209191173329069 +/- 0.01427994152828436
+
+======================================
+Test Option Pricing using Heston Model
+======================================
+
+Pricing task: European Call Option Analytical: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 2.0
+Theta: 0.04
+Volatility of volatility: 0.1
+Process correlation: -0.5
+Net Present Value using Analytical Formula: 9.952397662101214
+Net Present Value using BSM Characteristic function: 9.950801689537453
+Net Present Value using Heston Characteristic function: 10.011505926471791
+
+Pricing Task: European Call Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: CALL
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+TimeSteps per Year: 40
+Number of Samples: 400000
+Net Present Value 10.02343213264891 +/- 0.02314004811869682
+
+Pricing task: European Put Option Analytical: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+Kappa: 2.0
+Theta: 0.04
+Volatility of volatility: 0.1
+Process correlation: -0.5
+NPV using BSM formula:  1.4292151307875167
+NPV using BSM Characteristic function: 1.4276191582237505
+Net Present Value using Heston Characteristic function: 1.488323395158086
+
+Pricing Task: European Put Option Monte Carlo: 
+Option Style: EUROPEAN
+Option Type: PUT
+Underlying Price: 44.0
+Strike Price: 40.0
+Expiring Time: 2.0 years 
+Risk Free Interest Rate: 0.06
+Volatility: 0.2
+TimeSteps per Year: 40
+Number of Samples: 400000
+Net Present Value 1.4911650381971022 +/- 0.005556590249530521
 
