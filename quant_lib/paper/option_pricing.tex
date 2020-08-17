@@ -5,12 +5,12 @@
 \author{Shi Guo} 
 \begin{document}
 \maketitle
-{\bf Abstract} In this article, we review the straties and a variety methods for pricing options. We first review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusion with jumps. Then we discuss the Monte Carlo simulation algorithms of each model and how to treat the stopping time for American style options. Finally, we present the simulation result. \\
+{\bf Abstract} In this article, we present a variety of methods for pricing options and the simulation results. We first review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusions with jumps. We analyze each model with possible analytical solutions.Then we introduce the Monte Carlo simulation algorithms for each model and how to treat the stopping time for American style options. Finally, we present the simulation results and comparison with literature.\\
 \line(1,0) {350}
 \section{European Option Pricing Models}
-In this section we firstly present two approach for pricing European options: One is to solve Black-Scholes-Merton partial equation and the other one is using Martingale property. We are going to show these two ways are equivalent as they are connnected through Faynman-Kac formula. Then we present the analytical solutions and discussions. 
+In this section we first present two approaches for pricing European options: One is to solve Black-Scholes-Merton partial differential equation and the other one is using Martingale property. We are going to show these two approches are equivalent as they are connnected through Faynman-Kac formula. Then we present the analytical solutions and discussions. 
 \subsection{Black Scholes Merton Equation: Introduction}
-Here is basic idea for pricing options. We consider a portfolio composed of certain shares of stock and a saving account with an interest rate then use the portfolio to replicate the payoff of the option. If we are able to replicate the payoff successfully, we use the value of the portfolio to price the option. We briefly go through the steps to derive the Black Scholes Merton equation. We assume the stock prices following a geometric Brownian motion\\
+Here is basic idea for pricing options. We consider a portfolio composed of certain shares of stock and a saving account with an interest rate then use the portfolio to replicate the payoff of the option. If we are able to replicate the payoff successfully, we can set the value of the portfolio equal to the price of the option. We briefly go through the steps to derive the Black Scholes Merton equation. We assume the stock prices following a geometric Brownian motion\\
 1) Stock price:\\
 \begin{align*}
 	 dS(t) = \alpha S(t) dt + \sigma S(t) dW(t)\\
@@ -76,10 +76,10 @@ As the expecation of $dW(t)$ is 0, the expectation of discounted value of the po
 \begin{align*}
 	X(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]
 \end{align*}
-To find the value of the option at time t, we use the replicating strategy, in which we replicate the payoff of option g(T) at time T using portfolio X(T) by setting X(T) = g(T)
+To find the value of the option at time t, we use the replicating strategy, in which we replicate the payoff of option $g(T)$ at time T using portfolio $X(T)$ by setting $X(T) = g(T)$.
 Based on martingale property of X(t), the option price $c(t, S(t))$ is
 \begin{align*}
-	c(t, S(t)) = x(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]= \tilde E[e^{-r(T-t)}g(T)| F(t)]
+	c(t, S(t)) = X(t) = \tilde E[e^{-r(T-t)}X(T)| F(t)]= \tilde E[e^{-r(T-t)}g(T)| F(t)]
 \end{align*}
 \subsection{Connection to Faynman-Kac formula}
 From above, we know
@@ -88,10 +88,9 @@ From above, we know
 \end{align}
 Based on Faynman-Kac formula, there is a function $c(t,S(t))$ which must satisfy discounted partial differential equation 
 \begin{align*}
-	c_t(t,S) + rx c_S(t,S) + \frac{1}{2} \sigma^2 S^2 c_{SS}(t,S) = rc(t,S)
+	c_t(t,S) + rS c_S(t,S) + \frac{1}{2} \sigma^2 S^2 c_{SS}(t,S) = rc(t,S)
 \end{align*}
-Where $c(T,S(T)) = g(S(T), T)$.
-Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation. 
+Where $c(T,S(T)) = g(S(T), T)$. This is the exactly the Black-Scholes-Merton equation that we derived as in Eq. \ref{BSM}. Now we have seen two ways of showing the Black-Scholes-Merton(BSM) equation. 
 One way is to reproduce the payoff of the option using a portfolio that consists of a 
 saving account. Another way is based on the risk-neutral pricing formula and Feynman-Kac formula. 
 These two ways are equivalent. Because under risk-neutral measure, the payoff of a derivative is the same as a saving account, which imply we are able to reproduce the payoff using portfolio that consisting of a saving account.
@@ -228,9 +227,9 @@ where
 So as long as we know the pdf of $x_T$, we can solve these two integral and get $C(t, S(t))$. But unlike in the BSM model, the analytical form of pdf of x does not exist for Heston model. Fortunately, literauture shows the characteristic function of x exists. Heston \cite{heston} proposed a solution using characteristic function. We list the result here and we will elaborate the derivation in the Appendix. \\
 Suppose $\phi(u, x_t)$ is the characteristic function of $p(x_T| x_t)$, Heston shows $\phi(u,x_t)$ takes the form of
 \begin{align}
-	\phi(u) = exp(C(\tau, u) + D(\tau, u)V_0 + iux_t) \label{heston_characteristic}
+	\phi(u) = exp(C(T-t, u) + D(T-t, u)V_t + iux_t) \label{heston_characteristic}
 \end{align}
-With C and D defined as
+Let $\tau = T - t$. The solution of C and D are
 \begin{align} 
 	C(\tau, u) = iru\tau + \frac{\kappa \theta}{\sigma^2}
 	[(\kappa - i\rho \sigma u + d)\tau - 2ln(\frac{1 - g e^{d\tau}}{1 - g})] \label{heston_C}
@@ -396,7 +395,7 @@ We can easily check the mean of $W_2^{'}$
 		      & = \rho \\
 \end{align*}
 The last step uses the fact $W_1$ and $W_2$ are independent, so $E[W_1 W_2] = E[W_1] E[W_2] = 0$.\\
-{\bf b. Coping with negative V(t). } \\
+{\bf b. Discretization schemes and coping with negative V(t). } \\
 The Heston model setting provides a non-negative V(t). This can be seen when V(t) is positively moving close to zero, the drift term $adt$ pulls the V(t) up and avoid $V(t)$ to cross zero. However, in discretized version $V(t)$ may attain negative values. There exists several methods to deal with this issue.\\
 (1) Absorption: Keep positive part of the previous $V(t)$ and use it to calculate next step $V(t+dt)$ and X(t+dt)\\
 \begin{align*}
@@ -426,7 +425,15 @@ Together with formula for the drift and asset price, we write
 	& V^{(t + dt)} = V^{(t)} + \kappa (\theta - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2) 
 \end{align*}
-All these above belong to the Euler discretization schemes which lead to more or less discretization errors. There exists an exact but computationaly expensive simulation scheme proposed by Broadie and Kaya\ref{exact_heston} by sampling the transition probability of $V(t)$ given $V(u)$（$u < t$) using chi-square distribution.
+All these above belong to the Euler discretization schemes which lead to more or less discretization errors. There exists an exact but computationaly expensive simulation scheme proposed by Broadie and Kaya\ref{exact_heston}. Their method is based on the fact that the transition probability of $V(t)$ given $V(u)$（$u < t$) is chi-square distribution, which can be proved using Kolmogorov's partial differential equation. %Then we follow the following steps:\\
+%(1) Generate a sample from the distribution of $V_t$ given $V_u$.
+%(2) Generate a sample from the distribution of $\int_u^t V_s ds$ given $V_t$ and $V_u$.
+%t √
+%Step 3. Recover u V s dW s 1 from (7) given V t , V u , andtV ds.u s
+%Step 4. √ Generate a sample from the distribution of S t
+%t
+%t
+%given u V s dW s 1 and u V s ds.
 3. Bates process\\
 \begin{align*}
 	& \mu = r - \frac{1}{2} (V^{+(t)}) - \lambda (e^{\nu + \frac{1}{2}\delta^2}  -1) \\
@@ -441,7 +448,7 @@ American Option can be exercised at any time. So in Monte Carlo Simulation, for 
 However, this does not mean there is no feasible way to evaluate American options. One idea is to avoid doing additional Monte Carlo simulation at each step to determine the value of holding the option and utilizing the simulation path of the European options. LongStaff\cite{americanoption} proposed an algorithm to determine the stopping time by using least square regression and here we briefly outline the algorithm.
 
 Let us assume the option has a payoff function $h(S, K)$, where K is strike price.
-The algorhim simply has two parts. The first part is to follow the standard simulation scheme for European options. We generate M samples path from timestep 0 to timestep T. For each sample, the asset price forms a price path from $i = 0$ to $T$ and the current asset price at a given timestep i is $S^{(m)}_i$, where $0 \leq i \geq T$. We define a discount factor $D_{i,j}$ to discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
+The algorhim simply has two parts. The first part is to follow the standard simulation scheme for European options. We generate M samples path from timestep 0 to timestep T. For each sample, the asset price forms a price path from $i = 0$ to $T$ and the current asset price at a given timestep i is $S^{(m)}_i$, where $0 \leq i \leq T$. We define a discount factor $D_{i,j}$ to discount the asset price at time j to time t. For example $D_{13} = e^{-(3-1)r} = e^{-2r}$. 
 Then the second part is to define a stopping time $\tau^{(m)}$ for each path. \\
 (1) set $\tau^{(m)}$ to T for each sample path m.\\
 (2) for t from T - 1 to 1:\\
@@ -449,7 +456,7 @@ Then the second part is to define a stopping time $\tau^{(m)}$ for each path. \\
 \indent  \indent \indent(2a) calculate discount payoff value: $DV^{(m)} = D_{t, \tau} h(S^{(m)}_\tau, K) $\\
 \indent  \indent \indent(2b) calculate the current payoff value: $h(S^{(m)}_t)$\\
 \indent	 \indent \indent(2c) regress $DV$ on ${S_t}$ using least square and get estimated \\
-\indent  \indent \indent    discount payoff value $EDV = f(X_t)$\\
+\indent  \indent \indent    discount payoff value $EDV = f(S_t)$\\
 \indent	 \indent \indent(2d) if $h(S^{(m)}_t) > EDV^{(m)}(X^{(m)}_i)$, \\
 \indent  \indent \indent     this means we can exercise the option, then upate $\tau^{(m)} = t$.\\
 (3) for each path calculate the present value of the payoff at stopping time $\tau$ \\
