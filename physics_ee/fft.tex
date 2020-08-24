@@ -80,8 +80,7 @@ x(t) = cos(2 \pi f_0 t) = \frac{1}{2} (e^{2 i \pi f_0 t} + e^{- 2 i \pi f_0 t})
 	     & = \frac{1}{2}\delta(f - f_0) + \frac{1}{2} \delta(f + f_0)	
 \end{align*}
 {\bf Discrete Fourier Series }\\
-The above is the Fourier transform in continuous case, in discrete case
-If $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
+The above is the Fourier transform in continuous case. In discrete case if $x = n \Delta t$, where n = 1...N, and $T= N \Delta t$, then the Fourier series can be written as
 \begin{align*}
 	x(n) & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k n \Delta t}{N \Delta t}}\\
 	     & = \sum_{-\infty}^{+\infty} c_k e^{\frac{2 \pi i k n }{N }}\\
@@ -103,7 +102,7 @@ In the discrete case, suppose we sample a signal N times within time T.  We divi
 In frequency domain, the frequency also becomes discrete, and same as the case in discrete Fourier series,
 $\Delta f = \frac{1}{T}$. Another way of seeing $\Delta f$ is when we confine the length of time domain to T, the function in time domain has to be periodic function with period T. So we have
 \begin{align*}
-	e^{2\pi f (n\Delta t + T)} = e^{2\pi f n \Delta t} 
+	e^{2\pi i f (n\Delta t + T)} = e^{2\pi i f n \Delta t} 
 \end{align*}
 This requires 
 \begin{align*}
@@ -122,11 +121,14 @@ Using $f = k \Delta f$, we can rewrite our Fourier transform
 	\mathcal F(k\Delta f) & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k \Delta f n \Delta t} \frac{T}{N} \\
 			     & = \sum_{0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } \frac{T}{N}	
 \end{align*}
-Then we work out the Fourier transform and inverse Fourier transform identity
+The last step uses the fact $\Delta k \Delta t = \frac{1}{T}\frac{T}{N} = \frac{1}{N}$. Then we work out the Fourier transform and inverse Fourier transform identity
 \begin{align*}
 	x(n^{'}\Delta t) & = \sum_{k = 0}^{N} \mathcal F(k\Delta f) e^{2 \pi i k n^{'} /N } \Delta f \\
 	& = \sum_{k = 0}^{N} (\sum_{n = 0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } \frac{T}{N})e^{2 \pi i k n^{'} /N } \Delta f \\
-& \sum_{k = 0}^{N}\frac{1}{N}(\sum_{n = 0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } )e^{2 \pi i k n^{'} /N } \\
+& = \sum_{k = 0}^{N}\frac{1}{N}(\sum_{n = 0}^{N} x(n\Delta t) e^{-2 \pi i k n /N } )e^{2 \pi i k n^{'} /N } \\
+	& = \sum_{k = 0 }^{N} \frac{1}{N} x(n^{'}\Delta t) \textrm{ Only the term $n^{'} = n$ survives }\\
+	& = \frac{1}{N} N \\
+	& = 1\\
 \end{align*}
 So we define discrete Fourier transform
 \begin{align*}
@@ -203,6 +205,7 @@ When signal is real, then
 	    & = a_0^2 + \frac{1}{2} \sum_{k=1}^{\infty} (a_k^2 + b_k^2)\\
 \end{align*}
 \section{Fast Fourier Transform}
+The above discrete Fourier transform requires a multiplication of $N \times N$ matrix and it has the time complexity of $N^2$. The fast Fourier transform does the same job as discrete Fourier transform but runs much faster as it has a time complexity of $NlogN$. To see this, we start from the discrete Fourier transform
 \begin{align*}
 	X_k =  \sum_{n = 0} ^ {N-1} x_n e^{-i 2 \pi k \frac{n}{N}}
 \end{align*}
@@ -233,7 +236,11 @@ As noted, the above derivation is for $k<N/2$, a very similar derivation for $N/
 	X_{k+N/2} =  E_k - e^{-\frac{2\pi i}{N} k} O_k
 \end{align*}
 Now we have divided the FFT of N points to two FFT with N/2 points
-Keep going till we reach the size to one, then combine together recursively.
+Keep going till we reach the size to one, then combine together recursively. Let $T_N$ be the time for Fast Fourier transform with $N$ points, then we have
+\begin{align*}
+	T_N = 2T_{N/2} + N
+\end{align*}
+By Master theorem, we can get $T_N = \mathcal O(NlogN)$. Since we divded the size of calculation by 2 each time until we reach the base case with size 1, the total size has to be $2^m$, where m is an positive integer.
 \section{Fourier Transform of Useful Functions}
 {\bf The Fourier Transform of Step Function}\\
 Let $u(t)$ be a step function: $u(t) = 1$ when $t \geq 0$, $u(t) = 0$ when $t < 0$. And its derivative is a delta function\\
@@ -378,4 +385,10 @@ This is the Bloch Theorem. And the wavefunction $\Psi(r)$ can be written as
 \end{align*}
 Where $u({\bf r})$ is periodic too with $u({\bf r}) = u({\bf r} + {\bf R}_n)$. In above, ${\bf R}_n$ is the crystal translation vector, and ${\bf k}$ is a vector. For simplicity, we consider one dimension crystal and the lattice basis vector is ${\bf a}$, therefore ${\bf R}_n = n {\bf a}$.\\
 We note for a $k$ vector which holds the Bloch theorem, $k + l \frac{2 \pi}{a}$ (where $l$ is an integer) can also holds the Bloch theorem. As in the discrete Fourier transform, where $\mathcal F(k)$ is periodic function with period N and we confine the frequency to be in the range of $[-N/2T, N/2T]$, the function $\Psi(k)$ here is also a periodic function with $\frac{2\pi}{a}$. So to make k unique, we usually confine k to be within the range$-\frac{2 \pi}{a}, \frac{2 \pi}{a}$, and we call this the First Brillioun zone.  
+\section{Connection to Characteristic Function in Statistics}
+In statistics, given a probability density function $f(x)$, we define the characteristic function as
+\begin{align*}
+	\mathcal F(k) = \int_{-\infty}^{\infty}e^{ikx}f(x)
+\end{align*}
+The use of characteristic function comes from the reason as it always exists even the probability density function does not. And a huge advantage to use characteristic function duing calculations is it makes very simple to do differenciations when the probability density functions are involved with differentiations. 
 \end{document}
