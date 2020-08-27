@@ -5,7 +5,7 @@
 \author{Shi Guo} 
 \begin{document}
 \maketitle
-{\bf Abstract} In this article, we present a variety of methods for pricing options and the simulation results. We first review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusions with jumps. We analyze each model with possible analytical solutions.Then we introduce the Monte Carlo simulation algorithms for each model and how to treat the stopping time for American style options. Finally, we present the simulation results and comparison with literature.\\
+{\bf Abstract} In this article, we present a variety of methods for pricing options and the simulation results. We review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusions with jumps. We analyze each model with possible analytical solutions. Then we introduce the Monte Carlo simulation algorithms for each model. A special algorithm for handling early exercising feature of American style option is provided. Finally, we present the simulation results and compare the results with literature.\\
 \line(1,0) {350}
 \section{European Option Pricing Models}
 In this section we first present two approaches for pricing European options: One is to solve Black-Scholes-Merton partial differential equation and the other one is using Martingale property. We are going to show these two approches are equivalent as they are connnected through Faynman-Kac formula. Then we present the analytical solutions and discussions. 
@@ -425,7 +425,7 @@ Together with formula for the drift and asset price, we write
 	& V^{(t + dt)} = V^{(t)} + \kappa (\theta - b V^{+(t)}) \sqrt{dt} + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2) 
 \end{align*}
-All these above belong to the Euler discretization schemes which lead to more or less discretization errors. There exists an exact but computationaly expensive simulation scheme proposed by Broadie and Kaya\ref{exact_heston}. Their method is based on the fact that the transition probability of $V(t)$ given $V(u)$（$u < t$) is chi-square distribution, which can be proved using Kolmogorov's partial differential equation. %Then we follow the following steps:\\
+All these above belong to the Euler discretization schemes which lead to more or less discretization errors. There exists an exact but computationaly expensive simulation scheme proposed by Broadie and Kaya\cite{exact_heston}. Their method is based on the fact that the transition probability of $V(t)$ given $V(u)$（$u < t$) is chi-square distribution, which can be proved using Kolmogorov's partial differential equation.\\ %Then we follow the following steps:\\
 %(1) Generate a sample from the distribution of $V_t$ given $V_u$.
 %(2) Generate a sample from the distribution of $\int_u^t V_s ds$ given $V_t$ and $V_u$.
 %t √
