@@ -4,8 +4,7 @@
 \begin{document}
 \section{Gaussian Random Number Generator}
 Given $U_1$ and $U_2$ belong $[-1,1]$, the following is to find out random variables that are Gaussian distributed.\\
-
-\noindent{\bf a. Principle}\\
+\subsection{Principle}
 1)	Start from an cdf of joint Gaussian random variable x and y\\
 \begin{align*}
 & \int \int exp(-1/2 x^2)  exp(-1/2 y^2)  dx dy \\
@@ -31,18 +30,15 @@ X = \sqrt{-2 ln U_1} cos(2\pi U_2) \\
 Y = \sqrt{-2 ln U_1} sin(2\pi U_2) \\
 \end{align*}
 
-\noindent{\bf b.	Efficient way of evaluating cos and sin function} \\
+\subsection{Efficient way of evaluating cos and sin function}
 In most computers, evaluating cos and sine is not quite straightforward, so the above method is not practical to use. So the following alternative avoids evaluating sine and cos functions directly.\\
-1)	We generate new random variable $S = U_1^2 + U_2^2$
+1) We generate new random variable $S = U_1^2 + U_2^2$, then the cumulative probability of S when $S<=1$ is the ratio of the area of the circle with radius $r = \sqrt{S}$ to the area of the circle with radius 1.
 \begin{align*}
- P(S<s) &= P(U_1^2 + U_2^2 <s) \\
-& = \int\int_{u_1^2 + u_2^2} 1 dx dy\\
-& = \int_0 ^{\sqrt{s}} r dr *2\pi \\
-& = \pi r^2|_0^s \\
-& = \pi s \\
+	Prob(S<s, s<=1) &= \frac{\pi r^2}{\pi} \\
+	& = s \\
 \end{align*}
-So pdf of s is 1/pi, it is uniform distribution.\\
-2)	Now if we let $S<1$, by taking S that satisfies only $U_1^2 + U_2^2 <1$, then throwing away others, then S is uniform in (0,$\pi$), which corresponds r in(0, 1)\\
+So pdf of s is $1$, it is uniform distribution in $[0, 1]$.\\
+2) So if we confine $S<1$, by taking S that satisfies only $U_1^2 + U_2^2 <1$, then throwing away others, then S is uniform in (0, 1), which corresponds r in(0, 1)\\
 Then a.4) becomes\\
 \begin{align*}
 X = \sqrt{-2 ln S} cos(2\pi S) =\sqrt{-2 ln S} U_1/\sqrt{S} \\
@@ -50,7 +46,7 @@ Y = \sqrt{-2 ln S} sin(2\pi S) = \sqrt{-2 ln S} U_2/\sqrt{S} \\
 \end{align*}
 
 
-{\bf c.	Final algorithm} \\
+\subsection{Final algorithm} 
 1)	Generate two uniform random variables $U_1$ $U_2$ y belongs to [-1, 1]\\
 2)	If $U_1^2 + U_2^2 >=1$, throw away and regenerate.\\
 3)	Return\\ 
@@ -58,11 +54,41 @@ Y = \sqrt{-2 ln S} sin(2\pi S) = \sqrt{-2 ln S} U_2/\sqrt{S} \\
     U_1 * \sqrt{-2 log (U_1^2 + U_2^2) / (U_1^2 + U_2 ^2)}\\
     U_2 * \sqrt{-2 log (U_1^2 + U_2^2) / (U_1^2 + U_2 ^2)}\\
 \end{align*}
+\section{Poisson Random Number Generator}
+\subsection{Inverse Transform Sampling}
+The probability integral transform states that if ${\displaystyle X}$ is a continuous random variable with cumulative distribution function ${\displaystyle F_{X}}$, then the random variable ${\displaystyle Y=F_{X}(X)}$ has a uniform distribution on [0, 1]. The inverse probability integral transform is just the inverse of this: specifically, if ${\displaystyle Y}$ has a uniform distribution on [0, 1] and if ${\displaystyle X}$ has a cumulative distribution ${\displaystyle F_{X}}$, then the random variable ${\displaystyle F_{X}^{-1}(Y)}$ has the same distribution as ${\displaystyle X}$.\\
 
+\noindent {\bf Proof:}\\
+If random variable X has cumulative distribution function $F_X(X)$, and if we define random variable $Y = F_X(X)$,  then $Y \in [0, 1]$, and the cumulative distribution function of Y is
+\begin{align*}
+	&P(Y<y)\\
+	=&P(F_X (X) < y)\\ 
+        =&P(X<F_X^{-1}(y))\\
+	=&F_X(F_X^{-1}(y)) \\
+ 	=& y\\
+\end{align*}
+So $P(Y < y) = y$ and $Y \in [0,1]$. This means $Y$ has uniform distribution.
 
-
-
-
-
+Correspondingly, the reverse direction holds as well. Suppose $Y$ is a uniform random variable on (0, 1) and F is a cumulative distribution function, then the random variable $X = F^{-1}(Y)$ has a cumulative distribution function of the following
+\begin{align*}
+	&P(X < x) \\
+	=& P(F^{-1}(Y) \leq x ) \\
+	=& P(Y \leq F(x)) \\
+	=& F(x)
+\end{align*}
+The last line is based on the definition of cumulative distribution function.
+\subsection{Generating Possion Random Number}
+Based on the inverse transform method above, we can generate a Possion random variable by: first generate uniform random variable $U \in [0, 1]$, then find X where F(X) = u. Since Possion random varible is discrete, we would like to find largest X where F(X) < U, meaning $X = F^{-1}(u) = inf\{x | F(x) < u\}$.
+{\bf Algorithm generating Possion random variable with parameter $\lambda$}\\
+$p = exp(-\lambda)$ \\
+$F = p$ \\
+$N = 0$
+generate $U \in Unif[0, 1]$\\
+while ($U > F$)\\
+\indent $N = N + 1$\\
+\indent $p = p\lambda/N$, because $P(N = k + 1) = P(N = k)\theta/(k + 1)$ \\
+\indent $F = F + p$ \\
+return N\\
+        
 
 \end{document}
