@@ -3,6 +3,7 @@
 ./machine_learning/*.log
 ./stochastic_finance/*.log
 ./stochastic_finance/*.aux
+./stochastic_finance/*.dvi
 ./src/java/linkedlist/*.class
 ./src/java/stack/*.class
 ./src/java/quant/*.class
