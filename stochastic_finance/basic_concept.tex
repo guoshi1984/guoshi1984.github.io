@@ -7,10 +7,10 @@ Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
 \noindent The reason of the article is to provide a basic review of several key concepts in measure theory. Each concept is illustrated with an example so that one can easily understand.
 \section{$\sigma$ Algebra}
 {\bf a.	Sigma algebra definition} \\ 
-Given a non-empty set $\Omega$, a sigma algebra is defined\\
+Given a non-empty set $\Omega$, a sigma algebra is a collection of all the subsets of $\Omega$ that\\
 1)	Include empty set and whole set \\ 
-2)	Include the complement of any element itself \\
-3)	Closed under countable union \\
+2)	Include the complement of any element in the sigma algebra \\
+3)	Is closed under countable union \\
 
 
 \noindent {\bf  b.	Sigma algebra example by tossing a coin} \\
@@ -88,8 +88,9 @@ is completely determined by F, then S is F measurable. \\
 \section{Conditional Expectation}
 
 \noindent {\bf a. Definition }\\
-1)	$E[X|G ]$ is G measurable, which means the value of $E[X|G]$ is completely determined by G \\
-2)	$\int_A E[X|G](w)dP(w)= \int_A X(w)dP(w)$ for all A which belongs to G\\
+The conditional expectation is a random variable that satisfies the two following conditions\\
+1)	$E[X| \mathcal G ]$ is $\mathcal G$ measurable, which means the value of $E[X|\mathcal G]$ is completely determined by $\mathcal G$ \\
+2)	$\int_A E[X|\mathcal G](w)dP(w)= \int_A X(w)dP(w)$ for all A which belongs to $\mathcal G$\\
 
 
 \noindent{ \bf b.	Example to understand 2)}\\
@@ -110,17 +111,17 @@ Expectation of 3 tosses random variable $S_3$ give the first two is HH\\
 & E_2(S_3 | TT)  P(TT)= prob(HTH) S_3(TTH) + prob(TTT)  S_3(TTT) \\
 \end{align*}
 This confirms def 2),  for A = HH or HT or TH or TT \\
-$\int E_2(S_3|G)(w) dP(w) = \int _A X(w)dP(w)$\\
+$\int E_2(S_3|\mathcal G)(w) dP(w) = \int _A X(w)dP(w)$\\
 
 \noindent{\bf c. Properties}\\
 
-\noindent 1)  The conditional expectation is a random variable. Because the value is dependent on G.\\
+\noindent 1)  The conditional expectation is a random variable. Because the value is dependent on $\mathcal G$.\\
 
-\noindent 2)  If X is G measurable, then  $E[X|G] = X$.\\
+\noindent 2)  If X is $\mathcal G$ measurable, then  $E[X|\mathcal G] = X$.\\
 
-\noindent 3)  If X is G measurable $E[XY|G] = X E[Y|G]$, this is to take out what is known.\\
+\noindent 3)  If X is $\mathcal G$ measurable $E[XY|\mathcal G] = X E[Y|\mathcal G]$, this is to take out what is known.\\
 
-\noindent 4)	If X is independent of G, $E[X|G] = EX$\\
+\noindent 4)	If X is independent of $\mathcal G$, $E[X|\mathcal G] = EX$\\
 
 	\noindent To understand 2), 3) and 4), consider two extreme cases\\
 	Define random variable S \\
