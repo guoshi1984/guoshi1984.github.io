@@ -40,7 +40,10 @@ so
 	Z(H) & = \frac{\tilde P(H)}{P(H)} = \frac{4}{3}\\
 	Z(T) & = \frac{\tilde P(T)}{P(T)} = \frac{2}{3}\\
 \end{align*}
-This is the change of measure for a discrete random variable. \\
+This is the change of measure for a discrete random variable. Note the expecation value of Z under probability measure P is 1.
+\begin{align*}
+	E[Z] = Z(H)P(H) + Z(T)P(T) = \frac{4}{3} \frac{1}{2} + \frac{2}{3} \frac{1}{2} = 1
+\end{align*}
 \subsection{Change of Measure for a Continuously Random Variable(Uniformly Distributed) } 
 Give a random variable  X($\omega$)=x where x in [0,1]\\
 1)\\
@@ -79,13 +82,13 @@ This is the change of measure for a continuously random variable. \\
 
 
 \subsection{Change of Measure for a Normal Distributed Random Variable}
-We show an example of change of measure in normal distribution. If X is N(0,1), let Y = X+ u, so Y is N(u,1), so the random variable Y does not have mean 0. However, based
+We show an example of change of measure in normal distribution. If X is $\mathcal N(0,1)$, let Y = X+ u, so Y is $\mathcal N(u,1)$, so the expectation value of Y is not zero. However, based
 on the definition of expectation\\
 \begin{align*}
 	E(Y(\omega)) = \int Y(\omega) dP(\omega)
 \end{align*}
 we can change the probability measure $P(\omega)$, such that E(Y) becomes zero.
-Define $Z(w) = exp(-uX(\omega) - \frac{1}{2}u^2)$
+Define $Z(\omega) = exp(-uX(\omega) - \frac{1}{2}u^2)$
 We are able to show two things\\ 
 1 Z \textgreater 0 \\
 2 E(Z) =1 i.e. $\int Z(w)dP(X(w)) = 1$ \\
@@ -121,7 +124,7 @@ Suppose we have the following stock $S_0$ at t=0. At t=1, we can associate the v
 S_1(H) & = (1+\alpha + \sigma) S_0\\  
 S_1(T) & = (1+\alpha - \sigma) S_0\\     
 \end{align*}
-In the sense of risk neutral pricing, we would like to have the stock values grows as the same as a saving account with interest rate r.  Namely, we need
+In the sense of risk neutral pricing, we would like to have the stock values grow as the same as a saving account with interest rate r.  Namely, we need
 \begin{align*}
 S_0 (1+r) = \frac{1}{2}S_1(H) + \frac{1}{2} S_1(T) 
 \end{align*}
@@ -149,7 +152,7 @@ S_0 = \frac{1}{1+r} (p S_1(H) + q S_1(T)) = p DS_1(H) + q DS_1(T) = \tilde E[DS_
 Where $\tilde E[DS_1]$ stands for expectation of the discounted price of asset S at time 1 under risk-neutral measure.\\
 
 \subsection{Girsanov's Theorem}
-\noindent{\bf Define change of measure for continous variable}\\
+\noindent{\bf Define change of measure for continuous variable}\\
 For $(\Omega, F, P)$, given random variable Z with $E(Z) = 1$, define new probability measure
 \begin{align}
 	\tilde P = \int_A Z(\omega) dP(\omega)\\
