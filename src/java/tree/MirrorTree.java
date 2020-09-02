@@ -21,7 +21,7 @@ public class MirrorTree
 		return node;
 	}
 
-	/* Using post order travesal, from bottom to top
+	/* 
 	 * 
 	 * Traverse the tree recursively to its bottom, when finding an empty node, stop and 
 	 * return to the last recursive call.

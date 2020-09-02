@@ -5,6 +5,7 @@ public class ValidNumber{
 	 * ?   once or none
 	 * \\d one digit 0-9
 	 * +   one or more
+	 * *   zero or more 
 	 * $   end of string
 	 * (?:) non capturing group
 	 * |   or

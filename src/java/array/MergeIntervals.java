@@ -27,14 +27,14 @@ public class MergeIntervals
 	public static int[][] merge(int[][] intervals)
 	{
 		List<int[]> resultList = new LinkedList<int[]>();
-		Arrays.sort(intervals, new Comparator<int[]>(){
+		/*Arrays.sort(intervals, new Comparator<int[]>(){
 			@Override
 		        public int compare(int[] ints1, int[] ints2)
 			{
 				return ints1[0] - ints2[0];
 			}
 		});
-
+		*/
 		for(int i = 0; i< intervals.length -1; i++) {
 			if(intervals[i+1][0] > intervals[i][1]) {
 				resultList.add(intervals[i]);
@@ -49,8 +49,9 @@ public class MergeIntervals
 		int[][] resultArray = new int[resultList.size()][];
 		for (int i =0; i < resultList.size(); i++) {
 			resultArray[i] = resultList.get(i);
-			System.out.println(Arrays.toString(resultArray[i]));
+			System.out.print(Arrays.toString(resultArray[i]) + " ");
 		}
+		System.out.println();
 		return resultArray;
 	}
 

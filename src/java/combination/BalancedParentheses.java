@@ -11,7 +11,7 @@
 
 public class BalancedParentheses
 {
-	/* Function that a recursive call to generate the string
+	/* Function that uses a recursive call to generate the string, based on DFS
 	 * @param str The string we generate
 	 * @param n The total size
 	 * @param numberOfOpen The number of open parentheses that have been generated
@@ -25,6 +25,12 @@ public class BalancedParentheses
 			return;
 		}
 
+		if(numberOfOpen < n)
+		{
+			str = str + '(';
+			generateBalancedParentheses(str, n, numberOfOpen+1, numberOfClose);
+			str = str.substring(0, str.length()-1);
+		}
 		if(numberOfOpen > numberOfClose)
 		{
 			str = str + ')';
@@ -32,12 +38,6 @@ public class BalancedParentheses
 			str = str.substring(0, str.length()-1);
 		}
 
-		if(numberOfOpen < n)
-		{
-			str = str + '(';
-			generateBalancedParentheses(str, n, numberOfOpen+1, numberOfClose);
-			str = str.substring(0, str.length()-1);
-		}
 	}	
 
 	// Top level function that wrapps the recursion call 

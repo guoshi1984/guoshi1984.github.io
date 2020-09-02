@@ -1,5 +1,14 @@
 import java.util.*;
 public class ValidParentheses {
+	
+	/* Leetcode 20
+	 * Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+	 * An input string is valid if:
+	 * Open brackets must be closed by the same type of brackets.
+	 * Open brackets must be closed in the correct order.
+	 *
+	 * Solution: use a stack to keep track of the open brackets, when see a close bracket, peek the stack and check if they are in pair.
+	 */
 
 	public static boolean isValid(String s) {
 		Stack<Character> stack = new Stack();

@@ -21,6 +21,13 @@ public class RemoveDuplicate {
 	 * Find all the elements that appear twice in this array.
 	 * Could you do it without extra space and in O(n) runtime?
 	 *
+	 * Solution: 
+	 * 1. the key point is a[i]'s range is [1, n], so if there is no duplicate, we should place a[i] at index a[i]-1 for all a[i]
+	 * for example if n = 5, we are able to reorder the array so it becomes [1, 2, 3, 4, 5]
+	 * 2. for each a[i], put it at index a[i]-1 by swap a[i] and a[a[i]-1], and set a[a[i]-1] = 0, meaning already found 
+	 * a[i] and put it at position a[i]-1
+	 * 3. when doing swap at 2, if a[a[i]-1] = 0, meaning in the previous step a[i] is found already, so we encounter a duplicate a[i],
+	 * we mark it as -1, add into result list
 	 */
 
 	public static List<Integer> findDuplicatesFromFirstNIntegers(int[] nums) {
@@ -61,6 +68,7 @@ public class RemoveDuplicate {
 		List<Integer> result = findDuplicatesFromFirstNIntegers(nums2);
 		List<Integer> ref1 = new LinkedList<Integer>(Arrays.asList(2,3));
 		List<Integer> ref2 = new LinkedList<Integer>(Arrays.asList(3,2));
+		System.out.println(result.toString());
 		if(result.equals(ref1) || result.equals(ref2))
 			System.out.println("Test 2 passed.");
 		else 	
@@ -68,7 +76,7 @@ public class RemoveDuplicate {
 	}
 
 	public static void test3() {
-		int[] nums3 = {1, 1, 1};
+		int[] nums3 = {1, 1, 3};
 		List<Integer> result = findDuplicatesFromFirstNIntegers(nums3);
 		List<Integer> ref1 = new LinkedList<Integer>(Arrays.asList(1,1));
 		if(result.equals(ref1))

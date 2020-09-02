@@ -2,8 +2,11 @@ public class InterleavingString
 {
 	/* LeetCode 97 Interleaving String
 	 * Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+	* 
+	* two D boolean result[i][j] stores whether s1.substring(0,j) and s2.substring(i, 0) form s3(0, i+j-1) 
 	*/
-	
+
+		
 	public static boolean check(String s1, String s2, String s3)
 	{
 		final int n1 = s1.length();
