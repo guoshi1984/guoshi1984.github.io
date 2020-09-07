@@ -5,7 +5,7 @@
 \author{Shi Guo} 
 \begin{document}
 \maketitle
-{\bf Abstract} In this article, we present a variety of methods for pricing options and the simulation results. We review the theory of the Black-Scholes-Merton model, the Heston model with stochastic volatility and the Bates model that contains diffusions with jumps. We analyze each model with possible analytical solutions. Then we introduce the Monte Carlo simulation algorithms for each model. A special algorithm for handling early exercising feature of American style option is provided. Finally, we present the simulation results and compare the results with literature.\\
+{\bf Abstract} In this article, we present a variety of methods for pricing options with simulation results. We first review the theory of the Black-Scholes-Merton model, then move to the Heston model with stochastic volatility. We analyze both models with possible analytical solutions. Then we introduce the Monte Carlo simulation algorithms for each model. A special algorithm for handling early exercising feature of American style option is provided. Finally, we present the simulation results and compare the results with literature.\\
 \line(1,0) {350}
 \section{European Option Pricing Models}
 In this section we first present two approaches for pricing European options: One is to solve Black-Scholes-Merton partial differential equation and the other one is using Martingale property. We are going to show these two approches are equivalent as they are connnected through Faynman-Kac formula. Then we present the analytical solutions and discussions. 
@@ -249,6 +249,7 @@ then using inverse Fourier transform
 	I_2 = \frac{1}{\pi} \int_{0}^{\infty}\mathcal Re( \frac{e^{-i u lnK}}{iu} \phi(u))  du + \frac{1}{2} \\
 \end{align*}
 With $I_1$ and $I_2$, we can have the solution of the value of the option using Eq. \ref{heston_solution_form}.
+\iffalse
 \subsection{Jump Diffusion Model}
 The BSM model and the Heston model assumes the asset prices follows the stochastic process driven by Brownian motion. Under this assumption, the asset price is continuous in time. The jump diffusion model extends the BSM model and Heston model by assuming asset price has discrete jump in time. Therefore in jump diffusion model, the stochastic process contains a continuous Brownian motion process and a discrete jump process.\\
 
@@ -356,6 +357,7 @@ Let $Z = \sum_i^{N(t)} J_i$, which is a sum of normal random variable. Then $Z \
 	S(t) = S(0) exp{(Z -(e^{\nu + \frac{1}{2}\delta^2}-1) \lambda t)} 
 \end{align*}
 Where $ Z \sim Normal(N(t)\nu, N(t)\delta^2)$ given $N(t) \sim Poisson(\lambda t)$.\\
+\fi
 \section{Monte Carlo Simulation Processes}
 In simulation, we decompose the time evolvement of an asset price into three components: drift, diffusion, jump. The
 drift term is dt term, the diffusion term has Brownian motion component, the jump term has Possion component. Let us look at the following examples. \\ 
@@ -434,6 +436,7 @@ All these above belong to the Euler discretization schemes which lead to more or
 %t
 %t
 %given u V s dW s 1 and u V s ds.
+\iffalse
 3. Bates process\\
 \begin{align*}
 	& \mu = r - \frac{1}{2} (V^{+(t)}) - \lambda (e^{\nu + \frac{1}{2}\delta^2}  -1) \\
@@ -442,6 +445,7 @@ All these above belong to the Euler discretization schemes which lead to more or
 	& V^{(t + dt)} = V^{(t)} + \kappa(\theta -  V^{+(t)}) dt + \sigma \sqrt{V^{+(t)}} dt (\rho \hat W_1
 	+ \sqrt{1 - \rho^2} \hat W_2 )
 \end{align*}
+\fi
 \section{Simulation for American Option}
 American Option can be exercised at any time. So in Monte Carlo Simulation, for each path we need to determine the stopping time, in other words, time for the option to be exerciesed. For each sample path at each time step point, we need to compare the current payoff value with the value to keep holding this option. If the current payoff value is great than the value to keep holding this option, we choose to exercise, otherwise we hold it. To evaluate the value to hold this option requires another Monte Carlo simulation, so the simulation for American option has a "Monte Carlo on Monte Carlo feature", and this is very computationally expensive. To see why it is expensive, consider the case of M samples and we are at time step 1. To determine the value of holding the option, we need generate another Monte Carlo simulation which has M sample paths. As we move on the time step, each step needs the number of sample path M times the previous one, therefore, the total number of Monte Carlo simulation grows exponentially as time step grows. 
 
