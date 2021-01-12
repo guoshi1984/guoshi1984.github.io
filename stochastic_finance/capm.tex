@@ -1,0 +1,54 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Derivation of Capital Asset Pricing Model}
+Given an asset with return $R_i$, the basic pricing equation for return states
+\begin{equation} \label{basic}
+	1 = E(m R_i)
+\end{equation}
+This means if we invest using one dollar, the expectation of discount return should be equal to one dollar. In other words, it is equal to what we start with to prevent arbitrage.
+Applying the covariance decomposition
+\begin{align*}
+	1 = E(m)E(R_i) + cov(m, R_i)
+\end{align*}
+If we let $R_i = R_f$ in Eq.\ref{basic}, where $R_f$ is the risk-free interest rate. Because $R_f$ is deterministic, we have $R_f = \frac{1}{E(m)}$. Substituting the $R_f$ into the equation above yields
+\begin{align*}
+	1 = \frac {E(R_i)}{R_f} + cov(R_i, m)
+\end{align*}
+After a little algebra
+\begin{align*}
+	R_f = E(R_i) + R_f cov(R_i, m)\\
+	E(R_i) = R_f  -R_fcov(m, R_i) 
+	= R_f -\frac{1}{E(m)} \rho(m, R_i)\sigma(m) \sigma(R_i)
+\end{align*}
+Because $\rho(m, R_i) <= 1$, so
+\begin{align*}
+	|E(R_i) - R_f| \leq \frac{\sigma(m)}{E(m)}\sigma(R_i)
+\end{align*}
+We define market portfolio return $R_{mf}$: $\rho(m, R_{mf}) = -1$, then 
+\begin{align*}
+	E(R_{mf}) =  R_f - \frac{\sigma(m)}{E(m)} \sigma(R_{mf}) 
+\end{align*}
+This is called the market front line with slope equal to $\frac{\sigma(m)}{E(m)}$.And
+\begin{equation} \label{slope}
+	-\frac{\sigma(m)}{E(m)} \sigma(R_{mf})= E(R_{mf}) - R_f
+\end{equation}
+\begin{align*}
+	E(R_i) = R_f -\frac{cov(R_i, m)}{E(m)}
+	       = R_f - \frac{cov(R_i, m)}{var(m)} \frac{var(m)}{E(m)}
+\end{align*}
+When $\rho(m, R_{mf}) = 1$, let $m = a + bR_{mf}$, then
+\begin{align*}
+	E(R_i) & = R_f - \frac{b cov(R_i, R_{mf})}{b^2 var{R_{mf}}}
+	\frac{\sigma(m)b\sigma(R_{mf})}{E(m)}\\
+	       & = R_f - \frac{ cov(R_i, R_{mf})}{ var{R_{mf}}}
+	\frac{\sigma(m) \sigma(R_{mf})}{E(m)}\\
+\end{align*}
+Substituting Eq.\ref{slope} for the above expression, we have
+\begin{align*}
+	E(R_i) & =R_f + \frac{cov(R_i, R_{mf})}{var{R_{mf}}}(E(R_{mf}) - R_f)\\
+	& =R_f + \beta(E(R_{mf}) - R_f)\\
+\end{align*}
+With $\beta=\frac{cov(R_i, R_{mf})}{var{R_{mf}}}$.
+\end{document}
