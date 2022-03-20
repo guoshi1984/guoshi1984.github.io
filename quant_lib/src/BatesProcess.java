@@ -1,4 +1,5 @@
 import java.util.*;
+import stat.*;
 class BatesProcess extends Process
 {
 	/* Define Bates Process(Stochastic Volatility Jump Diffusion)

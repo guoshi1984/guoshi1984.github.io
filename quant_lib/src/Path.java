@@ -1,4 +1,11 @@
 import java.util.*;
+/*
+ * Path class
+ * Given a sample of asset value, it value is evolve in time based on specific model, and the collection
+ * of all the values respect to time form a sample path. This class is used to store asset values
+ *  at each time point for a given sample, and the stopping time for this given sample path.
+ */
+
 public class Path {
 	public List<Double> values;
 	public int stoppingTime;

@@ -1,5 +1,6 @@
 import java.util.*;
 import math.*;
+import stat.*;
 public class Test 
 {
 
@@ -12,15 +13,18 @@ public class Test
 		OptionType type = OptionType.CALL;
 		ExerciseStyle style = ExerciseStyle.EUROPEAN;
 		
-		double underlying = 36.0;
+		double underlying = 44.0;
 		double strike = 40.0;
-		double riskFreeRate = 0.06;
+		double riskFreeRate = 0.06;  //0.06;
 		double volatility = 0.4;
 		double time = 2;
 			
 		//paramters for MC
-		int timeStepPerYear = 20;
-		int SampleSize = 100000;	
+		int timeStepPerYear = 1;
+		int euroSampleSize = 20000;
+		int ameSampleSize = 50000;
+		SampleAccumulatorType sEuroType = SampleAccumulatorType.CONTROL;	         	
+		SampleAccumulatorType sAmeType = SampleAccumulatorType.RAW;	         	
 		Option option = new Option(style,
 				OptionType.CALL, underlying,
 			strike, riskFreeRate, 
@@ -41,7 +45,8 @@ public class Test
 		Process process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		MonteCarlo mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
+			       timeStepPerYear, euroSampleSize, process,
+			       sEuroType);
 		mc.initialize();
 		mc.showInfo();
 		mc.run();
@@ -62,7 +67,8 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
+			       timeStepPerYear, ameSampleSize, process,
+			       sAmeType);
 		mc.initialize();
 		mc.showInfo();
 		mc.run();
@@ -90,7 +96,8 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
+			       timeStepPerYear, euroSampleSize, process,
+			       sEuroType);
 		mc.initialize();
 		mc.showInfo();
 		mc.run();
@@ -110,7 +117,8 @@ public class Test
 		process = new BSMProcess(option.riskFreeRate,
                                 option.volatility);
 		mc = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process);
+			       timeStepPerYear, ameSampleSize, process,
+			       sAmeType);
 		mc.initialize();
 		mc.showInfo();
 		mc.run();
@@ -145,8 +153,8 @@ public class Test
 		double rho = -0.5;
 			
 		//paramters for MC
-		int timeStepPerYear = 40;
-		int SampleSize = 400000;	
+		int timeStepPerYear = 50;
+		int SampleSize = 50000;	
 		Option option = new Option(style,
 				OptionType.CALL, underlying,
 			strike, riskFreeRate, 
@@ -172,7 +180,9 @@ public class Test
 				rho);
 		//process2.showInfo();	
 		MonteCarlo mc2 = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process2);
+			       timeStepPerYear, SampleSize, process2,
+			       SampleAccumulatorType.RAW);
+
 		mc2.initialize();
 		mc2.showInfo();
 		mc2.run();
@@ -199,7 +209,8 @@ public class Test
 		option.showInfo();
 		//process2.showInfo();
 		mc2 = new MonteCarlo(option,
-			       timeStepPerYear, SampleSize, process2);
+			       timeStepPerYear, SampleSize, process2,
+			       SampleAccumulatorType.RAW);
 		mc2.initialize();
 		mc2.showInfo();
 		mc2.run();
@@ -286,21 +297,12 @@ public class Test
 	}
 
 
-
-	
-	public static void main(String[] args) {
-//		testOption1();
-		testOption2();
-//		testOption3();
-//		Option option = new Option(OptionType.CALL, 36.0,
-//			40.0, 0.06, 
-//			0.2, 2.0);
-		
-		/*double mo1 = 0;
+	public static void testOption4() {
+		double mo1 = 0;
 		double mo2 = 0;
 		double mo3 = 0;
 		double mo4 = 0;
-		int n = 1000;
+		int n = 100000;
 		Random r = new Random();
 		for (int i = 0; i < n; i++)
 		{
@@ -319,7 +321,120 @@ public class Test
 		System.out.println(mo2);
 		System.out.println(mo3);
 		System.out.println(mo4);
-		*/
+		
+	}
+
+	public static void testOption5() {
+		System.out.println("=============================");
+		System.out.println("Test Option Pricing Model using Black-Scholes Model");
+		System.out.println("=============================");
+		
+		//parameters for option
+		OptionType type = OptionType.CALL;
+		ExerciseStyle style = ExerciseStyle.EUROPEAN;
+		
+		double underlying = 36.0;
+		double strike = 40.0;
+		double riskFreeRate = 0.06;  //0.06;
+		double volatility = 0.4;
+		double time = 2;
+			
+		//paramters for MC
+		int timeStepPerYear = 1;
+		int SampleSize = 100000;
+	         	
+		Option option = new Option(style,
+				OptionType.CALL, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		System.out.println("=============================");
+		System.out.println("Pricing task: European Call Option Black-Scholes Analytical: ");
+		option.showInfo();
+		BSMCalculator bsm = new BSMCalculator(option);
+		double npv1 = bsm.calculate();
+		System.out.println("Net Present Value: "+ npv1);
+		System.out.println();	
+		
+		
+
+		System.out.println("=============================");
+		System.out.println("Pricing Task: European Call Option Black-Scholes Monte Carlo Using Raw Sampling: ");
+		option.showInfo();
+		Process process = new BSMProcess(option.riskFreeRate,
+                                option.volatility);
+		MonteCarlo mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process,
+			       SampleAccumulatorType.RAW);
+		mc.initialize();
+		mc.showInfo();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+
+		System.out.println("=============================");
+		System.out.println("Pricing Task: European Call Option Black-Scholes Monte Carlo Using Control Sampling: ");
+		option.showInfo();
+		mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process,
+			       SampleAccumulatorType.CONTROL);
+		mc.initialize();
+		mc.showInfo();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+		
+		
+		style = ExerciseStyle.EUROPEAN;
+		type = OptionType.PUT;
+		option = new Option(style,
+				type, underlying,
+			strike, riskFreeRate, 
+			volatility, time);
+		System.out.println("=============================");
+		System.out.println("Pricing Task: European Put Black-Scholes Analytical: ");
+		option.showInfo();
+		bsm = new BSMCalculator(option);
+		double npv2 = bsm.calculate();
+		System.out.println("Net Present Value: "+ npv2);
+		System.out.println();	
+		
+		
+		System.out.println("=============================");
+		System.out.println("Pricing Task: Eueopean Put Black-Scholes Monte Carlo Using Raw Sampling: ");
+		option.showInfo();
+		process = new BSMProcess(option.riskFreeRate,
+                                option.volatility);
+		mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process,
+			       SampleAccumulatorType.RAW);
+		mc.initialize();
+		mc.showInfo();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+		
+		
+		System.out.println("=============================");
+		System.out.println("Pricing Task: Eueopean Put Black-Scholes Monte Carlo Using Control Sampling: ");
+		option.showInfo();
+		mc = new MonteCarlo(option,
+			       timeStepPerYear, SampleSize, process,
+			       SampleAccumulatorType.CONTROL);
+		mc.initialize();
+		mc.showInfo();
+		mc.run();
+		mc.showResult();
+		System.out.println();
+		
+	}
+
+	public static void main(String[] args) {
+//		testOption5();
+		testOption1();
+		for(int i = 0; i < 10; i++) {
+			//testOption4();
+			System.out.println();
+		}
 		return;
 	}
 }
