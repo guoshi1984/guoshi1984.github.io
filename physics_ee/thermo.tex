@@ -1,0 +1,21 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb, amsmath}
+\usepackage{graphicx}
+\begin{document}
+\section{Free Energy}
+Whether a chemical process can occur spontaneously is contingent upon the change of entropy.  If the entropy increases, then the process can occur spontaneously. But this rule is applicable primarily to adiabatic process. The majority of chemical processes take place under  constant pressure conditions. Consequently, it becomes essential to account for the total entropy change both within and outside the system. \\
+Let $S_{total}$ be the total entropy, $S_{in}$ and  $S_{out}$ be the entropy inside and outside the system, respectively, and $Q_{in}$ and  $Q_{out}$ the heat inside and outside the sytem respectively.  Then the chane of entropy is
+\begin{align*}
+\Delta S_{total}  = & \Delta S_{in} + \Delta S_{out} \\
+                           &   (\Delta S_{out} = \frac{\Delta Q_{out}}{T})\\
+                        = & \Delta S_{in} + \frac{ \Delta Q_{out} }{T}\\
+                           & \Delta Q_{out} = -\Delta Q_{in} \\
+                        = &\Delta S_{in} - \frac{ \Delta Q_{in} }{T}\\
+                        = & \Delta S_{in} - \frac{ \Delta H} {T}\\
+\end{align*}
+The last step uses the fact that under constant pressure, the heat change is the enthalpy change. $\Delta U = \Delta Q - p\Delta V$, so $\Delta Q = \Delta U + p \Delta V = \Delta H$. We define the Gibbs free energy G, 
+\begin{align}
+\Delta G = -T \Delta S_{univ} & = -T \Delta S_{sys} + \Delta H \\
+                                 G & = U + pV - TS \\
+\end{align}
+\end{document}

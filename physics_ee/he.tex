@@ -2,21 +2,16 @@
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
 \begin{document}
-Author: Dr. Shi Guo  \hspace{30mm} Email: guoshi1984@hotmail.com\\
-\line(1,0){350}\\
-\noindent The purpose of this article is providing an review of Hall effect family. Understanding the mechanism of all the physics underlying in the Hall effect family is not an easy task, here we provide a step by step review. The whole article is organized as the following:\\
-\noindent 1) We review the standard conductivity theory at classical level.\\
-\noindent 2) We then move to the semiclassical level where the conductivity is related to the group velocity of the wavepacket and the Hall conductivity is derived. \\
-\noindent 3) Finally, we go to the purely quantum level. We derive current by calculating the expectation value of  the current operator. The expectation has two components: the first term, the gradient of the energy eigenvalue in k space, contributes the conductivity of most metals; the second term, which relates to the Berry curvature, is nontrivial for the systems which break time-reversal symmetry.\\
-\noindent 3) We show that the Berry curvature related conductivity term has an interesting property. The integral of the Berry curvature over the first Brillouin zone summed over all bands is an integer multiple of $2\pi$.\\
-
+\noindent The objective of this article is to provide a comprehensive review of the Hall effect family. Grasping the intricate physics underlying the various manifestations of the Hall effect is no straightforward feat. In this regard, we present a step-by-step analysis. The structure of the entire article is as follows:\\
+\noindent 1) We commence by delving into the conventional theory of conductivity, spanning from classical principles to the realm of quantum mechanics.\\
+\noindent 2) Upon entering the quantum realm, we proceed to derive the current operator, encompassing two distinct contributions. The initial term corresponds to the gradient of the energy eigenvalue in k-space, impacting the conductivity of most metals. The subsequent term, connected to the Berry curvature, assumes significance in situations where time-reversal symmetry is violated.\\
+\noindent 3) It is worth noting that the Berry curvature-associated second term possesses a captivating property. The integration of the Berry curvature across the Brillouin zone, summed over all bands, results in an integer value of $2\pi$.\\
 \section{Brief Summary of Conductance Theory}
 %\section{Current Operator}
-\noindent In order to describe the conductivity, physicists have developed several models, starting from classical model, semiclassical model to quantum model. These model can be summarized as:\\
+\noindent To elucidate conductivity, physicists have formulated multiple models, spanning from the classical and semiclassical to the quantum approaches. These models can be summarized as follows:\\
 \noindent 1) In classical model, the electrons are treated classically, and the movement is governed by the Newton's law and the forces on the electrons are described by electromagnetism . This model is good enough to explain the Ohm's law.\\
-\noindent 2) In semiclassical model, we consider the behavior of electron as a wave, and treat the movement of electrons as the propagation of the wavepacket, therefore the velocity of the electron is group velocity of the wave. This model utilize the particle-wave duality, and is capable of explaining the conduction in metal.\\
-\noindent 3) In quantum model, the velocity is the expectation value of the velocity operator given a wavefunction. We need to use this theory to derive the Hall conductance, and understand the topological behavior of Hall conductance.\\
-
+\noindent 2) The semiclassical model views electrons as both particles and waves. Electron movement is likened to wavepacket propagation, with the electron's velocity representing the group velocity of the wave. This model leverages particle-wave duality and effectively accounts for conduction in metals.\\
+\noindent 3) In the quantum model, velocity is represented by the expectation value of the velocity operator within a given wavefunction. This theoretical approach is essential for deriving Hall conductance and comprehending the topological intricacies of Hall conductance.\\
 \section{Classical Conductance Theory Example: Hall Effect}
 We consider the electrons inside conductors. When we apply both an electric field E and a magnetic filed B, the electrons have the equation of motion following the Newtons' law
 \begin{align*}
@@ -81,7 +76,7 @@ and the energies are
 \begin{align*}
 	E_{n,k} = \hbar \omega_B (n+ \frac{1}{2}) -eE(\frac{\hbar k}{eB}+\frac{eE}{m\omega_B^2})+\frac{m}{2}\frac{E^2}{B^2}
 \end{align*}
-Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. In semiclassical approximation, we use a wave packet to describe the behavior of particles, and the velocity of the particle is the velocity of the wave pack. For given a wavevector k, the velocity is
+Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
 \begin{align*}
 	v_y = \frac{1}{\hbar} \frac{\partial E_{n,k}}{\partial k} = -\frac{E}{B}
 \end{align*}
@@ -90,25 +85,13 @@ To find out the total current in y direction, we have to know the degeneracy, wh
 \begin{align*}
 	\frac{dn}{dk} = \frac{L_y}{2 \pi}
 \end{align*}
-If the total density of states is n, then the density in a unit length in y direction becomes $\frac{n}{L_y}$, the The total current is
+The total current is
 \begin{align*}
-	I_y = \frac{n}{L_y} e v_y =\frac{1}{L_y}e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eE}{2\pi B} \int dk
+	I_y = e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eEL_y}{2\pi B} \int k
 \end{align*}
 The range of k in the above integral is tricky. From the wavefunction, we see the center of the harmonic oscillator in x direction is $x = -k\hbar/eB$, while $ 0 \leq x \leq L_x$, then $-L_x eB/\hbar  \leq k \leq 0$.
 \begin{align*}
-	I_y = \frac{eE}{2\pi B} \int_{-L_xeB/\hbar}^0 dk = \frac{e^2}{h}EL_x
-\end{align*}
-Then the current density j is defined as the charge flows through a unit area within a unit of time. Since our system is 2 dimensional, the unit area becomes the unit length in x direction.
-\begin{align*}
-	j = \frac{I_y}{L_x} = \frac{e^2}{h}E = \sigma E
-\end{align*}
-where 
-\begin{align*}
-	\sigma = \frac{e^2}{h}
-\end{align*}
-The above expression of conductivity is for the electrons in one filled Landau energy level. So if there are n Landau levels filled, the conductivity is
-\begin{align*}
-	\sigma = n\frac{e^2}{h}
+	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
 \end{align*}
 The second way is purely quantum approach. We need the following steps in order to derive the expression of the current. 
 1) In quantum mechanics, we represent every physical quantity using an operator. So the first step is to find out the expression of velocity operator. \\
@@ -170,17 +153,7 @@ The current operator is
 \end{align*}
 The integral is taken over the first Brillouin zone denoted by BZ.
 We need to consider several cases to discuss the current.\\
-1) If the system preserves time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. Here is a quick proof.\\
-When the system preserves the time reversal symmetry, we have $u_n(-k) = u_n(k)^{*}$. Let us call the second term in Eqn. \ref{velocity} $v_a(k)$, where subscript a stands for anomalous. Then
-\begin{align*}
-	v_a(-k) \\
-	= & i  (<\frac{\partial u_n(-k)}{\partial {\bf k}}| \frac{\partial u_n(-k)}{\partial t}> -<\frac{\partial u_n(-k)}{\partial t}| \frac{\partial u_n(-k)}{\partial {\bf k}}>) \\
-	= & i  (<\frac{\partial u_n(k)^{*}}{\partial {\bf k}}| \frac{\partial u_n(k)^{*}}{\partial t}> -<\frac{\partial u_n(k)^{*})}{\partial t}| \frac{\partial u_n(k)^{*}}{\partial {\bf k}}>) \\
-	= & i  (<\frac{\partial u_n(k)}{\partial {\bf t}}| \frac{\partial u_n(k)}{\partial k}> -<\frac{\partial u_n(k)}{\partial k}| \frac{\partial u_n(k)}{\partial {\bf t}}>) \\
-    = & -v_a(k)
-\end{align*}
-
-In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
+1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
 2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
 {\bf Quantized current}\\
 When the first term of the velocity vanishes(in the case that all bands are fully occupied), the expression of velocity reduces to
@@ -189,21 +162,9 @@ When the first term of the velocity vanishes(in the case that all bands are full
 \end{align}
 Using the relationship 
 \begin{align*}
-	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} 
+	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} = -\frac{e}{\hbar} {\bf E} \times \Omega^n({\bf k})
 \end{align*}
-Based on the definition of crystal momentum and Newton's law
-\begin{align*}
-	\partial_t(\hbar k) = -eE
-\end{align*}
-So
-\begin{align*}
-	\partial_t = -\frac{e}{\hbar} {\bf E} \cdot \nabla_{({\bf k})}
-\end{align*}
-
-\begin{align*}
-	v_a({\bf k}) = -\frac{e}{\hbar} {\bf E} \times \Omega^{n}({\bf k})  
-\end{align*}
-where
+where 
 \begin{align*}
 	\Omega^{n}({\bf k}) = \nabla_{\bf k} \times <u_n({\bf k})|i\nabla_{\bf k}|u_n({\bf k})>
 \end{align*}
