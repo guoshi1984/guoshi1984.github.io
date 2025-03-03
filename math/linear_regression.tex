@@ -299,8 +299,14 @@ If X1 and X2 are orthogonal, namely, $X_1^T X_2=0$, then
 \boldsymbol {\hat  \beta_1} = (X_1^T X_1)^{-1} X_1^Ty\\
 \boldsymbol {\hat  \beta_2} = (X_2^T X_2)^{-1} X_2^Ty
 \end{align*}
+If X1 and X2 are not orthogonal, we can solve for $\beta_2$ in the above normal equation set and get $\beta_2$
 \begin{align*}
 \hat \beta_2 & = [X_2^T(I-X_1(X_1^TX_1)^{-1}X_1^T)X_2]^{-1}[X_2(I-X_1(X_1^TX_1)^{-1}X_1^T)y]\\
+& = (X_2^T M_1X_2)^{-1}(X_2^T  M_1y) \\
+\end{align*}
+Given the fact that $M_1$ is symmetrical and idempotent, we can rewrite the above expression
+\begin{align*}
+\hat \beta_2
 & = (X_2^T M_1 M_1X_2)^{-1}(X_2^T M_1 M_1y) \\
 & = (X_2^T M_1^T M_1X_2)^{-1}(X_2^TM_1^T M_1y) \\
 & = ((M_1 X_2)^T  M_1X_2)^{-1}((M_1 X_2)^T M_1y) 
@@ -319,6 +325,7 @@ Var(\hat \beta)
 =\sigma^2 (X^TX)^{-1}X^T  X (X^TX)^{-1}
 =\sigma^2 (X^TX)^{-1}
 \end{align*}
+The above derivation use the fact that $\epsilon$ has a normal distribution with mean 0 and variance $\sigma^2$.
 For simple linear regression
 \begin{align*}
 Var(\hat \beta)
@@ -405,7 +412,7 @@ If we regression y on $X_1$ only, our estimator is
 \end{align*}
 On the second term, we see unless 1)$X_1$ and $X_2$ are orthogonal, or 2)$\beta_2$ =0,  $\beta_1$ is biased.\\
 \subsection{Consistency}
-We know
+The unbiasness gives us a metric of measuring how good our esitimator is, from population perspetive. In reality, as our sample size is finite, we need ask ourselves does our estimator converges to true value when sample size is sufficiently large. We know
 \begin{align*}
 \hat \beta = \beta + (X^TX)^{-1}X^T\epsilon
 \end{align*}
@@ -436,13 +443,42 @@ X^TX & = \Sigma_{i=1}^N
 \begin{align*}
 \hat \beta &= \beta + ({X^TX})^{-1} {X^T \epsilon} \\
                &= \beta + ( \Sigma_{i=1}^N X_i X_i^T)^{-1} X^T \epsilon \\
-               &= \beta + ( \Sigma_{i=1}^N  \frac{1}{N}{X_i^TX_i})^{-1}(\frac{X^T \epsilon}{n})
+               &= \beta + ( \Sigma_{i=1}^N  \frac{1}{N}{X_i^TX_i})^{-1}(\frac{X^T \epsilon}{N})
 \end{align*}
 If $X_i$s are iid, then by law of large numbers
 \begin{align*}
 \Sigma_{i=1}  \frac{1}{n}{X_i^TX_i} 
 \end{align*}
 converges to Q in probability.\\
+\begin{align*}
+&\frac{X^T \epsilon}{N}\\ 
+ =& \left(\begin{array} {c}
+       \frac{1}{N}\Sigma_{1}^{N}x_{i1}\epsilon_i \\
+       \frac{1}{N}\Sigma_{1}^{N}x_{i2}\epsilon_i \\
+       \frac{1}{N}\Sigma_{1}^{N}x_{i3}\epsilon_i \\
+       ... \\ 
+      \frac{1}{N}\Sigma_{1}^{N}x_{ik}\epsilon_i\\
+     \end{array} \right)\\
+=& \frac{1}{N}\Sigma_{i=1}^{N} X_i\epsilon_i = \bar w\\
+\end{align*}
+Where $\bar w$ is a k $\times$ 1 vector. To see the asymptotical behavior of $w$, we consider its mean and asymptotical varance. The mean is
+\begin{align*}
+E[w_i]=E_X[E[w_i|x_i]] = E_X[X_iE[\epsilon|X_i]] = 0
+\end{align*}
+\begin{align*}
+Var[\bar w]=E[Var[\bar w|X]]+Var[E[\bar w|X]] = E[Var[\bar w|X]]+0 = E[Var[\bar w|X]]
+\end{align*}
+\begin{align*}
+Var[\bar w|X] = E[\bar w \bar w^T|X]=\frac{1}{n}X^TE[\epsilon \epsilon^T]X\frac{1}{n} = \frac{\sigma^2}{n}\frac{X^T X}{n}
+\end{align*}
+\begin{align*}
+E[Var[\bar w|X]] = \frac{\sigma^2}{n}E(\frac{X^TX}{n})
+\end{align*}
+When $\frac{X^TX}{n}$ converges to Q, 
+\begin{align*}
+E[Var[\bar w|X]] = 0
+\end{align*} 
+So $\bar w$ converges to $\boldsymbol 0(k \times 1)$ vector. Then when N is sufficiently large, $\hat \beta$ converges to $\beta$. This is the proof of consistency.\\
 There are certain conditions in which the estimators become inconsitent.\\
 1) X is not full rank, or X has multicollinearity
 2) $cov[X, \epsilon] \neq 0$
@@ -519,17 +555,25 @@ P_U = X(X^TX)^{-1}X^T\\
 P_R = X_1(X_1^TX_1)^{-1}X_1^T
 \end{align*}
 \begin{align*}
-SSE_R-SSE_U=y^T(I-P_R)y-y^T(I-P_U)y = y^T(P_U-P_R)y
+SSR_R-SSR_U=y^TP_Ry-y^TP_Uy = y^T(P_R-P_U)y
 \end{align*}
 recall
 \begin{align*}
 \hat \beta_2 = (X_2^T M_1 X_2)^{-1}X_2^TM_1 y
 \end{align*}
-So 
+The corresponding projection matrix is
 \begin{align*}
-P_U-P_R = X_2\beta =X_2(X_2^TM_1X_2)^{-1}X_2^TM_1y\\
-SSR_R-SSR_U = (X_2^TM_1y)^T(X_2^TM_1X_2)^{-1}X_2^TM_1y
+M_1X_2 (X_2^T M_1 X_2)^{-1}X_2^TM_1
 \end{align*}
+The $SSR_R$ - $SSR_U$ is the additional variance explained by $X_2$ after removing the linear space of $X_1$ on $X_2$.  This means the projection matrix corresponding to $\beta_2$ is $P_U$ - $P_R$. So we can get $P_U$ - $P_R$ using the interpretation of projection matrix instead solving for the projection matrix itself.
+\begin{align*}
+P_U-P_R & =M_1X_2(X_2^TM_1X_2)^{-1}X_2^TM_1\\
+\end{align*}
+The extra expained sum of squares by the unrestricted model is
+\begin{align*}
+SSR_R-SSR_U & = y^T(P_R-P_U)y = (X_2^TM_1y)^T(X_2^TM_1X_2)^{-1}X_2^TM_1y
+\end{align*}
+with 1 degree of freedom as $X_2$ only contains 1 parameter.
 \begin{align*}
 F = \frac{SSR_R - SSR_U}{\frac{SSR_U}{n-k}} = \frac{(X_2M_1y)^T(X_2^TM_1y)}{\hat \sigma^2 (X_2^TM_1X_2)} =LM
 \end{align*}
