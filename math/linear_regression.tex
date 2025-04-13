@@ -106,7 +106,7 @@ Estimator of $\beta$
 \end{align*}
 {\bf Least Square Estimator for Simple Linear Regression}\\
 \begin{align*}
-y =  \beta_o + \beta_1 X + \epsilon\\
+y =  \beta_0 + \beta_1 X + \epsilon\\
 \end{align*}
 \begin{align*}
 	&\left(  \begin{array} {c}
@@ -152,10 +152,29 @@ y =  \beta_o + \beta_1 X + \epsilon\\
 		\right) 
 \end{align*}
 So
+\begin{align} \label{eq:beta0}
+\beta_0 & = \frac{\Sigma x_i^2 \Sigma y_i - \Sigma x_i (\Sigma x_i y_i)}{n\Sigma x^2_i - (\Sigma x_i)^2}
+\end{align}
+\begin{align} \label{eq:beta1} 
+\beta_1 & = \frac{n \Sigma x_i y_i -\Sigma x_i \Sigma y_i }{n\Sigma x^2_i - (\Sigma x_i)^2}
+\end{align}
+$\beta_1$ can also be written using the covariance
+\begin{equation} \label{eq:betacovariance}
+\beta_1=\frac{\sum_i^n(x_i-\bar x)(y_i-\bar y)}{\sum_i^n(x_i-\bar x)(x_i-\bar x)}
+\end{equation}
+And it is easy to show 
 \begin{align*}
-\beta_1 = \frac{\Sigma x_i^2 \Sigma y_i - \Sigma x_i (\Sigma x_i y_i)}{n\Sigma x^2_i - (\Sigma x_i)^2} \\
-\beta_2 = \frac{-\Sigma x_i \Sigma y_i + n \Sigma x_i y_i}{n\Sigma x^2_i - (\Sigma x_i)^2}
+\beta_2 &=\frac{\sum_i^n(x_i-\bar x)(y_i-\bar y)}{\sum_i^n(x_i-\bar x)(x_i-\bar x)}\\
+            &=\frac{\sum_i^n(x_iy_i-\bar x y_i -x_i \bar y + \bar x \bar y)}{\sum_i^n(x_i^2 -2\bar x x_i + (\bar x)^2)}\\
+	    &=\frac{\sum_i^n x_iy_i-\sum_i^n \bar x y_i -\sum_i^n x_i \bar y + \sum_i^n \bar x \bar y}{\sum_i^n x_i^2 -\sum_i^n 2\bar x x_i + \sum_i^n (\bar x)^2}\\
+           &=\frac{\sum_i^n x_iy_i-(\frac{1}{n}\sum_j^n x_j)(\sum_i^n y_i) -(\sum_i^n x_i)(\frac{1}{n}\sum_j^n y_j) + \sum_i^n (\frac{1}{n}\sum_j^n x_i)(\frac{1}{n}\sum_k^n y_i)}{\sum_i^n x_i^2 -\sum_i^n 2(\frac{1}{n}\sum_j^n x_j) x_i + \sum_i^n (\frac{1}{n}\sum_j^n x_j)^2}\\
+ &=\frac{\sum_i^n x_iy_i-(\frac{1}{n}\sum_j^n x_j)(\sum_i^n y_i) -(\sum_i^n x_i)(\frac{1}{n}\sum_j^n y_j) + n (\frac{1}{n}\sum_j^n x_i)(\frac{1}{n}\sum_k^n y_k)}{\sum_i^n x_i^2 -\sum_i^n 2(\frac{1}{n}\sum_j^n x_j) x_i + n(\frac{1}{n}\sum_j^n x_j)^2}\\
+&=\frac{\sum_i^n x_iy_i-\frac{1}{n}(\sum_i^n x_i)(\sum_j^n y_j) -\frac{1}{n}(\sum_i^n x_i)(\sum_j^n y_j) +  \frac{1}{n}(\sum_j^n x_i)(\sum_k^n y_k)}{\sum_i^n x_i^2 - \frac{2}{n}(\sum_j^n x_j) (\sum_i^nx_i) + \frac{1}{n}(\sum_j^n x_j)^2}\\
+&=\frac{\sum_i^n x_iy_i-\frac{1}{n}(\sum_i^n x_i)(\sum_j^n y_j)}{\sum_i^n x_i^2 - \frac{1}{n}(\sum_j^n x_j) (\sum_i^nx_i) }\\
+&=\frac{n\sum_i^n x_iy_i-(\sum_i^n x_i)(\sum_j^n y_j)}{n\sum_i^n x_i^2 - (\sum_j^n x_j) (\sum_i^nx_i) }\\
+&=\frac{n\sum x_iy_i-(\sum x_i)(\sum_j^n y_j)}{n\sum x_i^2 - (\sum x_i)^2 }\\
 \end{align*}
+which is the same as Eq.\ref{eq:beta1}.  We can interpret $\beta$ as ratio of the covariance of x and y to the variance of x.
 \subsection{Projection matrix}
 Given $\hat \beta = (X^TX)^{-1}X^TY$, we have the predictor value of $y=X\beta$ 
 \begin{align*}
@@ -270,12 +289,19 @@ If $P$ is a projection matrix, the matrix $I - P$ is also a projection matrix. I
 \begin{align*}
 y &= X\beta +\epsilon\\
 P &= X(X^TX)^{-1}X^T\\
+\end{align*}
+Define residual vector $\hat \epsilon$
+\begin{align*}
 \hat \epsilon & = (I - P) y = (I - X(X^TX)^{-1}X^T)y\\
+\end{align*}
+And it is easy to show $\hat e$ and X are orthogonal.
+\begin{align*}
+X^T \hat \epsilon = X^T (I-P)y =X^T(I - X(X^TX)^{-1}X^T)y = (X^T- X^TX(X^TX)^{-1}X^T)y = 0 y = 0
 \end{align*}
 For the above example, we define $M = I - \frac{1}{N}i i^T$, and $My$ express the mean deviations of a vector.\\
 {\bf Idempotent property of projection matrix\\}
 Consider the previous example that we project a vector V onto x axis, how about we do this projection twice, we would end up the same vector $V_x$. Using a little matrix algebra, it is easy to prove that for any project matrix P, we have $PP=P$.  
-\subsection{Partitioned Regression and Partial Regression}
+\subsection{Partitioned Regression and  Regression}
 \begin{align*}
 y = X \boldsymbol \beta + \epsilon = X_1 \beta_1 + X_2 \beta_2 + \epsilon
 \end{align*}
@@ -305,18 +331,72 @@ If X1 and X2 are not orthogonal, we can solve for $\beta_2$ in the above normal 
 & = (X_2^T M_1X_2)^{-1}(X_2^T  M_1y) \\
 \end{align*}
 Given the fact that $M_1$ is symmetrical and idempotent, we can rewrite the above expression
-\begin{align*}
-\hat \beta_2
-& = (X_2^T M_1 M_1X_2)^{-1}(X_2^T M_1 M_1y) \\
-& = (X_2^T M_1^T M_1X_2)^{-1}(X_2^TM_1^T M_1y) \\
-& = ((M_1 X_2)^T  M_1X_2)^{-1}((M_1 X_2)^T M_1y) 
-\end{align*}
+\begin{align}
+\hat \beta_2  & = (X_2^T M_1 M_1X_2)^{-1}(X_2^T M_1 M_1y)  \notag \\
+&= (X_2^T M_1^T M_1X_2)^{-1}(X_2^TM_1^T M_1y) \notag \\
+& = ((M_1 X_2)^T  M_1X_2)^{-1}((M_1 X_2)^T M_1y)  \label{eq:partial} 
+\end{align}
 The above uses the property that $M_1^T=M_1$ and $M_1 M_1 = M_1$\\
 The $\hat \beta_2$ is also the solution of 
 \begin{align*}
- M_1 y = M_1 X_2 \beta + \epsilon
+ M_1 Y = M_1 X_2 \beta + \epsilon
 \end{align*}
 where $M_1 y$ is the residual of y regressed on $X_1$ and $M_1 X_2$ is the residual of $X_2$ regressed on $X_1$.
+For example, in simple linear regression
+\begin{align*}
+Y= \beta_0 + x\beta_1
+\end{align*}
+Where $X_1=1_N$, so its projection matrix is $i\frac{1}{N}i^T$, and the corresponding M matrix is $I - \frac{1}{N}ii^T$.
+We tries to calculate $\beta$ using partition regression. 
+\begin{align*}
+MY = (I-\frac{1}{N}ii^T)Y = Y-\bar Y
+MX = (I-\frac{1}{N}ii^T)Y = X-\bar X
+\end{align*}
+Then
+\begin{align}
+\beta_1 = ((MX)^T(MX))^{-1}((MX)^T(MY))  = \frac{\sum_i^N(x_i - \bar x)(y_i - \bar y)}{\sum_i^N(x_i-\bar x)^2} \label{eq:betapartition}
+\end{align}
+which is the same as Eq.\ref{eq:betacovariance}
+\subsection{Variance componet identity}
+If we define our mean projection matrix P 
+\begin{align*}
+P = i \frac{1}{N}i^T
+\end{align*}
+and silimarly we define mean deviation project matrix 
+\begin{align*}
+M= I-P = i\frac{1}{N}i^T
+\end{align*}
+We have
+\begin{align*}
+y= \hat y + \hat \epsilon = X\hat \beta + \hat \epsilon
+\end{align*}
+Multiplying M matrix on the left, we have
+\begin{align*}
+My= MX\hat \beta + M \hat \epsilon = MX\hat \beta +\hat \epsilon
+\end{align*}
+\begin{align*}
+(My)^2 &= (MX\hat \beta + \hat \epsilon)^T(MX\hat \beta +  \hat \epsilon) \\
+&=(\beta^T X^T M^T + \hat \epsilon^T )(MX\hat \beta + \hat \epsilon) \\
+&=(MX\hat \beta)^2 + \beta^T X^T M^T \hat \epsilon+ (\beta^T X^T M^T \hat \epsilon)^T  + (\hat \epsilon)^2\\
+\end{align*}
+The 2nd and 3rd terms are zero because that 1)$\hat \epsilon$ has zero mean, so $M^T\hat \epsilon = M \hat \epsilon = \hat \epsilon$ and 2) $X^T\hat \epsilon = 0$, so
+\begin{align*}
+(My)^2 &=(MX\hat \beta)^2 + (\hat \epsilon)^2\\
+\end{align*}
+Rewriting the above equation using summation, we have
+\begin{align*}
+\sum_i (y_i - \bar y)^2 =\sum_i^N (\bar y_i - \bar {\hat y})^2 + \sum_i(y_i-\hat y)^2
+\end{align*}
+Define
+\begin{align*}
+SST & = \sum_i (y_i - \bar y)^2 \\
+SSR & = \sum_i (\bar y_i - \bar {\hat y})^2 \\
+SSE & = \sum_i(y_i-\hat y)^2\\
+\end{align*}
+Then we have
+\begin{align*}
+SST = SSR + SSE
+\end{align*}
 \subsection{Variance of $\hat \beta$ and $\sigma^2$ estimation}
 \begin{align*}
 Var(\hat \beta)
@@ -383,8 +463,8 @@ and the stanard error of $\beta_i$ is
 SE(\hat \beta_i) = \sqrt{ \hat \sigma^2(X^TX)^{-1}_{ii}}
 \end{align*}
 \section{Properties of Least Square Estimators}
+When we have a estimator, we need to evaluate how good our estimator is? A few questions we can ask is 1): how far is the value of our estimator away from the true value, even in the ideal case when the sample size is inifinite? 2) when 1) is true, with finite sample size, does the value of our estimator approach to the true value as the sample size increase? In other words, does the estimator converge to the true value as sample size goes to inifinity? 3) when 1) and 2) is true, as the sample size increase, how fast does our estimator converges to true value? 4) with 1) 2) and 3), what is the asymptotic distribution of the estimator? If the distribution is normal, it can be used to do interval estimation such as confidence interval. The 1st question defines unbiasness, the 2nd one defines consistency, and the 3rd one defines efficiency.\\ 
 \subsection{Unbiasness}
-When we have a estimator, we need to ask ourselves two questions, 1)how accurate is our estimator, can the estimator give us true value of $\beta$, 2) Does it converge to the real value with reasonable speed as sample size increases? The metric we use to evaluate accuracy is unbiasness, and the metric we measure the convergence speed is the efficiency.\\ 
 {\bf Unbiased}\\
 \begin{align*}
 \hat \beta & = (X^T X)^{-1}X^TY\\
@@ -394,7 +474,7 @@ When we have a estimator, we need to ask ourselves two questions, 1)how accurate
 \end{align*}
 Then the expectation of $\hat \beta$ condition on X is
 \begin{align*}
-E[{\hat \beta|X}] = \beta + (X^TX)^{-1} X^T E(\epsilon|X)\\
+E[{\hat \beta|X}] = \beta + (X^TX)^{-1} X^T E(\epsilon|X)\\t
 \end{align*}
 The last term is zero by assuption of linear regression. So 
 \begin{align*}
@@ -482,6 +562,8 @@ So $\bar w$ converges to $\boldsymbol 0(k \times 1)$ vector. Then when N is suff
 There are certain conditions in which the estimators become inconsitent.\\
 1) X is not full rank, or X has multicollinearity
 2) $cov[X, \epsilon] \neq 0$
+\subsection{Efficiency}
+The least equare estimator has the smallest varaince, and this can be proved by Gauss-Markov theorem. 
 \subsection{Multicollinearity}
 Suppose we have a regression model that contains two parameters
 \begin{align*}
@@ -504,39 +586,48 @@ S_{12} & =\Sigma(x_{1i}-\hat x_1)(x_{2i}-\hat x_2)\\
 r_{12} & = \frac{S_{12}}{\sqrt{S_{11}S_{22}}}\\
 \end{align*}
 $r_{12}$ is the correlation coefficient. In extreme case, when $X_1$ and $X_2$ are perfectly correlated, the variance becomes infinite.\\
-\subsection{Model Testing}
-{\bf Lagrange Multiplie(LM) test}\\
+\section{Model Testing}
+{\bf Lagrange Multiplier(LM) test}\\
 Suppose we have two models, one is restriced, the other is unrestricted:
 Restricted(R): $y = X_1 \beta_1 + \epsilon$\\
 Unrestricted (U): $y = X_1 \beta_1 + X_2 \beta_2 + \epsilon$\\
-Given the unrestriced model, the likehood function is 
+Given the unrestricted model, the likehood function is 
 \begin{align*}
 L(\beta_1, \beta_2, \sigma^2) = \frac{1}{(2\pi \sigma^2)^{n/2}}exp(-\frac{1}{2\sigma^2}(y-X_1\beta_1-X_2\beta_2)^T(y-X_1\beta_1-X_2\beta_2))
 \end{align*}
 \begin{align*}
 S_2 = \frac{\partial L}{\partial \beta_2} =\frac{1}{\sigma^2}X_2^T(y - X_1\beta_1-X_2\beta_2)
 \end{align*}
-When $\beta=0$, define
+When $\beta_2=0$, define
 \begin{align*}
 M_1 = I - X_1(X^T_1X_1)^{-1}X^T_1
 \end{align*}
 and $M_1X_1=0$.
 \begin{align*}
-S_2 =\frac{1}{\sigma^2}X_2^TM_1y = \frac{1}{\sigma^2}X_2^TM_1(X_1 \beta_1 + \epsilon) = \frac{1}{\sigma^2}X_2^TM_1 \epsilon
+S_2 =\frac{1}{\sigma^2}X_2^T(y-X\hat \beta_1)=\frac{1}{\sigma^2}X_2^TM_1y = \frac{1}{\sigma^2}X_2^TM_1(X_1 \beta_1 + \epsilon) = \frac{1}{\sigma^2}X_2^TM_1 \epsilon
 \end{align*}
 The last equal sign uses the fact $M_1X_1 = 0$.
 \begin{align*}
- Var(X_2^TM_1y) & = Var(X_2^TM_1 \epsilon) \\
+ Var(X_2^TM_1 \epsilon) & = Var(X_2^TM_1 \epsilon) \\
              & =  X_2^TM_1Var(\epsilon)(X_2^TM_1)^T \\
-             & =  X_2^TM_1 M_1^T X_2Var(\epsilon) = \sigma^2  X_2^TM_1X_2 \\
+             & =  X_2^TM_1 M_1^T X_2Var(\epsilon) \\
+             & = \sigma^2  X_2^TM_1X_2 \\
+\end{align*}
+Define
+\begin{align*}
+V =  X_2^TM_1X_2
+\end{align*}
+Then
+\begin{align*}
+Var(X_2^T M_1 \epsilon) = \sigma^2V
 \end{align*}
 So $X_2^TM_1\epsilon$ follows normal distribution with mean 0 and variance $\sigma^2X_2^TM_1X_2$. Define
 \begin{align*}
-Z=\frac{X_2^TM_1\epsilon}{\sqrt{\sigma^2X_2^TM_1X_2}}
+Z=\frac{X_2^TM_1\epsilon}{\sqrt{\sigma^2X_2^TM_1X_2}} = \frac{S_2}{\sqrt{\sigma^2V}}
 \end{align*}
 then Z follows standard normal distribution. The {\bf Lagrange Multiplier (LM) test} is defined
 \begin{align*}
-LM =  Z^2  = \frac{(X_2^TM_1\epsilon)^2}{\sigma^2X_2^TM_1X_2} 
+LM =  Z^2  = \frac{(X_2^TM_1\epsilon)^2}{\sigma^2X_2^TM_1X_2} = \frac{S_2^2}{\sigma^2 V}
 \end{align*}
 which follows $\chi^2$ distribution with degree of freedom 1.\\
 {\bf F test}\\
@@ -577,5 +668,316 @@ with 1 degree of freedom as $X_2$ only contains 1 parameter.
 \begin{align*}
 F = \frac{SSR_R - SSR_U}{\frac{SSR_U}{n-k}} = \frac{(X_2M_1y)^T(X_2^TM_1y)}{\hat \sigma^2 (X_2^TM_1X_2)} =LM
 \end{align*}
-We see that F test and LM test are equivalent.
+We see that F test and LM test are equivalent.\\
+{\bf Wald Test}\\
+Recall the estimator for $\beta_2$ in Eq.\ref{eq:partial},
+\begin{align*}
+\hat \beta_2  =  (X_2^T  M_1X_2)^{-1}(X_2^T M_1y)  
+\end{align*}
+Substitue
+\begin{align*}
+y=X_1\beta_1+X_2\beta_2+\epsilon
+\end{align*}
+we get
+\begin{align*}
+\hat \beta_2 =  (X_2^T  M_1X_2)^{-1}(X_2^T M_1\epsilon)  
+\end{align*}
+Since $\epsilon ~ N(0, \sigma^2I)$, we obtain
+\begin{align*}
+\beta_2 \sim N(0, \sigma^2(X_2^TM_1X_2)^{-1})
+\end{align*}
+Thus, scaling by $1/\sigma^2$, we arrive at
+\begin{align*}
+\frac{1}{\sigma^2}X_2^T M_1\epsilon \sim N(0,X_2^T M_1 X_2 )
+\end{align*}
+Construct Wald test W
+\begin{align*}
+W = \frac{\hat \beta_2}{\sqrt{\hat Var(\hat \beta_2)}}
+\end{align*}
+W follows t distribution. We now show W test is equivalent to LM test. Consider $W^2$
+\begin{align*}
+W^2 & =\hat \beta^T (Var(\hat \beta))^{-1} \hat \beta = \frac{1}{\sigma^2}\hat \beta^T V \hat \beta = \frac{1}{\sigma^2} (V^{-1}S_2)^T V V^{-1} S_2 =\frac{1}{\sigma^2} S_2^T V^{-1}VV^{-1}S_2 \\ &=  \frac{1}{\sigma^2}S_2^T V^{-1}S_2\\
+       &= LM
+\end{align*}
+\section{Panel Data Model}
+We can view panel data as a "two dimensional" data set in which the sample does not only come from different individuals, but also same individual across different time point.  We can write the regression model as
+\begin{align*}
+y_{it} = \alpha_{it} + \sum_k x_{itk} \beta_{itk} + u_{it}
+\end{align*}
+where $1<i<N$, $1<t<T$, and $1<k<K$. The equation has total sample size of $NT$ with total number of parameter $NT(K+1)$, therefore it is not estimable. So we will make the following few assumptions\\
+\begin{tabular}{c |c | c | c | c}
+&$\alpha_{it} = \alpha_{is}$ & $\alpha_{it} = \alpha_{jt}$ & $\beta_{it} = \beta_{is}$ & $\beta_{itk} = \beta_{jtk}$\\ 
+\hline
+Pooled&yes&yes&yes&yes\\
+Fixed Effect&yes&no&yes&yes\\
+Unrestricted&yes&no&yes&no\\
+\end{tabular}
+\subsection{The unrestriced model}
+\begin{align*}
+y_{it}=\alpha_i + \sum_k x_{itk}\beta_{ik} + u_{it}
+\end{align*}
+The above equation can be written in matrix form:\\
+for $i = 1$,
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{11}  \\
+                   y_{12}  \\
+                   ... \\
+                   y_{1T} \\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1 &  x_{111} & x_{112} & ... & x_{11K} \\
+                 1 &  x_{121} & x_{122} & ... & x_{12K}\\
+                 1 &  ... & ... & ...&...\\
+                 1 &  x_{1T1} & x_{1T2} & ... &x_{1TK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \alpha_1 \\
+                   \beta_{11}  \\
+                   \beta_{12}  \\
+                   ... \\
+                   \beta_{1K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   u_{11}  \\
+                   u_{12}  \\
+                   ... \\
+                   u_{1T} \\
+           \end{array} \right)
+\end{align*}
+which we can also write as
+for $i = 2$,
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{21}  \\
+                   y_{22}  \\
+                   ... \\
+                   y_{2T} \\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1 &  x_{211} & x_{212} & ... & x_{21K} \\
+                 1 &  x_{221} & x_{222} & ... & x_{22K}\\
+                 1 &  ... & ... & ...&...\\
+                 1 &  x_{2T1} & x_{2T2} & ... &x_{2TK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \alpha_2 \\
+                   \beta_{21}  \\
+                   \beta_{22}  \\
+                   ... \\
+                   \beta_{2K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   u_{21}  \\
+                   u_{22}  \\
+                   ... \\
+                   u_{2T} \\
+           \end{array} \right)
+\end{align*}
+So for each i, we can write
+\begin{align*}
+Y_i = 1_T \alpha_i+ X_i \beta_i + U_i
+\end{align*}
+where $Y_i = (y_{i1}, y_{i2}, ...,y_{iT})^T$, $1_T$ is a one vector of length T, $X_i$ is $K \times T $ matrix, $\beta_i = (\beta_{i1}, \beta_{i2}, ...,\beta_{iK})^T$, and $U_i = (u_{i1}, u_{i2}, ...,u_{iT})^T$.
+
+If we consolidate equation set for all the value of i
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   Y_{1}  \\
+                   Y_{2}  \\
+                   ... \\
+                   Y_{N} \\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1_{T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{NT}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \alpha_{1}  \\
+                   \alpha_{2}  \\
+                   ... \\
+                   \alpha_{N} \\
+           \end{array} \right) +
+\left( \begin{array} { c c c c c } 
+                 X_{1} & 0 & 0 & ... & 0\\
+                 0 & X_{2} & 0 & ...& 0\\
+                 0 & 0 & X_{3} & ...& 0\\
+                 0 &  0 & 0 & ... &X_{N}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \beta_{1}  \\
+                   \beta_{2}  \\
+                   ... \\
+                   \beta_{N} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   U_{1}  \\
+                   U_{2}  \\
+                   ... \\
+                   U_{N} \\
+           \end{array} \right)
+\end{align*}
+To solve for $\beta_i$, we can use the strategy of partition regression. $\beta_i$ is the solution of the the regression
+\begin{align*}
+MY_i= MX_i\beta + U
+\end{align*}
+where 
+\begin{align*}
+M & = I -\frac{1}{T}1_T 1_T^{T} \\
+MY_i & = y_{it}-\bar y_{i.} \\
+MX_i & = x_{it}-\bar x_{i.} \\
+\end{align*}
+ the estimate of $\beta$ is
+
+\begin{align*}
+\hat \beta_i = W_{xx,i}^{-1}W_{xy,i}
+\end{align*}
+where 
+\begin{align*}
+W_{xy,i} &= \sum_i^T(x_{it}-\bar x_{i.})(y_{it}-\bar y_{i.}) \\
+W_{xx,i} &= \sum_i^T(x_{it}-\bar x_{i.})(x_{it}-\bar x_{i.})^T
+\end{align*}
+\subsection{The pooled model}
+\begin{align*}
+y_{it}=\alpha + \sum_k x_{itk}\beta_{k} + u_{it}
+\end{align*}
+The above equation can be written in matrix form:\\
+for $i = 1$,
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{11}  \\
+                   y_{12}  \\
+                   ... \\
+                   y_{1T} \\
+                   y_{21} \\
+                   y_{22} \\
+                   ... \\
+                   y_{2T}\\
+                   ...\\
+                   y_{NT}\\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1 &  x_{111} & x_{112} & ... & x_{11K} \\
+                 1 &  x_{121} & x_{122} & ... & x_{12K}\\
+                 1 &  ... & ... & ...&...\\
+                 1 &  x_{1T1} & x_{1T2} & ... &x_{1TK}\\
+           	 1 &  x_{211} & x_{212} & ... & x_{21K} \\
+                 1 &  x_{221} & x_{222} & ... & x_{22K}\\
+                 1 &  ... & ... & ...&...\\
+                 1 &  x_{2T1} & x_{2T2} & ... &x_{2TK}\\
+                 1 &  ... & ... & ...&...\\
+                 1 &  x_{NT1} & x_{NT2} & ... &x_{NTK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \alpha \\
+                   \beta_{1}  \\
+                   \beta_{2}  \\
+                   ... \\
+                   \beta_{K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   u_{11}  \\
+                   u_{12}  \\
+                   ... \\
+                   u_{1T} \\
+   		   u_{21}  \\
+                   u_{22}  \\
+                   ... \\
+                   u_{2T} \\
+                   ...\\
+                   u_{NT}\\
+           \end{array} \right)
+\end{align*}
+Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the estimated $\beta$ can be written as
+\begin{align*}
+M = I - \frac{1}{T}1_T 1_T^T
+\end{align*}
+\begin{align*}
+\hat \beta = W_{xx}^{-1}W_{xy}
+\end{align*}
+where 
+\begin{align*}
+W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
+W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T
+\end{align*}
+\subsection{The fixed effect model}
+\begin{align*}
+y_{it}=\alpha_i + \sum_k x_{itk}\beta_{k} + u_{it}
+\end{align*}
+The above equation can be written in matrix form:\\
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{11}  \\
+                   y_{12}  \\
+                   ... \\
+                   y_{1T} \\
+                   y_{21} \\
+                   y_{22} \\
+                   ... \\
+                   y_{2T}\\
+                   ...\\
+                   y_{NT}\\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1_{T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{NT}\\
+           \end{array} \right)
+\left( \begin{array} { c } 
+                   \alpha_{1}  \\
+                   \alpha_{2}  \\
+                   ... \\
+                   \alpha_{N} \\
+           \end{array} \right) \\
++
+\left( \begin{array} {  c c c c } 
+                   x_{111} & x_{112} & ... & x_{11K} \\
+                  x_{121} & x_{122} & ... & x_{12K}\\
+                  ... & ... & ...&...\\
+                   x_{1T1} & x_{1T2} & ... &x_{1TK}\\
+           	   x_{211} & x_{212} & ... & x_{21K} \\
+                   x_{221} & x_{222} & ... & x_{22K}\\
+                   ... & ... & ...&...\\
+                   x_{2T1} & x_{2T2} & ... &x_{2TK}\\
+                   ... & ... & ...&...\\
+                  x_{NT1} & x_{NT2} & ... &x_{NTK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \beta_{1}  \\
+                   \beta_{2}  \\
+                   ... \\
+                   \beta_{K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   u_{11}  \\
+                   u_{12}  \\
+                   ... \\
+                   u_{1T} \\
+   		   u_{21}  \\
+                   u_{22}  \\
+                   ... \\
+                   u_{2T} \\
+                   ...\\
+                   u_{NT}\\
+           \end{array} \right)
+\end{align*}
+Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the M matrix is
+
+the estimated $\beta$ can be written as
+\begin{align*}
+\hat \beta = W_{xx}^{-1}W_{xy}
+\end{align*}
+where 
+\begin{align*}
+W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.}) \\
+W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T
+\end{align*}
 \end{document}
