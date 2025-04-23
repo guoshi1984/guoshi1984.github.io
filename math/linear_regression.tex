@@ -339,7 +339,7 @@ Given the fact that $M_1$ is symmetrical and idempotent, we can rewrite the abov
 The above uses the property that $M_1^T=M_1$ and $M_1 M_1 = M_1$\\
 The $\hat \beta_2$ is also the solution of 
 \begin{align*}
- M_1 Y = M_1 X_2 \beta + \epsilon
+ M_1 Y = M_1 X_2 \beta_2 + \epsilon
 \end{align*}
 where $M_1 y$ is the residual of y regressed on $X_1$ and $M_1 X_2$ is the residual of $X_2$ regressed on $X_1$.
 For example, in simple linear regression
@@ -354,7 +354,7 @@ MX = (I-\frac{1}{N}ii^T)Y = X-\bar X
 \end{align*}
 Then
 \begin{align}
-\beta_1 = ((MX)^T(MX))^{-1}((MX)^T(MY))  = \frac{\sum_i^N(x_i - \bar x)(y_i - \bar y)}{\sum_i^N(x_i-\bar x)^2} \label{eq:betapartition}
+\beta_1 = ((MX)^T(MX))^{-1}((MX)^T(MY))  = \frac{\sum_i^N(x_i - \bar x)(y_i - \bar y)}{\sum_i^N(x_i-\bar x)^2} \label{eq:beta_partition}
 \end{align}
 which is the same as Eq.\ref{eq:betacovariance}
 \subsection{Variance componet identity}
