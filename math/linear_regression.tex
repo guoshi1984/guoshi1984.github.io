@@ -104,6 +104,41 @@ Estimator of $\beta$
 \begin{align*}
 \hat \beta = (X^TX)^{-1}X^TY
 \end{align*}
+Using the rule of matrix mutiplication, we can rewrite $X^TX$ as the f
+\begin{align*}
+X^TX & =
+ \left( \begin{array} { c  c  c c } 
+                   \sum_{i=1}^N x_{1i}^Tx_{i1} &  \sum_{i=1}^Nx_{1i}^Tx_{i2} & ... & \sum_{i=1}^N x^T_{1i}x_{ik}   \\
+                   ... & ... & ... & \\
+                   \sum_{i=1}^N x_{ki}^Tx_{i1} &  \sum_{i=1}^Nx_{ki}^Tx_{k2} & ... & \sum_{i=1}^Nx^T_{ki}x_{ik}   \\
+           \end{array} \right) \\
+    & =  \sum_{i=1}^N
+ \left( \begin{array} { c  c  c c } 
+                   x_{i1}x_{i1} & x_{i1}x_{i2} & ... & x_{i1}x_{ik}   \\
+                   ... & ... & ... & \\
+                   x_{ik}x_{i1} & x_{ik}x_{k2} & ... & x_{ik}x_{ik}   \\
+           \end{array} \right) \\
+      &  =  \sum_{i=1}^N
+ \left( \begin{array} { c  } 
+                   x_{i1}    \\
+                   ...  \\
+                   x_{ik}    \\
+           \end{array} \right)
+ \left( \begin{array} { c c c c } 
+                   x_{i1}  & ... &  ... x_{ik}\\ 
+           \end{array} \right) \\
+     & = \sum_{i=1}^N X_i X_i^T
+\end{align*}
+where $X_i$ is $K \times 1$ vector, and $X_i X_i^T$ is $K \times K $ matrix.
+Similarly,
+\begin{align*}
+X^TY & = \sum_{i=1}^N X_i y_i
+\end{align*}
+where $X_i$ is $K \times 1$ vector, $y_i$ is a scalor, and $X_iy_i$ is $K \times 1$ vector.
+So the estimator of $\beta$ is
+\begin{align*}
+\hat \beta = (\sum_{i=1}^N X_i X_i^T)^{-1} (\sum_{i=1}^N X_i y_i)
+\end{align*}
 {\bf Least Square Estimator for Simple Linear Regression}\\
 \begin{align*}
 y =  \beta_0 + \beta_1 X + \epsilon\\
@@ -496,30 +531,7 @@ The unbiasness gives us a metric of measuring how good our esitimator is, from p
 \begin{align*}
 \hat \beta = \beta + (X^TX)^{-1}X^T\epsilon
 \end{align*}
-\begin{align*}
-X^TX & = \Sigma_{i=1}^N
- \left( \begin{array} { c  c  c c } 
-                   x_{1i}^Tx_{i1} & x_{1i}^Tx_{i2} & ... & x^T_{1i}x_{ik}   \\
-                   ... & ... & ... & \\
-                   x_{ki}^Tx_{i1} & x_{ki}^Tx_{k2} & ... & x^T_{ki}x_{ik}   \\
-           \end{array} \right) \\
-    & =  \Sigma_{i=1}^N
- \left( \begin{array} { c  c  c c } 
-                   x_{i1}x_{i1} & x_{i1}x_{i2} & ... & x_{i1}x_{ik}   \\
-                   ... & ... & ... & \\
-                   x_{ik}x_{i1} & x_{ik}x_{k2} & ... & x_{ik}x_{ik}   \\
-           \end{array} \right) \\
-      &  =  \Sigma_{i=1}^N
- \left( \begin{array} { c  } 
-                   x_{i1}    \\
-                   ...  \\
-                   x_{ik}    \\
-           \end{array} \right)
- \left( \begin{array} { c c c c } 
-                   x_{i1}  & ... &  ... x_{ik}\\ 
-           \end{array} \right) \\
-     & = \Sigma_{i=1}^N X_i X_i^T
-\end{align*}
+
 \begin{align*}
 \hat \beta &= \beta + ({X^TX})^{-1} {X^T \epsilon} \\
                &= \beta + ( \Sigma_{i=1}^N X_i X_i^T)^{-1} X^T \epsilon \\
@@ -828,19 +840,18 @@ MY_i= MX_i\beta + U
 \end{align*}
 where 
 \begin{align*}
-M & = I -\frac{1}{T}1_T 1_T^{T} \\
+M & = I -\frac{1}{T}1_T 1_T^{'} \\
 MY_i & = y_{it}-\bar y_{i.} \\
 MX_i & = x_{it}-\bar x_{i.} \\
 \end{align*}
- the estimate of $\beta$ is
-
+Here to avoid duplicate notation, we denote the transposed matrix using $'$. The estimate of $\beta$ is
 \begin{align*}
-\hat \beta_i = W_{xx,i}^{-1}W_{xy,i}
+\hat \beta_i = ((MX_i)^T(MX_i))^{-1}((MX_i)^T(MY_i))=  W_{xx,i}^{-1}W_{xy,i}
 \end{align*}
 where 
 \begin{align*}
-W_{xy,i} &= \sum_i^T(x_{it}-\bar x_{i.})(y_{it}-\bar y_{i.}) \\
-W_{xx,i} &= \sum_i^T(x_{it}-\bar x_{i.})(x_{it}-\bar x_{i.})^T
+W_{xy,i} &= \sum_t^T(x_{it}-\bar x_{i.})(y_{it}-\bar y_{i.}) \\
+W_{xx,i} &= \sum_t^T(x_{it}-\bar x_{i.})(x_{it}-\bar x_{i.})^T
 \end{align*}
 \subsection{The pooled model}
 \begin{align*}
@@ -896,15 +907,17 @@ for $i = 1$,
 \end{align*}
 Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the estimated $\beta$ can be written as
 \begin{align*}
-M = I - \frac{1}{T}1_T 1_T^T
+M = I - \frac{1}{NT}1_{NT} 1_{NT}^{'}
 \end{align*}
 \begin{align*}
-\hat \beta = W_{xx}^{-1}W_{xy}
+\hat \beta & = ((MX)^T(MX))^{-1}((MX)^T(MY_i)) \\
+               & =(\sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T)^{-1}\sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
+               & = T_{xx}^{-1}T_{xy} \\
 \end{align*}
 where 
 \begin{align*}
-W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
-W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T
+T_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
+T_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T
 \end{align*}
 \subsection{The fixed effect model}
 \begin{align*}
@@ -928,13 +941,13 @@ The above equation can be written in matrix form:\\
                  1_{T} & 0 & 0 & ... & 0\\
                  0 & 1_{T} & 0 & ...& 0\\
                  0 & 0 & 1_{T} & ...& 0\\
-                 0 &  0 & 0 & ... &1_{NT}\\
+                 0 &  0 & 0 & ... &1_{T}\\
            \end{array} \right)
 \left( \begin{array} { c } 
-                   \alpha_{1}  \\
-                   \alpha_{2}  \\
-                   ... \\
-                   \alpha_{N} \\
+                  \alpha_{1}  \\
+                  \alpha_{2}  \\
+                  ... \\
+                  \alpha_{N} \\
            \end{array} \right) \\
 +
 \left( \begin{array} {  c c c c } 
@@ -969,15 +982,91 @@ The above equation can be written in matrix form:\\
                    u_{NT}\\
            \end{array} \right)
 \end{align*}
-Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the M matrix is
-
+Where $1_T$ is a $1\times T$ vector. Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the M matrix is
+\begin{align*}
+M=I -\frac{1}{T}\left( \begin{array} { c c c c c } 
+                 1_{T\times T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T\times T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T \times T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{T \times T}\\
+           \end{array} \right)
+\end{align*}
 the estimated $\beta$ can be written as
 \begin{align*}
-\hat \beta = W_{xx}^{-1}W_{xy}
+\hat \beta & = ((MX)^T(MX))^{-1}((MX)^T(MY_i)) \\
+               & =\sum_i^N\sum_t^T[(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^{'}]^{-1}[\sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.})] \\
+               & = W_{xx}^{-1}W_{xy}\\
 \end{align*}
 where 
 \begin{align*}
 W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.}) \\
 W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T
 \end{align*}
+\subsection{The random effect model}
+In fixed effect model, we treat individual mean $\alpha_i$ is a constant. In random effect model, we treat $\alpha_i$ as a random variable. We write our random effect model as
+\begin{align*}
+y_{it} = \sum_k x_{itk}\beta_k + \alpha_i + u_{it}
+\end{align*}
+Where $\alpha_i \in Normal(0, \sigma_{\alpha}^2)$, $u_{it} \in Normal(0, \sigma^2_{u})$, $E(\alpha_i u_{it}) = 0$. 
+Define
+\begin{align*}
+v_{it} = \alpha_i + u_{it}
+\end{align*}
+The variance of $v_{it}$ for fixed i is 
+\begin{align*}
+E(v_{it}v_{is}) = E(\alpha_i + u_{it})(\alpha_i + u_{is}) = \sigma^2_{\alpha} + \delta_{ts} \sigma^2_{u}
+\end{align*}
+The last time is non-zero only when t = s.
+Thus, the covariance matrix for individual i is 
+\begin{align*}
+V_i = \left( \begin{array} {  c c c c } 
+                   \sigma^2_{\alpha} + \sigma^2_{u} &  \sigma^2_{\alpha}  & ... &  \sigma^2_{\alpha}  \\
+                   \sigma^2_{\alpha} & \sigma^2_{\alpha} + \sigma^2_{u} & ... & \sigma^2_{\alpha} \\
+                  ... & ... & ...&...\\
+                    \sigma^2_{\alpha} &  \sigma^2_{\alpha} & ... &\sigma^2_{\alpha} + \sigma^2_{u} \\
+           \end{array} \right)
+\end{align*}
+where $V_i$ is  $T \times T$ matrix. Stack together for all individuals, the whole covariance matrix is
+\begin{align*}
+V =  \left( \begin{array} {  c c c c } 
+                   V_1 &  0  & ... &  0  \\
+                   0 & V_2& ... & 0 \\
+                  ... & ... & ...&...\\
+                  0 &  0 & ... & V_N\\
+           \end{array} \right)
+\end{align*}
+Based on the solution of GLS, we define
+\begin{align*}
+V_i^{-1/2} = \frac{1}{\sigma_u}[I-\frac{\theta}{T} 1_T 1^{'}_T]
+\end{align*}
+where
+\begin{align*}
+\theta = 1 - \frac{\sigma_u}{\sqrt{\sigma^2_u + T \sigma^2_{\alpha}}}
+\end{align*}
+and the transformation of $X_i$ and $y_i$
+\begin{align*}
+\tilde{y_i} & = V_i^{-1/2}y_i = y_i - \theta \bar y_i\\
+\tilde{X_{i}} & = V_i^{-1/2}X_{i} = X_i - \theta \bar X_i\\
+\end{align*}
+where $y_i$ is $T\times 1$ vector, and $X_{i}$ is $T \times K$ matrix.  The estimator of $\beta$ becomes
+\begin{align*}
+\hat \beta_{RE} = (\tilde X^{'}V^{-1}\tilde X)^{-1} (\tilde X^{'}V^{-1}\tilde Y)
+\end{align*}
+With a little derivation, we can prove $\beta_{RE}$ is a combination of estimator of pooled model and fixed effect model:
+\begin{align*}
+\hat \beta_{RE} = (1-\omega)\hat \beta_{pooled} + \omega \hat \beta_{FE}
+\end{align*}
+where
+\begin{align*}
+\omega = \frac{T\sigma^2_{\alpha}}{T\sigma^2_{\alpha} + \sigma^2_u}
+\end{align*}
+{\bf Connections to estimator of pooled model and fixed effect model}\\
+1) when $\sigma_{\alpha} >> \sigma_u$, then $\omega$ $\rightarrow$ 1, $\theta$ $\rightarrow$ 1,  this leads to fixed-effect model. In fixed effect model\\
+a. Large $\sigma_{\alpha}$ means large viariation of $\alpha$ for different i, in other words, $\alpha_i$ is very different.\\
+b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are far apart.\\
+c. The smaller $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $Y_it$ is small. Therefore, the probability density functions of $Y_i$ for different i barely overlap, and their tails almost do not touch each other at all.\\
+2) when $\sigma_{\alpha} << \sigma_u$, then $\omega$ $\rightarrow$ 0, $\theta$ $\rightarrow$ 0, this leads to pooled model. In pooled model,\\
+a. Small $\sigma_{\alpha}$ means $\alpha_i$s are almost identitical .\\
+b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are very close to each other.\\
+c. The larger $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $Y_it$ is large. Therefore, the probability density functions of $Y_i$ for different i are completely overlapping. The difference between different individual i is hardly visible. So it is unnecessary to model the individual mean. \\
 \end{document}
