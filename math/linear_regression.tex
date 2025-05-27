@@ -428,6 +428,30 @@ SST & = \sum_i (y_i - \bar y)^2 \\
 SSR & = \sum_i (\bar y_i - \bar {\hat y})^2 \\
 SSE & = \sum_i(y_i-\hat y)^2\\
 \end{align*}
+SSE can also be written as
+\begin{align*}
+SSE & = SST- SSR\\
+      & = SST - (MX\hat \beta)^2\\
+      & = SST - ((MX)((MX)^T(MX))^{-1}(MX)^T(MY))^2 
+\end{align*}
+Let $U = MX$, and$V= MY$ then
+\begin{align*}
+SSE & = SST - (Z(Z^TZ)^{-1}Z^T)^2 \\
+      &  = SST - (U(U^TU)^{-1}U^TV)^T (U(U^TU)^{-1}U^TV) \\
+      &  = SST - V^TU(U^TU)^{-1}U^TU(U^TU)^{-1}U^TV\\
+      &  = SST - V^TU(U^TU)^{-1}U^TV\\
+      &  = SST - (MY)^T(MX)((MX)^T(MX))^{-1}(MX)^T(MY)\\
+\end{align*}
+Define
+\begin{align*}
+S_{xx} &= (MX)^T(MX)  = \sum_{i}^N (x_i - \bar x)^2\\
+S_{xy} &= (MX)^T(MY) = \sum_{i}^N (x_i - \bar x)(y_i -\bar y)\\
+\end{align*}
+So
+\begin{align*}
+SSE = SST - S_{xy}^T S_{xx}^{-1} S_{xy}
+\end{align*}
+
 Then we have
 \begin{align*}
 SST = SSR + SSE
@@ -535,13 +559,32 @@ The unbiasness gives us a metric of measuring how good our esitimator is, from p
 \begin{align*}
 \hat \beta &= \beta + ({X^TX})^{-1} {X^T \epsilon} \\
                &= \beta + ( \Sigma_{i=1}^N X_i X_i^T)^{-1} X^T \epsilon \\
-               &= \beta + ( \Sigma_{i=1}^N  \frac{1}{N}{X_i^TX_i})^{-1}(\frac{X^T \epsilon}{N})
+               &= \beta + ( \Sigma_{i=1}^N  \frac{1}{N}{X_iX_i^T})^{-1}(\frac{X^T \epsilon}{N})
 \end{align*}
-If $X_i$s are iid, then by law of large numbers
+To show $\hat \beta$ converges to $\beta$, we need to show two things:\\
+(1)$\frac{1}{n}\sum_i{X_iX_i^T}$  converges to Q in probability when N is large. Also the inverse of Q exists.\\
+(2)$\frac{X^T \epsilon}{N}$ converges to zero in probability when N is large.\\
+For (1), we write
 \begin{align*}
-\Sigma_{i=1}  \frac{1}{n}{X_i^TX_i} 
+Q^{(n)} = \frac{1}{n}\sum_i{X_iX_i^T}
 \end{align*}
-converges to Q in probability.\\
+which is a $K \times K$ matrix. Its element $Q_{kl}$ is
+\begin{align*}
+Q^{(n)}_{kl} = \frac{1}{n} \sum_i x_{ik} x_{il}
+\end{align*}
+Based on Law of large numbers, $Q^{n}_{kl}$ converges to its expectation value $E[x_{ik}x_{il}]$. Let
+\begin{align*}
+E[x_{ik}x_{il}]=Q_{kl}
+\end{align*}
+So each element of $Q^{(n)}$ converges $Q_{kl}$. Therefore, $Q^{(n)}$ converges to Q. To show the inverse of Q exists, we can show Q is a symmetric positive definite matrix. For any k dimenional vector v, we have
+\begin{align*}
+v^TQv = E[v^T x_i x_i^T v]
+\end{align*}
+Since $v^T x_i = \sum_k v_k x_{ik} = x_i^T v$ which is a scalar, so
+\begin{align*}
+v^TQv = E[v^T x_i x_i^T v] = E[(v^T x_i)^2]
+\end{align*} 
+if for any i, $x_{ik}$ are linear independent, in other words, no multicollinearity. Then $v^T x_{i} =\sum_k v_k x_{ik} \neq 0$ and $(v^T x_i)^2>0$. Therefore Q is SPD matrix and its inverse exists.
 \begin{align*}
 &\frac{X^T \epsilon}{N}\\ 
  =& \left(\begin{array} {c}
@@ -566,6 +609,11 @@ Var[\bar w|X] = E[\bar w \bar w^T|X]=\frac{1}{n}X^TE[\epsilon \epsilon^T]X\frac{
 \begin{align*}
 E[Var[\bar w|X]] = \frac{\sigma^2}{n}E(\frac{X^TX}{n})
 \end{align*}
+We have shown that $X^TX = \sum_i x_i x_i^T$, so 
+\begin{align*}
+\frac{X^TX}{n} = \frac{1}{n}\sum_i x_i x_i^T 
+\end{align*}
+
 When $\frac{X^TX}{n}$ converges to Q, 
 \begin{align*}
 E[Var[\bar w|X]] = 0
@@ -917,8 +965,14 @@ M = I - \frac{1}{NT}1_{NT} 1_{NT}^{'}
 where 
 \begin{align*}
 T_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
-T_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T
+T_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T\\
+T_{yy} &= \sum_i^N\sum_t^T(y_{it}-\bar y)^2
 \end{align*}
+The sum of square error for the pooled model is
+\begin{align*}
+SSE_{pooled} = T_{yy} - T^{'}_{xy} T^{-1}_{xx} T_{xy} 
+\end{align*}
+with N-1-K degrees of freedom.
 \subsection{The fixed effect model}
 \begin{align*}
 y_{it}=\alpha_i + \sum_k x_{itk}\beta_{k} + u_{it}
@@ -1000,7 +1054,20 @@ the estimated $\beta$ can be written as
 where 
 \begin{align*}
 W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.}) \\
-W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T
+W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T\\
+W_{yy} &= \sum_i^N\sum_t^T(y_{it}-\bar y_{i.})^2\\
+\end{align*}
+\begin{align*}
+SSE_{fix} = W_{yy} - W^{'}_{xy}W^{-1}_{xx}W^{xy}
+\end{align*}
+with NT - N - K degrees of freedom.\\
+{\bf Limitations of fixed effect model}\\
+1)Time-invariant variables are dropped\\
+For a given individual i and regressor k, and any different time t and s($t \neq s$), if $x_{itk}=x_{isk}$, this x variable will be dropped during estimation. Because this condition leads to $x_{it} = \bar x_{i.}$\\  
+\subsection{F test for fixed effect model}
+\begin{align*}
+F & = \frac{(SSE_{pooled}-SSE_{fix})/((NT-1-K)-(NT-N-K))}{SSE_{fix}/(NT-N-K)} \\
+&= \frac{(SSE_{pooled}-SSE_{fix})/(N-1)}{SSE_{fix}/(NT-N-K)}
 \end{align*}
 \subsection{The random effect model}
 In fixed effect model, we treat individual mean $\alpha_i$ is a constant. In random effect model, we treat $\alpha_i$ as a random variable. We write our random effect model as
@@ -1069,4 +1136,13 @@ c. The smaller $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $
 a. Small $\sigma_{\alpha}$ means $\alpha_i$s are almost identitical .\\
 b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are very close to each other.\\
 c. The larger $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $Y_it$ is large. Therefore, the probability density functions of $Y_i$ for different i are completely overlapping. The difference between different individual i is hardly visible. So it is unnecessary to model the individual mean. \\
+{\bf Testing of $\sigma_{\alpha}$}
+We define the null and alternative hypothesis\\
+$H_0: \sigma^2_{\alpha} = 0$ \\
+$H_1: \sigma^2_{\alpha} > 0$ \\
+We construct LM test, which uses the score function(gradient of log-likelyhood) with respect to $\sigma^2_\alpha$ evaluated at $\sigma^2_\alpha=0$:
+\begin{align*}
+LM & = \frac{(\partial l/\partial\sigma^2_{\alpha})^2}{Var(\partial l/\partial\sigma^2_{\alpha})}|_{\sigma^2_{\alpha}}\\
+& = \frac{nT}{2(T-1)}[\frac{[\sum_{i=1}^n(\bar e_i)^2]}{(\frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^Te^2_{it})}-1]^2\\
+\end{align*}
 \end{document}
