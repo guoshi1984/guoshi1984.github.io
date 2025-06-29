@@ -968,7 +968,7 @@ T_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(y_{it}- \bar y_{..}) \\
 T_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{..})(x_{it}- \bar x_{..})^T\\
 T_{yy} &= \sum_i^N\sum_t^T(y_{it}-\bar y)^2
 \end{align*}
-We call $T_{xx}, T_{yy} and T_{xy}$ the total sum square of x, total sum square of y, and total sum of cross product.
+We call $T_{xx}$, $T_{yy}$ and $T_{xy}$ the total sum square of x, total sum square of y, and total sum of cross product.
 The sum of square error for the pooled model is
 \begin{align*}
 SSE_{pooled} = T_{yy} - T^{'}_{xy} T^{-1}_{xx} T_{xy} 
@@ -1104,7 +1104,7 @@ When $T \rightarrow \infty$, how do $W_{xx}$ and $B_{xx}$ behave? remember
 B_{xx} & = \sum_i^NT(\bar x_{i.}-\bar x_{...})(\bar x_{i.}-\bar x_{...})^{'} \\
 W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T\\
 \end{align*} 
-When T increase, $x_{i.}$ would move close to E[x_{i.}] so its variance would decrease, so B_{xx} grows sub-linealy. In practice, most of the panel data noise comes from transitory noise. so $W_{xx}$ grows faster tan $B_{xx}$ when T is large. Then $\omega \rightarrow 1$. So in large T, the pooled estimator converges to fix effect estimator.
+When T increase, $\bar x_{i.}$ would move close to $E[x_{i.}]$. so its variance would decrease, so $B_{xx}$ grows sub-linealy. In practice, most of the panel data noise comes from transitory noise. so $W_{xx}$ grows faster than $B_{xx}$ when T is large. Then $\omega \rightarrow 1$. So in large T, the pooled estimator converges to fix effect estimator.\\
 {\bf Limitations of fixed effect model}\\
 1)Time-invariant variables are dropped\\
 For a given individual i and regressor k, and any different time t and s($t \neq s$), if $x_{itk}=x_{isk}$, this x variable will be dropped during estimation. Because this condition leads to $x_{it} = \bar x_{i.}$\\  
