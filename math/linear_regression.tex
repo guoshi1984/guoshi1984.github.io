@@ -1038,7 +1038,7 @@ The above equation can be written in matrix form:\\
            \end{array} \right)
 \end{align*}
 Where $1_T$ is a $1\times T$ vector. Similarly, using the solution of $\beta$ from Eq.\ref{eq:beta_partition}, the M matrix is
-\begin{align*}
+\begin{align*}\label{eq:remove_mean_matrix}
 M=I -\frac{1}{T}\left( \begin{array} { c c c c c } 
                  1_{T\times T} & 0 & 0 & ... & 0\\
                  0 & 1_{T\times T} & 0 & ...& 0\\
@@ -1046,23 +1046,80 @@ M=I -\frac{1}{T}\left( \begin{array} { c c c c c }
                  0 &  0 & 0 & ... &1_{T \times T}\\
            \end{array} \right)
 \end{align*}
-the estimated $\beta$ can be written as
+Define  
 \begin{align*}
-\hat \beta & = ((MX)^T(MX))^{-1}((MX)^T(MY_i)) \\
-               & =\sum_i^N\sum_t^T[(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^{'}]^{-1}[\sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.})] \\
+\tilde x_{itk} = (MX)_{itk} =x_{itk} - \bar x_{i.k}
+\end{align*}
+which is an NT x K matrix,
+\begin{align*}
+\tilde y_{it} = (MY)_{it} = y_{it} - \bar y_{i.}
+\end{align*}
+which is an NT x 1 vector.
+The estimated $\beta$ can be written as
+\begin{align*}
+\hat \beta  = ((MX)^{'}(MX))^{-1}((MX)^T(MY_i)) 
+\end{align*}
+and
+\begin{align*}
+((MX)^{'}(MX))_{kl} = \sum_i \sum_t \tilde x_{itk}  \tilde x_{itl} \\
+((MX)^{'}(MY))_k = \sum_i \sum_t x_{itk} \tilde y_{it} \\
+\end{align*}
+Let $\tilde X_{it} = (x_{it1} - \bar x_{i.1}, x_{it2} - \bar x_{i.2},...,x_{itk} - \bar x_{i.k})$, $\tilde y_{it} = y_{it} - \bar y_{i.}$
+Then 
+\begin{align*}
+((MX)^{'}(MX)) &= \sum_i \sum_t \tilde X_{it} \tilde X_{it}^{'}\\
+((MX)^{'}(MY)) &= \sum_i \sum_t \tilde X_{it} \tilde y_{it} \\
+\end{align*}
+\begin{align*}
+\hat \beta & =[\sum_i^N\sum_t^T\tilde X_{it}\tilde X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T\tilde X_{it} \tilde y_{it}] \\
                & = W_{xx}^{-1}W_{xy}\\
 \end{align*}
 where 
 \begin{align*}
-W_{xy} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(y_{it}- \bar y_{i.}) \\
-W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T\\
-W_{yy} &= \sum_i^N\sum_t^T(y_{it}-\bar y_{i.})^2\\
+W_{xy} &= \sum_i^N\sum_t^T \tilde X_{it} \tilde y_{it} \\
+W_{xx} &= \sum_i^N\sum_t^T\tilde X_{it}\tilde X_{it}^T\\
+W_{yy} &= \sum_i^N\sum_t^T\tilde y_{it}^2\\
 \end{align*}
-We call $W_{xx}, W_{yy} and W_{xy}$ the within-groups sum square of x, the within-groups sum square of y, and within-groups of cross product. The name within-groups means they utilized the variation within group i. The sum of square error is
+We call $W_{xx}$, $W_{yy}$ and $W_{xy}$ the within-groups sum square of x, the within-groups sum square of y, and within-groups of cross product. The name within-groups means they utilized the variation within group i. The sum of square error is
 \begin{align*}
 SSE_{fix} = W_{yy} - W^{'}_{xy}W^{-1}_{xx}W^{xy}
 \end{align*}
 with NT - N - K degrees of freedom.\\
+If we remind ourselves of the concept of partial regression, we let
+\begin{align*}
+Y^{*} = MY
+X^{*} = MX
+U^{*} = MU
+\end{align*}
+then the fix effect model can also be written as
+\begin{align*}
+Y^{*} = X^{*}\beta + U^{*}
+\end{align*}
+or 
+\begin{align*}
+y_{it} - \bar y_{i.} = (X_{it} - \bar X_{i.}) \beta +  (u_{it} - \bar u_{i.})
+\end{align*} 
+{\bf Properties of Fixed effect estimator}\\
+1) Unbiasdness\\
+\begin{align*}
+\hat \beta & =  [\sum_i^N\sum_t^T\tilde X_{it}X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T(\tilde X_{it})( \tilde y_{it})] \\
+               & =  [\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T(\tilde X_{it})( \tilde X^{'}_{it}\beta + \tilde u_{it})] \\
+              & =  [\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T(\tilde X_{it} \tilde X^{'}_{it}\beta + \tilde X_{it}\tilde u_{it})]\\
+              & = [\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T \tilde X_{it} \tilde X^{'}_{it}]\beta 
+                   + [\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1} [\sum_i^N \sum_t^T\tilde X_{it}\tilde u_{it}]
+\end{align*}
+So 
+\begin{align*}
+E[\hat \beta] = \beta + E[\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1} [\sum_i^N \sum_t^T \tilde X_{it}\tilde u_{it}]
+\end{align*}
+As $u_{it}$ is uncorrelated with $x_{it}$, it is easy to prove the 2nd term above is zero. Therefore, the within group estimator is unbiased.\\
+2) Consistency\\
+To show consistency, we need to prove
+\begin{align*}
+[\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1} [\sum_i^N \sum_t^T\tilde X_{it}\tilde u_{it}] 
+= [\frac{1}{NT}\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1} [\frac{1}{NT}\sum_i^N \sum_t^T\tilde X_{it}\tilde u_{it}]  = 0 
+\end{align*}
+Similar to our previous consistency proof, the above converges to zero when 1) either T or N goes to infinity, 2) $\tilde x_{it}$ and $\tilde u_{it}$ are not correlated, 3) $x_{it}$ and $u_{it} $ has finite second moment.\\
 {\bf Connections between fixed effect model estimator and pooled model estimator when T is large}\\
 To see the connection between fixed effect estimator and pooled model estimator, we first introduce between-groups estimator, which allows us to easily understand the relationship among differect estimators.\\
 We define the between-groups sum of square is
@@ -1108,6 +1165,8 @@ When T increase, $\bar x_{i.}$ would move close to $E[x_{i.}]$. so its variance 
 {\bf Limitations of fixed effect model}\\
 1)Time-invariant variables are dropped\\
 For a given individual i and regressor k, and any different time t and s($t \neq s$), if $x_{itk}=x_{isk}$, this x variable will be dropped during estimation. Because this condition leads to $x_{it} = \bar x_{i.}$\\  
+2)Loss degree of freedom\\
+In fixed effect, each individual adds up one parameter, so total N individuals need N parameters. This can cause problem in short panel.
 \subsection{F test for fixed effect model}
 \begin{align*}
 F & = \frac{(SSE_{pooled}-SSE_{fix})/((NT-1-K)-(NT-N-K))}{SSE_{fix}/(NT-N-K)} \\
@@ -1127,7 +1186,7 @@ The variance of $v_{it}$ for fixed i is
 \begin{align*}
 E(v_{it}v_{is}) = E(\alpha_i + u_{it})(\alpha_i + u_{is}) = \sigma^2_{\alpha} + \delta_{ts} \sigma^2_{u}
 \end{align*}
-The last time is non-zero only when t = s.
+The last term is non-zero only when t = s.
 Thus, the covariance matrix for individual i is 
 \begin{align*}
 V_i = \left( \begin{array} {  c c c c } 
@@ -1180,6 +1239,239 @@ c. The smaller $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $
 a. Small $\sigma_{\alpha}$ means $\alpha_i$s are almost identitical .\\
 b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are very close to each other.\\
 c. The larger $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $Y_it$ is large. Therefore, the probability density functions of $Y_i$ for different i are completely overlapping. The difference between different individual i is hardly visible. So it is unnecessary to model the individual mean. \\
+{\bf Estimation of $\sigma^2_{u}$ and $\sigma^2_{\alpha}$}\\
+Estimation of $\sigma^2_{u}$ can be based on the regression formula
+\begin{align*}
+y_{it} - \bar y_{i.} = (X_{it} - \bar X_{i.}) \beta+  (u_{it} - \bar u_{i.})
+\end{align*}
+and $\sigma^2_u$ can be estimated using sum of square error and its degrees of freedom.
+\begin{align*}
+\hat \sigma^2_u = \frac{\sum_{i=1}^N \sum_{t=1}^T [(y_{it} - \bar y_i) - \hat \beta_{fix}(x_{it}-\bar x_i)]}{N(T-1) -K}
+\end{align*}
+$\sigma^2_{\alpha}$ can be estimated by first taking the average of random effect model.
+\begin{align*}
+\bar y_{i} = \mu + \bar X_i \beta + \alpha_i + \bar u_{i}
+\end{align*}
+Then because $\alpha$ and $u_{i}$ are independent, 
+\begin{align*}
+Var(\bar y_i - \mu - \bar X_i \beta) = Var(\alpha) + Var(\bar u_{i}) = Var(\alpha) + \frac{1}{T}Var(u) 
+\end{align*}
+Then
+\begin{align*}
+\sigma^2_{\alpha} = \frac{\sum_{i=1}^N(\bar y_i - \hat \mu - X_i \hat \beta)^2}{N-(K+1)} -\frac{1}{T}\hat \sigma^2_u
+\end{align*}
+{\bf Coping with the Limitation of Random Model}\\
+The random model, like linear model in general, assumes $\alpha$ does not correlate with variable $X$. Mundlak intruduced auxiliary regression where we write
+\begin{align*}
+\alpha_i = \sum_k \bar x_{i.k} a_k +\omega_i
+\end{align*}
+where $\omega_i \in Normal(0, \sigma^2_{\omega})$. So
+\begin{align*}
+y_{it} = \sum_k x_{itk}\beta_{k} + \sum_k \bar x_{i.k}a_k + \omega_i + u_{it}
+\end{align*}
+If we define the error term 
+\begin{align*}
+v_{it} = \omega_i + u_{it}
+\end{align*}
+The above equation can be written in matrix form:\\
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{11}  \\
+                   y_{12}  \\
+                   ... \\
+                   y_{1T} \\
+                   y_{21} \\
+                   y_{22} \\
+                   ... \\
+                   y_{2T}\\
+                   ...\\
+                   y_{NT}\\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1_{T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{T}\\
+           \end{array} \right)
+\left( \begin{array} { c  c  c  c} 
+                \bar x_{1.1} &  \bar x_{1.2}  & ... & \bar x_{1.K} \\
+                \bar x_{2.1} &  \bar x_{2.2}  & ... & \bar x_{2.K} \\
+                \bar x_{3.1} &  \bar x_{3.2}  & ... & \bar x_{3.K} \\  
+                  ... & ... & ... & ...\\
+                \bar x_{N.1} &  \bar x_{N.2}  & ... & \bar x_{N.K} \\ 
+           \end{array} \right) 
+\left( \begin{array} { c } 
+                \bar a_{1} \\
+                \bar a_{2} \\
+                \bar a_{3} \\  
+                  ... \\
+                \bar a_{K} \\ 
+           \end{array} \right) \\
++
+\left( \begin{array} {  c c c c } 
+                   x_{111} & x_{112} & ... & x_{11K} \\
+                  x_{121} & x_{122} & ... & x_{12K}\\
+                  ... & ... & ...&...\\
+                   x_{1T1} & x_{1T2} & ... &x_{1TK}\\
+           	   x_{211} & x_{212} & ... & x_{21K} \\
+                   x_{221} & x_{222} & ... & x_{22K}\\
+                   ... & ... & ...&...\\
+                   x_{2T1} & x_{2T2} & ... &x_{2TK}\\
+                   ... & ... & ...&...\\
+                  x_{NT1} & x_{NT2} & ... &x_{NTK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \beta_{1}  \\
+                   \beta_{2}  \\
+                   ... \\
+                   \beta_{K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   v_{11}  \\
+                   v_{12}  \\
+                   ... \\
+                   v_{1T} \\
+   		   v_{21}  \\
+                   v_{22}  \\
+                   ... \\
+                   v_{2T} \\
+                   ...\\
+                   v_{NT}\\
+           \end{array} \right)
+\end{align*}
+Similarly to the original random model, the variance matrix of $v_{it}$ is
+\begin{align*}
+V_i = \left( \begin{array} {  c c c c } 
+                   \sigma^2_{\omega} + \sigma^2_{u} &  \sigma^2_{\omega}  & ... &  \sigma^2_{\omega}  \\
+                   \sigma^2_{\omega} & \sigma^2_{\omega} + \sigma^2_{u} & ... & \sigma^2_{\omega} \\
+                  ... & ... & ...&...\\
+                    \sigma^2_{\omega} &  \sigma^2_{\omega} & ... &\sigma^2_{\omega} + \sigma^2_{u} \\
+           \end{array} \right)
+\end{align*}
+The way to estimator $\beta$ should be GLM, but what happens if we just run OLS on this model by assuming $v_{it}$ follows standard normail distribution? Remember the method of doing partial regression. Running OLS on this model is equivalently running the {\bf residual } of Y after regressing on $\bar X_{i.}$ on the residual of X after regressing on $\bar X_{i.}$. \\
+Obviously, regressing $X_{it}$ on ${X_{i.}}$ leads the residual
+\begin{align*}
+X^{*}_{it} = X_{it} - \bar X_{i.}
+\end{align*}
+Where each term is a K by 1 vector
+Let us regress $Y_{it}$ on ${\bar X_{i.}}$ and compute the residual. The regression is
+\begin{align*}
+y_{it} = \mu + \lambda \bar x_{i.} + \eta_{it}
+\end{align*}
+We realize that $\mu$ and $\bar x_{i.}$ are constant for a given i. So the fitted value on a constant is the mean of the $y_{it}$ with respect t.  We can write
+\begin{align*}
+\bar y_{i.} = \sum_k \beta_k \bar x_{i.k} + \sum_k \bar x_{i.k} a_k + \bar v_{i} = \sum_k (\beta_k + a_k) \bar x_{i.k} + \bar v_{i}
+\end{align*}
+We know $E[v_{i}]=0$. So when we regress y on $\bar x_{i.}$, the fitted value becomes
+\begin{align*}
+\hat y_{it} =  \sum_k (\beta_k + a_k) \bar x_{i.k} 
+\end{align*}
+Then the residual is
+\begin{align*}
+y_{it} - \hat y_{it} & =  \sum_k x_{ik}\beta_{k} + \sum_k \bar x_{i.k}a_k + \epsilon_{it}
+                           - (\sum_k (\beta_k + a_k) \bar x_{i.k}) \\
+                           & = \sum_k \beta_k(x_{ik} - \bar x_{i.k} ) + \epsilon_{it} - \bar \epsilon_{i.} \\
+                           & = y_{it} - \bar y_{i.} \\
+\end{align*}
+So the OLS we try to run is regress $y_{it} -\bar y_{i.}$ on $x_{it} - \bar x_{i.}$, which is equivalent to fixed effect estimation.\\
+{\bf Fixed Effect Model Generalization}\\
+
+We can generalize fixed effect model by including more individual specific variables which vary across different individuals and but do not vary over time. We can write the model as
+\begin{align*}
+y_{it} & = \mu + \alpha_i + z_{i1}\gamma_1 + z_{i2}\gamma_2 + ... + z_{ip} \gamma_p + \sum_k x_{itk} \beta_k +u_{it}\\ 
+         & = \mu + \alpha_i + \sum_p z_{ip}\gamma_p +
+\sum_k x_{itk} \beta_k +u_{it}
+\end{align*}
+\begin{align*}
+ \left( \begin{array} { c  } 
+                   y_{11}  \\
+                   y_{12}  \\
+                   ... \\
+                   y_{1T} \\
+                   y_{21} \\
+                   y_{22} \\
+                   ... \\
+                   y_{2T}\\
+                   ...\\
+                   y_{NT}\\
+           \end{array} \right)
+       = \left( \begin{array} { c c c c c } 
+                 1_{T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{T}\\
+           \end{array} \right)
+\left( \begin{array} { c } 
+                  \alpha_{1}  \\
+                  \alpha_{2}  \\
+                  ... \\
+                  \alpha_{N} \\
+           \end{array} \right) \\
++
+ \left( \begin{array} { c c c c c } 
+                 1_{T} & 0 & 0 & ... & 0\\
+                 0 & 1_{T} & 0 & ...& 0\\
+                 0 & 0 & 1_{T} & ...& 0\\
+                 0 &  0 & 0 & ... &1_{T}\\
+           \end{array} \right)
+\left( \begin{array} { c c c c } 
+                  z_{11} & z_{12} & ... & z_{1p}   \\
+                  z_{21} & z_{22} & ... & z_{2p}  \\
+                  ... & ... & ... & ...\\
+                  z_{N1} & z_{N2} & ... & z_{Np} \\
+           \end{array} \right) 
+\left( \begin{array} { c } 
+                  \gamma_{1}  \\
+                  \gamma_{2}  \\
+                  ... \\
+                  \gamma_{N} \\
+           \end{array} \right) \\
++
+\left( \begin{array} {  c c c c } 
+                   x_{111} & x_{112} & ... & x_{11K} \\
+                  x_{121} & x_{122} & ... & x_{12K}\\
+                  ... & ... & ...&...\\
+                   x_{1T1} & x_{1T2} & ... &x_{1TK}\\
+           	   x_{211} & x_{212} & ... & x_{21K} \\
+                   x_{221} & x_{222} & ... & x_{22K}\\
+                   ... & ... & ...&...\\
+                   x_{2T1} & x_{2T2} & ... &x_{2TK}\\
+                   ... & ... & ...&...\\
+                  x_{NT1} & x_{NT2} & ... &x_{NTK}\\
+           \end{array} \right)
+            \left( \begin{array} { c } 
+                   \beta_{1}  \\
+                   \beta_{2}  \\
+                   ... \\
+                   \beta_{K} \\
+           \end{array} \right)
+               +
+            \left( \begin{array} { c  } 
+                   u_{11}  \\
+                   u_{12}  \\
+                   ... \\
+                   u_{1T} \\
+   		   u_{21}  \\
+                   u_{22}  \\
+                   ... \\
+                   u_{2T} \\
+                   ...\\
+                   u_{NT}\\
+           \end{array} \right)
+\end{align*}
+This model suffers multicollinearity so $\alpha$ and $\gamma$ are not both estimable. We can set
+\begin{align*}
+\alpha^{*}_i = \alpha_i + \sum_p z_{ip} \gamma_p
+\end{align*}
+Then the model is effectively the same as the original fixed effect model, so we can use the same trick of solving fixed effect model to estimate $\beta$. To estimate $\gamma$, we note
+\begin{align*}
+\bar y_{i.} - \sum \bar x_{i.k}\beta_k = \sum_p z_{ip}\gamma_p + \alpha_i + \bar u_i
+\end{align*} 
+Let $\epsilon_i = \alpha_i + \bar u_i$ and by minimizing $\sum_i \epsilon^2_i$, we obtain
+\begin{align*}
+\hat \gamma = [\sum^N_{i=1}(z_i - \bar z)(z_i - \bar z)^{*}]^{-1} \{ \sum^N_{i=1} (z_i - \bar z )[(\bar y_i - \bar y) - (\bar x_i - \bar x)^{'} \beta]\}
+\end{align*}
 {\bf Testing of $\sigma_{\alpha}$}
 We define the null and alternative hypothesis\\
 $H_0: \sigma^2_{\alpha} = 0$ \\
