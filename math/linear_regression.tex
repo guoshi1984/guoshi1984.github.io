@@ -975,6 +975,7 @@ SSE_{pooled} = T_{yy} - T^{'}_{xy} T^{-1}_{xx} T_{xy}
 \end{align*}
 with N-1-K degrees of freedom.
 \subsection{The fixed effect model}
+\subsubsection{Model formulation and estimator}
 \begin{align*}
 y_{it}=\alpha_i + \sum_k x_{itk}\beta_{k} + u_{it}
 \end{align*}
@@ -1099,8 +1100,8 @@ or
 \begin{align*}
 y_{it} - \bar y_{i.} = (X_{it} - \bar X_{i.}) \beta +  (u_{it} - \bar u_{i.})
 \end{align*} 
-{\bf Properties of Fixed effect estimator}\\
-1) Unbiasdness\\
+\subsubsection {Properties of Fixed effect estimator}
+1) Unbiasedness\\
 \begin{align*}
 \hat \beta & =  [\sum_i^N\sum_t^T\tilde X_{it}X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T(\tilde X_{it})( \tilde y_{it})] \\
                & =  [\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1}[\sum_i^N\sum_t^T(\tilde X_{it})( \tilde X^{'}_{it}\beta + \tilde u_{it})] \\
@@ -1120,7 +1121,7 @@ To show consistency, we need to prove
 = [\frac{1}{NT}\sum_i^N\sum_t^T\tilde X_{it} X_{it}^{'}]^{-1} [\frac{1}{NT}\sum_i^N \sum_t^T\tilde X_{it}\tilde u_{it}]  = 0 
 \end{align*}
 Similar to our previous consistency proof, the above converges to zero when 1) either T or N goes to infinity, 2) $\tilde x_{it}$ and $\tilde u_{it}$ are not correlated, 3) $x_{it}$ and $u_{it} $ has finite second moment.\\
-{\bf Connections between fixed effect model estimator and pooled model estimator when T is large}\\
+\subsubsection {Connections between fixed effect model estimator and pooled model estimator when T is large}
 To see the connection between fixed effect estimator and pooled model estimator, we first introduce between-groups estimator, which allows us to easily understand the relationship among differect estimators.\\
 We define the between-groups sum of square is
 \begin{align*}
@@ -1162,17 +1163,18 @@ B_{xx} & = \sum_i^NT(\bar x_{i.}-\bar x_{...})(\bar x_{i.}-\bar x_{...})^{'} \\
 W_{xx} &= \sum_i^N\sum_t^T(x_{it}-\bar x_{i.})(x_{it}- \bar x_{i.})^T\\
 \end{align*} 
 When T increase, $\bar x_{i.}$ would move close to $E[x_{i.}]$. so its variance would decrease, so $B_{xx}$ grows sub-linealy. In practice, most of the panel data noise comes from transitory noise. so $W_{xx}$ grows faster than $B_{xx}$ when T is large. Then $\omega \rightarrow 1$. So in large T, the pooled estimator converges to fix effect estimator.\\
-{\bf Limitations of fixed effect model}\\
+\subsubsection{Limitations of fixed effect model}
 1)Time-invariant variables are dropped\\
 For a given individual i and regressor k, and any different time t and s($t \neq s$), if $x_{itk}=x_{isk}$, this x variable will be dropped during estimation. Because this condition leads to $x_{it} = \bar x_{i.}$\\  
 2)Loss degree of freedom\\
 In fixed effect, each individual adds up one parameter, so total N individuals need N parameters. This can cause problem in short panel.
-\subsection{F test for fixed effect model}
+\subsubsection{F test for fixed effect model}
 \begin{align*}
 F & = \frac{(SSE_{pooled}-SSE_{fix})/((NT-1-K)-(NT-N-K))}{SSE_{fix}/(NT-N-K)} \\
 &= \frac{(SSE_{pooled}-SSE_{fix})/(N-1)}{SSE_{fix}/(NT-N-K)}
 \end{align*}
 \subsection{The random effect model}
+\subsubsection{Model formulation and estimator}
 In fixed effect model, we treat individual mean $\alpha_i$ is a constant. In random effect model, we treat $\alpha_i$ as a random variable. We write our random effect model as
 \begin{align*}
 y_{it} = \sum_k x_{itk}\beta_k + \alpha_i + u_{it}
@@ -1230,7 +1232,7 @@ where
 \begin{align*}
 \omega = \frac{T\sigma^2_{\alpha}}{T\sigma^2_{\alpha} + \sigma^2_u}
 \end{align*}
-{\bf Connections to estimator of pooled model and fixed effect model}\\
+\subsubsection{Connections to estimator of pooled model and fixed effect model}
 1) when $\sigma_{\alpha} >> \sigma_u$, then $\omega$ $\rightarrow$ 1, $\theta$ $\rightarrow$ 1,  this leads to fixed-effect model. In fixed effect model\\
 a. Large $\sigma_{\alpha}$ means large viariation of $\alpha$ for different i, in other words, $\alpha_i$ is very different.\\
 b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are far apart.\\
@@ -1239,7 +1241,7 @@ c. The smaller $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $
 a. Small $\sigma_{\alpha}$ means $\alpha_i$s are almost identitical .\\
 b. Since $Y_it$ for fixed i is center around $\alpha_i$, this means centers of $Y_i$ given different i are very close to each other.\\
 c. The larger $\sigma_u$ compared to $\sigma_{\alpha}$ means the variation of $Y_it$ is large. Therefore, the probability density functions of $Y_i$ for different i are completely overlapping. The difference between different individual i is hardly visible. So it is unnecessary to model the individual mean. \\
-{\bf Estimation of $\sigma^2_{u}$ and $\sigma^2_{\alpha}$}\\
+\subsubsection{Estimation of $\sigma^2_{u}$ and $\sigma^2_{\alpha}$}
 Estimation of $\sigma^2_{u}$ can be based on the regression formula
 \begin{align*}
 y_{it} - \bar y_{i.} = (X_{it} - \bar X_{i.}) \beta+  (u_{it} - \bar u_{i.})
@@ -1260,7 +1262,7 @@ Then
 \begin{align*}
 \sigma^2_{\alpha} = \frac{\sum_{i=1}^N(\bar y_i - \hat \mu - X_i \hat \beta)^2}{N-(K+1)} -\frac{1}{T}\hat \sigma^2_u
 \end{align*}
-{\bf Coping with the Limitation of Random Model}\\
+\subsubsection{Coping with the Limitation of Random Model}
 The random model, like linear model in general, assumes $\alpha$ does not correlate with variable $X$. Mundlak intruduced auxiliary regression where we write
 \begin{align*}
 \alpha_i = \sum_k \bar x_{i.k} a_k +\omega_i
@@ -1375,8 +1377,7 @@ y_{it} - \hat y_{it} & =  \sum_k x_{ik}\beta_{k} + \sum_k \bar x_{i.k}a_k + \eps
                            & = y_{it} - \bar y_{i.} \\
 \end{align*}
 So the OLS we try to run is regress $y_{it} -\bar y_{i.}$ on $x_{it} - \bar x_{i.}$, which is equivalent to fixed effect estimation.\\
-{\bf Fixed Effect Model Generalization}\\
-
+\subsection{Fixed Effect Model Generalization}
 We can generalize fixed effect model by including more individual specific variables which vary across different individuals and but do not vary over time. We can write the model as
 \begin{align*}
 y_{it} & = \mu + \alpha_i + z_{i1}\gamma_1 + z_{i2}\gamma_2 + ... + z_{ip} \gamma_p + \sum_k x_{itk} \beta_k +u_{it}\\ 
