@@ -93,60 +93,187 @@ The range of k in the above integral is tricky. From the wavefunction, we see th
 \begin{align*}
 	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
 \end{align*}
-The second way is purely quantum approach. We need the following steps in order to derive the expression of the current. 
-1) In quantum mechanics, we represent every physical quantity using an operator. So the first step is to find out the expression of velocity operator. \\
-2) The current is the expectation value of its operator, therefore we need to know the wavefunction. Here we employ the time-dependent perturbation theory in order to know how the wavefunction changes overtime.\\
-3) Thirdly, we evaluate the expectation of the current operator then analyze why the conductivity is quantized.\\
-\noindent{\bf Derivation of velocity operator}\\
-In quantum mechanics, the velocity operator is defined as
+\section{Current derivation in quantum approach}
+The second way is purely quantum approach. In quantum mechanics, the average position is defined as
 \begin{align*}
-	v = \frac{\partial H}{\partial p} = \frac{\partial H}{ \hbar \partial k}
+<r(t)> = <\Psi(t)|\hat r|\Psi(t)>
 \end{align*}
-There exist several ways to understand this. First, we can recall the equation of motion in analytical mechanics. Given a Hamiltonian, the equation of motion is
+and the average velocity is the total derivative of above.
 \begin{align*}
-	{\bf v} = \dot{{\bf r}} = \frac{\partial H}{\partial {\bf p}}
+<\dot r(t)> = \frac{d}{dt}<\Psi(t)|\hat r|\Psi(t)>
 \end{align*}
-Another way is using Heisenburg equation of motion, which is the counterpart of analytical mechanics' equation of motion in quantum mechanics. The velocity operator given by Heisenburg equation of motion is
+We first need to derive $\Psi(t)$.\\
+{\bf Wavefunction subject to adiabatic approximation }\\
+Based on Bloch theorem,  the wave function can be written as
 \begin{align*}
-	{\bf v} = \frac{d{\bf r}}{dt} = \frac{i}{\hbar}[H, {\bf r}]
+|\Psi_n(t)> = e^{i\theta_n(t)} | u_n(R(t)>
 \end{align*}
-In momentum space, it becomes
+and its derivative is
 \begin{align*}
-	{\bf v}({\bf k}) = e^{-i{\bf k} \cdot {\bf r}} \frac{i}{\hbar}[H, {\bf r}] e^{i{\bf k} \cdot {\bf r}} = \frac{1}{\hbar} \nabla_{\bf k} H({\bf k},t)
+\frac{d}{dt}|\Psi_n(t)> = i \dot \theta_n e^{i\theta_n(t)}|u_n>+ e^{i \theta_n} \frac{d}{dt}|u_n>
 \end{align*}
-%Let us recall the semi-classical model where the movement of electrons is described as the movement of the wave-packet. And the velocity is given by the group velocity of the wave packet.
-%\begin{align*}
-%	v_g = \frac{\partial \omega}{ \partial k} = \frac{1}{\hbar} \frac{\partial E}{\partial k}
-%\end{align*}
-{\bf Wavefunction subject to adiabatic evolution }\\
-The wave function is subject to the time-dependent Schrodinger equation.
+Substituting $|\Psi_n(t)$ into Schrodinger equation, 
 \begin{align*}
-	i \hbar \partial_t |\Psi(t) > = H(t) |\Psi(t)> 
+i \hbar \frac{d}{dt}|\Psi_n(t)> = H(R(t)) |\Psi_n(t)>
 \end{align*}
-Suppose when $t= t_0$, the instantaneous eigenstates are $|u_n({\bf k}, t)>$, then
-the wavefunction can be written as linear combination of all instantaneous states with coefficients $a_n(t)$ times a time evolution factor.  
+yields
 \begin{align*}
-	|\Psi(t)> = \sum_n exp(\frac{1}{i\hbar} \int_{t_0}^t dt^{'} E_n(t^{'})) a_n(t) |u_n({\bf k}, t)>
+i\hbar[i\dot \theta_n |u_n> + \frac{d}{dt}|u_n>]e^{i \theta_n(t)} = H(R(t)) e^{i\theta_n}|u_n>
 \end{align*}
-Then we consider adiabatic approximation which means the vector {\bf R}(t) varies with time very slowly and apply the time-dependent perturbation theory. After a few steps we have
+Canceling $e^{i \theta_n(t)}$ on both sides:
 \begin{align*}
-	|\Psi(t)>= exp(-\frac{i}{\hbar}\int_{t_0}^{t} dt^{'} E_{n}(t^{'}))(|u_n({\bf k})> 
-	-i\hbar \sum_{n^{'}\neq n} |u_n^{'}({\bf k})>\frac{<u_n^{'}({\bf k})|\frac{\partial}{\partial t}|u_n({\bf k})>}{E_{n} - E_{n^{'}}})
+-\hbar\dot \theta_n |u_n> + i \hbar \frac{d}{dt}|u_n> = E_n(R(t)) |u_n>
+\end{align*}
+Multiplying $|u_n>$ on the left:
+\begin{align*}
+-\hbar \dot \theta_n + i \hbar <u_n|\frac{d}{dt}|u_n> = E_n(R(t))
+\end{align*}
+So
+\begin{align*}
+\dot \theta_n = i <u_n|\frac{d}{dt}|u_n> - \frac{1}{\hbar} E_n(R(t))
+\end{align*}
+Integrating over time gives
+\begin{align*}
+\theta_n(t) = - \frac{1}{\hbar} \int_0^t E_n(t')dt'+ i \int_0^t <u_n(t')|\frac{d}{dt'}u_n(t')>dt'
+\end{align*}
+Define
+\begin{align*}
+\gamma_n(t) = i\int_0^t <u_n(t')|\frac{d}{dt'}u_n(t')>dt'
+\end{align*}
+which is the Berry phase.
+The final result of adiabatic solution is
+\begin{align*}
+|\Psi_n(t)> = e^{i \gamma_n(t)} exp(-\frac{i}{\hbar} \int_0^t E_n(t')dt')|u_n(R(t))>
+\end{align*}
+The final state at time t acquires both a dynamical phase from the energy eighenvalue and a geometric Berry phase from the parametric evolution of the eigenstate.\\
+{\bf Expectation value of velocity given the wavefunction}
+\begin{align*}
+<\dot r(t)> & = \frac{d}{dt}<\Psi(t)|\hat r|\Psi(t)>\\
+                 & = <\frac{d}{dt}\Psi(t)|\hat r| \Psi(t)> + <\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> +  <\Psi(t)|\hat r| \frac{d}{dt}\Psi(t)>
+\end{align*}
+{\bf Derivation of the 2nd term $<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)>$ }\\
+1)Based on Heisenburg equation
+\begin{align*}
+\frac{d}{dt} \hat r = \frac{i}{\hbar}[H, r] = \frac{1}{i\hbar}[\hat r, \hat H]
+\end{align*}
+So
+\begin{align*}
+<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> = \frac{1}{i\hbar}<\Psi(t)|[\hat r,\hat H]|\Psi(t)>
+\end{align*}
+2)Schrodinger equation with periodic Hamiltonian.
+Consider Bloch eigenstate
+\begin{align*}
+|\Psi_{nk}> = e^{ikr} |u_{nk}> 
+\end{align*}
+Then Schrodinger equation give the Block eigenstate becomes
+\begin{align*}
+\hat H(k) e^{ikr} |u_{nk}> = \epsilon_{nk} e^{ikr}|u_{nk}>
+\end{align*}
+Multiplying $e^{-ikr}$ on the left hand side,
+\begin{align*}
+e^{-ikr}\hat H(k) e^{ikr} |u_{nk}> = e^{-ikr}\epsilon_{nk} e^{ikr}|u_{nk}> = \epsilon_{nk} |u_n{nk}>
+\end{align*}
+Define the cell-periodic Hamiltonian
+\begin{align*}
+\hat H(k) \equiv e^{-ikr} \hat H e^{ikr}
+\end{align*}
+then we have
+\begin{align*}
+\hat H(k) |u_{nk}> = \epsilon_n(k) |u_{nk}>
+\end{align*}
+3)link $[r, \hat H]$ to $\partial_k H(k)$,\\  
+Differentiating $\hat H(k)$:
+\begin{align*}
+\frac{d}{dk}\hat H(k) & = \frac{d}{dk}[e^{-ik\dot r} \hat H e^{ik \dot r}] \\
+& = -i[e^{-ik\dot r} r\hat H e^{ik \dot r}] + [e^{-ik\dot r} \hat H  r e^{ik \dot r}] \\
+& = -ie^{-ikr} [r, \hat H]e^{ikr}
+\end{align*}
+4)Evaluating the expectation value of $ [r, \hat H] $,
+\begin{align*}
+<\Psi_{nk}| [\hat r, \hat H ]| \Psi_{nk}> 
+&= <u_{nk}| e^{-ikr}[\hat r, \hat H] e^{ikr}|u_{nk}>\\
+& = <u_{nk}| i \nabla_k \hat H(k)|u_{nk}> \\
+\end{align*}
+According to Hellmann–Feynman theorem
+\begin{align*}
+<u_{nk}| i \nabla_k \hat H(k)|u_{nk}> = i \nabla_k \hat \epsilon(k)
+\end{align*}
+Combining 1) through 4)
+\begin{align*}
+<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> = \frac{1}{i\hbar}<\Psi(t)|[\hat r,\hat H]|\Psi(t)> = \frac{1}{\hbar}\nabla_k \epsilon_n(k)
+\end{align*}
+This shows the current contribution coming directly from band structure, and it allows us to explain the conductivity of metal, which will be explained in later sections.\\
+{\bf Derivation of 1st and 3rd term\\}
+The 3rd term is the complex conjugate of the 1st term. \
+{(1)Derivative of wavefunction\\}
+The time-dependent wavefunction is the Bloch form with a Berry phase.
+\begin{align*}
+|\Psi> = e^{i\theta(t)}e^{ik(t)r}|u(k(t))>
+\end{align*}  
+\begin{align*}
+ | \partial_t\Psi> & =[i\dot \theta(t)  + (i\dot k(t)r)] e^{i\theta}e^{ik(t)r}|u(k(t))>+ e^{i\theta}e^{ik(t)r} \dot k(t)|\partial_ku(k(t))> \\
+<\partial_t \Psi | & = <u(k(t))|e^{-ik(t)r}e^{-i\theta}[-i\dot \theta(t) + (-ik(t)r)] +<\partial_k u(k(t))|e^{-ik(t)r}e^{-i\theta}\dot k(t) 
+\end{align*}
+So
+\begin{align*}
+<\Psi|r|\partial_t\Psi> &= <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} i r \dot \theta(t) e^{i\theta(t)} e^{ik(t)r}|u(k(t))>  \\
+                                &+ <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} i r k(t)r e^{i\theta(t)} e^{ik(t)r}|u(k(t))>\\
+                                &+ <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|\partial_k u(k(t))>\\
+<\partial_t \Psi|r|\Psi> & =  <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)}(-ir  \dot \theta(t)) e^{i\theta(t)} e^{ik(t)r}|u(k(t))> \\
+                                 &  + <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} (-i r k(t)r) e^{i\theta(t)} e^{ik(t)r}|u(k(t))> \\
+                                 & + <\partial_k u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|u(k(t))>\\
+<\Psi|r|\partial_t\Psi> + <\partial_t \Psi|r|\Psi>
+& =<u(k(t))|e^{-ik(t)r}e^{-i\theta(t)}( i r \dot \theta(t) -ir  \dot \theta(t)) e^{i\theta(t)} e^{ik(t)r}|u(k(t))>\\
+& +  <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} (i r k(t)r -i r k(t)r)  e^{i\theta(t)} e^{ik(t)r}|u(k(t))>\\
+& + <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|\partial_k u(k(t))>\\
+& + <\partial_k u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|u(k(t))> \\
+& = <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|\partial_k u(k(t))>\\
+ & + <\partial_k u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|u(k(t))>\\
+\end{align*}
+Define $S_{geom}$
+\begin{align*}
+S_{geom} = <u(k(t))|e^{-ik(t)r}e^{-i\theta(t)} r \dot k(t) e^{i\theta(t)} e^{ik(t)r}|\partial_k u(k(t))> + c.c
+\end{align*}
+Based on an identity
+\begin{align*}
+<u_k|e^{-ikr} \hat r e^{ikr}| u_k> = i \partial_k + <u_k| i\partial_k u_k>
+%<u_k​%|%e^{−ikr} %\hat r e^{ikr}|u_k​>%=i\partial k​+<u_k​∣i\partial_k ​u_k​>
+\end{align*}
+The component of $S_{geom,i}$ is
+\begin{align*}
+S_{geom, \alpha} = \dot k_{\beta} [\partial_{k_{\beta}}(i<u|\partial_{k_{\alpha}}u>) - \partial_k{k_\alpha}(i<\partial_{k_{\beta}}u|u> )]
+= \dot k_{\beta} (\partial_{k_{\beta}} A_{\alpha} - \partial_{k_{\alpha}}A_{\beta})
+\end{align*}
+Define Berry connection
+\begin{align*}
+A_{\alpha}(k) = i<u|\partial_{k_{\alpha}}u>
+\end{align*}
+The corresponding Berry curvature is
+\begin{align*}
+\Omega_{\gamma} = (\nabla_k \times A)_{\gamma}
+\end{align*}
+\begin{align*}
+S_{geom} = - \dot k \times \Omega(k)
+\end{align*}
+When the electric field E is present
+\begin{align*}
+\hbar \dot k = -e E
 \end{align*}
 The expectation value of the velocity
 \begin{align*}
-	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
-	- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial {\bf k}}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
+	%\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
+	%- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial {\bf k}}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
+<v> = \frac{1}{\hbar}\nabla_k \epsilon_n(k) + \frac{e}{\hbar} E \times \Omega_n(k)
 \end{align*}
-Using the identity
-\begin{align*}
-	<u_n|\nabla_{\bf k} H | u_m> = (E_n - E_m) < \nabla_{\bf k} u_n| u_m>
-\end{align*}
-\begin{align}\label{velocity}
-	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
-	- i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
-\end{align}
-Where the second term is the {\bf Berry phase}.
+%Using the identity
+%\begin{align*}
+%	<u_n|\nabla_{\bf k} H | u_m> = (E_n - E_m) < \nabla_{\bf k} u_n| u_m>
+%\end{align*}
+%\begin{align}\label{velocity}
+%	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
+%	- i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
+%\end{align}
+%Where the second term is the {\bf Berry phase}.
 The current operator is
 \begin{align*}
 	j = -2e\sum_{all bands}\int_{BZ}\frac{dk}{2 \pi} f(k)v(k)
