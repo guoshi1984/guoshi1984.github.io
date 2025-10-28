@@ -264,53 +264,119 @@ The expectation value of the velocity
 	%\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
 	%- i \sum_{n^{'}\neq n} (<u_n|\frac{\partial H}{\partial {\bf k}}|u_n^{'}>\frac{<u_n^{'}|\frac{\partial}{\partial t}|u_n>}{E_{n} - E_{n^{'}}} - c.c.)
 <v> = \frac{1}{\hbar}\nabla_k \epsilon_n(k) + \frac{e}{\hbar} E \times \Omega_n(k)
+       = v_{Bloch} + v_{anomalous}
 \end{align*}
-%Using the identity
+So the contribution of electron velocity comes from two terms: one is Bloch velocity $v_{Bloch} =  \frac{1}{\hbar}\nabla_k \epsilon_n(k)$ which can explan the conductivity of metal, the other one is anomalous velocity $\frac{e}{\hbar} E \times \Omega_n(k)$, which explains the conductivity for Hall effect, topological insulators, etc.\\
+{\bf Current expression}
+\begin{align*}
+j = -e \int_{BZ}\frac{d^3k}{(2\pi)^3} f({\bf k}) v_n({\bf k})
+\end{align*}
+where $f({\bf k})$ is Fermi-Dirac distribution.
+We can decompose the current into two terms,\\
+Bloch current:\\
+\begin{align*}
+j_{Bloch} = -e \int_{BZ}\frac{d^3k}{(2\pi)^3} f({\bf k}) v_{Bloch}({\bf }k)
+\end{align*}
+and anomalous current:\\
+\begin{align*}
+j_{anomalous} = -e \int_{BZ}\frac{d^3k}{(2\pi)^3} f({\bf k}) v_{Bloch}({\bf k})
+\end{align*}
+{\bf Bloch Current}\\
+1) Electric field is not present. We have symmetrical engery band $E_n({\bf k}) = E_n(-{\bf k})$, so $\nabla_k E_n({\bf k})$ is odd function. $\nabla_{\bf k} E_n(-{\bf k}) = - \nabla_{\bf k} E_n({\bf k})$. Also $f({\bf k})$ is symmetrical with respect to ${\bf k}$, $f({\bf k}) = f(E({\bf k}))=f(e({\bf -k}))$. So $ f({\bf k}) v_{Bloch}({\bf k})$ is an odd function with respect to k. As a consequence the integral over the Brillion zone is zero
+\begin{align*}
+j_{Bloch} = -e \int_{BZ}\frac{d^3k}{(2\pi)^3} f({\bf k}) v_{Bloch}({\bf k})  = 0
+\end{align*}
+So the net current without eletric field.\\
+2) Electric field is present\\
+a) If all the bands are fully occupied, the distribution function does not change when electric field is applied because all the states are occupied. Therefore the net current is still zero.\\
+b) When some bands are partially filled, the distribution function becomes
+\begin{align*}
+f({\bf k}) = f_0({\bf k}) + \delta f({\bf k})
+\end{align*}
+Where $f_0({\bf k})$ is the distribution function without electric field.
+Based on Boltzman relaxation time approximation
+\begin{align*}
+\delta f({\bf k}) = -e \tau {\bf \hat E} \cdot \nabla_k f_0(k)
+\end{align*}
+\begin{align*}
+j_{Bloch} & = -e \int_{BZ}\frac{d^3k}{(2\pi)^3} \delta f({\bf k}) v_{Bloch}(k) \\
+& = e^2 \tau \int_{BZ}\frac{d^3k}{(2\pi)^3}  (E \cdot \nabla_k f_0) v_n(k) \\
+& =e^2 \tau \int_{BZ}\frac{d^3k}{(2\pi)^3}  (E \cdot \frac{\partial f}{\partial \epsilon} \frac{\partial \epsilon}{\partial k} ) v_n(k)
+\end{align*} 
+define 
+\begin{align*}
+\sigma_{ij} = e^2 \tau \hbar \int \frac{d^3k}{(2\pi)^3} v_i(k) v_j(k) (-\frac{d f^0}{d \epsilon})
+\end{align*}
+We have
+\begin{align*}
+{\bf j} = \sigma {\bf E}
+\end{align*}
+{\bf Anomalous Current}\\
+\begin{align*}
+v_{anomalous} = - \frac{e}{\hbar} E \times \Omega_n{\bf k}
+\end{align*}
+Imagine we apply an electric field in x direction, and we would like to know the current in y
+\begin{align*}
+j_y = -e \sum_n \int \frac{d^2k}{(2\pi)^2}f_n(\bf k)[-\frac{e}{\hbar}(E \times \Omega_n({\bf k}))_y]
+\end{align*}
+For 2D system, $E = (E_x, E_y)$, and $\Omega$ is in z direction. So
+\begin{align*}
+(E \times \Omega_n)_y = E_z \Omega_n^x - E_x \Omega_n^z
+\end{align*}
+Because $E_z = 0$, and $\Omega_n^x=0$
+\begin{align*}
+(E \times \Omega_n)_y = - E_x \Omega_n^z({\bf k})
+\end{align*}
+Plugging this into the formula of $j_y$
+\begin{align*}
+j_y = [-\frac{e^2}{\hbar}\sum_n \int_{BZ} \frac{d^2 k}{(2\pi)^2}f_n({\bf k})\Omega_n({\bf k})]E_x
+\end{align*}
+The conductivity is
+\begin{align*}
+\sigma_{xy} =-\frac{e^2}{\hbar}\sum_n \int_{BZ} \frac{d^k}{(2\pi)^2}f_n({\bf k})\Omega_n(k_x, k_y)
+\end{align*}
+%It can be proved the integral below is an integer, called Chern number
 %\begin{align*}
-%	<u_n|\nabla_{\bf k} H | u_m> = (E_n - E_m) < \nabla_{\bf k} u_n| u_m>
+%C_n = \frac{1}{2\pi} \int_{BZ} d^2 k \Omega_n({\bf k})
 %\end{align*}
-%\begin{align}\label{velocity}
-%	\bar v({\bf k},t) = \frac{1}{\hbar} \nabla_{\bf k} E_n({\bf k}) 
-%	- i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
+
+%The current operator is
+%\begin{align*}
+%	j = -2e\sum_{all bands}\int_{BZ}\frac{dk}{2 \pi} f(k)v(k)
+%\end{align*}
+%The integral is taken over the first Brillouin zone denoted by BZ.
+%We need to consider several cases to discuss the current.\\
+%1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
+%2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
+%{\bf Quantized current}\\
+%When the first term of the velocity vanishes(in the case that all bands are fully occupied), the expression of velocity reduces to
+%\begin{align}
+%	\bar v({\bf k},t) = - i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| %%\frac{\partial u_n}{\partial {\bf k}}>)
 %\end{align}
-%Where the second term is the {\bf Berry phase}.
-The current operator is
-\begin{align*}
-	j = -2e\sum_{all bands}\int_{BZ}\frac{dk}{2 \pi} f(k)v(k)
-\end{align*}
-The integral is taken over the first Brillouin zone denoted by BZ.
-We need to consider several cases to discuss the current.\\
-1) If the system preservers time reversal symmetry and space reversal symmetry, then the second term in Eqn. \ref{velocity} vanishes. In this case, if the bands are fully occupied, it is an insulator. If the band are not fully occupied, it is an conductor. The semiconductor is something between this two where the thermal excitation can promote the electron going from valence band to the conduction band so the not fully occupied conduction band contributes the current.\\
-2) If all the bands are filled, but the system breaks time and space reversal symmetry, then first term vanishes, the second term is non-trivial. This is what contributes the current in quantum Hall effect.\\
-{\bf Quantized current}\\
-When the first term of the velocity vanishes(in the case that all bands are fully occupied), the expression of velocity reduces to
-\begin{align}
-	\bar v({\bf k},t) = - i  (<\frac{\partial u_n}{\partial {\bf k}}| \frac{\partial u_n}{\partial t}> -<\frac{\partial u_n}{\partial t}| \frac{\partial u_n}{\partial {\bf k}}>)
-\end{align}
-Using the relationship 
-\begin{align*}
-	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} = -\frac{e}{\hbar} {\bf E} \times \Omega^n({\bf k})
-\end{align*}
-where 
-\begin{align*}
-	\Omega^{n}({\bf k}) = \nabla_{\bf k} \times <u_n({\bf k})|i\nabla_{\bf k}|u_n({\bf k})>
-\end{align*}
-\begin{align*}
-	{\bf v_n}({\bf k}) = - \frac{e}{\hbar} {\bf E} \times \Omega^{n}({\bf k})
-\end{align*}
-We plug the expression of $v_n$ into the expression of current j, we have
-\begin{align*}
-	{\bf j} = -2e\sum_{all bands}\int_{BZ}\frac{d{\bf k}}{2 \pi} f({\bf k}){\bf v}_n({\bf k}) 
-	 = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} {\bf E} \times \Omega^n({\bf k})
-\end{align*}
-Therefore the conductivity is
-\begin{align*}
-	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n({\bf k})
-\end{align*}
-If we consider the case of 2 dimensional electron gas, then 
-\begin{align*}
-	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n(k_x, k_y)
-\end{align*}
+%Using the relationship 
+%\begin{align*}
+%	\partial_t = \partial_t {\bf k} \cdot \nabla_{\bf k} = -\frac{e}{\hbar} {\bf E} \times \Omega^n({\bf k})
+%\end{align*}
+%where 
+%\begin{align*}
+%	\Omega^{n}({\bf k}) = \nabla_{\bf k} \times <u_n({\bf k})|i\nabla_{\bf k}|u_n({\bf k})>
+%\end{align*}
+%\begin{align*}
+%	{\bf v_n}({\bf k}) = - \frac{e}{\hbar} {\bf E} \times \Omega^{n}({\bf k})
+%\end{align*}
+%We plug the expression of $v_n$ into the expression of current j, we have
+%\begin{align*}
+%	{\bf j} = -2e\sum_{all bands}\int_{BZ}\frac{d{\bf k}}{2 \pi} f({\bf k}){\bf v}_n({\bf k}) 
+%	 = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} {\bf E} \times \Omega^n({\bf k})
+%\end{align*}
+%Therefore the conductivity is
+%\begin{align*}
+%	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n({\bf k})
+%\end{align*}
+%If we consider the case of 2 dimensional electron gas, then 
+%\begin{align*}
+%	\sigma = \frac{e^2}{h} \frac{1}{2 \pi} \sum_n \int_{BZ} d{\bf k} \Omega^n(k_x, k_y)
+%\end{align*}
 Since the integral runs over the first Brillouin zone, and
 \begin{align*}
 	\Omega^n(k_x, k_y) = \Omega^n(k_x+\pi, k_y) = \Omega^n(k_x, k_y + \pi)
