@@ -1,209 +1,331 @@
 \documentclass[a4paper]{article}
+\title{Modern Theory of Conduction and Polarization}
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx}
+\newcommand{\BZ}{\text{BZ}} % Brillouin Zone
+\newcommand{\occ}{\text{occ}} % occupied bands
+\newcommand{\kvec}{\mathbf{k}}
+\newcommand{\rvec}{\mathbf{r}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\Evec}{\mathbf{E}}
+\newcommand{\Bvec}{\mathbf{B}}
 \begin{document}
-\noindent The objective of this article is to provide a comprehensive review of the Hall effect family. Grasping the intricate physics underlying the various manifestations of the Hall effect is no straightforward feat. In this regard, we present a step-by-step analysis. The structure of the entire article is as follows:\\
-\noindent 1) We commence by delving into the conventional theory of conductivity, spanning from classical principles to the realm of quantum mechanics.\\
-\noindent 2) Upon entering the quantum realm, we proceed to derive the current operator, encompassing two distinct contributions. The initial term corresponds to the gradient of the energy eigenvalue in k-space, impacting the conductivity of most metals. The subsequent term, connected to the Berry curvature, assumes significance in situations where time-reversal symmetry is violated.\\
-\noindent 3) It is worth noting that the Berry curvature-associated second term possesses a captivating property. The integration of the Berry curvature across the Brillouin zone, summed over all bands, results in an integer value of $2\pi$.\\
-\section{Brief Summary of Conductance Theory}
-%\section{Current Operator}
-\noindent To elucidate conductivity, physicists have formulated multiple models, spanning from the classical and semiclassical to the quantum approaches. These models can be summarized as follows:\\
-\noindent 1) In classical model, the electrons are treated classically, and the movement is governed by the Newton's law and the forces on the electrons are described by electromagnetism . This model is good enough to explain the Ohm's law.\\
-\noindent 2) The semiclassical model views electrons as both particles and waves. Electron movement is likened to wavepacket propagation, with the electron's velocity representing the group velocity of the wave. This model leverages particle-wave duality and effectively accounts for conduction in metals.\\
-\noindent 3) In the quantum model, velocity is represented by the expectation value of the velocity operator within a given wavefunction. This theoretical approach is essential for deriving Hall conductance and comprehending the topological intricacies of Hall conductance.\\
-\section{Classical Conductance Theory Example: Hall Effect}
-We consider the electrons inside conductors. When we apply both an electric field E and a magnetic filed B, the electrons have the equation of motion following the Newtons' law
-\begin{align*}
-	m \frac{d\bf v}{dt} = -e {\bf E} - e {\bf v} \times {\bf B} - m\frac{\bf v}{\tau}
-\end{align*}
-The first term in right hand side is the force by the electric field, and the second term is the force by the magnetic field. The third term electron collision by the ions. When collision happens, the momentum of the electron changes to zero within a certain mean free time $\tau$. At the equilibrium states, we have $\frac{d {\bf v}}{d t} = 0$. The velocity satisfies 
-\begin{align}
-	  \frac{e\tau}{m} {\bf v} \times {\bf B} + {\bf v} = - \frac{e \tau}{m} {\bf E}
-\end{align}
-As {\bf v} = ($v_x$, $v_y$), so the above equation can be written as
-\begin{align*}
-	v_x + \frac{e \tau}{m} v_y B = -\frac{e \tau}{m} E_x
-\end{align*}
-The current density J is related to the velocity by
-\begin{align*}
-	{\bf J} = - n e {\bf v}
-\end{align*}
-So 
-\begin{align*}
-	j_x + \frac{e \tau B} {m} j_y  = \frac{n e^2 \tau}{m} E_x
-\end{align*}
-We define the conductivity as 
-\begin{align*}
-	{\bf J} = \sigma {\bf E}
-\end{align*}
-so $\sigma_{xx} =\frac{n e^2 \tau}{m}$, $\sigma_{xy} =\frac{ne}{B}$.\\  
+\section*{Abstract}
+This note traces the development of electrical conduction theory from early classical models to the modern quantum geometric formulation. We begin with the Drude model (1900) and Sommerfeld free electron model (1927), highlight their successes and limitations, then progress to the full quantum treatment incorporating band theory and Berry phase effects.
+\section{Classical Foundations: The Drude Model (1900)}
+\subsection{Basic Assumptions}
+The Drude model, proposed by Paul Drude in 1900, treats electrons in a metal as a classical gas of charged particles. Key assumptions:
+\begin{itemize}
+    \item Electrons move freely between collisions with stationary ions.
+    \item Collisions are instantaneous and randomize electron velocity.
+    \item Electron-ion collisions occur with a characteristic \textbf{relaxation time} $\tau$.
+    \item Between collisions, electrons accelerate under external fields: $m\dot{\vvec} = -e\Evec$.
+\end{itemize}
 
-\section{Hall conductivity of 2D electrons }
-{\bf Solution to 2D electron system subject to a magnetic field}\\
-A Hamiltonian for 2D electrons in a magnetic field $A = xB\hat y$ is\\
-\begin{align*}
-	H = \frac{1}{2m} (p_x^2 + (p_y + eBx)^2)
-\end{align*}
-Because this Hamiltonian commutes with $p_y$, so they share the same eigenstates, therefore, we can write the
-solution for the Hamiltonian as
-\begin{align*}
-	\psi_k(x, y) = e^{iky}f_k(x)
-\end{align*}
-\begin{align*}
-	H \psi_k(x, y) = \frac{1}{2m} (p_x^2 +(\hbar k + eBx)^2) \psi_k(x, y) = H_k \psi_k(x, y)
-\end{align*}
-\begin{align*}
-		H_k = \frac{1}{2m} p_x^2 +\frac{m \omega_B^2}{2} (x+ \frac{\hbar k}{eB})^2
-\end{align*}
-This $H_k$ is the Hamiltonian for a harmonic oscillator in the x direction, with the center displaced form the origin. The solution to $H_k$ is very similar to harmonic oscillator. The energy eigenvalues are
-\begin{align*}
-	E_n = \hbar \omega_B (n + \frac{1}{2})
-\end{align*}
-where $\omega_B = \frac{eB}{m}$. And the eigenstate wavefunctions are
-\begin{align*}
-	\psi_{n,k}(x, y) \propto e^{iky} H_n(x + \frac{\hbar k}{eB})e^{-(x+ \frac{\hbar k}{eB})^2eB/2\hbar}
-\end{align*}
-{\bf Adding an electric filed for 2D electron system subjected to a magnetic field}\\
-\begin{align*}
-	H = \frac{1}{2m} (p_x^2 + (p_y + eBx)^2) + eEx
-\end{align*}
-Its solution is again similar to harmonic oscillator with additional shift
-\begin{align*}
-	\psi(x, y) = \psi_{n,k}(x+ mE/eB^2, y)	
-\end{align*}
-and the energies are 
-\begin{align*}
-	E_{n,k} = \hbar \omega_B (n+ \frac{1}{2}) -eE(\frac{\hbar k}{eB}+\frac{eE}{m\omega_B^2})+\frac{m}{2}\frac{E^2}{B^2}
-\end{align*}
-Since we get the wavefunction and eigenenergy, there are two ways to find out the current. One way is to use the semiclassical approach. We can calculate group velocity given a wavevector k
-\begin{align*}
-	v_y = \frac{1}{\hbar} \frac{\partial E_{n,k}}{\partial k} = -\frac{E}{B}
-\end{align*}
-So we surprisingly see add an electric filed in x direction generates the movement in y!
-To find out the total current in y direction, we have to know the degeneracy, which means how many electrons are in the state with the momentum k to k + dk. In y direction, electrons are free particle with momentum k confined in a finite size $L_y$. So
-\begin{align*}
-	\frac{dn}{dk} = \frac{L_y}{2 \pi}
-\end{align*}
-The total current is
-\begin{align*}
-	I_y = e \frac{E}{B} \int \frac{dn}{dk}dk = \frac{eEL_y}{2\pi B} \int k
-\end{align*}
-The range of k in the above integral is tricky. From the wavefunction, we see the center of the harmonic oscillator in x direction is $x = -k\hbar/eB$, while $ 0 \leq x \leq L_x$, then $-L_x eB/\hbar  \leq k \leq 0$.
-\begin{align*}
-	I_y = \frac{eEL_y}{2\pi B} \int_{-L_xeB/\hbar}^0 k = \frac{e^2}{h}EA
-\end{align*}
+\subsection{DC Conductivity}
+Under a constant electric field $\Evec$, the average drift velocity reaches a steady state:
+\begin{align}
+\vvec_d = -\frac{e\tau}{m}\Evec
+\end{align}
+The current density $\mathbf{j} = -ne\vvec_d$ gives \textbf{Ohm's law}:
+\begin{align}
+\mathbf{j} = \sigma \Evec, \quad \sigma = \frac{ne^2\tau}{m}
+\end{align}
+where $n$ is the electron density.
+
+\subsection{AC Response and Limitations}
+For time-dependent fields $\Evec(t) = \Evec_0 e^{-i\omega t}$:
+\begin{align}
+\sigma(\omega) = \frac{ne^2\tau}{m(1-i\omega\tau)}
+\end{align}
+This predicts the \textbf{Drude peak} at $\omega=0$ and a plasma frequency at $\omega_p = \sqrt{ne^2/m\epsilon_0}$.
+
+\textbf{Limitations of the Drude model:}
+\begin{enumerate}
+    \item \textbf{Wrong temperature dependence}: Predicts $\sigma \propto 1/\sqrt{T}$ (from kinetic theory) but metals show $\sigma \propto 1/T$.
+    \item \textbf{Wrong heat capacity}: Classical equipartition gives $C_v = \frac{3}{2}nk_B$, but electron contribution is $\sim 100\times$ smaller.
+    \item \textbf{Ignores quantum statistics}: Treats electrons as classical Maxwell-Boltzmann particles.
+    \item \textbf{No explanation for insulators}: Cannot explain why some materials don't conduct at all.
+\end{enumerate}
+\section{Sommerfeld Free Electron Model (1927)}
+
+\subsection{Quantum Mechanical Revision}
+Arnold Sommerfeld incorporated quantum mechanics and Fermi-Dirac statistics:
+\begin{itemize}
+    \item Electrons are quantum particles obeying Pauli exclusion principle.
+    \item Energy states: $E(\kvec) = \frac{\hbar^2 k^2}{2m}$ for free electrons.
+    \item At $T=0$, electrons fill states up to the \textbf{Fermi energy} $E_F = \frac{\hbar^2 k_F^2}{2m}$.
+    \item Fermi wavevector: $k_F = (3\pi^2 n)^{1/3}$.
+    \item Fermi velocity: $v_F = \frac{\hbar k_F}{m} \sim 10^6$ m/s.
+\end{itemize}
+
+\subsection{Improved Predictions}
+\begin{align}
+\text{Heat capacity: } & C_e = \gamma T, \quad \gamma = \frac{\pi^2}{2} \frac{nk_B^2}{E_F} \\
+\text{DC conductivity: } & \sigma = \frac{ne^2\tau}{m^*} \quad \text{(same form as Drude)} \\
+\text{But now: } & \tau \sim \ell/v_F, \quad \ell = \text{mean free path}
+\end{align}
+This resolves the heat capacity discrepancy and gives better temperature dependence.
+
+\subsection{The Boltzmann Equation Approach}
+For a distribution function $f(\rvec, \kvec, t)$, the semi-classical Boltzmann equation is:
+\begin{align}
+\frac{\partial f}{\partial t} + \vvec \cdot \nabla_{\rvec} f - \frac{e}{\hbar}(\Evec + \vvec \times \Bvec) \cdot \nabla_{\kvec} f = \left(\frac{\partial f}{\partial t}\right)_{\text{coll}}
+\end{align}
+In relaxation time approximation:
+\begin{align}
+\left(\frac{\partial f}{\partial t}\right)_{\text{coll}} = -\frac{f - f_0}{\tau}
+\end{align}
+For DC conductivity, the solution gives:
+\begin{align}
+f(\kvec) = f_0(\kvec) - \frac{e\tau}{\hbar} \Evec \cdot \nabla_{\kvec} f_0(\kvec)
+\end{align}
+and current:
+\begin{align}
+\mathbf{j} = -e \int \frac{d^3k}{(2\pi)^3} \vvec(\kvec) f(\kvec)
+\end{align}
+
+\subsection{Remaining Limitations of Sommerfeld Model}
+\begin{enumerate}
+    \item \textbf{Ignores periodic lattice potential}: Cannot explain:
+    \begin{itemize}
+        \item Why some materials are insulators
+        \item Effective mass $m^* \neq m$
+        \item Existence of holes
+    \end{itemize}
+    \item \textbf{No explanation for Hall coefficient sign}: Free electron model predicts $R_H = -1/(ne)$, but some materials show positive Hall coefficient.
+    \item \textbf{Cannot explain anomalous Hall effect}: Observed in ferromagnets without external magnetic field.
+    \item \textbf{No geometric/topological effects}: Misses Berry phase contributions.
+\end{enumerate}
+\section{Band Theory Foundations}
+
+The failures of the free electron models motivated the development of band theory, which properly accounts for the periodic crystal potential. Two complementary approaches emerge: the \textbf{nearly-free electron model} (weak potential limit) and the \textbf{tight-binding model} (strong potential limit).
+
+\subsection{Nearly-Free Electron Model}
+
+For electrons in a weak periodic potential $V(\rvec) = V(\rvec + \mathbf{R})$, we treat the potential as a perturbation to free electrons.
+
+\subsubsection{Bloch's Theorem}
+The solutions to the Schrödinger equation in a periodic potential take the form:
+\begin{align}
+\psi_{n\kvec}(\rvec) = e^{i\kvec\cdot\rvec} u_{n\kvec}(\rvec)
+\end{align}
+where $u_{n\kvec}(\rvec + \mathbf{R}) = u_{n\kvec}(\rvec)$ has the lattice periodicity.
+
+\subsubsection{Energy Gap Formation}
+At the Brillouin zone boundaries, where the Bragg condition $2\kvec \cdot \mathbf{G} = G^2$ is satisfied (with $\mathbf{G}$ a reciprocal lattice vector), degenerate free electron states mix strongly. For a 1D crystal with lattice constant $a$:
+\begin{align}
+\text{At } k = \pm \frac{\pi}{a}: \quad E_{\pm} = \frac{\hbar^2}{2m}\left(\frac{\pi}{a}\right)^2 \pm |V_G|
+\end{align}
+where $V_G$ is the Fourier component of the potential. This opens an \textbf{energy gap} of size $2|V_G|$.
+
+\subsubsection{Dispersion Relation Near Zone Boundary}
+For $k$ near $\pi/a$:
+\begin{align}
+E_{\pm}(k) = \frac{\hbar^2}{2m}\left[\left(\frac{\pi}{a}\right)^2 + q^2\right] \pm \sqrt{\left(\frac{\hbar^2\pi q}{ma}\right)^2 + |V_G|^2}
+\end{align}
+where $q = k - \pi/a$. The group velocity $v_g = \frac{1}{\hbar}\frac{dE}{dk}$ vanishes at the zone boundary.
+\subsection{Tight-Binding Model}
+
+For strongly bound electrons, we start from localized atomic orbitals and consider hopping between neighbors.
+
+\subsubsection{Simple 1D Chain}
+For a chain of identical atoms with spacing $a$, each with an atomic orbital $|\phi_n\rangle$ centered at site $n$:
+\begin{align}
+|\psi_k\rangle = \frac{1}{\sqrt{N}} \sum_n e^{ikna} |\phi_n\rangle
+\end{align}
+The energy dispersion is:
+\begin{align}
+E(k) = \epsilon_0 - 2t \cos(ka)
+\end{align}
+where:
+\begin{itemize}
+    \item $\epsilon_0 = \langle \phi_n|H|\phi_n\rangle$: on-site energy
+    \item $t = -\langle \phi_n|H|\phi_{n+1}\rangle > 0$: hopping integral
+\end{itemize}
+The bandwidth is $4t$, reflecting the degree of electron delocalization.
+
+\subsubsection{Physical Interpretation}
+\begin{itemize}
+    \item At $k=0$: All phases align constructively $\rightarrow$ bonding state (lowest energy)
+    \item At $k=\pi/a$: Alternating phases $\rightarrow$ antibonding state (highest energy)
+    \item For a half-filled band (1 electron per atom): $E_F$ lies within the band $\rightarrow$ metal
+    \item For a filled band (2 electrons per atom): $E_F$ in the gap $\rightarrow$ insulator
+\end{itemize}
+\subsection{General Band Structure Properties}
+
+\subsubsection{Number of States per Band}
+For a crystal with $N$ primitive cells:
+\begin{align}
+\text{Number of } k\text{-states in a band} = N
+\text{Electron capacity of a band} = 2N \quad \text{(including spin)}
+\end{align}
+\subsubsection{Effective Mass}
+Near band extrema, the dispersion can be approximated as:
+\begin{align}
+E(\kvec) \approx E_0 + \frac{\hbar^2}{2}\sum_{ij} \left(m^{*-1}\right)_{ij} k_i k_j
+\end{align}
+where the effective mass tensor is:
+\begin{align}
+\left(m^{*-1}\right)_{ij} = \frac{1}{\hbar^2} \frac{\partial^2 E}{\partial k_i \partial k_j}
+\end{align}
+Unlike free electrons ($m^* = m$), in crystals $m^*$ can be:
+\begin{itemize}
+    \item Positive: electron-like carriers
+    \item Negative: hole-like carriers (near valence band maximum)
+    \item Anisotropic: different along different crystal directions
+\end{itemize}
+
+\subsubsection{Group Velocity and Current}
+The group velocity of a Bloch electron is:
+\begin{align}
+\boxed{\vvec_n(\kvec) = \frac{1}{\hbar} \nabla_{\kvec} E_n(\kvec)}
+\end{align}
+This fundamental relation explains why partially filled bands conduct (available states at $E_F$) while filled bands don't (velocity contributions cancel by symmetry).
+
+\subsubsection{Direct vs. Indirect Gaps}
+\begin{itemize}
+    \item \textbf{Direct gap}: Valence band maximum and conduction band minimum at same $\kvec$ (e.g., GaAs)
+    \item \textbf{Indirect gap}: Extrema at different $\kvec$ (e.g., Si, Ge)
+\end{itemize}
+This distinction is crucial for optical absorption and emission processes.
+
+\subsection{From Band Theory to Modern Transport}
+
+The success of band theory in explaining metals, semiconductors, and insulators was revolutionary. However, several phenomena remained unexplained:
+\begin{enumerate}
+    \item \textbf{Anomalous Hall effect} in ferromagnets
+    \item \textbf{Integer quantum Hall effect} (discovered 1980)
+    \item \textbf{Quantization of polarization} in insulators
+    \item \textbf{Topological insulators} (discovered 2005s)
+\end{enumerate}
+
+These required going beyond the simple $\vvec = \frac{1}{\hbar}\nabla_{\kvec}E$ picture to include the \textbf{geometric properties} of Bloch wavefunctions, leading to the Berry phase formalism discussed next.
+
+\section{Transition to Modern Theory}
+The limitations above motivated the development of \textbf{band theory} (Bloch, 1928) and later the incorporation of \textbf{geometric phases} (Berry, 1984). The key insights:
+\begin{enumerate}
+    \item \textbf{Crystalline potential matters}: $H = \frac{p^2}{2m} + V(\rvec)$ with $V(\rvec+\mathbf{R}) = V(\rvec)$.
+    \item \textbf{Bloch theorem}: Wavefunctions $\psi_{n\kvec}(\rvec) = e^{i\kvec\cdot\rvec}u_{n\kvec}(\rvec)$.
+    \item \textbf{Velocity is modified}: $\vvec_n(\kvec) = \frac{1}{\hbar}\nabla_{\kvec}E_n(\kvec) + \text{geometric terms}$.
+    \item \textbf{Geometry matters}: Berry curvature $\Omega_n(\kvec)$ affects electron dynamics.
+\end{enumerate}
+
+The following sections develop the full quantum mechanical theory that overcomes these limitations.
 \section{Current derivation in quantum approach}
-The second way is purely quantum approach. In quantum mechanics, the average position is defined as
+In quantum mechanics, the average position is defined as
 \begin{align*}
-<r(t)> = <\Psi(t)|\hat r|\Psi(t)>
+<\rvec(t)> = <\Psi(t)|\hat\rvec|\Psi(t)>
 \end{align*}
-and the average velocity is the total derivative of above.
+The average velocity is its time derivative 
 \begin{align*}
-<\dot r(t)> = \frac{d}{dt}<\Psi(t)|\hat r|\Psi(t)>
+<\dot \rvec(t)> = \frac{d}{dt}<\Psi(t)|\hat \rvec|\Psi(t)>
 \end{align*}
 We first need to derive $\Psi(t)$.\\
-\subsection{Wavefunction subject to adiabatic approximation }
-Based on Bloch theorem,  the wave function can be written as
+\subsection{Wavefunction under adiabatic approximation }
+Based on the adiabatic theorem and Bloch's theorem,  the wave function can be written as
 \begin{align*}
-|\Psi_n(t)> = e^{i\theta_n(t)} | u_n(R(t)>
+|\Psi_n(t)\rangle = e^{i\theta_n(t)} | u_n(\rvec(t)) \rangle
 \end{align*}
-and its derivative is
+Its time derivative is
 \begin{align*}
-\frac{d}{dt}|\Psi_n(t)> = i \dot \theta_n e^{i\theta_n(t)}|u_n>+ e^{i \theta_n} \frac{d}{dt}|u_n>
+\frac{d}{dt}|\Psi_n(t)\rangle = i \dot \theta_n e^{i\theta_n(t)}|u_n(\rvec(t)) \rangle+ e^{i \theta_n} \frac{d}{dt}|u_n(\rvec(t)) \rangle
 \end{align*}
-Substituting $|\Psi_n(t)$ into Schrodinger equation, 
+Substituting $|\Psi_n(t)$ into Schrodinger equation:
 \begin{align*}
-i \hbar \frac{d}{dt}|\Psi_n(t)> = H(R(t)) |\Psi_n(t)>
+i \hbar \frac{d}{dt}|\Psi_n(t) \rangle = H(\rvec(t)) |\Psi_n(t) \rangle
 \end{align*}
-yields
+yields:
 \begin{align*}
-i\hbar[i\dot \theta_n |u_n> + \frac{d}{dt}|u_n>]e^{i \theta_n(t)} = H(R(t)) e^{i\theta_n}|u_n>
+i\hbar[i\dot \theta_n |u_n(\rvec(t)) \rangle + \frac{d}{dt}|u_n(\rvec(t)) \rangle]e^{i \theta_n(t)} = H( \rvec(t)) e^{i\theta_n}|u_n(\rvec(t)) \rangle
 \end{align*}
-Canceling $e^{i \theta_n(t)}$ on both sides:
+Canceling the phase factor $e^{i \theta_n(t)}$ on both sides:
 \begin{align*}
--\hbar\dot \theta_n |u_n> + i \hbar \frac{d}{dt}|u_n> = E_n(R(t)) |u_n>
+-\hbar\dot \theta_n |u_n(\rvec(t)) \rangle + i \hbar \frac{d}{dt}|u_n(\rvec(t)) \rangle = E_n(\rvec(t)) |u_n(\rvec(t))\rangle
 \end{align*}
-Multiplying $|u_n>$ on the left:
+Multiplying $\langle u_n|$ on the left:
 \begin{align*}
--\hbar \dot \theta_n + i \hbar <u_n|\frac{d}{dt}|u_n> = E_n(R(t))
+-\hbar \dot \theta_n + i \hbar \langle u_n(\rvec(t))|\frac{d}{dt}|u_n(\rvec(t)) \rangle = E_n(\rvec(t))
 \end{align*}
-So
+Thus
 \begin{align*}
-\dot \theta_n = i <u_n|\frac{d}{dt}|u_n> - \frac{1}{\hbar} E_n(R(t))
+\dot \theta_n = i \langle u_n|\frac{d}{dt}|u_n \rangle - \frac{1}{\hbar} E_n(\rvec(t))
 \end{align*}
 Integrating over time gives
 \begin{align*}
-\theta_n(t) = - \frac{1}{\hbar} \int_0^t E_n(t')dt'+ i \int_0^t <u_n(t')|\frac{d}{dt'}u_n(t')>dt'
+\theta_n(t) = - \frac{1}{\hbar} \int_0^t E_n(t')dt'+ i \int_0^t \langle u_n(\rvec(t'))|\frac{d}{dt'}u_n(\rvec(t')) \rangle dt'
 \end{align*}
-Define
+Define the Berry phase
 \begin{align*}
-\gamma_n(t) = i\int_0^t <u_n(t')|\frac{d}{dt'}u_n(t')>dt'
+\gamma_n(t) = i\int_0^t \langle u_n(\rvec(t'))|\frac{d}{dt'}u_n(\rvec(t'))\rangle dt'
 \end{align*}
-which is the Berry phase.
-The final result of adiabatic solution is
+The final result of adiabatic solution is:
 \begin{align*}
-|\Psi_n(t)> = e^{i \gamma_n(t)} exp(-\frac{i}{\hbar} \int_0^t E_n(t')dt')|u_n(R(t))>
+\boxed{|\Psi_n(t)\rangle = e^{i\gamma_n(t)} \exp\left(-\frac{i}{\hbar}\int_0^t E_n(t') dt'\right) |u_n(\rvec(t))\rangle}
 \end{align*}
-The final state at time t acquires both a dynamical phase from the energy eighenvalue and a geometric Berry phase from the parametric evolution of the eigenstate.\\
-\subsection{Expectation value of velocity given the wavefunction}
+The state acquires both a dynamical phase from the energy eigenvalue and a geometric Berry phase from the parametric evolution
+\subsection{Expectation value of velocity}
+The velocity expectation value is:
 \begin{align*}
-<\dot r(t)> & = \frac{d}{dt}<\Psi(t)|\hat r|\Psi(t)>\\
+\langle \dot r(t) \rangle & = \frac{d}{dt}<\Psi(t)|\hat r|\Psi(t)>\\
                  & = <\frac{d}{dt}\Psi(t)|\hat r| \Psi(t)> + <\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> +  <\Psi(t)|\hat r| \frac{d}{dt}\Psi(t)>
 \end{align*}
-{\bf Derivation of the 2nd term $<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)>$ }\\
+\subsubsection{Second term $<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)>$ }
 1)Based on Heisenburg equation
 \begin{align*}
 \frac{d}{dt} \hat r = \frac{i}{\hbar}[H, r] = \frac{1}{i\hbar}[\hat r, \hat H]
 \end{align*}
-So
+Thus:
 \begin{align*}
 <\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> = \frac{1}{i\hbar}<\Psi(t)|[\hat r,\hat H]|\Psi(t)>
 \end{align*}
 2)Schrodinger equation with periodic Hamiltonian.
-Consider Bloch eigenstate
+Consider a Bloch eigenstate
 \begin{align*}
-|\Psi_{nk}> = e^{ikr} |u_{nk}> 
+|\Psi_{n\kvec}> = e^{i\kvec r} |u_{n\kvec}> 
 \end{align*}
-Then Schrodinger equation give the Block eigenstate becomes
+Then Schrodinger equation gives:
 \begin{align*}
-\hat H(k) e^{ikr} |u_{nk}> = \epsilon_{nk} e^{ikr}|u_{nk}>
+\hat H(k) e^{i\kvec \cdot \rvec} |u_{n \kvec}> = \epsilon_{n \kvec} e^{i\kvec \cdot \rvec}|u_{n\kvec}>
 \end{align*}
 Multiplying $e^{-ikr}$ on the left hand side,
 \begin{align*}
-e^{-ikr}\hat H(k) e^{ikr} |u_{nk}> = e^{-ikr}\epsilon_{nk} e^{ikr}|u_{nk}> = \epsilon_{nk} |u_n{nk}>
+e^{-i\kvec \cdot \rvec}\hat H(\kvec) e^{i\kvec \cdot \rvec} |u_{n\kvec}\rangle = e^{-i\kvec \cdot \rvec}\epsilon_{n \kvec} e^{i \kvec \cdot \rvec}|u_{n \kvec}> = \epsilon_{n\kvec} |u_{n\kvec}>
 \end{align*}
 Define the cell-periodic Hamiltonian
 \begin{align*}
-\hat H(k) \equiv e^{-ikr} \hat H e^{ikr}
+\hat H(\kvec) \equiv e^{-i \kvec \cdot \rvec} \hat H e^{i \kvec \cdot \rvec}
 \end{align*}
 then we have
 \begin{align*}
-\hat H(k) |u_{nk}> = \epsilon_n(k) |u_{nk}>
+\hat H(\kvec) |u_{n\kvec}> = \epsilon_n(\kvec) |u_{n\kvec}>
 \end{align*}
 3)link $[r, \hat H]$ to $\partial_k H(k)$,\\  
 Differentiating $\hat H(k)$:
 \begin{align*}
-\frac{d}{dk}\hat H(k) & = \frac{d}{dk}[e^{-ik\dot r} \hat H e^{ik \dot r}] \\
-& = -i[e^{-ik\dot r} r\hat H e^{ik \dot r}] + [e^{-ik\dot r} \hat H  r e^{ik \dot r}] \\
-& = -ie^{-ikr} [r, \hat H]e^{ikr}
+\nabla_{\kvec} H(\kvec) &= \nabla_{\kvec} \left[ e^{-i\kvec\cdot\rvec} H e^{i\kvec\cdot\rvec} \right] \\
+&= -i e^{-i\kvec\cdot\rvec} [\rvec, H] e^{i\kvec\cdot\rvec}
 \end{align*}
-4)Evaluating the expectation value of $ [r, \hat H] $,
+Therefore:
 \begin{align*}
-<\Psi_{nk}| [\hat r, \hat H ]| \Psi_{nk}> 
-&= <u_{nk}| e^{-ikr}[\hat r, \hat H] e^{ikr}|u_{nk}>\\
-& = <u_{nk}| i \nabla_k \hat H(k)|u_{nk}> \\
+e^{-i\kvec\cdot\rvec} [\rvec, H] e^{i\kvec\cdot\rvec} = i \nabla_{\kvec} H(\kvec)
+\end{align*}
+4)Evaluating the expectation value of $ [r, \hat H] $:
+\begin{align*}
+\langle \Psi_{n\kvec} | [\hat{r}, H] | \Psi_{n\kvec} \rangle 
+&= \langle u_{n\kvec} | e^{-i\kvec\cdot\rvec} [\hat{r}, H] e^{i\kvec\cdot\rvec} | u_{n\kvec} \rangle \\
+&= \langle u_{n\kvec} | i \nabla_{\kvec} H(\kvec) | u_{n\kvec} \rangle
 \end{align*}
 According to Hellmann–Feynman theorem
 \begin{align*}
-<u_{nk}| i \nabla_k \hat H(k)|u_{nk}> = i \nabla_k \epsilon(k)
+\langle u_{n\kvec}| i \nabla_{\kvec} \hat H(k)|u_{n\kvec}> = i \nabla_{\kvec} \epsilon(\kvec)
 \end{align*}
 Combining 1) through 4)
 \begin{align*}
-<\Psi(t)|\frac{d}{dt}\hat r|\Psi(t)> = \frac{1}{i\hbar}<\Psi(t)|[\hat r,\hat H]|\Psi(t)> = \frac{1}{\hbar}\nabla_k \epsilon_n(k)
+\boxed{\langle \Psi(t) | \partial_t \hat{r} | \Psi(t) \rangle = \frac{1}{\hbar} \nabla_{\kvec} \epsilon_n(\kvec)}
 \end{align*}
-This shows the current contribution coming directly from band structure, and it allows us to explain the conductivity of metal, which will be explained in later sections.\\
-\textbf{ Derivation of 1st and 3rd term}
+This is the  \textbf{Bloch velocity} term. It shows the current contribution coming directly from band structure, and it allows us to explain the conductivity of metal, which will be explained in later sections.\\
+\subsubsection{First and Third terms: Geometric Contribution}
 The 3rd term is the complex conjugate of the 1st term. \
 {(1)Derivative of wavefunction\\}
 The time-dependent wavefunction is the Bloch form with a Berry phase.
@@ -244,7 +366,7 @@ The component of $S_{geom,i}$ is
 S_{geom, \alpha} = \dot k_{\beta} [\partial_{k_{\beta}}(i<u|\partial_{k_{\alpha}}u>) - \partial_k{k_\alpha}(i<\partial_{k_{\beta}}u|u> )]
 = \dot k_{\beta} (\partial_{k_{\beta}} A_{\alpha} - \partial_{k_{\alpha}}A_{\beta})
 \end{align*}
-Define Berry connection
+Define Berry connection:
 \begin{align*}
 A_{\alpha}(k) = i<u|\partial_{k_{\alpha}}u>
 \end{align*}
