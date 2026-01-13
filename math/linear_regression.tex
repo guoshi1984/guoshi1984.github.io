@@ -5,20 +5,26 @@
 \section{Linear Regression}
 \subsection{Linear regression and Least Square Solution}
 \begin{align*}
-Y = X{\boldsymbol \beta} + \epsilon
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon}
 \end{align*}
-Where Y is a n $\times$ 1 matrix, X is a n $\times$ k matrix, beta is k $\times$ 1 vector and $\epsilon$ is nx1 vector with $\epsilon_i$ begin iid with normal distribution.\\
+where:
+\begin{itemize}
+    \item $\mathbf{y}$ is $n\times 1$ vector of outcomes
+    \item $\mathbf{X}$ is $n\times k$ matrix of regressors (full column rank)
+    \item $\boldsymbol{\beta}$ is $k\times 1$ parameter vector
+    \item $\mathbf{\epsilon}$ is $n\times 1$ error vector
+\end{itemize}
 {\bf Assumptions}\\
 1. Linear \\
 2. X matrix has full rank. In other words, no multicollinearity. \\
-2. error term has zero mean $E[\epsilon|X] = 0$\\
+2. error term has zero mean $\mathbb{E}[\mathbf{\epsilon}|X] = 0$\\
 3. Homescedasticity or equal variance of $\epsilon$. In other words, no autocorrelation between disturbances.$cov(\epsilon_i, \epsilon_j)=0$.\\
 6. Number of obsearvations n must be greater than the number of parameters.\\
 {\bf Least Square Solution}\\
 The cost function is given by
 \begin{align*}
-f(\boldsymbol \beta) = ||Y-X\beta||^2 & = (Y-X\beta)^T(Y-X\beta)
-                      & = Y^T Y - Y^TX\beta - \beta^TX^TY +\beta^TX^T X \beta
+f(\boldsymbol{\beta}) = ||\mathbf{y}-\mathbf{X}\boldsymbol{\beta}||^2 & = (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})^T(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})
+                      & = \mathbf{y}^T \mathbf{y} - \mathbf{y}^T\mathbf{X} \boldsymbol{\beta} - \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y} +\boldsymbol{\beta}^T\mathbf{X}^T \mathbf{X} \boldsymbol{\beta}
 \end{align*}
 Since third term are scalar, 
 \begin{align*}
@@ -647,7 +653,389 @@ r_{12} & = \frac{S_{12}}{\sqrt{S_{11}S_{22}}}\\
 \end{align*}
 $r_{12}$ is the correlation coefficient. In extreme case, when $X_1$ and $X_2$ are perfectly correlated, the variance becomes infinite.\\
 \section{Model Testing}
-{\bf Lagrange Multiplier(LM) test}\\
+\subsection{Lagrange Multiplier(LM) test}
+\subsubsection{Constrained Maximum Likelihood Estimation}
+Consider a parametric model with likelihood function $L(\theta)$ for $\theta \in \Theta \subset \mathbb{R}^p$. We wish to test $q$ restrictions:
+
+\[
+H_0: g(\theta) = 0,
+\]
+where $g: \mathbb{R}^p \to \mathbb{R}^q$ is continuously differentiable and $q \leq p$.
+
+The constrained maximum likelihood estimator (CMLE) solves:
+\[
+\max_{\theta} \ell(\theta) \quad \text{s.t.} \quad g(\theta) = 0,
+\]
+where $\ell(\theta) = \log L(\theta)$.
+\subsubsection{Lagrangian and First-Order Conditions}
+Form the Lagrangian:
+\[
+\mathcal{L}(\theta, \lambda) = \ell(\theta) - \lambda' g(\theta),
+\]
+where $\lambda \in \mathbb{R}^q$ is the vector of Lagrange multipliers.
+
+The first-order conditions are:
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial \theta} &= s(\theta) - G(\theta)'\lambda = 0, \label{foc_theta} \\
+    \frac{\partial \mathcal{L}}{\partial \lambda} &= -g(\theta) = 0, \label{foc_lambda}
+\end{align}
+where:
+\begin{itemize}
+    \item $s(\theta) = \frac{\partial \ell(\theta)}{\partial \theta}$ is the $p \times 1$ score vector.
+    \item $G(\theta) = \frac{\partial g(\theta)}{\partial \theta}$ is the $q \times p$ Jacobian matrix of constraints.
+\end{itemize}
+
+Let $(\tilde{\theta}, \tilde{\lambda})$ denote the solution to (\ref{foc_theta}) and (\ref{foc_lambda}).
+\subsubsection{Statistical Interpretation of Lagrange Multipliers}
+\begin{enumerate}
+\item Sample vs. Population Lagrange Multipliers
+\begin{itemize}
+    \item $\tilde{\lambda}$ is the \textbf{sample Lagrange multiplier}: a numerical value computed from the data.
+    \item Under $H_0$, the \textbf{population Lagrange multiplier} $\lambda_0 = 0$. Why? If the constraint holds in population, imposing it does not change the optimum, so its "shadow price" is zero.
+\end{itemize}
+
+Thus, we can write:
+\[
+\tilde{\lambda} = \lambda_0 + \text{sampling error} = \text{sampling error} \quad \text{under } H_0.
+\]
+
+\item Distribution of $\tilde{\lambda}$ Under $H_0$
+From (\ref{foc_theta}), at the constrained estimate:
+\[
+s(\tilde{\theta}) = G(\tilde{\theta})' \tilde{\lambda}. \tag{1}
+\]
+
+Under regularity conditions and $H_0$, as $n \to \infty$:
+\begin{itemize}
+    \item $\tilde{\theta} \stackrel{p}{\to} \theta_0$, where $\theta_0$ is the true parameter.
+    \item By the Central Limit Theorem for the score:
+    \[
+    \frac{1}{\sqrt{n}} s(\theta_0) \stackrel{d}{\to} N(0, \mathcal{I}(\theta_0)),
+    \]
+    where $\mathcal{I}(\theta_0)$ is the Fisher information matrix.
+    \item Applying the delta method and using (1):
+    \[
+    \frac{1}{\sqrt{n}} \tilde{\lambda} \stackrel{d}{\to} N\left(0, [G(\theta_0) \mathcal{I}(\theta_0)^{-1} G(\theta_0)']^{-1}\right).
+    \]
+\end{itemize}
+
+Therefore, under $H_0$:
+\[
+\tilde{\lambda} \stackrel{a}{\sim} N\left(0, \frac{1}{n} [G(\theta_0) \mathcal{I}(\theta_0)^{-1} G(\theta_0)']^{-1}\right).
+\]
+\end{enumerate}
+
+\subsubsection{Constructing the LM Test Statistic}
+\begin{enumerate}
+%\subsubsection{Quadratic Form in $\tilde{\lambda}$}
+\item{Quadratic Form in $\tilde{\lambda}$}
+Since $\tilde{\lambda} \sim N(0, \Sigma_\lambda)$ under $H_0$, the quadratic form:
+\[
+\tilde{\lambda}' \Sigma_\lambda^{-1} \tilde{\lambda} \sim \chi^2_q.
+\]
+
+From the asymptotic variance above:
+\[
+\Sigma_\lambda = \frac{1}{n} [G(\theta_0) \mathcal{I}(\theta_0)^{-1} G(\theta_0)']^{-1}.
+\]
+Hence:
+\[
+n \cdot \tilde{\lambda}' G(\theta_0) \mathcal{I}(\theta_0)^{-1} G(\theta_0)' \tilde{\lambda} \stackrel{d}{\to} \chi^2_q.
+\]
+
+\item{Connection to the Score Vector}
+Using $s(\tilde{\theta}) = G(\tilde{\theta})' \tilde{\lambda}$ from (1):
+\[
+n \cdot \tilde{\lambda}' G(\theta_0) \mathcal{I}(\theta_0)^{-1} G(\theta_0)' \tilde{\lambda} 
+= n \cdot s(\tilde{\theta})' \mathcal{I}(\theta_0)^{-1} s(\tilde{\theta}) + o_p(1).
+\]
+
+Replacing $\mathcal{I}(\theta_0)$ with a consistent estimator $\hat{\mathcal{I}}$ (e.g., observed information at $\tilde{\theta}$), we obtain the \textbf{Lagrange Multiplier (LM) test statistic}:
+\[
+\boxed{\text{LM} = s(\tilde{\theta})' \hat{\mathcal{I}}^{-1} s(\tilde{\theta}) \stackrel{d}{\to} \chi^2_q}.
+\]
+\end{enumerate}
+
+\subsection{Example: Testing $\beta_2 = 0$ in a Linear Model}
+
+Consider the linear regression model:
+\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u, \quad u \sim N(0, \sigma^2 I)
+\]
+with $n$ observations. We want to test $H_0: \beta_2 = 0$.
+
+Let $\theta = (\beta_0, \beta_1, \beta_2)' \in \mathbb{R}^3$.
+
+\subsubsection{Constraint, Maximum Likelihood and Lagrangian}
+The constraint is $g(\theta) = \beta_2 = 0$. Here $q=1$, and:
+\[
+G(\theta) = \frac{\partial g}{\partial \theta} = \begin{pmatrix} 0 & 0 & 1 \end{pmatrix}.
+\]
+
+The log-likelihood is:
+\[
+\ell(\theta) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i})^2.
+\]
+
+The Lagrangian is:
+\[
+\mathcal{L}(\theta, \lambda) = \ell(\theta) - \lambda \beta_2,
+\]
+where $\lambda$ is a scalar Lagrange multiplier.
+
+\subsubsection{First-Order Conditions}
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial \beta_0} &= \frac{1}{\sigma^2}\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i}) = 0, \label{foc_b0} \\
+    \frac{\partial \mathcal{L}}{\partial \beta_1} &= \frac{1}{\sigma^2}\sum_{i=1}^n x_{1i}(y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i}) = 0, \label{foc_b1} \\
+    \frac{\partial \mathcal{L}}{\partial \beta_2} &= \frac{1}{\sigma^2}\sum_{i=1}^n x_{2i}(y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i}) - \lambda = 0, \label{foc_b2} \\
+    \frac{\partial \mathcal{L}}{\partial \lambda} &= -\beta_2 = 0. \label{foc_lambda_ex}
+\end{align}
+
+From (\ref{foc_lambda_ex}), $\beta_2 = 0$ under the constraint.
+
+\subsubsection{Constrained Estimates}
+Let $\tilde{\theta} = (\tilde{\beta}_0, \tilde{\beta}_1, 0)'$ be the constrained MLE. 
+Substituting $\beta_2 = 0$ into (\ref{foc_b0}) and (\ref{foc_b1}) gives the OLS estimates from the restricted model:
+\[
+y = \beta_0 + \beta_1 x_1 + u.
+\]
+These are simply:
+\[
+\begin{pmatrix}
+\tilde{\beta}_0 \\
+\tilde{\beta}_1
+\end{pmatrix} = (W'W)^{-1}W'y,
+\]
+where $W = [\mathbf{1}, x_1]$ is the $n \times 2$ matrix of intercept and $x_1$.
+
+\subsubsection{Solving for $\tilde{\lambda}$}
+From (\ref{foc_b2}), with $\beta_2 = 0$:
+\[
+\tilde{\lambda} = \frac{1}{\sigma^2}\sum_{i=1}^n x_{2i}(y_i - \tilde{\beta}_0 - \tilde{\beta}_1 x_{1i}) = \frac{1}{\sigma^2}\sum_{i=1}^n x_{2i} \tilde{u}_i,
+\]
+where $\tilde{u}_i$ are residuals from the restricted regression.
+
+In matrix form:
+\[
+\tilde{\lambda} = \frac{1}{\sigma^2} x_2' \tilde{u},
+\]
+where $x_2$ is the $n \times 1$ vector of $x_{2i}$ and $\tilde{u} = y - W\tilde{\beta}$.
+
+\subsubsection{Distribution of $\tilde{\lambda}$ Under $H_0$}
+
+Under $H_0: \beta_2 = 0$, the true model is $y = \beta_0 + \beta_1 x_1 + u$. Then:
+\begin{itemize}
+    \item $\tilde{\beta}_0, \tilde{\beta}_1$ are consistent for $\beta_0, \beta_1$.
+    \item $\tilde{u}_i = u_i - (\tilde{\beta}_0 - \beta_0) - (\tilde{\beta}_1 - \beta_1)x_{1i}$.
+\end{itemize}
+
+Since $\mathbb{E}[x_{2i} u_i] = 0$ (by exogeneity) under $H_0$:
+\[
+\mathbb{E}[\tilde{\lambda}] = 0.
+\]
+
+The variance can be computed. Write $M_W = I - W(W'W)^{-1}W'$, the annihilator matrix for $W$. Then $\tilde{u} = M_W y = M_W u$ under $H_0$. Thus:
+\[
+\tilde{\lambda} = \frac{1}{\sigma^2} x_2' M_W u.
+\]
+Since $u \sim N(0, \sigma^2 I)$:
+\[
+\tilde{\lambda} \sim N\left(0, \frac{1}{\sigma^2} x_2' M_W x_2\right).
+\]
+Note $x_2' M_W x_2$ is the residual sum of squares from regressing $x_2$ on $W$.
+
+Thus, under $H_0$:
+\[
+\frac{\tilde{\lambda}^2}{\frac{1}{\sigma^2} x_2' M_W x_2} = \sigma^2 \frac{\tilde{\lambda}^2}{x_2' M_W x_2} \sim \chi^2_1.
+\]
+
+\subsubsection{Score Vector at Constrained Estimate}
+The score vector is:
+\[
+s(\theta) = \frac{1}{\sigma^2} \begin{pmatrix}
+\sum (y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i}) \\
+\sum x_{1i}(y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i}) \\
+\sum x_{2i}(y_i - \beta_0 - \beta_1 x_{1i} - \beta_2 x_{2i})
+\end{pmatrix}.
+\]
+
+At $\tilde{\theta} = (\tilde{\beta}_0, \tilde{\beta}_1, 0)'$:
+\[
+s(\tilde{\theta}) = \frac{1}{\sigma^2} \begin{pmatrix}
+0 \\
+0 \\
+\sum x_{2i} \tilde{u}_i
+\end{pmatrix},
+\]
+because the first two equations are satisfied by $\tilde{\beta}_0, \tilde{\beta}_1$ (from FOCs \ref{foc_b0}, \ref{foc_b1}).
+
+Note that the third element equals $\tilde{\lambda}$, consistent with the general relation $s(\tilde{\theta}) = G(\tilde{\theta})' \tilde{\lambda}$.
+
+\subsubsection{Information Matrix}
+The information matrix for this normal linear model is:
+\[
+\mathcal{I}(\theta) = \frac{1}{\sigma^2} \begin{pmatrix}
+n & \sum x_{1i} & \sum x_{2i} \\
+\sum x_{1i} & \sum x_{1i}^2 & \sum x_{1i}x_{2i} \\
+\sum x_{2i} & \sum x_{1i}x_{2i} & \sum x_{2i}^2
+\end{pmatrix} = \frac{1}{\sigma^2} X'X,
+\]
+where $X = [\mathbf{1}, x_1, x_2]$.
+
+\subsubsection{LM Statistic}
+The LM statistic is:
+\[
+\text{LM} = s(\tilde{\theta})' \mathcal{I}(\tilde{\theta})^{-1} s(\tilde{\theta}).
+\]
+
+Since only the third element of $s(\tilde{\theta})$ is non-zero, and $\mathcal{I}^{-1} = \sigma^2 (X'X)^{-1}$, we have:
+\[
+\text{LM} = \frac{1}{\sigma^4} (0, 0, \sum x_{2i}\tilde{u}_i) \cdot \sigma^2 (X'X)^{-1} \cdot \begin{pmatrix} 0 \\ 0 \\ \sum x_{2i}\tilde{u}_i \end{pmatrix}.
+\]
+
+Let $v = (0, 0, 1)'$ and note $\sum x_{2i}\tilde{u}_i = x_2'\tilde{u}$. Then:
+\[
+\text{LM} = \frac{1}{\sigma^2} (x_2'\tilde{u}) \cdot v'(X'X)^{-1} v \cdot (x_2'\tilde{u}).
+\]
+
+But $v'(X'X)^{-1} v = [(X'X)^{-1}]_{33}$, the (3,3) element of $(X'X)^{-1}$, which is $(x_2' M_W x_2)^{-1}$ (the inverse of the residual variance from regressing $x_2$ on $W$).
+
+Thus:
+\[
+\text{LM} = \frac{(x_2'\tilde{u})^2}{\sigma^2 \cdot (x_2' M_W x_2)} = \frac{\tilde{\lambda}^2}{\frac{1}{\sigma^2} x_2' M_W x_2},
+\]
+exactly the quadratic form in $\tilde{\lambda}$ derived earlier.
+
+\subsubsection{Connection to Usual t-Test}
+
+%\subsection{Unconstrained OLS}
+The unconstrained OLS estimate of $\beta_2$ is:
+\[
+\hat{\beta}_2 = \frac{x_2' M_W y}{x_2' M_W x_2}.
+\]
+Under $H_0$, $\hat{\beta}_2 \sim N\left(0, \frac{\sigma^2}{x_2' M_W x_2}\right)$.
+
+The t-statistic is:
+\[
+t = \frac{\hat{\beta}_2}{\text{SE}(\hat{\beta}_2)} = \frac{\hat{\beta}_2}{\sqrt{\hat{\sigma}^2/(x_2' M_W x_2)}},
+\]
+where $\hat{\sigma}^2$ is the error variance estimator from the unconstrained regression.
+
+%\subsection{Relation to $\tilde{\lambda}$}
+Note that:
+\[
+x_2' \tilde{u} = x_2' M_W y = (x_2' M_W x_2) \hat{\beta}_2.
+\]
+Thus:
+\[
+\tilde{\lambda} = \frac{1}{\sigma^2} (x_2' M_W x_2) \hat{\beta}_2.
+\]
+
+The LM statistic becomes:
+\[
+\text{LM} = \frac{(x_2' M_W x_2)^2 \hat{\beta}_2^2 / \sigma^4}{\frac{1}{\sigma^2} x_2' M_W x_2} = \frac{(x_2' M_W x_2) \hat{\beta}_2^2}{\sigma^2}.
+\]
+
+If we use the true $\sigma^2$, then $\text{LM} = \hat{\beta}_2^2 / \text{Var}(\hat{\beta}_2) \sim \chi^2_1$, and:
+\[
+\text{LM} = t^2.
+\]
+
+In practice, we estimate $\sigma^2$ from the constrained regression as $\tilde{\sigma}^2 = \frac{1}{n}\sum \tilde{u}_i^2$, and the LM statistic becomes $nR^2$ from the auxiliary regression of $\tilde{u}$ on $x_1$ and $x_2$.
+
+\subsubsection{Summary}
+
+For testing $H_0: \beta_2 = 0$:
+\begin{itemize}
+    \item The Lagrange multiplier $\tilde{\lambda} = \frac{1}{\sigma^2}\sum x_{2i}\tilde{u}_i$ measures the marginal increase in log-likelihood from relaxing $\beta_2 = 0$.
+    \item Under $H_0$, $\tilde{\lambda} \sim N\left(0, \frac{1}{\sigma^2} x_2' M_W x_2\right)$.
+    \item The LM statistic $\text{LM} = \frac{\tilde{\lambda}^2}{\text{Var}(\tilde{\lambda})} \sim \chi^2_1$.
+    \item This equals $s(\tilde{\theta})' \mathcal{I}(\tilde{\theta})^{-1} s(\tilde{\theta})$, connecting constrained optimization to hypothesis testing.
+    \item When $\sigma^2$ is known, $\text{LM} = t^2$, showing equivalence to the usual t-test.
+\end{itemize}
+
+This example illustrates the general principle: LM tests check whether the score (gradient of the likelihood) at the constrained estimate is statistically zero, which is equivalent to testing whether the Lagrange multipliers (shadow prices of constraints) are zero.
+
+\subsubsection{Example: Testing constraint $R\beta = r$ in Linear Model }
+
+Consider $y = X\beta + u$, $u \sim N(0, \sigma^2 I)$, with constraint $R\beta = r$.
+
+\begin{enumerate}
+\item{Constrained MLE}
+%\subsection{Constrained MLE}
+The Lagrangian is:
+\[
+\mathcal{L}(\beta, \lambda) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}(y-X\beta)'(y-X\beta) - \lambda'(R\beta - r).
+\]
+FOCs:
+\begin{align*}
+    \frac{\partial \mathcal{L}}{\partial \beta} &= \frac{1}{\sigma^2}X'(y-X\beta) - R'\lambda = 0, \\
+    \frac{\partial \mathcal{L}}{\partial \lambda} &= -(R\beta - r) = 0.
+\end{align*}
+
+The constrained estimator is $\tilde{\beta}$ with $R\tilde{\beta} = r$, and:
+\[
+\tilde{\lambda} = \frac{1}{\sigma^2} [R(X'X)^{-1}R']^{-1} (R\hat{\beta}_{OLS} - r),
+\]
+where $\hat{\beta}_{OLS} = (X'X)^{-1}X'y$.
+
+\item{Distribution Under $H_0$}
+%\subsection{Distribution Under $H_0$}
+Under $H_0: R\beta = r$, and assuming $\sigma^2$ known:
+\[
+\tilde{\lambda} \sim N\left(0, \frac{1}{\sigma^2} [R(X'X)^{-1}R']^{-1}\right).
+\]
+
+Thus:
+\[
+\sigma^2 \tilde{\lambda}' R(X'X)^{-1}R' \tilde{\lambda} \sim \chi^2_q.
+\]
+
+\item{Equivalence to Score Form}
+%\subsection{Equivalence to Score Form}
+The score at $\tilde{\beta}$ is:
+\[
+s(\tilde{\beta}) = \frac{1}{\sigma^2} X'(y-X\tilde{\beta}) = R'\tilde{\lambda}.
+\]
+The information matrix is $\mathcal{I}(\beta) = \frac{1}{\sigma^2} X'X$.
+
+Then:
+\[
+\text{LM} = s(\tilde{\beta})' \mathcal{I}(\tilde{\beta})^{-1} s(\tilde{\beta}) = \sigma^2 \tilde{\lambda}' R(X'X)^{-1}R' \tilde{\lambda},
+\]
+identical to the quadratic form in $\tilde{\lambda}$.
+\end{enumerate}
+
+\subsubsection{Key Insights}
+\begin{enumerate}
+\item{Why Test $\lambda = 0$?}
+\begin{itemize}
+    \item $\lambda$ measures the marginal increase in log-likelihood from relaxing the constraint.
+    \item If $H_0$ is true, relaxing the constraint should not improve the likelihood significantly $\Rightarrow \lambda$ should be near zero.
+    \item A large $|\tilde{\lambda}|$ suggests the constraint is costly, evidence against $H_0$.
+\end{itemize}
+
+\item{Advantages of the Score Form}
+%\subsection{Advantages of the Score Form}
+While we \textit{could} directly test $\tilde{\lambda} = 0$, the score form $s(\tilde{\theta})$ is preferred because:
+\begin{enumerate}
+    \item \textbf{Invariance}: $\text{LM} = s(\tilde{\theta})' \hat{\mathcal{I}}^{-1} s(\tilde{\theta})$ is invariant to reparameterization of constraints, while $\tilde{\lambda}$ is not.
+    \item \textbf{Computational simplicity}: Often $s(\tilde{\theta})$ is easier to compute (e.g., via auxiliary regressions like White's test).
+    \item \textbf{Unified theory}: The score vector appears in other contexts (Cramér-Rao bound, MLE asymptotics).
+\end{enumerate}
+
+\item{The Big Picture}
+%\subsubsection{The Big Picture}
+The LM test elegantly connects:
+\begin{itemize}
+    \item \textbf{Constrained optimization} (Lagrange multipliers)
+    \item \textbf{Asymptotic distribution theory} (CLT for scores)
+    \item \textbf{Quadratic forms} (chi-square distributions)
+\end{itemize}
+
+It tests whether the gradient of the likelihood at the constrained estimate is statistically zero—which is exactly what we expect if the constraints are true in population.
+\end{enumerate}
+
 Suppose we have two models, one is restriced, the other is unrestricted:
 Restricted(R): $y = X_1 \beta_1 + \epsilon$\\
 Unrestricted (U): $y = X_1 \beta_1 + X_2 \beta_2 + \epsilon$\\
@@ -759,6 +1147,218 @@ W follows t distribution. We now show W test is equivalent to LM test. Consider 
 W^2 & =\hat \beta^T (Var(\hat \beta))^{-1} \hat \beta = \frac{1}{\sigma^2}\hat \beta^T V \hat \beta = \frac{1}{\sigma^2} (V^{-1}S_2)^T V V^{-1} S_2 =\frac{1}{\sigma^2} S_2^T V^{-1}VV^{-1}S_2 \\ &=  \frac{1}{\sigma^2}S_2^T V^{-1}S_2\\
        &= LM
 \end{align*}
+
+\section{Generalized Regression Model}
+\subsection{Generalized Least Squares (GLS)}
+\subsubsection{Problem Setting and Motivation}
+
+Recall the linear regression model:
+\[
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon}
+\]
+where:
+\begin{itemize}
+    \item $\mathbf{y}$ is $n\times 1$ vector of outcomes
+    \item $\mathbf{X}$ is $n\times k$ matrix of regressors (full column rank)
+    \item $\boldsymbol{\beta}$ is $k\times 1$ parameter vector
+    \item $\mathbf{\epsilon}$ is $n\times 1$ error vector
+\end{itemize}
+
+The classical OLS assumptions include spherical errors: 
+\[
+\mathbb{E}[\mathbf{\epsilon}\mid\mathbf{X}] = \mathbf{0}, \quad \mathbb{E}[\mathbf{\epsilon \epsilon}'\mid\mathbf{X}] = \sigma^2\mathbf{I}_n.
+\]
+
+When the second assumption fails (heteroskedasticity and/or autocorrelation), OLS remains unbiased but is no longer efficient. The Generalized Least Squares (GLS) framework provides the BLUE under a known non-spherical covariance structure.
+
+\subsubsection{Assumptions}
+
+Assume:
+\begin{enumerate}
+    \item $\mathbb{E}[\mathbf{\epsilon}\mid\mathbf{X}] = \mathbf{0}$
+    \item $\mathbb{E}[\mathbf{\epsilon \epsilon}'\mid\mathbf{X}] = \sigma^2\mathbf{\Omega}$, where $\mathbf{\Omega}$ is a known $n\times n$ symmetric positive definite matrix.
+    \item $\mathbf{X}$ has full column rank $k$, and $\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{X}$ is invertible.
+\end{enumerate}
+
+\subsubsection{Derivation via Transformation}
+
+Since $\mathbf{\Omega}$ is positive definite, there exists a nonsingular matrix $\mathbf{P}$ such that:
+\[
+\mathbf{P}\mathbf{\Omega}\mathbf{P}' = \mathbf{I}_n.
+\]
+One common choice is $\mathbf{P} = \mathbf{\Omega}^{-1/2}$ (the inverse of the Cholesky factor).
+
+Transform the model by premultiplying by $\mathbf{P}$:
+\[
+\mathbf{P}\mathbf{y} = \mathbf{P}\mathbf{X}\boldsymbol{\beta} + \mathbf{P}\mathbf{u}.
+\]
+Define $\mathbf{y}^* = \mathbf{P}\mathbf{y}$, $\mathbf{X}^* = \mathbf{P}\mathbf{X}$, $\mathbf{u}^* = \mathbf{P}\mathbf{u}$. Then:
+\[
+\mathbb{E}[\mathbf{u}^*\mid\mathbf{X}] = \mathbf{P}\mathbb{E}[\mathbf{u}\mid\mathbf{X}] = \mathbf{0},
+\]
+\[
+\mathbb{E}[\mathbf{u}^*\mathbf{u}^{*\prime}\mid\mathbf{X}] = \mathbf{P}(\sigma^2\mathbf{\Omega})\mathbf{P}' = \sigma^2\mathbf{I}_n.
+\]
+
+Applying OLS to the transformed model gives the GLS estimator:
+\[
+\hat{\boldsymbol{\beta}}_{\text{GLS}} = (\mathbf{X}^{*\prime}\mathbf{X}^*)^{-1}\mathbf{X}^{*\prime}\mathbf{y}^* = (\mathbf{X}'\mathbf{P}'\mathbf{P}\mathbf{X})^{-1}\mathbf{X}'\mathbf{P}'\mathbf{P}\mathbf{y}.
+\]
+Since $\mathbf{P}'\mathbf{P} = \mathbf{\Omega}^{-1}$, we obtain the canonical form:
+\[
+\boxed{\hat{\boldsymbol{\beta}}_{\text{GLS}} = (\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{X})^{-1}\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{y}}.
+\]
+
+\subsubsection{Properties}
+
+Under assumptions 1-3, $\hat{\boldsymbol{\beta}}_{\text{GLS}}$ is the Best Linear Unbiased Estimator (BLUE) of $\boldsymbol{\beta}$.
+
+Let $\tilde{\boldsymbol{\beta}} = \mathbf{A}\mathbf{y}$ be any linear unbiased estimator. Write $\mathbf{A} = (\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{X})^{-1}\mathbf{X}'\mathbf{\Omega}^{-1} + \mathbf{D}$. Unbiasedness requires $\mathbf{D}\mathbf{X} = \mathbf{0}$. Then:
+\[
+\operatorname{Var}(\tilde{\boldsymbol{\beta}}\mid\mathbf{X}) = \sigma^2\left[(\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{X})^{-1} + \mathbf{D}\mathbf{\Omega}\mathbf{D}'\right].
+\]
+Since $\mathbf{D}\mathbf{\Omega}\mathbf{D}'$ is positive semidefinite, $\hat{\boldsymbol{\beta}}_{\text{GLS}}$ has minimal variance.
+
+
+The asymptotic distribution (under appropriate regularity conditions) is:
+\[
+\sqrt{n}(\hat{\boldsymbol{\beta}}_{\text{GLS}} - \boldsymbol{\beta}) \stackrel{d}{\to} N\left(\mathbf{0}, \sigma^2 \mathbf{Q}^{-1}\right),
+\]
+where $\mathbf{Q} = \text{plim}\, \frac{1}{n}\mathbf{X}'\mathbf{\Omega}^{-1}\mathbf{X}$.
+
+\subsection{Feasible Generalized Least Squares (FGLS)}
+
+\subsubsection{The Problem of Unknown $\mathbf{\Omega}$}
+
+In practice, $\mathbf{\Omega}$ is unknown. Feasible GLS (FGLS) replaces $\mathbf{\Omega}$ with a consistent estimator $\hat{\mathbf{\Omega}}$.
+
+\subsubsection{Two-Step Procedure}
+
+\begin{enumerate}
+    \item \textbf{First step:} Obtain initial OLS estimator $\hat{\boldsymbol{\beta}}_{\text{OLS}}$ and residuals $\hat{\mathbf{u}} = \mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}_{\text{OLS}}$.
+    \item \textbf{Estimate $\mathbf{\Omega}$:} Model $\mathbf{\Omega}$ as a function of parameters $\boldsymbol{\theta}$, e.g.:
+    \begin{itemize}
+        \item For heteroskedasticity: $\Omega_{ii} = h(\mathbf{z}_i'\boldsymbol{\theta})$, where $\mathbf{z}_i$ may include $\mathbf{x}_i$.
+        \item For AR(1) errors: $\Omega_{ij} = \rho^{|i-j|}$.
+    \end{itemize}
+    Estimate $\boldsymbol{\theta}$ from residuals (e.g., regress $\log(\hat{u}_i^2)$ on $\mathbf{z}_i$ for multiplicative heteroskedasticity).
+    \item \textbf{Second step:} Compute FGLS estimator:
+    \[
+    \boxed{\hat{\boldsymbol{\beta}}_{\text{FGLS}} = (\mathbf{X}'\hat{\mathbf{\Omega}}^{-1}\mathbf{X})^{-1}\mathbf{X}'\hat{\mathbf{\Omega}}^{-1}\mathbf{y}}.
+    \]
+\end{enumerate}
+
+\subsubsection{Large-Sample Properties}
+
+Under regularity conditions (consistency of $\hat{\mathbf{\Omega}}$ and finite moments):
+\[
+\sqrt{n}(\hat{\boldsymbol{\beta}}_{\text{FGLS}} - \boldsymbol{\beta}) \stackrel{d}{\to} N(\mathbf{0}, \sigma^2 \mathbf{Q}^{-1}),
+\]
+the same asymptotic distribution as GLS. Thus, FGLS is \textbf{asymptotically efficient}.
+
+\textbf{Important:} In finite samples, FGLS may not outperform OLS if $\mathbf{\Omega}$ is poorly estimated. Iterated FGLS (updating residuals and $\hat{\mathbf{\Omega}}$ until convergence) is sometimes used.
+
+\subsection{Weighted Least Squares (WLS)}
+
+\subsubsection{Special Case of GLS}
+
+WLS arises when $\mathbf{\Omega}$ is diagonal (heteroskedasticity with no autocorrelation):
+\[
+\mathbf{\Omega} = \operatorname{diag}(\omega_1, \omega_2, \dots, \omega_n), \quad \omega_i > 0.
+\]
+Then $\mathbf{\Omega}^{-1} = \operatorname{diag}(\omega_1^{-1}, \dots, \omega_n^{-1})$.
+
+\subsubsection{Derivation}
+
+The GLS estimator simplifies to:
+\[
+\hat{\boldsymbol{\beta}}_{\text{WLS}} = \left(\sum_{i=1}^n \omega_i^{-1}\mathbf{x}_i\mathbf{x}_i'\right)^{-1} \left(\sum_{i=1}^n \omega_i^{-1}\mathbf{x}_i y_i\right).
+\]
+Equivalently, $\hat{\boldsymbol{\beta}}_{\text{WLS}}$ minimizes the weighted sum of squares:
+\[
+\boxed{\sum_{i=1}^n \omega_i^{-1}(y_i - \mathbf{x}_i'\boldsymbol{\beta})^2}.
+\]
+If we define weights $w_i = \omega_i^{-1}$, the estimator is called Weighted Least Squares.
+
+\subsubsection{Common Weight Specifications}
+
+\begin{itemize}
+    \item \textbf{Known weights:} From survey data where $\omega_i$ reflects sampling probabilities.
+    \item \textbf{Variance proportional to a known function:} Suppose $\operatorname{Var}(u_i\mid\mathbf{x}_i) = \sigma^2 v(\mathbf{x}_i)$. Then $\omega_i = v(\mathbf{x}_i)$.
+    \item \textbf{Estimated weights:} A two-step FGLS procedure where:
+    \begin{enumerate}
+        \item Regress $y$ on $\mathbf{X}$ by OLS, get residuals $\hat{u}_i$.
+        \item Regress $\hat{u}_i^2$ (or $\log \hat{u}_i^2$) on functions of $\mathbf{x}_i$ to estimate $v(\mathbf{x}_i)$.
+        \item Use $\hat{\omega}_i = \hat{v}(\mathbf{x}_i)$ in WLS.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Relationships and Comparison}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+
+Method & $\mathbf{\Omega}$ known? & Structure & Efficiency \\
+
+OLS & $\mathbf{\Omega}=\mathbf{I}$ & Spherical errors & Inefficient if $\mathbf{\Omega}\neq\mathbf{I}$ \\
+WLS & Diagonal known/estimated & Heteroskedastic only & Efficient within diagonal class \\
+GLS & Known & General & BLUE \\
+FGLS & Estimated & General & Asymptotically efficient \\
+
+\end{tabular}
+\caption{Comparison of Least Squares Methods}
+\end{table}
+
+\subsubsection{Key Theorems}
+
+{\bf Equivalence of GLS and OLS on transformed data}\\
+GLS is numerically equivalent to OLS on data transformed by $\mathbf{P} = \mathbf{\Omega}^{-1/2}$.
+
+\noindent{\bf Invariance to choice of $\mathbf{P}$}\\
+If $\mathbf{P}_1$ and $\mathbf{P}_2$ satisfy $\mathbf{P}_i\mathbf{\Omega}\mathbf{P}_i' = \mathbf{I}$, the GLS estimator is unchanged.
+
+
+\noindent{\bf Asymptotic equivalence of FGLS and GLS}\\
+If $\hat{\mathbf{\Omega}} \stackrel{p}{\to} \mathbf{\Omega}$ and certain moment conditions hold, $\hat{\boldsymbol{\beta}}_{\text{FGLS}}$ has the same asymptotic distribution as $\hat{\boldsymbol{\beta}}_{\text{GLS}}$.
+
+
+\subsubsection{Empirical Considerations}
+
+\subsection{Testing for Heteroskedasticity/Autocorrelation}
+Before applying FGLS, test OLS residuals:
+\begin{itemize}
+    \item Breusch-Pagan / White test for heteroskedasticity
+    \item Durbin-Watson / Breusch-Godfrey test for autocorrelation
+\end{itemize}
+
+\subsection{Robust Inference}
+Even with FGLS, it is common to report \textbf{heteroskedasticity-robust standard errors} (White, 1980) because:
+\begin{enumerate}
+    \item The $\mathbf{\Omega}$ model may be misspecified.
+    \item Robust standard errors provide valid inference under weaker conditions.
+\end{enumerate}
+
+The robust asymptotic variance estimator for FGLS is:
+\[
+\widehat{\operatorname{Var}}_{\text{robust}}(\hat{\boldsymbol{\beta}}_{\text{FGLS}}) = (\mathbf{X}'\hat{\mathbf{\Omega}}^{-1}\mathbf{X})^{-1} 
+\left(\sum_{i=1}^n \hat{w}_i^2 \hat{u}_i^2 \mathbf{x}_i\mathbf{x}_i'\right)
+(\mathbf{X}'\hat{\mathbf{\Omega}}^{-1}\mathbf{X})^{-1},
+\]
+where $\hat{w}_i$ are the FGLS weights and $\hat{u}_i$ the FGLS residuals.
+
+\subsection*{Summary}
+\begin{itemize}
+    \item \textbf{GLS} is the theoretical benchmark with known $\mathbf{\Omega}$.
+    \item \textbf{FGLS} is the feasible version using estimated $\hat{\mathbf{\Omega}}$; asymptotically equivalent to GLS.
+    \item \textbf{WLS} is a special case for diagonal $\mathbf{\Omega}$ (pure heteroskedasticity).
+    \item In practice, FGLS is commonly implemented with:
+    \begin{enumerate}
+        \item Model specification for the error structure
+        \item Two-step estimation
+        \item Robust inference to guard against misspecification
+    \end{enumerate}
+\end{itemize}
 \section{Panel Data Model}
 We can view panel data as a "two dimensional" data set in which the sample does not only come from different individuals, but also same individual across different time point.  We can write the regression model as
 \begin{align*}
@@ -1482,4 +2082,233 @@ We construct LM test, which uses the score function(gradient of log-likelyhood) 
 LM & = \frac{(\partial l/\partial\sigma^2_{\alpha})^2}{Var(\partial l/\partial\sigma^2_{\alpha})}|_{\sigma^2_{\alpha}}\\
 & = \frac{nT}{2(T-1)}[\frac{[\sum_{i=1}^n(\bar e_i)^2]}{(\frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^Te^2_{it})}-1]^2\\
 \end{align*}
+\section{Panel Data Time-Dependent Models}
+
+\subsection{Introduction and Model Specification}
+
+Panel data (or longitudinal data) consist of observations on $N$ cross-sectional units (individuals, firms, countries, etc.) over $T$ time periods. Time dependence in panel models arises when the error terms or dependent variables exhibit correlation across time for the same unit. A general linear dynamic panel model can be written as:
+
+\[
+y_{it} = \alpha y_{i,t-1} + \mathbf{x}_{it}'\boldsymbol{\beta} + \eta_i + \varepsilon_{it}, \quad i=1,\dots,N, \quad t=1,\dots,T,
+\]
+where:
+\begin{itemize}
+    \item $y_{it}$ is the dependent variable for unit $i$ at time $t$,
+    \item $y_{i,t-1}$ is the lagged dependent variable (introducing \textbf{dynamics}),
+    \item $\mathbf{x}_{it}$ is a $k \times 1$ vector of exogenous regressors,
+    \item $\eta_i$ is the \textbf{unobserved individual effect} (fixed or random),
+    \item $\varepsilon_{it}$ is the idiosyncratic error term.
+\end{itemize}
+
+\noindent Key features of time dependence:
+\begin{enumerate}
+    \item \textbf{State dependence}: Past outcomes affect current outcomes ($y_{i,t-1}$ term).
+    \item \textbf{Serial correlation}: $\varepsilon_{it}$ may follow an AR(p) process.
+    \item \textbf{Heterogeneity}: Individual-specific effects $\eta_i$ that may be correlated with regressors.
+\end{enumerate}
+
+\subsection{Challenges in Estimation}
+
+\begin{itemize}
+    \item \textbf{Dynamic panel bias}: The lagged dependent variable $y_{i,t-1}$ is correlated with the individual effect $\eta_i$, making standard estimators (OLS, fixed effects) inconsistent for fixed $T$ as $N \to \infty$.
+    
+    \item \textbf{Nickell bias}: The within (fixed effects) estimator is biased of order $O(1/T)$, which diminishes only when $T$ is large.
+    
+    \item \textbf{Initial conditions problem}: The process may not be stationary, and the initial observation $y_{i0}$ may be correlated with $\eta_i$.
+\end{itemize}
+
+\subsection{Estimation Methods}
+
+\subsubsection{Generalized Method of Moments (GMM)}
+The most common approach for dynamic panels with small $T$ and large $N$.
+
+\textbf{First-difference transformation} to eliminate $\eta_i$:
+\[
+\Delta y_{it} = \alpha \Delta y_{i,t-1} + \Delta \mathbf{x}_{it}'\boldsymbol{\beta} + \Delta \varepsilon_{it}, \quad t=2,\dots,T.
+\]
+The problem: $\Delta y_{i,t-1}$ is correlated with $\Delta \varepsilon_{it}$.
+
+\noindent \textbf{Arellano-Bond (1991) GMM}:
+\begin{itemize}
+    \item Use \textbf{lagged levels} of $y_{it}$ as instruments for $\Delta y_{i,t-1}$:
+    \begin{itemize}
+        \item For $\Delta y_{i2}$, instrument: $y_{i0}$
+        \item For $\Delta y_{i3}$, instruments: $y_{i0}, y_{i1}$
+        \item For $\Delta y_{iT}$, instruments: $y_{i0}, y_{i1}, \dots, y_{i,T-2}$
+    \end{itemize}
+    \item Moment conditions: $\mathbb{E}[y_{i,t-s} \Delta \varepsilon_{it}] = 0$ for $s \geq 2$, $t=2,\dots,T$.
+    \item Efficient GMM estimator: 
+    \[
+    \hat{\boldsymbol{\theta}}_{\text{GMM}} = \left( \mathbf{Z}'\mathbf{X} \mathbf{W}_N \mathbf{X}'\mathbf{Z} \right)^{-1} \mathbf{Z}'\mathbf{X} \mathbf{W}_N \mathbf{Z}'\mathbf{y},
+    \]
+    where $\mathbf{Z}$ is the instrument matrix, $\mathbf{X}$ the regressor matrix, and $\mathbf{W}_N$ a weight matrix.
+\end{itemize}
+
+\noindent \textbf{Blundell-Bond (1998) System GMM}:
+\begin{itemize}
+    \item Combines equations in differences with equations in levels.
+    \item Additional moment conditions: Use lagged differences as instruments for levels equations.
+    \item More efficient when $\alpha$ is close to 1 or when series are persistent.
+    \item Moment conditions:
+    \begin{align*}
+        &\mathbb{E}[y_{i,t-s} \Delta \varepsilon_{it}] = 0 \quad \text{(difference equations)} \\
+        &\mathbb{E}[\Delta y_{i,t-s} (\eta_i + \varepsilon_{it})] = 0 \quad \text{(level equations)}
+    \end{align*}
+    for appropriate $s$.
+\end{itemize}
+
+\subsubsection{Maximum Likelihood Estimation (MLE)}
+For known distribution of errors, MLE can be used:
+\[
+L(\boldsymbol{\theta}) = \prod_{i=1}^N f(y_{i1}, \dots, y_{iT} | \mathbf{x}_{i1}, \dots, \mathbf{x}_{iT}; \boldsymbol{\theta}).
+\]
+\begin{itemize}
+    \item \textbf{Conditional MLE}: Treat initial conditions $y_{i0}$ as given.
+    \item \textbf{Unconditional MLE}: Model the distribution of $y_{i0}$ (e.g., assume stationarity).
+    \item Implementation requires specifying the joint distribution of $(\eta_i, \varepsilon_{i1}, \dots, \varepsilon_{iT})$.
+\end{itemize}
+
+\subsubsection{Long-T Panels: Bias-Corrected Estimators}
+When $T$ is moderately large (e.g., $T > 10$):
+\begin{itemize}
+    \item \textbf{Bias-corrected fixed effects}: Correct the Nickell bias using analytical or bootstrap methods.
+    \item \textbf{Least Squares Dummy Variable (LSDV)} with correction:
+    \[
+    \hat{\alpha}_{\text{corrected}} = \hat{\alpha}_{\text{LSDV}} + \frac{1+\hat{\alpha}_{\text{LSDV}}}{T-1}.
+    \]
+\end{itemize}
+
+\subsection{Hypothesis Testing}
+
+\subsubsection{Specification Tests}
+
+\textbf{1. Serial Correlation Tests}:
+\begin{itemize}
+    \item \textbf{Arellano-Bond test for autocorrelation}:
+    \begin{itemize}
+        \item Test $H_0$: No autocorrelation in first-differenced errors at order $m$.
+        \item Based on sample autocovariances of differenced residuals.
+        \item Critical: Test for AR(1) in $\Delta \varepsilon_{it}$ (expected) and AR(2) (should be zero under null).
+    \end{itemize}
+    
+    \item \textbf{Breusch-Godfrey test for panel data}: LM test for serial correlation.
+\end{itemize}
+
+\textbf{2. Overidentification/Specification Tests}:
+\begin{itemize}
+    \item \textbf{Sargan-Hansen J-test}:
+    \[
+    J = \left( \frac{1}{\sqrt{N}} \sum_{i=1}^N \mathbf{z}_i' \hat{\mathbf{u}}_i \right)' \hat{\mathbf{W}} \left( \frac{1}{\sqrt{N}} \sum_{i=1}^N \mathbf{z}_i' \hat{\mathbf{u}}_i \right) \stackrel{d}{\to} \chi^2_{q-k},
+    \]
+    where $q$ is number of instruments, $k$ number of parameters.
+    \item Tests validity of moment conditions (instruments).
+    \item Difference-in-Sargan test: Compare subsets of instruments.
+\end{itemize}
+
+\textbf{3. Hausman Tests}:
+\begin{itemize}
+    \item Compare fixed effects vs. random effects estimators:
+    \[
+    H = (\hat{\boldsymbol{\beta}}_{\text{FE}} - \hat{\boldsymbol{\beta}}_{\text{RE}})' [\widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\text{FE}}) - \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\text{RE}})]^{-1} (\hat{\boldsymbol{\beta}}_{\text{FE}} - \hat{\boldsymbol{\beta}}_{\text{RE}}) \sim \chi^2_k.
+    \]
+    \item For dynamic models, compare GMM estimators with different instrument sets.
+\end{itemize}
+
+\textbf{4. Unit Root Tests for Panel Data}:
+\begin{itemize}
+    \item \textbf{Levin-Lin-Chu (LLC) test}: Assumes common unit root process.
+    \item \textbf{Im-Pesaran-Shin (IPS) test}: Allows for individual unit root processes.
+    \item \textbf{Maddala-Wu Fisher test}: Combines p-values from individual ADF tests.
+\end{itemize}
+
+\subsubsection{Inference on Parameters}
+
+\textbf{Wald tests} for linear restrictions $H_0: \mathbf{R}\boldsymbol{\theta} = \mathbf{r}$:
+\[
+W = (\mathbf{R}\hat{\boldsymbol{\theta}} - \mathbf{r})' [\mathbf{R} \widehat{\text{Var}}(\hat{\boldsymbol{\theta}}) \mathbf{R}']^{-1} (\mathbf{R}\hat{\boldsymbol{\theta}} - \mathbf{r}) \sim \chi^2_q,
+\]
+where $q$ is number of restrictions.
+
+\noindent For GMM, use robust variance estimator:
+\[
+\widehat{\text{Var}}(\hat{\boldsymbol{\theta}}_{\text{GMM}}) = (\mathbf{X}'\mathbf{Z} \mathbf{W}_N \mathbf{Z}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{Z} \mathbf{W}_N \hat{\mathbf{S}} \mathbf{W}_N \mathbf{Z}'\mathbf{X} (\mathbf{X}'\mathbf{Z} \mathbf{W}_N \mathbf{Z}'\mathbf{X})^{-1},
+\]
+where $\hat{\mathbf{S}}$ estimates $\text{Var}(N^{-1/2}\sum \mathbf{z}_i' \mathbf{u}_i)$.
+
+\subsection{Practical Considerations}
+
+\begin{enumerate}
+    \item \textbf{Instrument proliferation}: Too many instruments in GMM can overfit endogenous variables and bias results. Use:
+    \begin{itemize}
+        \item Collapsing instruments (combining lags)
+        \item Limiting lag depth
+        \item Principal components of instruments
+    \end{itemize}
+    
+    \item \textbf{Weak instruments}: When lagged levels are poor predictors of differences (high persistence). Check with:
+    \begin{itemize}
+        \item First-stage F-statistics
+        \item Stock-Yogo critical values
+        \item Anderson-Rubin tests
+    \end{itemize}
+    
+    \item \textbf{Choice between difference and system GMM}:
+    \begin{itemize}
+        \item Use difference GMM when series are stationary
+        \item Use system GMM for persistent data or when $\alpha$ is near 1
+        \item Compare with Hansen test for additional moments
+    \end{itemize}
+    
+    \item \textbf{Time effects}: Include time dummies to account for common shocks:
+    \[
+    y_{it} = \alpha y_{i,t-1} + \mathbf{x}_{it}'\boldsymbol{\beta} + \eta_i + \delta_t + \varepsilon_{it}.
+    \]
+    
+    \item \textbf{Nonlinear dynamic panels}: For binary, count, or other nonlinear outcomes:
+    \begin{itemize}
+        \item Dynamic probit/logit with correlated random effects
+        \item Conditional maximum likelihood for logit
+        \item GMM for exponential regression models
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Software Implementation}
+
+\textbf{Stata}:
+\begin{verbatim}
+* Arellano-Bond difference GMM
+xtabond y x1 x2, lags(1)
+estat abond  // Test autocorrelation
+estat sargan // Test overidentifying restrictions
+
+* Blundell-Bond system GMM
+xtdpdsys y x1 x2, lags(1)
+\end{verbatim}
+
+\textbf{R}:
+\begin{verbatim}
+library(plm)
+# Difference GMM
+gmm_diff <- pgmm(y ~ lag(y, 1) + x1 + x2 | lag(y, 2:99),
+                 data = pdata, effect = "individual", 
+                 model = "twosteps")
+summary(gmm_diff)
+
+# System GMM  
+gmm_sys <- pgmm(y ~ lag(y, 1) + x1 + x2 | lag(y, 2:99),
+                data = pdata, effect = "individual",
+                model = "onestep", transformation = "ld")
+summary(gmm_sys)
+\end{verbatim}
+
+\subsection{Summary}
+
+Time-dependent panel models capture important dynamic relationships but require careful estimation due to:
+\begin{itemize}
+    \item The inherent endogeneity from lagged dependent variables
+    \item Unobserved heterogeneity correlated with regressors
+    \item Potential serial correlation in errors
+\end{itemize}
+
+GMM methods, particularly Arellano-Bond and Blundell-Bond estimators, are standard for short panels. For longer panels, bias-corrected fixed effects or MLE may be appropriate. Comprehensive specification testing is crucial for valid inference
 \end{document}
